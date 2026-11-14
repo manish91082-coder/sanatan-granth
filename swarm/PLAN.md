@@ -12,7 +12,7 @@
 |---|---|---|
 | 0.1 | फ़ैसले #1–#6 | ✅ `swarm/DECISIONS.md` में दर्ज |
 | 0.2 | usage credits बंद; Fable picker | ✅ credits बंद; Fable पर credits नहीं माँगता (`policy/quotas.md`) |
-| 0.3 | AI Studio: एक project, एक key; RPD/RPM; Batch परीक्षण | ⏳ मालिक |
+| 0.3 | AI Studio: एक project, एक key; RPD/RPM; Batch परीक्षण | 🔶 सीमाएँ पढ़कर दर्ज (Flash 20 RPD, Flash-Lite 500 RPD, Gemma 4 14.4K RPD/16K TPM)। बाक़ी: मालिक `GEMINI_API_KEY` secret डालें और "एक project, एक key" की पुष्टि करें; फिर Batch परीक्षण |
 | 0.4 | Kaggle API token; quota, reset-दिन | ⏳ मालिक |
 | 0.5 | Groq key; Workers AI | ⏳ मालिक |
 | 0.6 | Google Cloud project → Drive API → OAuth "In production" → `drive.file` → Desktop client | ⏳ मालिक |
