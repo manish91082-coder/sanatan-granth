@@ -57,3 +57,11 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - क़दम 0.2 `policy/quotas.md` में दर्ज।
 - AI Studio (क़दम 0.3): app के built-in browser में Google का sign-in पन्ना आया (वहाँ login नहीं है)। Claude password नहीं डालता। मालिक से पूछा गया है: pane में ख़ुद sign in करें, या Claude उनके Chrome का उपयोग करे। key बनाना और GitHub secret में डालना मालिक का ही काम रहेगा।
 - "दोबारा मत करो": PR #1 बंद परीक्षण-PR है; उसे न खोलें।
+
+### session 1, turn 5–7 (2026-11-14, claude-fable-5-2)
+
+- मालिक ने app के browser pane में Google login किया; Claude ने AI Studio की सीमाएँ पढ़कर दर्ज कीं (PR #7), projects/keys गिने (3 projects, 1 key; PR #8)।
+- मालिक ने `GEMINI_API_KEY` secret ख़ुद डाला। फ़ैसला: एक project, एक key ही (`DECISIONS.md`, PR #9)। नया project/key बनाने की बात दोबारा न उठाएँ, जब तक मालिक ख़ुद न कहें।
+- `provider-smoke` workflow चला (run 43623513779): key चली; मुफ़्त Batch नहीं चला (HTTP 400)।
+- अगला मालिक-क़दम: 0.4 (Kaggle token → `KAGGLE_USERNAME`, `KAGGLE_KEY`) और 0.5 (Groq → `GROQ_API_KEY`; Cloudflare → `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`)। सबसे आसान तरीका: terminal में `gh secret set NAME --repo manish91082-coder/sanatan-granth` और paste।
+- अगला Claude-काम (keys के बिना): ईश का दूसरा काण्व गवाह + PD छपे संस्करण का OCR-workflow → text-lock; फिर Gemini से पहला ड्राफ़्ट।
