@@ -1,0 +1,45 @@
+name: provider-smoke
+
+# क़दम 0.3/0.5: provider की मुफ़्त key काम करती है या नहीं, यह हाथ से चलाकर देखें।
+# 3–4 अनुरोध ख़र्च होते हैं। नतीजा job summary और artifact में; key कहीं नहीं छपती।
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: "कौन-सा provider"
+        default: "gemini"
+        type: choice
+        options: [gemini]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: provider-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Gemini smoke test
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          set +e
+          python tools/providers/gemini_smoke.py | tee /tmp/smoke.json
+          CODE=${PIPESTATUS[0]}
+          { echo '```json'; cat /tmp/smoke.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit $CODE
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: provider-smoke
+          path: /tmp/smoke.json
+          if-no-files-found: ignore
