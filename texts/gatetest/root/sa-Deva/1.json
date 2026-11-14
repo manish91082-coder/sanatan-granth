@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "layer": "root",
+    "text_id": "gatetest",
+    "chapter": "1",
+    "lang": "sa-Deva",
+    "licence": "LicenseRef-PD-India-US",
+    "version": "1",
+    "ai_generated": false,
+    "provenance": {
+      "created_at": "2026-11-14T00:00:00Z",
+      "by": "canary-fixture"
+    }
+  },
+  "segments": {
+    "gatetest:1": "सत्यमेव जयते नानृतं सत्येन पन्था विततो देवयानः ॥"
+  },
+  "witness_status": {
+    "gatetest:1": "W1"
+  }
+}

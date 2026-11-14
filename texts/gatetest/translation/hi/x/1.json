@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "layer": "translation",
+    "text_id": "gatetest",
+    "chapter": "1",
+    "lang": "hi",
+    "translation_id": "fake",
+    "licence": "LicenseRef-sanatan-granth-draft",
+    "version": "1",
+    "pipeline_version": "canary-0",
+    "ai_generated": true,
+    "provenance": {
+      "created_at": "2026-11-14T00:00:00Z",
+      "by": "canary-fixture",
+      "model": "canary-model",
+      "model_family": "canary",
+      "prompt_hash": "0000000000000000"
+    }
+  },
+  "segments": {
+    "gatetest:1": "सत्य की ही जय होती है, असत्य की नहीं।"
+  },
+  "badges": {
+    "gatetest:1": "A"
+  }
+}

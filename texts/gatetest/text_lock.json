@@ -1,0 +1,8 @@
+{
+  "text_id": "gatetest",
+  "locked_at": "2026-11-14T00:00:00Z",
+  "lock_rule": "canary-fixture",
+  "files": {
+    "root/sa-Deva/1.json": "f005b7f57f764cc4ccb85090681225cc5cb2759c97dde8e6a664810361e60665"
+  }
+}
