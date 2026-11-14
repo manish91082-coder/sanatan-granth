@@ -4,8 +4,8 @@
 
 | मंच | क्या देखा | मान | देखने की तिथि | किसने दर्ज किया |
 |---|---|---|---|---|
-| Claude Max | usage credits बंद? | (बाक़ी: क़दम 0.2) | | |
-| Claude Max | `/model` picker में Fable 5.2 पर "Requires usage credits"? | (बाक़ी: क़दम 0.2) | | |
+| Claude Max | usage credits बंद? | **हाँ, बंद** | 2026-11-14 | मालिक ने देखकर बताया; Claude ने दर्ज किया |
+| Claude Max | `/model` picker में Fable 5.2 पर "Requires usage credits"? | **नहीं दिखता** (Fable उपयोग-योग्य) | 2026-11-14 | मालिक ने देखकर बताया; Claude ने दर्ज किया |
 | Google AI Studio | Flash-Lite RPD / RPM | (बाक़ी: क़दम 0.3) | | |
 | Google AI Studio | 3.8 Flash, 3.6 Flash RPD / RPM | (बाक़ी: क़दम 0.3) | | |
 | Google AI Studio | 4 Hydrogen RPD / RPM | (बाक़ी: क़दम 0.3) | | |
