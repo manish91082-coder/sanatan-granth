@@ -1,0 +1,36 @@
+{
+  "_comment": "मास्टर योजना §1 फ़ैसला 4, §2.6। display = पाठ repo में आ सकता है। compare_only = केवल तुलना-गवाह, पाठ git में कभी नहीं। metadata_only = केवल सूची-तथ्य।",
+  "version": "1",
+  "display": [
+    "LicenseRef-PD-India-US",
+    "CC0-1.0",
+    "CC-BY-4.0",
+    "CC-BY-3.0",
+    "Apache-2.0",
+    "MIT",
+    "Unlicense",
+    "LicenseRef-sanatan-granth-draft"
+  ],
+  "compare_only": [
+    "CC-BY-NC-4.0",
+    "CC-BY-NC-3.0",
+    "CC-BY-NC-SA-4.0",
+    "CC-BY-NC-SA-3.0",
+    "CC-BY-NC-ND-4.0",
+    "CC-BY-ND-4.0",
+    "CC-BY-SA-4.0",
+    "CC-BY-SA-3.0",
+    "LicenseRef-personal-study-only",
+    "LicenseRef-PD-India-only",
+    "LicenseRef-unknown"
+  ],
+  "metadata_only": [
+    "LicenseRef-all-rights-reserved"
+  ],
+  "rules": {
+    "unknown_licence_is": "compare_only",
+    "copyright_fact_min_sources": 2,
+    "pd_scope": "per-edition, never per-author",
+    "default_when_in_doubt": "LicenseRef-all-rights-reserved"
+  }
+}

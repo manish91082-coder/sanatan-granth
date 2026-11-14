@@ -1,0 +1,121 @@
+name: ci
+
+# Required checks: "checks", "canaries", "protected-paths".
+# GITHUB_TOKEN से बने PR पर pull_request-run अपने-आप नहीं बनता, इसलिए डेटा-workflows
+# PR खोलने के बाद इसे workflow_dispatch से उसी branch पर चलाते हैं।
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: checks/requirements.txt
+      - run: pip install -q -r checks/requirements.txt
+      - name: R1–R14 + A3/D11
+        run: python -m checks.run_all --out /tmp/checks.json
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checks-report
+          path: /tmp/checks.json
+          if-no-files-found: ignore
+
+  canaries:
+    name: canaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: checks/requirements.txt
+      - run: pip install -q -r checks/requirements.txt
+      - name: canaries 3/3 + D-जाँचों की आत्म-परीक्षा
+        run: python -m checks.canary_test
+
+  foreman:
+    # required नहीं: Foreman के code की typecheck और unit tests
+    name: foreman
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: foreman
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: foreman/package-lock.json
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm test
+
+  protected-paths:
+    # workflows, policy, canaries, schema, checks, foreman, CLAUDE.md, RUBRIC में बदलाव
+    # तभी पास, जब repo-मालिक ने PR पर 'owner-approved' label लगाया हो (CLAUDE.md सीमा #3)।
+    # नया commit आते ही label हट जाता है।
+    name: protected-paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PROTECTED: '^(\.github/|policy/|canaries/|schema/|checks/|foreman/|kaggle/|drive/|tools/|CLAUDE\.md$|LICENSE|swarm/RUBRIC\.md$|swarm/DECISIONS\.md$)'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: बदले रास्ते और मालिक की स्वीकृति
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "push" ]; then echo "main पर push: जाँच लागू नहीं"; exit 0; fi
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            PR="${{ github.event.pull_request.number }}"
+          else
+            PR="$(gh pr list --head "${GITHUB_REF_NAME}" --state open --json number --jq '.[0].number // empty')"
+          fi
+          git fetch -q origin main
+          CHANGED="$(git diff --name-only origin/main...HEAD)"
+          HIT="$(printf '%s\n' "$CHANGED" | grep -E "$PROTECTED" || true)"
+          if [ -z "$HIT" ]; then echo "कोई संरक्षित रास्ता नहीं बदला"; exit 0; fi
+          echo "संरक्षित रास्ते बदले:"; printf '%s\n' "$HIT"
+          if [ -z "${PR:-}" ]; then echo "::error::संरक्षित रास्ते बदले हैं पर PR नहीं मिला"; exit 1; fi
+          OWNER="${GITHUB_REPOSITORY_OWNER}"
+          if [ "${{ github.event.action }}" = "synchronize" ]; then
+            gh pr edit "$PR" --remove-label owner-approved >/dev/null 2>&1 || true
+            echo "::error::नया commit आया: मालिक 'owner-approved' label दोबारा लगाएँ"; exit 1
+          fi
+          ACTOR="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/events" --paginate \
+                   --jq '[.[] | select(.event=="labeled" and .label.name=="owner-approved")] | last | .actor.login // empty')"
+          HAS="$(gh pr view "$PR" --json labels --jq '[.labels[].name] | index("owner-approved") // empty')"
+          if [ -n "$HAS" ] && [ "$ACTOR" = "$OWNER" ]; then
+            echo "मालिक की स्वीकृति मिली"; exit 0
+          fi
+          echo "::error::संरक्षित रास्ते बदले हैं: repo-मालिक PR पर 'owner-approved' label लगाएँ"; exit 1

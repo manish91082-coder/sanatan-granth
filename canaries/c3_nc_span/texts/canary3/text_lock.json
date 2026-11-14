@@ -1,0 +1,8 @@
+{
+  "text_id": "canary3",
+  "locked_at": "2026-11-14T00:00:00Z",
+  "lock_rule": "canary-fixture",
+  "files": {
+    "root/sa-Deva/1.json": "8659c615b65b52f6641daf62ca62d8d31e9bab84f2188393abf698e35b62906b"
+  }
+}

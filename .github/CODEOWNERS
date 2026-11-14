@@ -1,0 +1,16 @@
+# संरक्षित रास्ते (CLAUDE.md सीमा #3)। असली ताला ci.yml की required check "protected-paths" है:
+# इन रास्तों को छूने वाला PR तभी पास होता है, जब repo-मालिक उस पर 'owner-approved' label लगाए।
+# डेटा-रास्ते (texts/, catalog/, state/, audit/, sources/, witnesses/) जानबूझकर यहाँ नहीं हैं:
+# वे required checks पास होने पर अपने-आप merge होते हैं (फ़ैसला #2), और बैज C/D से ऊपर R3 रोकती है।
+/.github/            @manish91082-coder
+/policy/             @manish91082-coder
+/canaries/           @manish91082-coder
+/schema/             @manish91082-coder
+/checks/             @manish91082-coder
+/foreman/            @manish91082-coder
+/kaggle/             @manish91082-coder
+/drive/              @manish91082-coder
+/tools/              @manish91082-coder
+/CLAUDE.md           @manish91082-coder
+/swarm/RUBRIC.md     @manish91082-coder
+/swarm/DECISIONS.md  @manish91082-coder

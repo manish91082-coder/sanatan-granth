@@ -1,0 +1,27 @@
+{
+  // Cloudflare Workers Free। कोई paid सुविधा नहीं। (मास्टर योजना §5.2)
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sanatan-granth-foreman",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "vars": {
+    "GITHUB_REPO": "manish91082-coder/sanatan-granth"
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "FOREMAN", "class_name": "ForemanAgent" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ForemanAgent"] }],
+  "d1_databases": [
+    {
+      "binding": "LEDGER",
+      "database_name": "sanatan-granth-ledger",
+      "database_id": "REPLACED_AT_DEPLOY",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // एक असली Cron Trigger = dead-man's switch (खाते की 5 की सीमा में से 1)। Foreman की अपनी घड़ी DO alarm है।
+  "triggers": { "crons": ["*/30 * * * *"] },
+  "observability": { "enabled": true }
+}

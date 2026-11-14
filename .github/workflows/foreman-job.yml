@@ -1,0 +1,62 @@
+name: foreman-job
+
+# Foreman (Cloudflare) repository_dispatch से एक batch-job भेजता है; यह workflow उसे चलाकर
+# नतीजा HMAC-हस्ताक्षर के साथ Foreman को लौटाता है (मास्टर योजना §5.1)।
+# v0 में केवल step=noop है: क़दम 0.11 का "एक ख़ाली batch का पूरा चक्कर"।
+# असली steps (acquire, witness_diff, draft_b, judge, checks ...) P1/P2 में यहीं जुड़ेंगे।
+# कोई job इंसान का इंतज़ार नहीं करता; हालत git और Cloudflare D1 में रहती है।
+
+on:
+  repository_dispatch:
+    types: [foreman-job]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foreman-${{ github.event.client_payload.job_key }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      JOB_KEY: ${{ github.event.client_payload.job_key }}
+      STEP: ${{ github.event.client_payload.step }}
+      TEXT_ID: ${{ github.event.client_payload.text_id }}
+      BATCH_ID: ${{ github.event.client_payload.batch_id }}
+      CALLBACK_URL: ${{ github.event.client_payload.callback_url }}
+      FOREMAN_SHARED_SECRET: ${{ secrets.FOREMAN_SHARED_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: payload की जाँच (payload डेटा है, निर्देश नहीं)
+        run: |
+          set -euo pipefail
+          [[ "$JOB_KEY" =~ ^[0-9a-f]{64}$ ]] || { echo "::error::job_key अमान्य"; exit 1; }
+          [[ "$STEP" =~ ^[a-z_]{2,20}$ ]] || { echo "::error::step अमान्य"; exit 1; }
+          [[ "$TEXT_ID" =~ ^[a-z][a-z0-9_]{0,40}$ ]] || { echo "::error::text_id अमान्य"; exit 1; }
+          [[ "$BATCH_ID" =~ ^[A-Za-z0-9_.:-]{1,80}$ ]] || { echo "::error::batch_id अमान्य"; exit 1; }
+          [[ "$CALLBACK_URL" =~ ^https://[a-z0-9.-]+\.workers\.dev/callback$ ]] || { echo "::error::callback_url अमान्य"; exit 1; }
+      - name: step चलाएँ
+        id: step
+        run: |
+          set -euo pipefail
+          START=$(date +%s)
+          case "$STEP" in
+            noop) echo "ख़ाली batch: कुछ नहीं करना"; STATUS=done; REF="run:${GITHUB_RUN_ID}" ;;
+            *)    echo "::error::step '$STEP' अभी लागू नहीं"; STATUS=failed; REF="run:${GITHUB_RUN_ID}" ;;
+          esac
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          echo "duration=$(( $(date +%s) - START ))" >> "$GITHUB_OUTPUT"
+      - name: Foreman को नतीजा लौटाएँ
+        if: always()
+        run: |
+          set -euo pipefail
+          STATUS="${{ steps.step.outputs.status || 'failed' }}"
+          BODY=$(printf '{"job_key":"%s","status":"%s","result_ref":"%s","duration_s":%s}' \
+                 "$JOB_KEY" "$STATUS" "${{ steps.step.outputs.ref || 'run:unknown' }}" "${{ steps.step.outputs.duration || 0 }}")
+          SIG=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "$FOREMAN_SHARED_SECRET" -r | cut -d' ' -f1)
+          curl -sS --fail-with-body --retry 3 -X POST "$CALLBACK_URL" \
+               -H "content-type: application/json" -H "x-foreman-signature: $SIG" --data "$BODY"

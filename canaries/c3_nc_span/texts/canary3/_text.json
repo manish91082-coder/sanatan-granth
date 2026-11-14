@@ -1,0 +1,20 @@
+{
+  "text_id": "canary3",
+  "work_id": "canary.canary3",
+  "title": {
+    "title_iast": "canary"
+  },
+  "base_edition": "canary-fixture",
+  "citation_scheme": [
+    "mantra"
+  ],
+  "chapters": [
+    {
+      "chapter": "1",
+      "segment_count": 1
+    }
+  ],
+  "state": "DRAFTED",
+  "pipeline_version": "canary-0",
+  "notes": "CANARY: यह फ़ाइल जानबूझकर ग़लत है। जाँचें इसे हर बार पकड़ें। इसे कभी ठीक न करें।"
+}

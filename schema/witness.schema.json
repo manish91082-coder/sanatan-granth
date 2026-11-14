@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sanatan-granth.invalid/schema/witness.schema.json",
+  "title": "witnesses/<edition_id>.json: गवाह-संस्करण का metadata (पाठ कभी नहीं)",
+  "type": "object",
+  "required": ["witness_id", "text_ids", "kind", "licence", "usage", "copy_family", "source_uri", "g1"],
+  "additionalProperties": false,
+  "properties": {
+    "witness_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]*$"},
+    "text_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "kind": {"enum": ["etext", "print_scan_own_ocr", "print_scan_own_typed", "dataset", "pd_translation"]},
+    "description": {"type": "string"},
+    "edition": {
+      "type": "object",
+      "properties": {
+        "title": {"type": "string"},
+        "editor_or_translator": {"type": "string"},
+        "death_year": {"type": ["integer", "null"]},
+        "publisher": {"type": "string"},
+        "year": {"type": "integer"}
+      }
+    },
+    "licence": {"type": "string"},
+    "licence_evidence": {"type": "array", "items": {"type": "string"}, "description": "लाइसेंस/PD के प्रमाण के URL या संदर्भ; PD के लिए ≥2"},
+    "pd_india": {"enum": ["yes", "no", "assume-copyright", "n/a"]},
+    "pd_us": {"enum": ["yes", "no", "assume-copyright", "n/a"]},
+    "usage": {"enum": ["display", "compare", "reference"], "description": "display = हमारा पाठ इससे बन सकता है; compare = केवल मिलान; reference = PD इंसानी अनुवाद, तीसरा गवाह"},
+    "copy_family": {"type": "string", "description": "स्वतंत्रता का रिकॉर्ड। एक ही परिवार के गवाह एक गिने जाते हैं (जैसे GRETIL से नक़ल हुआ पाठ = 'gretil')।"},
+    "copy_family_evidence": {"type": "string"},
+    "source_uri": {"type": "string"},
+    "fetch": {
+      "type": "object",
+      "description": "Actions इसे चलते समय कैसे लाए। पाठ runner की अस्थायी जगह या Drive 01_sources_raw में रहता है, git में नहीं।",
+      "properties": {
+        "method": {"enum": ["http_get", "git_sparse", "mediawiki_api", "manual_drive", "dataset_api"]},
+        "url": {"type": "string"},
+        "revid": {"type": ["string", "integer"]},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "parser": {"type": "string"}
+      }
+    },
+    "g1": {
+      "type": "object",
+      "required": ["status"],
+      "additionalProperties": false,
+      "properties": {
+        "status": {"enum": ["auto_allowlist", "approved_by_owner", "pending_owner", "rejected"]},
+        "date": {"type": "string", "format": "date"},
+        "decision_ref": {"type": "string", "description": "swarm/DECISIONS.md का शीर्षक या issue"}
+      }
+    },
+    "notes": {"type": "string"}
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sanatan-granth.invalid/schema/text.schema.json",
+  "title": "texts/<text>/_text.json: ग्रंथ का घोषणा-पत्र",
+  "type": "object",
+  "required": ["text_id", "work_id", "title", "base_edition", "citation_scheme", "chapters", "state", "pipeline_version"],
+  "additionalProperties": false,
+  "properties": {
+    "text_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "work_id": {"type": "string"},
+    "urn": {"type": "string", "pattern": "^urn:cts:sanatanLit:"},
+    "title": {"type": "object", "required": ["title_iast"], "properties": {"title_devanagari": {"type": "string"}, "title_iast": {"type": "string"}, "title_hi": {"type": "string"}, "title_en": {"type": "string"}}},
+    "base_edition": {"type": "string", "description": "घोषित आधार-संस्करण का witness_id"},
+    "witnesses": {"type": "array", "items": {"type": "string"}},
+    "citation_scheme": {"type": "array", "items": {"type": "string"}, "description": "जैसे ['adhyaya','shloka'] या ['mantra']"},
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["chapter", "segment_count"],
+        "additionalProperties": false,
+        "properties": {
+          "chapter": {"type": "string"},
+          "segment_count": {"type": "integer", "minimum": 1},
+          "first": {"type": "string"},
+          "last": {"type": "string"},
+          "gaps_declared": {"type": "array", "items": {"type": "string"}, "description": "आधार-संस्करण में जो क्रमांक सचमुच नहीं हैं"}
+        }
+      }
+    },
+    "state": {"enum": ["SELECTED", "SOURCES_APPROVED", "ACQUIRED", "NORMALISED", "WITNESS_DIFFED", "TEXT_LOCKED", "ANALYSED", "DRAFTED", "JUDGED", "REVISED", "SCIENCE_SCREENED", "MACHINE_COMPLETE", "RELEASED_INTERNAL"]},
+    "pipeline_version": {"type": "string"},
+    "genre": {"type": "string", "description": "calibration की विधा (बाद में विशेषज्ञ इसी pool से नमूना लेंगे)"},
+    "sensitivity": {"type": "string"},
+    "notes": {"type": "string"}
+  }
+}

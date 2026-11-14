@@ -1,0 +1,20 @@
+{
+  "name": "sanatan-granth-foreman",
+  "private": true,
+  "version": "0.1.0",
+  "description": "नियतात्मक संचालक: code रास्ता तय करता है, कोई LLM-routing नहीं",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "agents": "0.33.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20261114.1",
+    "typescript": "7.0.2",
+    "wrangler": "4.162.0"
+  }
+}

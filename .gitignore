@@ -1,0 +1,14 @@
+node_modules/
+__pycache__/
+*.pyc
+.wrangler/
+.dev.vars
+.env
+*.local
+.cache/
+rclone.conf
+kaggle.json
+# कच्चे स्रोत, scans और तुलना-गवाहों का पाठ git में कभी नहीं (Drive 01_sources_raw)
+_raw/
+_cache/
+exports/

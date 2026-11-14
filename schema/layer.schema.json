@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sanatan-granth.invalid/schema/layer.schema.json",
+  "title": "Standoff परत: एक अध्याय × एक परत की एक फ़ाइल",
+  "description": "मास्टर योजना §4.1। texts/<text>/root/sa-Deva/<अध्याय>.json, translation/<lang>/<translation_id>/<अध्याय>.json आदि। segments = {segment-ID: पाठ}।",
+  "type": "object",
+  "required": ["_meta", "segments"],
+  "additionalProperties": false,
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "required": ["layer", "text_id", "chapter", "lang", "licence", "version", "ai_generated", "provenance"],
+      "additionalProperties": false,
+      "properties": {
+        "layer": {"enum": ["root", "translit", "padaccheda", "translation", "commentary", "variant", "summary", "note"]},
+        "text_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "chapter": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]+)*$"},
+        "lang": {"type": "string", "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?$"},
+        "translation_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]*$"},
+        "licence": {"type": "string", "minLength": 3},
+        "redistribute": {"type": "boolean", "default": true},
+        "version": {"type": "string", "minLength": 1},
+        "pipeline_version": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]*$"},
+        "ai_generated": {"type": "boolean"},
+        "follows_commentary": {"type": "string", "description": "अनुवाद किस टीका का अनुसरण करता है, जैसे 'शांकरभाष्य'; न हो तो 'none-declared'"},
+        "provenance": {
+          "type": "object",
+          "required": ["created_at", "by"],
+          "additionalProperties": false,
+          "properties": {
+            "created_at": {"type": "string", "format": "date-time"},
+            "by": {"type": "string", "description": "agent/भूमिका का नाम, जैसे 'draft_b' या 'aligner'; किसी व्यक्ति का ईमेल कभी नहीं"},
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["witness_id", "licence", "usage"],
+                "additionalProperties": false,
+                "properties": {
+                  "witness_id": {"type": "string"},
+                  "licence": {"type": "string"},
+                  "usage": {"enum": ["display", "compare", "reference"]},
+                  "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+                }
+              }
+            },
+            "model": {"type": "string"},
+            "model_family": {"type": "string", "description": "कंपनी से गिना परिवार: alibaba-qwen, google, openai, meta, mistral, anthropic ..."},
+            "prompt_hash": {"type": "string", "pattern": "^[0-9a-f]{16,64}$"},
+            "job_key": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "tool": {"type": "string"},
+            "reviewed_by": {"type": ["string", "null"]},
+            "reviewed_at": {"type": ["string", "null"]}
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"layer": {"const": "translation"}}},
+          "then": {"required": ["translation_id"]}
+        },
+        {
+          "if": {"properties": {"ai_generated": {"const": true}}},
+          "then": {
+            "required": ["pipeline_version"],
+            "properties": {"provenance": {"required": ["created_at", "by", "model", "model_family", "prompt_hash"]}}
+          }
+        }
+      ]
+    },
+    "segments": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"$ref": "defs.schema.json#/$defs/segment_id"},
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
+    "badges": {
+      "type": "object",
+      "propertyNames": {"$ref": "defs.schema.json#/$defs/segment_id"},
+      "additionalProperties": {"$ref": "defs.schema.json#/$defs/badge"}
+    },
+    "flags": {
+      "type": "object",
+      "description": "खुले झंडे: segment-ID → जाँच-कोड की सूची (D2, A4, CONTRADICTED, check_not_run:D1 ...)। झंडा खुला हो तो बैज D ही हो सकता है।",
+      "propertyNames": {"$ref": "defs.schema.json#/$defs/segment_id"},
+      "additionalProperties": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+    },
+    "witness_status": {
+      "type": "object",
+      "propertyNames": {"$ref": "defs.schema.json#/$defs/segment_id"},
+      "additionalProperties": {"$ref": "defs.schema.json#/$defs/witness_status"}
+    }
+  }
+}

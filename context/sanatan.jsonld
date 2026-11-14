@@ -1,0 +1,37 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dc": "http://purl.org/dc/terms/",
+    "wd": "http://www.wikidata.org/entity/",
+    "sg": "urn:cts:sanatanLit:",
+    "work_id": "@id",
+    "title_iast": "schema:name",
+    "title_devanagari": {
+      "@id": "schema:alternateName",
+      "@language": "sa-Deva"
+    },
+    "title_hi": {
+      "@id": "schema:alternateName",
+      "@language": "hi"
+    },
+    "title_en": {
+      "@id": "schema:alternateName",
+      "@language": "en"
+    },
+    "wikidata_qid": {
+      "@id": "schema:sameAs",
+      "@type": "@id"
+    },
+    "licence": {
+      "@id": "dc:license"
+    },
+    "attested_by": "prov:wasDerivedFrom",
+    "created_at": "prov:generatedAtTime",
+    "by": "prov:wasAttributedTo",
+    "ai_generated": "sg:aiGenerated",
+    "badge": "sg:badge",
+    "witness_status": "sg:witnessStatus",
+    "pipeline_version": "sg:pipelineVersion"
+  }
+}

@@ -1,0 +1,1 @@
+{"ts":"2026-11-14T00:00:00Z","model_id":"n/a","effort":"n/a","session_or_task_id":"bootstrap","rubric_version":"0.1-draft","inputs":{"ledger_sha":null,"pr_ids":[],"sample_ids":[]},"findings":["log बनाया गया; अभी कोई audit नहीं चला"],"verdict":"n/a","next_check":"पहला साप्ताहिक meta-audit (क़दम 0.13 के बाद)"}

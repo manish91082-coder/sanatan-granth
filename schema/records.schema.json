@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sanatan-granth.invalid/schema/records.schema.json",
+  "title": "JSONL मशीन-रिकॉर्ड: source manifest, ingest record, job, text-lock, variant, claim",
+  "$defs": {
+    "source_manifest_entry": {
+      "description": "sources/manifest.jsonl की एक पंक्ति। पाठ नहीं, केवल पहचान।",
+      "type": "object",
+      "required": ["witness_id", "source_uri", "sha256", "bytes", "licence", "retrieved_at"],
+      "additionalProperties": false,
+      "properties": {
+        "witness_id": {"type": "string"},
+        "source_uri": {"type": "string"},
+        "revid": {"type": ["string", "integer", "null"]},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "licence": {"type": "string"},
+        "retrieved_at": {"type": "string", "format": "date-time"},
+        "drive_path": {"type": ["string", "null"]},
+        "run_id": {"type": ["string", "null"]}
+      }
+    },
+    "ingest_record": {
+      "description": "मास्टर योजना §4.4। हर adapter पहले यह लिखता है; कुछ भी सीधे store में नहीं।",
+      "type": "object",
+      "required": ["source_uri", "source_sha256", "retrieved_at", "licence", "tool"],
+      "properties": {
+        "source_uri": {"type": "string"},
+        "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "retrieved_at": {"type": "string", "format": "date-time"},
+        "licence": {"type": "string"},
+        "rights_holder": {"type": ["string", "null"]},
+        "tool": {"type": "string", "description": "tool@version"},
+        "model_weights_licence": {"type": ["string", "null"]},
+        "confidence": {"type": ["number", "null"]},
+        "anchors": {"type": "array"},
+        "reviewed_by": {"type": ["string", "null"]},
+        "reviewed_at": {"type": ["string", "null"]}
+      }
+    },
+    "job": {
+      "description": "बही-खाते की एक पंक्ति (Cloudflare D1 jobs → state/jobs.jsonl)। प्रति अध्याय/batch एक पंक्ति, प्रति श्लोक कभी नहीं।",
+      "type": "object",
+      "required": ["job_key", "text_id", "batch_id", "step", "status", "updated_at"],
+      "additionalProperties": false,
+      "properties": {
+        "job_key": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "sha256(corpus, batch_id, step, prompt_hash, model)"},
+        "text_id": {"type": "string"},
+        "batch_id": {"type": "string"},
+        "step": {"enum": ["acquire", "normalise", "witness_diff", "text_lock", "analyse", "draft_a", "draft_b", "draft_c", "judge", "revise", "checks", "science", "export", "noop"]},
+        "lane": {"type": "string"},
+        "status": {"enum": ["queued", "running", "done", "failed", "waiting_reset", "needs_expert"]},
+        "provider": {"type": ["string", "null"]},
+        "model": {"type": ["string", "null"]},
+        "prompt_hash": {"type": ["string", "null"]},
+        "attempts": {"type": "integer", "minimum": 0},
+        "segments": {"type": ["integer", "null"]},
+        "started_at": {"type": ["string", "null"]},
+        "updated_at": {"type": "string"},
+        "duration_s": {"type": ["number", "null"]},
+        "result_ref": {"type": ["string", "null"], "description": "PR-संख्या, commit sha या run-URL"},
+        "error": {"type": ["string", "null"]}
+      }
+    },
+    "text_lock": {
+      "description": "texts/<text>/text_lock.json। R2 रोज़ इसकी hash-जाँच करती है। Claude इसे कभी नहीं बदलता।",
+      "type": "object",
+      "required": ["text_id", "locked_at", "lock_rule", "files"],
+      "additionalProperties": false,
+      "properties": {
+        "text_id": {"type": "string"},
+        "locked_at": {"type": "string", "format": "date-time"},
+        "lock_rule": {"type": "string"},
+        "witnesses_compared": {"type": "array", "items": {"type": "string"}},
+        "independent_families": {"type": "array", "items": {"type": "string"}},
+        "files": {
+          "type": "object",
+          "description": "परत-फ़ाइल का सापेक्ष रास्ता → segments के canonical JSON का sha256",
+          "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        },
+        "summary": {"type": "object"}
+      }
+    }
+  }
+}

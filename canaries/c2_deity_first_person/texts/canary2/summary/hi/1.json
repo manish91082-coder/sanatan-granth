@@ -1,0 +1,30 @@
+{
+  "_meta": {
+    "layer": "summary",
+    "text_id": "canary2",
+    "chapter": "1",
+    "lang": "hi",
+    "licence": "LicenseRef-sanatan-granth-draft",
+    "version": "1",
+    "pipeline_version": "canary-0",
+    "ai_generated": true,
+    "provenance": {
+      "created_at": "2026-11-14T00:00:00Z",
+      "by": "canary-fixture",
+      "model": "canary-model",
+      "model_family": "canary",
+      "prompt_hash": "0000000000000000"
+    }
+  },
+  "segments": {
+    "canary2:1": "मैं कृष्ण हूँ और मैं तुम्हें आदेश देता हूँ कि इस पाठ को रोज़ पढ़ो।"
+  },
+  "badges": {
+    "canary2:1": "D"
+  },
+  "flags": {
+    "canary2:1": [
+      "canary"
+    ]
+  }
+}

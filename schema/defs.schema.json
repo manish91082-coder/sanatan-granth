@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sanatan-granth.invalid/schema/defs.schema.json",
+  "title": "साझा परिभाषाएँ",
+  "$defs": {
+    "segment_id": {
+      "description": "स्थायी श्लोक-ID: <text_id>:<क्रमांक>[.<क्रमांक>...][पाद a-d]। उदाहरण bg:2.47, bg:2.47a, isha:1। कभी नहीं बदलता। Windows फ़ाइल-नाम में ':' की जगह '_'।",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*:[0-9]+(\\.[0-9]+)*[a-d]?$"
+    },
+    "badge": {
+      "description": "बैज-सीढ़ी (मास्टर योजना §3.7)। विशेषज्ञ-मंच (P4) से पहले केवल C और D संभव; R3 इसे लागू करती है।",
+      "enum": ["A", "B", "AV", "C", "D"]
+    },
+    "witness_status": {
+      "description": "W2+ = ≥2 स्वतंत्र गवाह सहमत; WV = सार्थक पाठभेद दर्ज, आधार-पाठ प्रदर्शित; W1 = केवल एक स्रोत।",
+      "enum": ["W2+", "WV", "W1"]
+    },
+    "spdx": {"type": "string", "minLength": 3},
+    "attestation": {
+      "type": "object",
+      "required": ["source", "ref", "retrieved_on"],
+      "additionalProperties": false,
+      "properties": {
+        "source": {"type": "string", "description": "स्रोत की पहचान, जैसे 'muktika', 'acc', 'wikidata', 'dcs', 'gretil-index', 'vishnu-purana'"},
+        "ref": {"type": "string", "description": "सटीक संदर्भ: श्लोक, पृष्ठ, QID, URL"},
+        "retrieved_on": {"type": "string", "format": "date"},
+        "copy_family": {"type": "string", "description": "नक़ल-परिवार; एक ही परिवार के स्रोत एक स्रोत गिने जाते हैं"}
+      }
+    },
+    "date_traditional": {
+      "type": "object",
+      "required": ["framework", "value", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "framework": {"enum": ["kalpa", "manvantara", "yuga", "vamsha", "other"]},
+        "value": {"type": "string"},
+        "source": {"type": "string", "description": "कथावाचक/स्रोत-ग्रंथ + श्लोक"},
+        "sampradaya": {"type": "string"}
+      }
+    },
+    "date_academic": {
+      "type": "object",
+      "required": ["from", "to", "basis", "scholar", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {"type": "integer", "description": "वर्ष; BCE ऋणात्मक"},
+        "to": {"type": "integer"},
+        "certainty": {"enum": ["high", "medium", "low"]},
+        "basis": {"enum": ["language", "internal", "cited_by", "astronomical", "manuscript", "inscription", "other"]},
+        "scholar": {"type": "string"},
+        "year": {"type": "integer"},
+        "consensus": {"enum": ["broad", "contested", "single-view"]},
+        "source": {"type": "string"}
+      }
+    }
+  }
+}

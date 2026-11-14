@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "layer": "translation",
+    "text_id": "canary3",
+    "chapter": "1",
+    "lang": "en",
+    "translation_id": "copied",
+    "licence": "LicenseRef-sanatan-granth-draft",
+    "version": "1",
+    "pipeline_version": "canary-0",
+    "ai_generated": true,
+    "provenance": {
+      "created_at": "2026-11-14T00:00:00Z",
+      "by": "canary-fixture",
+      "model": "canary-model",
+      "model_family": "canary",
+      "prompt_hash": "0000000000000000",
+      "sources": [
+        {
+          "witness_id": "canary-nc-source",
+          "licence": "CC-BY-NC-SA-4.0",
+          "usage": "display"
+        }
+      ]
+    }
+  },
+  "segments": {
+    "canary3:1": "Truth alone triumphs, not falsehood."
+  },
+  "badges": {
+    "canary3:1": "D"
+  },
+  "flags": {
+    "canary3:1": [
+      "canary"
+    ]
+  }
+}

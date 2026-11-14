@@ -1,0 +1,61 @@
+{
+  "_comment": "मास्टर योजना §3, §5.4, §9.3। सारी संख्याएँ प्रस्ताव [धारणा] हैं; pilot इन्हें calibrate करेगा। बदलाव केवल PR + DECISIONS-प्रविष्टि से।",
+  "version": "0.1",
+  "badges": {
+    "allowed_now": ["C", "D"],
+    "locked_until_expert_platform": ["A", "B", "AV"],
+    "expert_badges_file": "badges.json"
+  },
+  "text_lock": {
+    "min_independent_witnesses": 2,
+    "witness_status": ["W2+", "WV", "W1"]
+  },
+  "batch": {
+    "size_default": 30,
+    "size_ab_test": [10, 30, 60],
+    "max_redraft": 1,
+    "max_retry_per_step": 2
+  },
+  "jury": {
+    "full_jury_random_sample_min": 0.05,
+    "full_jury_random_sample_max": 0.10,
+    "judge_must_exclude_drafter_families": true
+  },
+  "veto_checks": ["D2", "D3", "D6", "D7", "D11"],
+  "required_checks_for_C": ["A1", "A2", "A3", "A4", "D2", "D3", "D6", "D7", "D11"],
+  "not_run_required_check_means": "D",
+  "stop_conditions": {
+    "rate_429_over_1h": 0.20,
+    "parse_fail_last_50_jobs": 0.05,
+    "do_duration_by_1800utc": 0.70,
+    "d_rate_last_1000_segments": 0.10,
+    "claude_contradicted_queue_days": 2,
+    "canary_missed": "full_stop",
+    "stop_file": "swarm/STOP"
+  },
+  "provider_budget": {
+    "switch_at": 0.90,
+    "sleep_at": 1.00,
+    "failover": "other-provider-or-resource-class-only"
+  },
+  "claude": {
+    "max_runs_per_day": 3,
+    "max_weekly_share": 0.40
+  },
+  "pilot_go": {
+    "batch_omission_silent": 0,
+    "batch_retry_max_share": 0.02,
+    "cascade_agreement_min": 0.60,
+    "kaggle_t4_tok_s_optimistic": 500,
+    "gemini_rpd_min": 500,
+    "d1_writes_per_segment_max": 1,
+    "deterministic_canary_catch": 1.0,
+    "claude_run_weekly_share_max": 0.019
+  },
+  "catalog": {
+    "saturation_last3_new_max": 0.01,
+    "chao1_unseen_max": 0.05,
+    "classify_crosscheck_share": 0.05,
+    "classify_disagreement_issue": 0.10
+  }
+}

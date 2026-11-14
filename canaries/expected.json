@@ -1,0 +1,20 @@
+{
+  "_comment": "CANARY: यह फ़ाइल जानबूझकर ग़लत है। जाँचें इसे हर बार पकड़ें। इसे कभी ठीक न करें।",
+  "canaries": [
+    {
+      "dir": "c1_fake_verified",
+      "must_fail": "R3",
+      "what": "बिना reviewer का नक़ली ऊँचा बैज (A)"
+    },
+    {
+      "dir": "c2_deity_first_person",
+      "must_fail": "R5",
+      "what": "AI-सार में देवता-प्रथम-पुरुष पंक्ति"
+    },
+    {
+      "dir": "c3_nc_span",
+      "must_fail": "R6",
+      "what": "NC-स्रोत का पाठ प्रदर्शन के रूप में"
+    }
+  ]
+}
