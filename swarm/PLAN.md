@@ -17,7 +17,7 @@
 | 0.5 | Groq key; Workers AI | ⏳ मालिक |
 | 0.6 | Google Cloud project → Drive API → OAuth "In production" → `drive.file` → Desktop client | ⏳ मालिक |
 | 0.7 | rclone remote `granth:`; `Sanatan_Library/` tree; token Kaggle Secret में | ⏳ मालिक + Claude |
-| 0.8 | public repo, branch protection, required checks, CODEOWNERS, `CLAUDE.md` | ✅ (HANDOFF देखें: protection की स्थिति) |
+| 0.8 | public repo, branch protection, required checks, CODEOWNERS, `CLAUDE.md` | ✅ protection लगा; परीक्षण-PR #1 पर लाल check ने merge रोका |
 | 0.9 | schemas, ID-नियम, SPDX allow-list, `swarm/*`, `policy/*`, 3 canaries | ✅ CI में canaries 3/3 |
 | 0.10 | जाँचें v0: R1–R14, A3/D11, D2/D3/D6/D7/D8 | ✅ v0। D1, D4, D5, D9, D10, D12 अभी `not_run` (रूप-विश्लेषक P2 में); ईश पर चलाना बाक़ी |
 | 0.11 | Cloudflare D1 + Foreman Agent + dead-man cron + status-पन्ना | 🔨 code `foreman/` में; deploy मालिक की keys के बाद |
