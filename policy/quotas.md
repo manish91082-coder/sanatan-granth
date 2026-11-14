@@ -16,7 +16,8 @@
 | Google AI Studio | Gemini 4 Argon, 4 Carbon, 3.1 Pro, 2.5 Pro | 0 / 0 / 0 (मुफ़्त स्तर पर उपलब्ध नहीं) | 2026-11-14 | Claude ने मालिक के logged-in AI Studio पन्ने (Rate limit, Free tier) से पढ़ा |
 | Google AI Studio | Gemma 4 26B और 31B: RPM / TPM / RPD | 30 / **16K** / **14.4K** | 2026-11-14 | Claude ने मालिक के logged-in AI Studio पन्ने (Rate limit, Free tier) से पढ़ा |
 | Google AI Studio | Gemini Embedding 1, 2: RPM / TPM / RPD | 100 / 30K / 1K | 2026-11-14 | Claude ने मालिक के logged-in AI Studio पन्ने (Rate limit, Free tier) से पढ़ा |
-| Google AI Studio | मुफ़्त Batch API चला? | (बाक़ी: `GEMINI_API_KEY` secret के बाद परीक्षण) | | |
+| Google AI Studio | मुफ़्त Batch API चला? | **नहीं।** `gemini-3.5-flash-lite:batchGenerateContent` ने HTTP 400 "Precondition check failed." लौटाया। कारण पक्का नहीं (मुफ़्त स्तर पर Batch बंद होना सबसे संभावित; अनुरोध का रूप भी कारण हो सकता है)। क्षमता-गणित में Batch नहीं गिना जाएगा। | 2026-11-14 | `provider-smoke` run 43623513779 |
+| Google AI Studio | key GitHub Actions से चली? | **हाँ।** `gemini-3.5-flash-lite`: HTTP 200, 0.77 s, strict JSON parse हुआ, दोनों ID ठीक लौटे; 50 prompt + 102 output tokens। models की सूची में 49 मॉडल generateContent देते हैं; `gemma-4-26b-a4b-it` और `gemma-4-31b-it` भी। | 2026-11-14 | `provider-smoke` run 43623513779 |
 | Google AI Studio | कितने projects और keys? | **3 projects, 1 key।** Projects: "Default Gemini Project" (1 key; मालिक के दूसरे काम में उपयोग), "Gemini Project GAG" (कोई key नहीं), "My First Project" (कोई key नहीं)। सब Free tier, billing नहीं जुड़ा। | 2026-11-14 | Claude ने मालिक के logged-in AI Studio (Projects और API Keys पन्ने) से पढ़ा; कोई key या ID दर्ज नहीं |
 | Kaggle | साप्ताहिक GPU घंटे | (बाक़ी: क़दम 0.4) | | |
 | Kaggle | साप्ताहिक TPU घंटे | (बाक़ी: क़दम 0.4) | | |
