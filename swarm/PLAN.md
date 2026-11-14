@@ -11,7 +11,7 @@
 | क़दम | क्या | हालत |
 |---|---|---|
 | 0.1 | फ़ैसले #1–#6 | ✅ `swarm/DECISIONS.md` में दर्ज |
-| 0.2 | usage credits बंद; Fable picker | ⏳ मालिक देखें → `policy/quotas.md` |
+| 0.2 | usage credits बंद; Fable picker | ✅ credits बंद; Fable पर credits नहीं माँगता (`policy/quotas.md`) |
 | 0.3 | AI Studio: एक project, एक key; RPD/RPM; Batch परीक्षण | ⏳ मालिक |
 | 0.4 | Kaggle API token; quota, reset-दिन | ⏳ मालिक |
 | 0.5 | Groq key; Workers AI | ⏳ मालिक |
@@ -31,11 +31,15 @@
 
 | Lane | हालत |
 |---|---|
-| सूची (P1) | शुरू नहीं। पहला काम: 1.1 बीज-सूचियाँ, 1.2 ACC parse (Actions) |
-| स्रोत/गवाह | शुरू नहीं। ईशोपनिषद् के ≥2 स्वतंत्र गवाह खोजना (P2 2.1) |
+| सूची (P1) | 1.1 आंशिक: 18 विद्याएँ, 18 महापुराण, मुक्तिका 108 (`catalog/seed/`)। बाक़ी: उपपुराण, 28 आगम, पाञ्चरात्र; फिर 1.2 ACC parse |
+| स्रोत/गवाह | ईश: 4 गवाह दर्ज (केवल तुलना), पहला मिलान `audit/witness/isha_collation_v0.json`। बाक़ी: दूसरा काण्व गवाह, PD छपे संस्करण का OCR, तब text-lock |
 | ड्राफ़्ट/जूरी | रुका: keys (0.3–0.5) चाहिए |
 | Kaggle | रुका: token (0.4) चाहिए। फ़िल्म का backup पहले (फ़ैसला #9 खुला) |
 | Claude audit | रुका: 0.13 |
+
+## काम का ढंग (14 नवंबर का फ़ैसला)
+
+मालिक के interactive session में Claude अपने PR पर label लगाकर, checks हरे होने पर ख़ुद merge करता है (`swarm/DECISIONS.md`)। keys/logins मालिक के ही रहते हैं।
 
 ## खुले फ़ैसले (मालिक)
 
@@ -50,4 +54,4 @@
 3. P1 1.1–1.4 (बीज-सूचियाँ, ACC, title-index, Wikidata): इन्हें keys नहीं चाहिए, PR से चलेंगे।
 
 ---
-अंतिम अपडेट: 2026-11-14 · claude-fable-5-2 (शुरुआत claude-opus-5-5) · निर्माण-session 1
+अंतिम अपडेट: 2026-11-14 · claude-fable-5-2 · निर्माण-session 1, turn 4
