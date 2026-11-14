@@ -16,6 +16,10 @@
 7. कोई खाता या key नहीं बनाना, usage credits कभी चालू नहीं करना, **Colab कभी नहीं छूना**, किसी असली व्यक्ति का चेहरा या आवाज़ नहीं।
 8. बजट के भीतर रहना: `claude_runs_today ≥ 3` या साप्ताहिक हिस्सा 40% से ऊपर हो, तो "over budget" लिखकर बाहर निकलना।
 
+## मालिक की दी हुई छूट (14 नवंबर 2026; `swarm/DECISIONS.md`)
+
+मालिक के **interactive निर्माण-session** में Claude अपने PR पर `owner-approved` label लगा सकता है और required checks हरे होने पर squash-merge कर सकता है। बिना-निगरानी runs (cloud scheduled tasks, Actions में Claude) पर ऊपर की आठों सीमाएँ ज्यों-की-त्यों लागू हैं: वे कभी merge, label, tag, release या deploy नहीं करते। लाल check पर कोई merge नहीं, और deploy/release-tag मालिक के बटन से।
+
 ## और नियम
 
 - **शून्य अतिरिक्त ख़र्च।** card, ID या phone-verification वाली कोई स्क्रीन दिखे तो रुकें और issue खोलें। हर कंपनी पर एक खाता, एक project, एक key। quota बढ़ाने की कोई चाल नहीं।

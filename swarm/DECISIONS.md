@@ -20,3 +20,20 @@
 - पुस्तकालय का repo फ़िल्म-प्रोजेक्ट से बाहर **`E:\sanatan-granth`** में बने: हाँ।
 - GitHub पर public repo `sanatan-granth` **Claude `gh` CLI से बनाए** और पहला commit push करे; branch protection और auto-merge भी `gh` से सेट करे: हाँ।
 - इसी के तहत P0 का पहला ढाँचा (`.github/workflows/`, `policy/`, `canaries/`, thresholds सहित) इस interactive session में सीधे `main` पर गया। इसके बाद CLAUDE.md की सीमा #3 पूरी तरह लागू है: इन रास्तों में बदलाव केवल PR से।
+
+## 2026-11-14 · निर्माण-session में merge और label Claude करे (मालिक, chat में)
+
+मालिक का निर्देश (सार): "PR merge करना और label लगाना तुम ही करो; पूरा automation पर ले जाना है; verify बाद में करेंगे।"
+
+इससे क्या बदला:
+
+- **मालिक के interactive निर्माण-session में** Claude अपने बनाए PR पर `owner-approved` label लगा सकता है और required checks (checks, canaries, protected-paths) हरे होने पर squash-merge कर सकता है। यह मास्टर योजना §7.2 की सीमा #1 और #3 में मालिक की दी हुई छूट है।
+- हर ऐसे merge का ब्योरा PR में रहता है; मालिक बाद में देख सकते हैं और कोई भी PR revert करवा सकते हैं।
+
+क्या **नहीं** बदला:
+
+- बिना-निगरानी runs (साप्ताहिक meta-audit, reviser cloud task) अब भी कभी merge, label, tag, release या deploy नहीं करते। auditor अपना ही काम merge नहीं करता।
+- लाल check पर कोई merge नहीं; branch protection bypass नहीं होती।
+- बैज C/D से ऊपर नहीं (R3), संस्कृत-ताला (R2), लाइसेंस-द्वार (R6), canaries: सब वैसे ही।
+- keys, tokens, passwords और खाते: Claude नहीं बनाता, नहीं छूता; वे मालिक ही secret-खानों में डालते हैं।
+- deploy (Foreman) और release-tag मालिक के बटन से ही चलते हैं, जब तक मालिक अलग से न कहें।
