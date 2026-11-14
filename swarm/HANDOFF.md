@@ -10,7 +10,13 @@
 - ढाँचा: `CLAUDE.md`, `swarm/*`, `policy/*`, `schema/*`, `catalog/_taxonomy.json`, `canaries/` (3), `checks/` (R1–R14, A3/D11, D2/D3/D6/D7/D8 v0), workflows (`ci`, `daily-audit`, `foreman-job`, `foreman-deploy`), `foreman/` (Agents SDK 0.33.0 pinned, D1 migration, 12 unit tests), `drive/` (rclone `granth:` scripts)।
 - स्थानीय नतीजे: `checks.run_all` FAIL=0; `checks.canary_test` canaries 3/3, D-आत्म-परीक्षा 8/8; Foreman `tsc` साफ़, 12/12 tests, `wrangler deploy --dry-run` बना (gzip ~425 KiB)।
 
+- GitHub पर जाँचा गया (14 नवंबर): पहला CI पूरा हरा (checks, canaries, protected-paths, foreman)। `main` पर protection लगा: PR अनिवार्य, 3 required checks, `enforce_admins`, force-push बंद। परीक्षण-PR #1 (नक़ली बैज A) पर `checks` लाल हुआ, merge BLOCKED रहा, और `main` पर सीधा push अस्वीकार हुआ। PR #1 बिना merge के बंद है।
+- repo-सेटिंग: auto-merge की अनुमति चालू, केवल squash-merge, merge पर branch हटे; labels बने (`owner-approved`, `needs-human`, `red-audit`, `audit`, `budget`, `licence`, `contradicted`, `data`); Actions को PR खोलने की अनुमति (दैनिक ऑडिट के PR के लिए)।
+- commits में मालिक का निजी ईमेल नहीं जाता: इस repo का `user.email` GitHub का noreply पता है।
+
 **क्या अभी नहीं हुआ / जाँचा नहीं गया**
+
+- `daily-audit` workflow अभी एक बार भी नहीं चला (पहली बार 23:30 UTC पर चलेगा)। उसका PR → `ci` dispatch → auto-merge वाला रास्ता अपरीक्षित है; पहले run के बाद देखें।
 
 - Foreman **deploy नहीं हुआ** (मालिक के Cloudflare secrets चाहिए)। D1, cron और असली dispatch-चक्कर अपरीक्षित।
 - D1, D4, D5, D9, D10, D12 जाँचें `not_run` हैं (रूप-विश्लेषक P2 में)। ईशोपनिषद् पर जाँचें अभी नहीं चलीं, क्योंकि पाठ अभी आया नहीं।
@@ -30,3 +36,17 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 
 1. मालिक: क़दम 0.2 (`docs/USER_STEPS_hi.md`)। उत्तर आने पर `policy/quotas.md` भरें (PR)।
 2. साथ-साथ, बिना keys के: P1 1.1 (बीज-सूचियाँ) और P2 2.1 के लिए ईशोपनिषद् के गवाह खोजना।
+
+### session 1, turn 2 (2026-11-14, claude-fable-5-2)
+
+- मालिक का उत्तर (क़दम 0.2 का आधा): model picker में Fable 5.2 पर "Requires usage credits" **नहीं दिखता**। usage credits बंद हैं या नहीं, यह उत्तर अभी बाक़ी है। दोनों मिलने पर `policy/quotas.md` में एक साथ दर्ज करें (संरक्षित रास्ता: PR + `owner-approved`)।
+- PR #3 खुला (`claude/p1-seed-lists`): P1 1.1 की तीन बीज-सूचियाँ + `tools/catalog/build_seeds.py`। `tools/` संरक्षित है, इसलिए मालिक का `owner-approved` label चाहिए।
+- बाक़ी बीज-सूचियाँ: उपपुराण, 28 आगम, पाञ्चरात्र। ईशोपनिषद् के गवाह खोजना (P2 2.1) अभी शुरू नहीं हुआ।
+- अगला मालिक-क़दम: 0.3 (Google AI Studio)।
+
+### session 1, turn 3 (2026-11-14, claude-fable-5-2)
+
+- क़दम 0.2 पूरा: मालिक ने बताया कि usage credits **बंद** हैं, और Fable 5.2 पर "Requires usage credits" **नहीं दिखता**। `policy/quotas.md` में दर्ज करना बाक़ी (0.3–0.5 के उत्तरों के साथ एक PR में)।
+- PR #4 खुला (`claude/p2-isha-witnesses`): तुलना-कुंजी, ईश के 4 गवाहों का metadata (सब `pending_owner`, केवल तुलना), पहला मिलान: 18 में 9 कुंजी-बराबर, 5 लगभग, 2 अलग (मंत्र 6, 15), 2 गवाह B में नहीं (16, 17)।
+- ईश के लिए अगला काम: (1) दूसरा काण्व-शाखा गवाह (GRETIL केवल तुलना; शांकरभाष्य वाले पन्ने में मूल), (2) हिरियण्णा 1911 के संपादक की मृत्यु-तिथि दो स्रोतों से, (3) Actions में Tesseract `san` से अपना OCR, (4) तब text-lock।
+- DCS में ईशोपनिषद् नहीं है (वाजसनेयि-माध्यन्दिन के केवल अध्याय 1–15 हैं): देखा गया, दोबारा न खोजें।
