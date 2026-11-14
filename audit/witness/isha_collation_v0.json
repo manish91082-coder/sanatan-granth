@@ -1,0 +1,246 @@
+{
+  "generated_at": "2026-11-14T16:50:35Z",
+  "text_id": "isha",
+  "tool": "tools/witness/isha_collate.py v0",
+  "key": "tools/witness/key.py",
+  "witnesses": [
+    {
+      "witness_id": "sa-ws-isha",
+      "host": "sa.wikisource.org",
+      "title": "ईशोपनिषत्",
+      "revid": 37761,
+      "timestamp": "2014-12-05T08:43:50Z",
+      "sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
+      "licence": "CC-BY-SA-4.0",
+      "usage": "compare"
+    },
+    {
+      "witness_id": "sa-ws-vsm40",
+      "host": "sa.wikisource.org",
+      "title": "शुक्लयजुर्वेदः/अध्यायः ४०",
+      "revid": 310965,
+      "timestamp": "2021-05-25T02:16:30Z",
+      "sha256": "c05a32dc08b9d1b040af4e910e1a780349a1359087400e63f54ce04b30de0ecb",
+      "licence": "CC-BY-SA-4.0",
+      "usage": "compare"
+    }
+  ],
+  "id_source": {
+    "A": "गवाह के ॥ N ॥ चिह्न",
+    "B": "गवाह का अपना काण्व-संदर्भ",
+    "b_concordance_madhyandina_to_kanva": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 12,
+      "10": 13,
+      "11": 14,
+      "12": 9,
+      "13": 10,
+      "14": 11,
+      "15": null,
+      "16": 18,
+      "17": 15
+    }
+  },
+  "counts": {
+    "a_segments": 18,
+    "b_segments": 17
+  },
+  "summary": {
+    "near": 5,
+    "key_equal": 9,
+    "differs": 2,
+    "b_absent": 2
+  },
+  "segments": [
+    {
+      "segment": "isha:1",
+      "a_key_sha256": "1dbc04e40c91991f854b033a017f059f701c49a88ca3f147ab38bdc246f36fb9",
+      "a_key_len": 74,
+      "b_ref": "VS(M) 40.1",
+      "b_key_sha256": "b16a6116dbe4c7a489a7f8659748c6bfdd9c49dda5c11efdd4b23687048535e6",
+      "b_key_len": 73,
+      "similarity": 0.9932,
+      "status": "near"
+    },
+    {
+      "segment": "isha:2",
+      "a_key_sha256": "04ff2c6fa320c0126186c3d616c293ffdc510275db0f8fd5adc38e2c97da33e6",
+      "a_key_len": 71,
+      "b_ref": "VS(M) 40.2",
+      "b_key_sha256": "04ff2c6fa320c0126186c3d616c293ffdc510275db0f8fd5adc38e2c97da33e6",
+      "b_key_len": 71,
+      "similarity": 1.0,
+      "status": "key_equal"
+    },
+    {
+      "segment": "isha:3",
+      "a_key_sha256": "b7c6de4452bdd0eaddfb5d2fedfc983ef3a55144e0bf3e1fa14dcf66062599aa",
+      "a_key_len": 70,
+      "b_ref": "VS(M) 40.3",
+      "b_key_sha256": "7ab4d76da72727e79256947cc7dda115496f00809eb26f4c00731b54044dfec5",
+      "b_key_len": 70,
+      "similarity": 0.9857,
+      "status": "near"
+    },
+    {
+      "segment": "isha:4",
+      "a_key_sha256": "b1a5a714455a92c20ff5ef01ed453b39b845a395d085e2cb5d5174ccf75c83e1",
+      "a_key_len": 93,
+      "b_ref": "VS(M) 40.4",
+      "b_key_sha256": "70cbf5e94a7d7bc21ea81e78388a847ebf00197ff4af60cbbe3ca7b1297ae4b1",
+      "b_key_len": 93,
+      "similarity": 0.9892,
+      "status": "near"
+    },
+    {
+      "segment": "isha:5",
+      "a_key_sha256": "7cb319262f4eed9ccc2ce8bbd4df436686e1e4bd7d7762c24bf9793252b0c256",
+      "a_key_len": 65,
+      "b_ref": "VS(M) 40.5",
+      "b_key_sha256": "7cb319262f4eed9ccc2ce8bbd4df436686e1e4bd7d7762c24bf9793252b0c256",
+      "b_key_len": 65,
+      "similarity": 1.0,
+      "status": "key_equal"
+    },
+    {
+      "segment": "isha:6",
+      "a_key_sha256": "1f9b4be3f71f2e1426a390ddd8d4d2cee6b7c78ea39936d54a08ce38559fc92e",
+      "a_key_len": 70,
+      "b_ref": "VS(M) 40.6",
+      "b_key_sha256": "2b399492973d762b06fc575cece38a8ae845494ded261f25d907bd33a0b34594",
+      "b_key_len": 69,
+      "similarity": 0.8921,
+      "status": "differs"
+    },
+    {
+      "segment": "isha:7",
+      "a_key_sha256": "4ba9a38b99f09fa5c0037ab59261455444d1a0e9487deaa6cac4438510d503b1",
+      "a_key_len": 68,
+      "b_ref": "VS(M) 40.7",
+      "b_key_sha256": "81eb2988d510f18e3cc8e2cc8b9fcd9048a70d736d346a2b07c0e63bc93c1750",
+      "b_key_len": 69,
+      "similarity": 0.9781,
+      "status": "near"
+    },
+    {
+      "segment": "isha:8",
+      "a_key_sha256": "b644b125b5ec82117926b1b1a9998af9d65dd9ee78d23e1aafa46d95272baa04",
+      "a_key_len": 114,
+      "b_ref": "VS(M) 40.8",
+      "b_key_sha256": "b644b125b5ec82117926b1b1a9998af9d65dd9ee78d23e1aafa46d95272baa04",
+      "b_key_len": 114,
+      "similarity": 1.0,
+      "status": "key_equal"
+    },
+    {
+      "segment": "isha:9",
+      "a_key_sha256": "1b6cd64b4640e317f680c02f69e70f8071e938bad1ffaffb7b57f6d514975916",
+      "a_key_len": 59,
+      "b_ref": "VS(M) 40.12",
+      "b_key_sha256": "1b6cd64b4640e317f680c02f69e70f8071e938bad1ffaffb7b57f6d514975916",
+      "b_key_len": 59,
+      "similarity": 1.0,
+      "status": "key_equal"
+    },
+    {
+      "segment": "isha:10",
+      "a_key_sha256": "6e34c346ffb6e905f91cc3e074554153406fc8e694fdaefa6a73d2e31cd35976",
+      "a_key_len": 69,
+      "b_ref": "VS(M) 40.13",
+      "b_key_sha256": "7a2f4a841fe71945d7b4f5c033c48471b11a0f07b7f21f7860708ac8642a3347",
+      "b_key_len": 73,
+      "similarity": 0.9718,
+      "status": "near"
+    },
+    {
+      "segment": "isha:11",
+      "a_key_sha256": "fee4b35509a41a0778bd721a45ff0d2eb6ee6e22d7b2ed05eba942b7f4a21862",
+      "a_key_len": 72,
+      "b_ref": "VS(M) 40.14",
+      "b_key_sha256": "fee4b35509a41a0778bd721a45ff0d2eb6ee6e22d7b2ed05eba942b7f4a21862",
+      "b_key_len": 72,
+      "similarity": 1.0,
+      "status": "key_equal"
+    },
+    {
+      "segment": "isha:12",
+      "a_key_sha256": "dbfbf28eb266b3e8ae215f47ade64761aec6777bc7ff6d54568daff80edd41a5",
+      "a_key_len": 59,
+      "b_ref": "VS(M) 40.9",
+      "b_key_sha256": "dbfbf28eb266b3e8ae215f47ade64761aec6777bc7ff6d54568daff80edd41a5",
+      "b_key_len": 59,
+      "similarity": 1.0,
+      "status": "key_equal"
+    },
+    {
+      "segment": "isha:13",
+      "a_key_sha256": "50d349da0c542976fba89223e8a23dad9d586cd2b3218866dab2d67ee4cfc53f",
+      "a_key_len": 66,
+      "b_ref": "VS(M) 40.10",
+      "b_key_sha256": "50d349da0c542976fba89223e8a23dad9d586cd2b3218866dab2d67ee4cfc53f",
+      "b_key_len": 66,
+      "similarity": 1.0,
+      "status": "key_equal"
+    },
+    {
+      "segment": "isha:14",
+      "a_key_sha256": "b541f8209accd78e0dde31ea74ae86dd7ec792ab052a04f7dbc3b2b46b9b305f",
+      "a_key_len": 70,
+      "b_ref": "VS(M) 40.11",
+      "b_key_sha256": "b541f8209accd78e0dde31ea74ae86dd7ec792ab052a04f7dbc3b2b46b9b305f",
+      "b_key_len": 70,
+      "similarity": 1.0,
+      "status": "key_equal"
+    },
+    {
+      "segment": "isha:15",
+      "a_key_sha256": "fb4f85612680a800f81c29c3ef28c2adfdbce82f24930085ba867c70e8e35d69",
+      "a_key_len": 68,
+      "b_ref": "VS(M) 40.17",
+      "b_key_sha256": "9d62450ac09f07746b61589ab48e9698bc461714534024e1f6a6f52a15eb94a8",
+      "b_key_len": 69,
+      "similarity": 0.5985,
+      "status": "differs"
+    },
+    {
+      "segment": "isha:16",
+      "a_key_sha256": "12fc58ed8cd7688831a7f101c420333c300e825832a7acb4c85a5e5a6105bfc9",
+      "a_key_len": 99,
+      "b_ref": null,
+      "status": "b_absent",
+      "note": "गवाह B में इस काण्व-मंत्र का संदर्भ नहीं"
+    },
+    {
+      "segment": "isha:17",
+      "a_key_sha256": "71c8758c5dca0f926e33abc14c4ea59475173fa67c1b70428741cc069389115f",
+      "a_key_len": 66,
+      "b_ref": null,
+      "status": "b_absent",
+      "note": "गवाह B में इस काण्व-मंत्र का संदर्भ नहीं"
+    },
+    {
+      "segment": "isha:18",
+      "a_key_sha256": "58dfb6e4e866fd420b99c48e515d13527041bd485d6fe52cadb3cd9a6a363c44",
+      "a_key_len": 96,
+      "b_ref": "VS(M) 40.16",
+      "b_key_sha256": "58dfb6e4e866fd420b99c48e515d13527041bd485d6fe52cadb3cd9a6a363c44",
+      "b_key_len": 96,
+      "similarity": 1.0,
+      "status": "key_equal"
+    }
+  ],
+  "limits": [
+    "यह text-lock नहीं है",
+    "दोनों गवाहों की स्वतंत्रता (नक़ल-परिवार) अभी सिद्ध नहीं",
+    "B दूसरी शाखा (माध्यन्दिन) का पाठ है; 'differs' में असली शाखा-भेद भी हैं, केवल टंकण-भूलें नहीं",
+    "प्रदर्शन-पाठ के लिए सार्वजनिक-डोमेन छपा संस्करण (अपना OCR) बाक़ी",
+    "रिपोर्ट में पाठ नहीं, केवल hash और अनुपात"
+  ]
+}

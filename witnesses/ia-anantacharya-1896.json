@@ -1,0 +1,35 @@
+{
+  "witness_id": "ia-anantacharya-1896",
+  "text_ids": [
+    "isha"
+  ],
+  "kind": "print_scan_own_ocr",
+  "description": "छपा संस्करण 'The Isavasyopanishad' (1896), Internet Archive पर DLI scan; archive की Tesseract OCR में देवनागरी है, गुणवत्ता मिली-जुली।",
+  "edition": {
+    "title": "The Isavasyopanishad",
+    "editor_or_translator": "Anantacharya",
+    "death_year": null,
+    "year": 1896
+  },
+  "licence": "LicenseRef-unknown",
+  "licence_evidence": [
+    "archive.org metadata: date = 1896"
+  ],
+  "pd_india": "assume-copyright",
+  "pd_us": "assume-copyright",
+  "usage": "compare",
+  "copy_family": "print-anantacharya-1896",
+  "copy_family_evidence": "छपा संस्करण।",
+  "source_uri": "https://archive.org/details/in.ernet.dli.2015.405521",
+  "fetch": {
+    "method": "http_get",
+    "url": "https://archive.org/download/in.ernet.dli.2015.405521/",
+    "parser": "बाक़ी"
+  },
+  "g1": {
+    "status": "pending_owner",
+    "date": "2026-11-14",
+    "decision_ref": "पहला G1 batch (PR में मालिक की स्वीकृति बाक़ी)"
+  },
+  "notes": "संपादक की पहचान और मृत्यु-तिथि नहीं मिली; नियम के अनुसार सर्वाधिकार-युक्त मानकर केवल तुलना।"
+}
