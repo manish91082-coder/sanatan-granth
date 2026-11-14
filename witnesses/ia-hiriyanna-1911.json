@@ -1,0 +1,37 @@
+{
+  "witness_id": "ia-hiriyanna-1911",
+  "text_ids": [
+    "isha"
+  ],
+  "kind": "print_scan_own_ocr",
+  "description": "प्रदर्शन-पाठ का उम्मीदवार: छपा संस्करण, Internet Archive पर scan (49 चित्र, University of California Libraries)। archive की मौजूदा OCR केवल अंग्रेज़ी है; देवनागरी मंत्रों के लिए अपना OCR चलाना बाक़ी है, और यह भी देखना बाक़ी है कि मंत्र देवनागरी में छपे हैं।",
+  "edition": {
+    "title": "Īśāvāsyopaniṣad, with the commentary of Śrī Śaṅkarācārya",
+    "editor_or_translator": "M. Hiriyanna",
+    "death_year": null,
+    "publisher": "Sri Vani Vilas Press, Srirangam",
+    "year": 1911
+  },
+  "licence": "LicenseRef-unknown",
+  "licence_evidence": [
+    "archive.org metadata: possible-copyright-status = NOT_IN_COPYRIGHT (identifier isavasyopanishad00sank)",
+    "archive.org metadata: date = 1911 (US में 1931 से पहले का प्रकाशन)"
+  ],
+  "pd_india": "assume-copyright",
+  "pd_us": "assume-copyright",
+  "usage": "compare",
+  "copy_family": "print-hiriyanna-1911",
+  "copy_family_evidence": "छपा संस्करण; हमारा अपना OCR इसका स्वतंत्र गवाह बनेगा।",
+  "source_uri": "https://archive.org/details/isavasyopanishad00sank",
+  "fetch": {
+    "method": "http_get",
+    "url": "https://archive.org/download/isavasyopanishad00sank/isavasyopanishad00sank_jp2.zip",
+    "parser": "बाक़ी: Tesseract san (Actions)"
+  },
+  "g1": {
+    "status": "pending_owner",
+    "date": "2026-11-14",
+    "decision_ref": "पहला G1 batch (PR में मालिक की स्वीकृति बाक़ी)"
+  },
+  "notes": "PD-दर्जा अभी तय नहीं: संपादक की मृत्यु-तिथि दो स्रोतों से मिलानी है (नियम: copyright-तथ्य पर ≥2 स्रोत)। तब तक लाइसेंस LicenseRef-unknown और उपयोग केवल तुलना। दोनों तथ्य मिलने और मालिक की G1-स्वीकृति के बाद ही display बनेगा।"
+}

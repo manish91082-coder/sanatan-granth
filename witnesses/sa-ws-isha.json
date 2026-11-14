@@ -1,0 +1,30 @@
+{
+  "witness_id": "sa-ws-isha",
+  "text_ids": [
+    "isha"
+  ],
+  "kind": "etext",
+  "description": "संस्कृत विकिस्रोत का पन्ना 'ईशोपनिषत्': काण्व क्रम, 18 मंत्र, संधि-युक्त टंकण। पन्ने पर स्रोत-संस्करण नहीं लिखा।",
+  "licence": "CC-BY-SA-4.0",
+  "licence_evidence": [
+    "sa.wikisource.org का site-लाइसेंस"
+  ],
+  "pd_india": "n/a",
+  "pd_us": "n/a",
+  "usage": "compare",
+  "copy_family": "unknown-sa-ws-isha",
+  "copy_family_evidence": "अज्ञात। पन्ने पर स्रोत नहीं; यह किसी दूसरे e-text (जैसे Sanskrit Documents या GRETIL) की नक़ल हो सकता है। स्वतंत्र गवाह तभी गिना जाएगा जब नक़ल-परिवार पता चले।",
+  "source_uri": "https://sa.wikisource.org/wiki/ईशोपनिषत्",
+  "fetch": {
+    "method": "mediawiki_api",
+    "url": "https://sa.wikisource.org/w/api.php",
+    "revid": 37761,
+    "sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
+    "parser": "tools/witness/isha_collate.py:parse_a"
+  },
+  "g1": {
+    "status": "pending_owner",
+    "date": "2026-11-14",
+    "decision_ref": "पहला G1 batch (PR में मालिक की स्वीकृति बाक़ी)"
+  }
+}

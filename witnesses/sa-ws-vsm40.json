@@ -1,0 +1,30 @@
+{
+  "witness_id": "sa-ws-vsm40",
+  "text_ids": [
+    "isha"
+  ],
+  "kind": "etext",
+  "description": "संस्कृत विकिस्रोत का 'शुक्लयजुर्वेदः/अध्यायः ४०': माध्यन्दिन संहिता का 40वाँ अध्याय, 17 मंत्र, पदच्छेद-शैली, हर मंत्र पर काण्व-संदर्भ। दूसरी शाखा का पाठ है, इसलिए काण्व पाठ के लिए यह शाखा-भेद का गवाह है, समान पाठ का नहीं।",
+  "licence": "CC-BY-SA-4.0",
+  "licence_evidence": [
+    "sa.wikisource.org का site-लाइसेंस"
+  ],
+  "pd_india": "n/a",
+  "pd_us": "n/a",
+  "usage": "compare",
+  "copy_family": "unknown-sa-ws-vsm",
+  "copy_family_evidence": "अज्ञात। टंकण-शैली (पदच्छेद, वैदिक अनुस्वार, काण्व-संदर्भ) गवाह sa-ws-isha से अलग है, पर स्रोत पन्ने पर नहीं लिखा।",
+  "source_uri": "https://sa.wikisource.org/wiki/शुक्लयजुर्वेदः/अध्यायः_४०",
+  "fetch": {
+    "method": "mediawiki_api",
+    "url": "https://sa.wikisource.org/w/api.php",
+    "revid": 310965,
+    "sha256": "c05a32dc08b9d1b040af4e910e1a780349a1359087400e63f54ce04b30de0ecb",
+    "parser": "tools/witness/isha_collate.py:parse_b"
+  },
+  "g1": {
+    "status": "pending_owner",
+    "date": "2026-11-14",
+    "decision_ref": "पहला G1 batch (PR में मालिक की स्वीकृति बाक़ी)"
+  }
+}
