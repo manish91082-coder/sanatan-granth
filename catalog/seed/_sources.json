@@ -1,0 +1,79 @@
+{
+  "_comment": "बीज-सूचियों के स्रोत। पाठ यहाँ नहीं रखा जाता; केवल पहचान। लाइसेंस CC BY-SA → केवल तुलना।",
+  "sources": [
+    {
+      "key": "muktika_sa",
+      "host": "sa.wikisource.org",
+      "title": "मुक्तिकोपनिषत्",
+      "revid": 333651,
+      "timestamp": "2022-03-14T09:50:58Z",
+      "sha256": "c8a3ef774c449dca6572026144e960550dc78bc975a31b8f77173be91eaf228d",
+      "bytes": 40355,
+      "licence": "CC-BY-SA-4.0",
+      "usage": "compare"
+    },
+    {
+      "key": "vp_3_6",
+      "host": "sa.wikisource.org",
+      "title": "विष्णुपुराणम्/तृतीयांशः/अध्यायः ६",
+      "revid": 203181,
+      "timestamp": "2019-06-03T20:47:15Z",
+      "sha256": "4780cf40ce564622d5dad752cc3a72ed554626846b341879d3f65cd2ccf130a5",
+      "bytes": 8675,
+      "licence": "CC-BY-SA-4.0",
+      "usage": "compare"
+    },
+    {
+      "key": "bhp_12_7",
+      "host": "sa.wikisource.org",
+      "title": "श्रीमद्भागवतपुराणम्/स्कन्धः १२/अध्यायः ७",
+      "revid": 112850,
+      "timestamp": "2017-07-04T06:06:44Z",
+      "sha256": "fbd5f549096d88fecbb0a49658caa8de647f317d033a965ff245319fb7ec6b9e",
+      "bytes": 7430,
+      "licence": "CC-BY-SA-4.0",
+      "usage": "compare"
+    },
+    {
+      "key": "muktika_enwiki",
+      "host": "en.wikipedia.org",
+      "title": "Muktikā",
+      "revid": 1368503094,
+      "timestamp": "2026-08-09T12:16:40Z",
+      "sha256": "3703e3f5ff63b128883fa99dfa048dee165b26ce1f814b300d33b470b56b2c77",
+      "bytes": 18323,
+      "licence": "CC-BY-SA-4.0",
+      "usage": "compare"
+    }
+  ],
+  "report": {
+    "vidya_18": {
+      "rows": 18,
+      "found": 10,
+      "group_only": 8,
+      "not_found": 0,
+      "count_words": {
+        "चतुर्दश": true,
+        "ष्टादश": true
+      }
+    },
+    "mahapurana_18": {
+      "rows": 18,
+      "vp_found_in_order": 18,
+      "bhp_found": 18
+    },
+    "muktika_108": {
+      "rows": 108,
+      "primary_found_in_order": 107,
+      "primary_variant": [
+        53
+      ],
+      "primary_not_found": [],
+      "secondary_table_names": 108,
+      "secondary_matched": 108,
+      "secondary_unmatched_ours": [],
+      "secondary_unmatched_theirs": [],
+      "duplicate_work_ids": []
+    }
+  }
+}

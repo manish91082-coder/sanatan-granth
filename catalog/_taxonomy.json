@@ -2,67 +2,620 @@
   "_comment": "मास्टर योजना §2.2: विषय × श्रेणी तालिका, स्तर 1 और 2। 1–10 = 18 विद्याएँ (14 विद्यास्थान + 4 उपवेद, समूहों में); 11–18 = जोड़े गए 8 खाने। core_estimate विषय-नोट के अनुमान हैं [धारणा]; असली गिनती catalog/_meters.json देगा।",
   "version": "1",
   "framework_sources": [
-    {"claim": "14 विद्यास्थान", "source": "विष्णु पुराण 3.6; याज्ञवल्क्य स्मृति 1.3", "status": "श्लोक-पाठ क़दम 1.1 में गवाह से मिलाना बाक़ी"},
-    {"claim": "18 विद्याएँ (14 + 4 उपवेद)", "source": "मधुसूदन सरस्वती, प्रस्थानभेद", "status": "द्वितीयक स्रोत से; मूल से मिलाना बाक़ी"}
+    {
+      "claim": "14 विद्यास्थान और 18 विद्याएँ (14 + 4 उपवेद)",
+      "source": "विष्णुपुराण 3.6.28–29",
+      "status": "मशीन-मिलान हुआ (14 नवंबर 2026): श्लोक में चतुर्दश/अष्टादश और मीमांसा, न्यायविस्तर, पुराण, धर्मशास्त्र, आयुर्वेद, धनुर्वेद, गान्धर्व, अर्थशास्त्र मिले; चार वेद और छह अंग केवल समूह-शब्द से। ब्योरा: catalog/seed/vidya_18.csv। गवाह एक टंकित e-text है; छपे संस्करण से मिलाना बाक़ी।"
+    },
+    {
+      "claim": "याज्ञवल्क्य स्मृति 1.3 में 14 विद्यास्थान",
+      "source": "याज्ञवल्क्य स्मृति 1.3",
+      "status": "अभी नहीं मिलाया"
+    },
+    {
+      "claim": "18 विद्याओं को सारे आस्तिक प्रस्थानों का नक़्शा कहना",
+      "source": "मधुसूदन सरस्वती, प्रस्थानभेद",
+      "status": "द्वितीयक स्रोत से; मूल से मिलाना बाक़ी (संस्कृत विकिस्रोत पर 'प्रस्थानभेदः' पन्ना है)"
+    }
   ],
   "l1": [
-    {"id": "veda", "n": 1, "kind": "vidya", "hi": "वेद (श्रुति)", "en": "Veda (Śruti)", "l2": [
-      {"id": "samhita", "hi": "संहिता"}, {"id": "brahmana", "hi": "ब्राह्मण"}, {"id": "aranyaka", "hi": "आरण्यक"}, {"id": "upanishad", "hi": "उपनिषद्"}],
-      "core_estimate": "~12 संहिताएँ, ~20 ब्राह्मण, ~6 आरण्यक, 108+ उपनिषद्", "sensitivity": "none", "production_phase": [1, 2]},
-    {"id": "vedanga", "n": 2, "kind": "vidya", "hi": "वेदांग", "en": "Vedāṅga", "l2": [
-      {"id": "shiksha", "hi": "शिक्षा"}, {"id": "kalpa", "hi": "कल्प"}, {"id": "vyakarana", "hi": "व्याकरण"}, {"id": "nirukta", "hi": "निरुक्त"}, {"id": "chandas", "hi": "छन्द"}, {"id": "jyotisha", "hi": "ज्योतिष"}],
-      "core_estimate": "60–75", "sensitivity": "none", "production_phase": [2, 3]},
-    {"id": "purana", "n": 3, "kind": "vidya", "hi": "पुराण (+ परंपरा से इतिहास)", "en": "Purāṇa and Itihāsa", "l2": [
-      {"id": "mahapurana", "hi": "महापुराण"}, {"id": "upapurana", "hi": "उपपुराण"}, {"id": "sthalapurana", "hi": "स्थल-पुराण/माहात्म्य"}, {"id": "itihasa", "hi": "रामायण, महाभारत, हरिवंश"}],
-      "core_estimate": "18 + 18 (+ ~80 विवादित) + 2 महाकाव्य", "sensitivity": "none", "production_phase": [1, 4]},
-    {"id": "nyaya", "n": 4, "kind": "vidya", "hi": "न्याय (+ वैशेषिक)", "en": "Nyāya and Vaiśeṣika", "l2": [
-      {"id": "sutra", "hi": "सूत्र"}, {"id": "bhashya", "hi": "भाष्य"}, {"id": "navya", "hi": "नव्य-न्याय"}],
-      "core_estimate": "10–15", "sensitivity": "none", "production_phase": [3]},
-    {"id": "mimamsa", "n": 5, "kind": "vidya", "hi": "मीमांसा (पूर्व + उत्तर/वेदान्त)", "en": "Mīmāṃsā and Vedānta", "l2": [
-      {"id": "purva", "hi": "पूर्व-मीमांसा"}, {"id": "advaita", "hi": "अद्वैत"}, {"id": "vishishtadvaita", "hi": "विशिष्टाद्वैत"}, {"id": "dvaita", "hi": "द्वैत"}, {"id": "shuddhadvaita", "hi": "शुद्धाद्वैत"}, {"id": "achintya", "hi": "अचिन्त्य-भेदाभेद"}],
-      "core_estimate": "35–50", "sensitivity": "none", "production_phase": [2, 3]},
-    {"id": "dharmashastra", "n": 6, "kind": "vidya", "hi": "धर्मशास्त्र", "en": "Dharmaśāstra", "l2": [
-      {"id": "dharmasutra", "hi": "धर्मसूत्र"}, {"id": "smriti", "hi": "स्मृति"}, {"id": "tika", "hi": "टीका"}, {"id": "nibandha", "hi": "निबन्ध"}, {"id": "samskara_vrata", "hi": "संस्कार/व्रत"}, {"id": "samkhya_yoga", "hi": "सांख्य और योग (दर्शन-सूत्र)", "placement_note": "मास्टर योजना की तालिका में सांख्य/योग का अलग खाना नहीं है। प्रस्थानभेद इन्हें धर्मशास्त्र के भीतर गिनता बताया जाता है [अपुष्ट; क़दम 1.1 में मूल से मिलाएँ]। तब तक यह अस्थायी जगह है; UI में ये 'दर्शन' facet से भी मिलेंगे।"}],
-      "core_estimate": "25–35", "sensitivity": "social_context_box", "production_phase": [4]},
-    {"id": "ayurveda", "n": 7, "kind": "upaveda", "hi": "आयुर्वेद (उपवेद)", "en": "Āyurveda", "l2": [
-      {"id": "brihattrayi", "hi": "बृहत्-त्रयी"}, {"id": "laghutrayi", "hi": "लघु-त्रयी"}, {"id": "rasashastra", "hi": "रसशास्त्र"}, {"id": "nighantu", "hi": "निघण्टु"}, {"id": "vriksha_pashu", "hi": "वृक्ष/पशु-आयुर्वेद"}],
-      "core_estimate": "15–20", "sensitivity": "health_claims", "production_phase": [3]},
-    {"id": "dhanurveda", "n": 8, "kind": "upaveda", "hi": "धनुर्वेद (उपवेद)", "en": "Dhanurveda", "l2": [
-      {"id": "dhanurveda", "hi": "धनुर्वेद"}, {"id": "ashva_gaja", "hi": "अश्व/गज-शास्त्र"}, {"id": "yuddha", "hi": "युद्ध-खंड"}],
-      "core_estimate": "5–8", "sensitivity": "none", "production_phase": [4]},
-    {"id": "gandharvaveda", "n": 9, "kind": "upaveda", "hi": "गान्धर्ववेद (उपवेद)", "en": "Gāndharvaveda", "l2": [
-      {"id": "sangita", "hi": "संगीत"}, {"id": "natya", "hi": "नाट्य"}, {"id": "nritya", "hi": "नृत्य"}],
-      "core_estimate": "16–25", "sensitivity": "none", "production_phase": [3]},
-    {"id": "arthashastra", "n": 10, "kind": "upaveda", "hi": "अर्थशास्त्र (उपवेद)", "en": "Arthaśāstra", "l2": [
-      {"id": "arthashastra", "hi": "अर्थशास्त्र"}, {"id": "niti", "hi": "नीति"}, {"id": "rajadharma", "hi": "राजधर्म"}, {"id": "katha_niti", "hi": "पञ्चतन्त्र-परिवार"}],
-      "core_estimate": "8–12", "sensitivity": "none", "production_phase": [2, 3]},
-    {"id": "vastu_shilpa", "n": 11, "kind": "added", "hi": "वास्तु/शिल्प/चित्र", "en": "Vāstu, Śilpa, Citra", "l2": [
-      {"id": "vastu", "hi": "वास्तु"}, {"id": "pratima", "hi": "प्रतिमा-लक्षण"}, {"id": "chitra", "hi": "चित्र"}, {"id": "kosha_encyclopedic", "hi": "मानसोल्लास-जैसे कोश"}],
-      "core_estimate": "10–15", "sensitivity": "none", "production_phase": [3]},
-    {"id": "kama", "n": 12, "kind": "added", "hi": "काम (पुरुषार्थ-शास्त्र)", "en": "Kāmaśāstra", "l2": [
-      {"id": "kamasutra_family", "hi": "कामसूत्र-परिवार"}, {"id": "kala_lists", "hi": "कला-सूचियाँ"}],
-      "core_estimate": "6–8", "sensitivity": "adult", "production_phase": [5]},
-    {"id": "sahitya", "n": 13, "kind": "added", "hi": "साहित्य", "en": "Sāhitya", "l2": [
-      {"id": "kavya", "hi": "काव्य"}, {"id": "nataka", "hi": "नाटक"}, {"id": "alankara", "hi": "अलंकार"}, {"id": "subhashita", "hi": "सुभाषित"}, {"id": "kosha", "hi": "कोश"}],
-      "core_estimate": "35–45", "sensitivity": "none", "production_phase": [3, 4]},
-    {"id": "agama_tantra", "n": 14, "kind": "added", "hi": "आगम/तन्त्र", "en": "Āgama and Tantra", "l2": [
-      {"id": "shaiva", "hi": "शैव"}, {"id": "shakta", "hi": "शाक्त"}, {"id": "vaishnava", "hi": "वैष्णव (पाञ्चरात्र, वैखानस)"}, {"id": "saura_ganapatya", "hi": "सौर/गाणपत्य"}, {"id": "hathayoga", "hi": "हठयोग"}],
-      "core_estimate": "40–60", "sensitivity": "restricted_tradition", "production_phase": [4, 5]},
-    {"id": "stotra_karmakanda", "n": 15, "kind": "added", "hi": "स्तोत्र और कर्मकाण्ड", "en": "Stotra and Karmakāṇḍa", "l2": [
-      {"id": "devata", "hi": "देवता-वार स्तोत्र"}, {"id": "sahasranama", "hi": "सहस्रनाम"}, {"id": "paddhati", "hi": "पद्धति/पूजा-विधि"}],
-      "core_estimate": "~100 कोर (कुल हज़ारों)", "sensitivity": "none", "production_phase": [1]},
-    {"id": "itihasa_vritta", "n": 16, "kind": "added", "hi": "इतिहास-वृत्त", "en": "Historical chronicles", "l2": [
-      {"id": "aitihasika_kavya", "hi": "ऐतिहासिक काव्य"}, {"id": "vamshavali", "hi": "वंशावली"}, {"id": "abhilekha", "hi": "अभिलेख"}],
-      "core_estimate": "15–25", "sensitivity": "none", "production_phase": [4]},
-    {"id": "bhakti_sant", "n": 17, "kind": "added", "hi": "भक्ति और संत-साहित्य", "en": "Bhakti and Sant literature", "l2": [
-      {"id": "awadhi_braj", "hi": "अवधी/ब्रज"}, {"id": "tamil", "hi": "तमिल"}, {"id": "marathi", "hi": "मराठी"}, {"id": "bangla", "hi": "बांग्ला"}, {"id": "kannada", "hi": "कन्नड़"}, {"id": "telugu", "hi": "तेलुगु"}, {"id": "gujarati", "hi": "गुजराती"}, {"id": "odia", "hi": "ओड़िया"}, {"id": "assamese", "hi": "असमिया"}, {"id": "malayalam", "hi": "मलयालम"}, {"id": "punjabi_sant", "hi": "पंजाबी-संत"}],
-      "core_estimate": "1,500–3,000 रिकॉर्ड; हिंदी-कोर ~30", "sensitivity": "shared_heritage", "production_phase": [1]},
-    {"id": "adhunik", "n": 18, "kind": "added", "hi": "आधुनिक युग (c. 1800 से आज)", "en": "Modern era", "l2": [
-      {"id": "sudharak_sanstha", "hi": "सुधारक व संस्थाएँ"}, {"id": "sant_shiksha", "hi": "संतों की शिक्षा"}, {"id": "vidvatta_anuvad", "hi": "विद्वत्ता व अनुवाद"}, {"id": "adhunik_sahitya", "hi": "आधुनिक साहित्य"}],
-      "core_estimate": "200–400 रिकॉर्ड", "sensitivity": "living_person", "production_phase": [1, 2, 3]}
+    {
+      "id": "veda",
+      "n": 1,
+      "kind": "vidya",
+      "hi": "वेद (श्रुति)",
+      "en": "Veda (Śruti)",
+      "l2": [
+        {
+          "id": "samhita",
+          "hi": "संहिता"
+        },
+        {
+          "id": "brahmana",
+          "hi": "ब्राह्मण"
+        },
+        {
+          "id": "aranyaka",
+          "hi": "आरण्यक"
+        },
+        {
+          "id": "upanishad",
+          "hi": "उपनिषद्"
+        }
+      ],
+      "core_estimate": "~12 संहिताएँ, ~20 ब्राह्मण, ~6 आरण्यक, 108+ उपनिषद्",
+      "sensitivity": "none",
+      "production_phase": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "vedanga",
+      "n": 2,
+      "kind": "vidya",
+      "hi": "वेदांग",
+      "en": "Vedāṅga",
+      "l2": [
+        {
+          "id": "shiksha",
+          "hi": "शिक्षा"
+        },
+        {
+          "id": "kalpa",
+          "hi": "कल्प"
+        },
+        {
+          "id": "vyakarana",
+          "hi": "व्याकरण"
+        },
+        {
+          "id": "nirukta",
+          "hi": "निरुक्त"
+        },
+        {
+          "id": "chandas",
+          "hi": "छन्द"
+        },
+        {
+          "id": "jyotisha",
+          "hi": "ज्योतिष"
+        }
+      ],
+      "core_estimate": "60–75",
+      "sensitivity": "none",
+      "production_phase": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "purana",
+      "n": 3,
+      "kind": "vidya",
+      "hi": "पुराण (+ परंपरा से इतिहास)",
+      "en": "Purāṇa and Itihāsa",
+      "l2": [
+        {
+          "id": "mahapurana",
+          "hi": "महापुराण"
+        },
+        {
+          "id": "upapurana",
+          "hi": "उपपुराण"
+        },
+        {
+          "id": "sthalapurana",
+          "hi": "स्थल-पुराण/माहात्म्य"
+        },
+        {
+          "id": "itihasa",
+          "hi": "रामायण, महाभारत, हरिवंश"
+        }
+      ],
+      "core_estimate": "18 + 18 (+ ~80 विवादित) + 2 महाकाव्य",
+      "sensitivity": "none",
+      "production_phase": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": "nyaya",
+      "n": 4,
+      "kind": "vidya",
+      "hi": "न्याय (+ वैशेषिक)",
+      "en": "Nyāya and Vaiśeṣika",
+      "l2": [
+        {
+          "id": "sutra",
+          "hi": "सूत्र"
+        },
+        {
+          "id": "bhashya",
+          "hi": "भाष्य"
+        },
+        {
+          "id": "navya",
+          "hi": "नव्य-न्याय"
+        }
+      ],
+      "core_estimate": "10–15",
+      "sensitivity": "none",
+      "production_phase": [
+        3
+      ]
+    },
+    {
+      "id": "mimamsa",
+      "n": 5,
+      "kind": "vidya",
+      "hi": "मीमांसा (पूर्व + उत्तर/वेदान्त)",
+      "en": "Mīmāṃsā and Vedānta",
+      "l2": [
+        {
+          "id": "purva",
+          "hi": "पूर्व-मीमांसा"
+        },
+        {
+          "id": "advaita",
+          "hi": "अद्वैत"
+        },
+        {
+          "id": "vishishtadvaita",
+          "hi": "विशिष्टाद्वैत"
+        },
+        {
+          "id": "dvaita",
+          "hi": "द्वैत"
+        },
+        {
+          "id": "shuddhadvaita",
+          "hi": "शुद्धाद्वैत"
+        },
+        {
+          "id": "achintya",
+          "hi": "अचिन्त्य-भेदाभेद"
+        }
+      ],
+      "core_estimate": "35–50",
+      "sensitivity": "none",
+      "production_phase": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "dharmashastra",
+      "n": 6,
+      "kind": "vidya",
+      "hi": "धर्मशास्त्र",
+      "en": "Dharmaśāstra",
+      "l2": [
+        {
+          "id": "dharmasutra",
+          "hi": "धर्मसूत्र"
+        },
+        {
+          "id": "smriti",
+          "hi": "स्मृति"
+        },
+        {
+          "id": "tika",
+          "hi": "टीका"
+        },
+        {
+          "id": "nibandha",
+          "hi": "निबन्ध"
+        },
+        {
+          "id": "samskara_vrata",
+          "hi": "संस्कार/व्रत"
+        },
+        {
+          "id": "samkhya_yoga",
+          "hi": "सांख्य और योग (दर्शन-सूत्र)",
+          "placement_note": "मास्टर योजना की तालिका में सांख्य/योग का अलग खाना नहीं है। प्रस्थानभेद इन्हें धर्मशास्त्र के भीतर गिनता बताया जाता है [अपुष्ट; क़दम 1.1 में मूल से मिलाएँ]। तब तक यह अस्थायी जगह है; UI में ये 'दर्शन' facet से भी मिलेंगे।"
+        }
+      ],
+      "core_estimate": "25–35",
+      "sensitivity": "social_context_box",
+      "production_phase": [
+        4
+      ]
+    },
+    {
+      "id": "ayurveda",
+      "n": 7,
+      "kind": "upaveda",
+      "hi": "आयुर्वेद (उपवेद)",
+      "en": "Āyurveda",
+      "l2": [
+        {
+          "id": "brihattrayi",
+          "hi": "बृहत्-त्रयी"
+        },
+        {
+          "id": "laghutrayi",
+          "hi": "लघु-त्रयी"
+        },
+        {
+          "id": "rasashastra",
+          "hi": "रसशास्त्र"
+        },
+        {
+          "id": "nighantu",
+          "hi": "निघण्टु"
+        },
+        {
+          "id": "vriksha_pashu",
+          "hi": "वृक्ष/पशु-आयुर्वेद"
+        }
+      ],
+      "core_estimate": "15–20",
+      "sensitivity": "health_claims",
+      "production_phase": [
+        3
+      ]
+    },
+    {
+      "id": "dhanurveda",
+      "n": 8,
+      "kind": "upaveda",
+      "hi": "धनुर्वेद (उपवेद)",
+      "en": "Dhanurveda",
+      "l2": [
+        {
+          "id": "dhanurveda",
+          "hi": "धनुर्वेद"
+        },
+        {
+          "id": "ashva_gaja",
+          "hi": "अश्व/गज-शास्त्र"
+        },
+        {
+          "id": "yuddha",
+          "hi": "युद्ध-खंड"
+        }
+      ],
+      "core_estimate": "5–8",
+      "sensitivity": "none",
+      "production_phase": [
+        4
+      ]
+    },
+    {
+      "id": "gandharvaveda",
+      "n": 9,
+      "kind": "upaveda",
+      "hi": "गान्धर्ववेद (उपवेद)",
+      "en": "Gāndharvaveda",
+      "l2": [
+        {
+          "id": "sangita",
+          "hi": "संगीत"
+        },
+        {
+          "id": "natya",
+          "hi": "नाट्य"
+        },
+        {
+          "id": "nritya",
+          "hi": "नृत्य"
+        }
+      ],
+      "core_estimate": "16–25",
+      "sensitivity": "none",
+      "production_phase": [
+        3
+      ]
+    },
+    {
+      "id": "arthashastra",
+      "n": 10,
+      "kind": "upaveda",
+      "hi": "अर्थशास्त्र (उपवेद)",
+      "en": "Arthaśāstra",
+      "l2": [
+        {
+          "id": "arthashastra",
+          "hi": "अर्थशास्त्र"
+        },
+        {
+          "id": "niti",
+          "hi": "नीति"
+        },
+        {
+          "id": "rajadharma",
+          "hi": "राजधर्म"
+        },
+        {
+          "id": "katha_niti",
+          "hi": "पञ्चतन्त्र-परिवार"
+        }
+      ],
+      "core_estimate": "8–12",
+      "sensitivity": "none",
+      "production_phase": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "vastu_shilpa",
+      "n": 11,
+      "kind": "added",
+      "hi": "वास्तु/शिल्प/चित्र",
+      "en": "Vāstu, Śilpa, Citra",
+      "l2": [
+        {
+          "id": "vastu",
+          "hi": "वास्तु"
+        },
+        {
+          "id": "pratima",
+          "hi": "प्रतिमा-लक्षण"
+        },
+        {
+          "id": "chitra",
+          "hi": "चित्र"
+        },
+        {
+          "id": "kosha_encyclopedic",
+          "hi": "मानसोल्लास-जैसे कोश"
+        }
+      ],
+      "core_estimate": "10–15",
+      "sensitivity": "none",
+      "production_phase": [
+        3
+      ]
+    },
+    {
+      "id": "kama",
+      "n": 12,
+      "kind": "added",
+      "hi": "काम (पुरुषार्थ-शास्त्र)",
+      "en": "Kāmaśāstra",
+      "l2": [
+        {
+          "id": "kamasutra_family",
+          "hi": "कामसूत्र-परिवार"
+        },
+        {
+          "id": "kala_lists",
+          "hi": "कला-सूचियाँ"
+        }
+      ],
+      "core_estimate": "6–8",
+      "sensitivity": "adult",
+      "production_phase": [
+        5
+      ]
+    },
+    {
+      "id": "sahitya",
+      "n": 13,
+      "kind": "added",
+      "hi": "साहित्य",
+      "en": "Sāhitya",
+      "l2": [
+        {
+          "id": "kavya",
+          "hi": "काव्य"
+        },
+        {
+          "id": "nataka",
+          "hi": "नाटक"
+        },
+        {
+          "id": "alankara",
+          "hi": "अलंकार"
+        },
+        {
+          "id": "subhashita",
+          "hi": "सुभाषित"
+        },
+        {
+          "id": "kosha",
+          "hi": "कोश"
+        }
+      ],
+      "core_estimate": "35–45",
+      "sensitivity": "none",
+      "production_phase": [
+        3,
+        4
+      ]
+    },
+    {
+      "id": "agama_tantra",
+      "n": 14,
+      "kind": "added",
+      "hi": "आगम/तन्त्र",
+      "en": "Āgama and Tantra",
+      "l2": [
+        {
+          "id": "shaiva",
+          "hi": "शैव"
+        },
+        {
+          "id": "shakta",
+          "hi": "शाक्त"
+        },
+        {
+          "id": "vaishnava",
+          "hi": "वैष्णव (पाञ्चरात्र, वैखानस)"
+        },
+        {
+          "id": "saura_ganapatya",
+          "hi": "सौर/गाणपत्य"
+        },
+        {
+          "id": "hathayoga",
+          "hi": "हठयोग"
+        }
+      ],
+      "core_estimate": "40–60",
+      "sensitivity": "restricted_tradition",
+      "production_phase": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "stotra_karmakanda",
+      "n": 15,
+      "kind": "added",
+      "hi": "स्तोत्र और कर्मकाण्ड",
+      "en": "Stotra and Karmakāṇḍa",
+      "l2": [
+        {
+          "id": "devata",
+          "hi": "देवता-वार स्तोत्र"
+        },
+        {
+          "id": "sahasranama",
+          "hi": "सहस्रनाम"
+        },
+        {
+          "id": "paddhati",
+          "hi": "पद्धति/पूजा-विधि"
+        }
+      ],
+      "core_estimate": "~100 कोर (कुल हज़ारों)",
+      "sensitivity": "none",
+      "production_phase": [
+        1
+      ]
+    },
+    {
+      "id": "itihasa_vritta",
+      "n": 16,
+      "kind": "added",
+      "hi": "इतिहास-वृत्त",
+      "en": "Historical chronicles",
+      "l2": [
+        {
+          "id": "aitihasika_kavya",
+          "hi": "ऐतिहासिक काव्य"
+        },
+        {
+          "id": "vamshavali",
+          "hi": "वंशावली"
+        },
+        {
+          "id": "abhilekha",
+          "hi": "अभिलेख"
+        }
+      ],
+      "core_estimate": "15–25",
+      "sensitivity": "none",
+      "production_phase": [
+        4
+      ]
+    },
+    {
+      "id": "bhakti_sant",
+      "n": 17,
+      "kind": "added",
+      "hi": "भक्ति और संत-साहित्य",
+      "en": "Bhakti and Sant literature",
+      "l2": [
+        {
+          "id": "awadhi_braj",
+          "hi": "अवधी/ब्रज"
+        },
+        {
+          "id": "tamil",
+          "hi": "तमिल"
+        },
+        {
+          "id": "marathi",
+          "hi": "मराठी"
+        },
+        {
+          "id": "bangla",
+          "hi": "बांग्ला"
+        },
+        {
+          "id": "kannada",
+          "hi": "कन्नड़"
+        },
+        {
+          "id": "telugu",
+          "hi": "तेलुगु"
+        },
+        {
+          "id": "gujarati",
+          "hi": "गुजराती"
+        },
+        {
+          "id": "odia",
+          "hi": "ओड़िया"
+        },
+        {
+          "id": "assamese",
+          "hi": "असमिया"
+        },
+        {
+          "id": "malayalam",
+          "hi": "मलयालम"
+        },
+        {
+          "id": "punjabi_sant",
+          "hi": "पंजाबी-संत"
+        }
+      ],
+      "core_estimate": "1,500–3,000 रिकॉर्ड; हिंदी-कोर ~30",
+      "sensitivity": "shared_heritage",
+      "production_phase": [
+        1
+      ]
+    },
+    {
+      "id": "adhunik",
+      "n": 18,
+      "kind": "added",
+      "hi": "आधुनिक युग (c. 1800 से आज)",
+      "en": "Modern era",
+      "l2": [
+        {
+          "id": "sudharak_sanstha",
+          "hi": "सुधारक व संस्थाएँ"
+        },
+        {
+          "id": "sant_shiksha",
+          "hi": "संतों की शिक्षा"
+        },
+        {
+          "id": "vidvatta_anuvad",
+          "hi": "विद्वत्ता व अनुवाद"
+        },
+        {
+          "id": "adhunik_sahitya",
+          "hi": "आधुनिक साहित्य"
+        }
+      ],
+      "core_estimate": "200–400 रिकॉर्ड",
+      "sensitivity": "living_person",
+      "production_phase": [
+        1,
+        2,
+        3
+      ]
+    }
   ],
   "topic_hubs": [
-    {"id": "srishti", "hi": "सृष्टि", "note": "आरंभ-बिंदु एक ग्रंथ नहीं, topic-hub है: नासदीय सूक्त (ऋग्वेद 10.129), पुरुष सूक्त, पुराणों के सर्ग/प्रतिसर्ग, मनु 1, सूर्यसिद्धान्त 1, और वैज्ञानिक ब्रह्माण्ड-विज्ञान का कार्ड, हर एक अपनी पट्टी में।"}
+    {
+      "id": "srishti",
+      "hi": "सृष्टि",
+      "note": "आरंभ-बिंदु एक ग्रंथ नहीं, topic-hub है: नासदीय सूक्त (ऋग्वेद 10.129), पुरुष सूक्त, पुराणों के सर्ग/प्रतिसर्ग, मनु 1, सूर्यसिद्धान्त 1, और वैज्ञानिक ब्रह्माण्ड-विज्ञान का कार्ड, हर एक अपनी पट्टी में।"
+    }
   ],
-  "out_of_scope_crossref_only": ["बौद्ध", "जैन", "सिख"]
+  "out_of_scope_crossref_only": [
+    "बौद्ध",
+    "जैन",
+    "सिख"
+  ]
 }
