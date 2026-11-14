@@ -17,7 +17,7 @@
 | Google AI Studio | Gemma 4 26B और 31B: RPM / TPM / RPD | 30 / **16K** / **14.4K** | 2026-11-14 | Claude ने मालिक के logged-in AI Studio पन्ने (Rate limit, Free tier) से पढ़ा |
 | Google AI Studio | Gemini Embedding 1, 2: RPM / TPM / RPD | 100 / 30K / 1K | 2026-11-14 | Claude ने मालिक के logged-in AI Studio पन्ने (Rate limit, Free tier) से पढ़ा |
 | Google AI Studio | मुफ़्त Batch API चला? | (बाक़ी: `GEMINI_API_KEY` secret के बाद परीक्षण) | | |
-| Google AI Studio | एक ही project और एक ही key? | (बाक़ी: मालिक पुष्टि करें; पन्ने पर एक project चुना दिखा, जिस पर "Antigravity" नाम की agent-श्रेणी भी है, यानी यह quota मालिक के दूसरे काम के साथ साझा हो सकता है) | 2026-11-14 | |
+| Google AI Studio | कितने projects और keys? | **3 projects, 1 key।** Projects: "Default Gemini Project" (1 key; मालिक के दूसरे काम में उपयोग), "Gemini Project GAG" (कोई key नहीं), "My First Project" (कोई key नहीं)। सब Free tier, billing नहीं जुड़ा। | 2026-11-14 | Claude ने मालिक के logged-in AI Studio (Projects और API Keys पन्ने) से पढ़ा; कोई key या ID दर्ज नहीं |
 | Kaggle | साप्ताहिक GPU घंटे | (बाक़ी: क़दम 0.4) | | |
 | Kaggle | साप्ताहिक TPU घंटे | (बाक़ी: क़दम 0.4) | | |
 | Kaggle | reset का दिन | (बाक़ी: क़दम 0.4) | | |
@@ -39,3 +39,9 @@
 - Pro-वर्ग मुफ़्त स्तर पर नहीं है।
 - ये सीमाएँ प्रति project हैं। दूसरा project या दूसरी key बनाकर इन्हें बढ़ाना वर्जित है।
 - क्षमता-तालिका (मास्टर योजना §5.6 का ~7,000 श्लोक/दिन) इन आँकड़ों से pilot में दोबारा निकलेगी; अभी कोई नया गति-अनुमान नहीं छापा गया।
+
+## AI Studio: कौन-सी key (14 नवंबर 2026)
+
+- मालिक ने नया project बनाकर नई key लेने को कहा था। **नहीं बनाया गया:** सीमाएँ प्रति project हैं, इसलिए पुस्तकालय के लिए अलग project या ख़ाली पड़े project में नई key बनाना दूसरा मुफ़्त quota-pool खोलना है। यह इस परियोजना के अपने नियम ("हर कंपनी पर एक खाता, एक project, एक key; quota बढ़ाने की कोई चाल नहीं") और मास्टर योजना §6 के ख़िलाफ़ है, और एक ही Google खाते को जोखिम में डालता है।
+- नियम के भीतर का रास्ता: **मौजूदा एक key** ("Default Gemini Project" वाली) ही `GEMINI_API_KEY` secret बने। उसका quota मालिक के दूसरे काम के साथ साझा रहेगा; Foreman की quota-बही इसी साझा सीमा को मानकर चलेगी।
+- यह नियम बदलना हो तो वह मालिक का स्पष्ट फ़ैसला होगा और `swarm/DECISIONS.md` में दर्ज होगा।
