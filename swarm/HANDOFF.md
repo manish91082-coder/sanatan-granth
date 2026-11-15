@@ -81,3 +81,8 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
   - **Cloudflare:** token सक्रिय है, पर **`CLOUDFLARE_ACCOUNT_ID` ग़लत है** (7 अक्षर; 32 hex अक्षर होने चाहिए), इसलिए Workers/D1 के अनुरोध 404 देते हैं। मालिक को ठीक करना है। ठीक होने तक Foreman deploy न चलाएँ। D1 अनुमति अभी परखी नहीं जा सकी।
   - **FOREMAN_DISPATCH_TOKEN:** चला, Contents write है। Pull requests write की जाँच नहीं हो सकती (बिना कुछ लिखे)। token को 13 repos दिखते हैं; यह "केवल एक repo" चुनने पर भी सार्वजनिक repos के कारण हो सकता है, पक्का नहीं।
 - Foreman deploy किसके बटन से: `DECISIONS.md` के अनुसार अभी मालिक के; मालिक से पूछा गया है।
+
+### session 1, turn 11 (2026-11-15, claude-fable-5-2)
+
+- `CLOUDFLARE_ACCOUNT_ID` ठीक हुआ (मालिक ने dashboard का पता दिखाया; Account ID गुप्त key नहीं, पहचान है, इसलिए Claude ने `gh secret set` से लगाया)। `secrets-check` run 43685486596: Workers 200, D1 200 (0 databases), workers.dev subdomain मौजूद। **ऊपर turn 10 की "Account ID ग़लत" वाली बात अब पुरानी है।**
+- अब Foreman deploy (क़दम 0.11) के लिए सब तैयार है: पहली बार `foreman-deploy` को `create_d1=yes` के साथ चलाना है। किसके बटन से, यह मालिक से पूछा गया है।
