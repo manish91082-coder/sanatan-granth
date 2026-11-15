@@ -65,3 +65,10 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - `provider-smoke` workflow चला (run 43623513779): key चली; मुफ़्त Batch नहीं चला (HTTP 400)।
 - अगला मालिक-क़दम: 0.4 (Kaggle token → `KAGGLE_USERNAME`, `KAGGLE_KEY`) और 0.5 (Groq → `GROQ_API_KEY`; Cloudflare → `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`)। सबसे आसान तरीका: terminal में `gh secret set NAME --repo manish91082-coder/sanatan-granth` और paste।
 - अगला Claude-काम (keys के बिना): ईश का दूसरा काण्व गवाह + PD छपे संस्करण का OCR-workflow → text-lock; फिर Gemini से पहला ड्राफ़्ट।
+
+### session 1, turn 8–9 (2026-11-15, claude-fable-5-2)
+
+- `tools/setup/set_secrets.ps1` merge हुई (PR #12): मालिक एक बार चलाकर सारे secrets लगा सकते हैं; keys Claude को नहीं दिखतीं। मालिक ने keys के screenshot भेजने की बात कही थी; मना किया गया (keys chat में नहीं आनी चाहिए)।
+- **सीख (दोबारा मत करो):** GITHUB_TOKEN से बना PR (#11, दैनिक ऑडिट) merge नहीं हो पाया। उसका `pull_request` run `ACTION_REQUIRED` (approval) पर अटकता है, और `workflow_dispatch` से चले हरे checks भी उसे नहीं खोलते। इसलिए दैनिक रिपोर्ट अब branch `audit-log` पर सीधे जाती है (main में नहीं)।
+- **आगे के लिए:** Actions से बनने वाले डेटा-PR (अनुवाद-परतें) इसी दीवार से टकराएँगे। रास्ता: PR `FOREMAN_DISPATCH_TOKEN` (मालिक का fine-grained token; उसमें Pull requests: Read and write भी चाहिए) से खोलें, ताकि checks सामान्य रूप से चलें। यह अभी लागू नहीं हुआ।
+- साप्ताहिक audit के prompt (`policy/audit_prompt.md`) में "दैनिक रिपोर्ट branch `audit-log` पर हैं" जोड़ना बाक़ी।

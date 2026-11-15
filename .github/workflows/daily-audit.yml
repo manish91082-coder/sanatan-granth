@@ -1,6 +1,6 @@
 name: daily-audit
 
-# रोज़ 05:00 IST (23:30 UTC): R1–R14 + canaries → audit/daily/YYYY-MM-DD.json (मास्टर योजना §5.7, §7.1)।
+# रोज़ 05:00 IST (23:30 UTC): R1–R14 + canaries → branch 'audit-log' में audit/daily/YYYY-MM-DD.json (मास्टर योजना §5.7, §7.1)।
 # लाल हो तो issue खुलता है। कोई canary छूटे तो swarm/STOP का प्रस्ताव issue में जाता है;
 # Foreman अपनी ओर से हर tick पर canary-नतीजा पढ़कर रुकता है।
 
@@ -12,8 +12,6 @@ on:
 permissions:
   contents: write
   issues: write
-  pull-requests: write
-  actions: write   # PR की branch पर ci.yml को workflow_dispatch से चलाने के लिए
 
 concurrency:
   group: daily-audit
@@ -52,22 +50,27 @@ jobs:
               rep["canaries"] = {"error": "canary-नतीजा पढ़ा नहीं जा सका"}
           p.write_text(json.dumps(rep, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
           PY
-      - name: रिपोर्ट का PR (डेटा-PR; required checks पर auto-merge)
+      - name: रिपोर्ट को audit-log branch पर रखें (PR नहीं)
+        # GITHUB_TOKEN से बने PR के checks "approval" पर अटकते हैं (पहला run, PR #11), इसलिए
+        # दैनिक रिपोर्ट main में नहीं, अलग branch 'audit-log' पर सीधे जाती है। main का ताला वैसा ही रहता है।
         run: |
           set -euo pipefail
           DAY="${{ steps.run.outputs.day }}"
-          BR="audit/daily-$DAY"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -q -b "$BR"
+          cp "audit/daily/$DAY.json" /tmp/report.json
+          if git fetch -q origin audit-log; then
+            git worktree add -q /tmp/al FETCH_HEAD
+            cd /tmp/al && git checkout -q -B audit-log
+          else
+            git worktree add -q --detach /tmp/al
+            cd /tmp/al && git checkout -q --orphan audit-log && git rm -q -rf . >/dev/null
+          fi
+          mkdir -p audit/daily && cp /tmp/report.json "audit/daily/$DAY.json"
           git add "audit/daily/$DAY.json"
           if git diff --cached --quiet; then echo "कोई बदलाव नहीं"; exit 0; fi
           git commit -q -m "audit: दैनिक script-ऑडिट $DAY"
-          git push -q -f origin "$BR"
-          gh pr create --head "$BR" --base main --title "audit: दैनिक script-ऑडिट $DAY" \
-            --body "R1–R14 + canaries की स्वचालित रिपोर्ट। केवल \`audit/daily/\` बदला है।" || true
-          gh pr merge "$BR" --auto --squash --delete-branch || true
-          gh workflow run ci.yml --ref "$BR"
+          git push -q origin audit-log
       - name: लाल हो तो issue
         if: steps.run.outputs.checks != '0' || steps.run.outputs.canary != '0'
         run: |
@@ -79,5 +82,5 @@ jobs:
           fi
           gh label create "$LABEL" --color B60205 >/dev/null 2>&1 || true
           gh issue create --title "$TITLE" --label "$LABEL" \
-            --body "run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} · रिपोर्ट: \`audit/daily/$DAY.json\` (PR में)। checks exit=${{ steps.run.outputs.checks }}, canary exit=${{ steps.run.outputs.canary }}."
+            --body "run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} · रिपोर्ट: branch \`audit-log\` में \`audit/daily/$DAY.json\`। checks exit=${{ steps.run.outputs.checks }}, canary exit=${{ steps.run.outputs.canary }}."
           exit 1
