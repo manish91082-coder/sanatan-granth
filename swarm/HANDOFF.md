@@ -93,3 +93,11 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **निजता-घटना:** wrangler ने त्रुटि-संदेश में मालिक का ईमेल public Actions log में छापा। वह run तुरंत मिटाया गया। `foreman-deploy.yml` में अब हर wrangler-आउटपुट ईमेल-filter (`REDACT`) से गुज़रता है। **नया कोई workflow जो wrangler या किसी खाते-CLI को चलाए, यही filter लगाए।**
 - अगला: token ठीक होते ही `gh workflow run foreman-deploy.yml -f create_d1=yes`, फिर ख़ाली batch का चक्कर (`/admin/enqueue-noop` + `/admin/tick`, HMAC के साथ; इसके लिए एक छोटा हाथ-से-चलने वाला workflow चाहिए, क्योंकि shared secret केवल GitHub/Cloudflare में है)।
 - **CI की सीख:** PR को label के साथ एक ही आदेश में बनाने पर `opened` और `labeled` के दो runs टकराते थे; रद्द हुआ run PR को BLOCKED कर देता था। `ci.yml` में अब `cancel-in-progress: false` है। फिर भी सुरक्षित क्रम: पहले PR बनाएँ, फिर label लगाएँ।
+
+### session 1, turn 13–16 (2026-11-15, claude-fable-5-2)
+
+- **Foreman deploy हो गया** (run 43687425895; मालिक ने Cloudflare token में D1 Edit और Workers Scripts Edit जोड़े)। D1 `sanatan-granth-ledger` बना, migration लगा, Worker `sanatan-granth-foreman` चल रहा है। पता repo variable `FOREMAN_URL` में है; `/status` और `/status.json` सार्वजनिक हैं। deploy-log में ईमेल नहीं छपा (filter काम कर रहा है)।
+- **ख़ाली batch का चक्कर अभी अधूरा** (`foreman-selftest` run 43687614326): enqueue ✔, tick ✔ (1 action), पर **dispatch HTTP 403**। कारण लगभग पक्का: `FOREMAN_DISPATCH_TOKEN` (fine-grained) में Contents **Read and write** नहीं है। पिछली `secrets-check` का `contents_write: true` भ्रामक था: वह उपयोगकर्ता की भूमिका दिखाता है, token की अनुमति नहीं। मालिक को token में Contents: Read and write और Pull requests: Read and write जोड़ने हैं; फिर `gh workflow run foreman-selftest.yml`।
+- **ज्ञात कमी (ठीक करना बाक़ी):** dispatch विफल होने पर job `failed` में अटक जाता है; `planTick` उसे दोबारा कतार में नहीं डालता (callback वाला रास्ता डालता है)। बही में अभी एक `failed` selftest-पंक्ति है; वह हानिरहित है।
+- **Claude की सीमा:** 15 नवंबर को साप्ताहिक "all models" 96% पर था (reset सोमवार 3:30 PM IST)। नया काम reset के बाद, **नए session** में शुरू करें (यह session बहुत लंबा है)। मालिक को सलाह दी गई: निर्माण Opus 5.5 पर, गहरे audit Fable पर; "Buy usage credits" कभी नहीं।
+- Cloudflare token अभी बहुत चौड़ा है (सारे खातों/zones की ~175 read-अनुमतियाँ + दो edit)। बाद में केवल-ज़रूरी अनुमतियों वाला token बनवाना अच्छा रहेगा (मालिक का काम)।
