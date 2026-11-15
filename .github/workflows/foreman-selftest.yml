@@ -1,0 +1,41 @@
+name: foreman-selftest
+
+# क़दम 0.11 की कसौटी: एक ख़ाली batch का पूरा चक्कर।
+#   enqueue (HMAC) → Foreman tick → repository_dispatch → foreman-job (noop) → callback → बही में 'done'
+# कुछ स्थायी नहीं बनता सिवाय बही की एक 'selftest' पंक्ति के।
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      URL: ${{ vars.FOREMAN_URL }}
+      SECRET: ${{ secrets.FOREMAN_SHARED_SECRET }}
+    steps:
+      - name: enqueue → tick → नतीजे की प्रतीक्षा
+        run: |
+          set -euo pipefail
+          [[ "$URL" =~ ^https://[a-z0-9.-]+\.workers\.dev$ ]] || { echo "::error::FOREMAN_URL variable नहीं या अमान्य"; exit 1; }
+          post() { local path="$1" body="$2" sig; sig=$(printf '%s' "$body" | openssl dgst -sha256 -hmac "$SECRET" -r | cut -d' ' -f1)
+                   curl -sS -X POST "$URL$path" -H "content-type: application/json" -H "x-foreman-signature: $sig" --data "$body"; echo; }
+          BATCH="selftest-${GITHUB_RUN_ID}"
+          echo "enqueue:"; OUT=$(post /admin/enqueue-noop "{\"batch_id\":\"$BATCH\"}"); echo "$OUT"
+          KEY=$(printf '%s' "$OUT" | python3 -c "import json,sys; print(json.load(sys.stdin)['job_key'])")
+          echo "tick:"; post /admin/tick "{}"
+          for i in $(seq 1 30); do
+            sleep 10
+            ST=$(curl -sS "$URL/status.json")
+            DONE=$(printf '%s' "$ST" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['jobs'].get('done',0))")
+            echo "t+$((i*10))s jobs=$(printf '%s' "$ST" | python3 -c "import json,sys; print(json.load(sys.stdin)['jobs'])")"
+            if printf '%s' "$ST" | grep -q "callback" && [ "$DONE" -ge 1 ]; then
+              printf '%s' "$ST" | python3 -c "import json,sys; d=json.load(sys.stdin); print(json.dumps({'jobs': d['jobs'], 'events': [(e['kind'], e['ref'][:12] if e['ref'] else None, e['detail']) for e in d['recent_events'][:6]]}, ensure_ascii=False, indent=1))" | tee -a "$GITHUB_STEP_SUMMARY"
+              echo "पूरा चक्कर सफल: job_key ${KEY:0:12}…"; exit 0
+            fi
+          done
+          echo "::error::5 मिनट में चक्कर पूरा नहीं हुआ"; curl -sS "$URL/status.json"; exit 1
