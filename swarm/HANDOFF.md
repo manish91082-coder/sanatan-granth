@@ -114,3 +114,10 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
   4. ईश का text-lock: दूसरा काण्व गवाह + हिरियण्णा 1911 का PD-दर्जा (2 स्रोत) + Actions में Tesseract OCR।
   5. `planTick` में dispatch-विफल `failed` jobs का retry; डेटा-PR `FOREMAN_DISPATCH_TOKEN` से खोलना।
   6. बाक़ी बीज-सूचियाँ (उपपुराण, 28 आगम, पाञ्चरात्र), फिर P1 1.2 (ACC)।
+
+### session 1, turn 18 (2026-11-15, claude-fable-5-2)
+
+- **हुआ (PR #23, main `d8d3759`):** `planTick` अब `failed` में अटके job को 10 मिनट के backoff के बाद retry-सीमा के भीतर दोबारा कतार में डालता है, वरना `needs_expert`; tick की query `failed` भी पढ़ती है; tests 13/13। `policy/audit_prompt.md` में लिखा कि दैनिक रिपोर्टें branch `audit-log` पर हैं।
+- **अभी deploy नहीं हुआ:** Cloudflare पर पुराना Foreman चल रहा है। `foreman-deploy` दोबारा चलाने पर ही retry-नियम लागू होगा (मालिक की हाँ चाहिए)। deploy के बाद बही की पुरानी `failed` selftest-पंक्ति एक बार noop चलकर `done` होगी; यह अपेक्षित है।
+- **क़दम 0.12:** परीक्षण-issue #24 खुला है। मालिक बताएँ कि फ़ोन/ईमेल पर सूचना आई या नहीं; आई हो तो issue बंद करें और PLAN में 0.12 ✅ करें।
+- **Claude की सीमा:** 15 नवंबर दोपहर "Weekly · all models" 97% था (reset सोमवार 16 नवंबर 3:30 PM IST)। Fable का उपयोग इसी साझा सीमा में गिनता है। इसलिए turn 17 की क्रम-सूची जस की तस है; अगला बड़ा काम Drive की चाबी (0.6–0.7) ही है।
