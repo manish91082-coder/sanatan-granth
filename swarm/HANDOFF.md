@@ -101,3 +101,16 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **ज्ञात कमी (ठीक करना बाक़ी):** dispatch विफल होने पर job `failed` में अटक जाता है; `planTick` उसे दोबारा कतार में नहीं डालता (callback वाला रास्ता डालता है)। बही में अभी एक `failed` selftest-पंक्ति है; वह हानिरहित है।
 - **Claude की सीमा:** 15 नवंबर को साप्ताहिक "all models" 96% पर था (reset सोमवार 3:30 PM IST)। नया काम reset के बाद, **नए session** में शुरू करें (यह session बहुत लंबा है)। मालिक को सलाह दी गई: निर्माण Opus 5.5 पर, गहरे audit Fable पर; "Buy usage credits" कभी नहीं।
 - Cloudflare token अभी बहुत चौड़ा है (सारे खातों/zones की ~175 read-अनुमतियाँ + दो edit)। बाद में केवल-ज़रूरी अनुमतियों वाला token बनवाना अच्छा रहेगा (मालिक का काम)।
+
+### session 1, turn 17 (2026-11-15, claude-fable-5-2) — यहाँ से नया session उठाए
+
+- **ख़ाली batch का पूरा चक्कर सफल** (`foreman-selftest` run 43688892718): enqueue → tick → repository_dispatch → `foreman-job` run 43688902812 (noop, success) → callback → बही में `done`, ~10 सेकंड में। मालिक ने GitHub token में Contents और Pull requests: Read and write जोड़े थे। Foreman का अपना 5-मिनट वाला schedule भी चलता दिखा (`last_tick_source: schedule`)।
+- बही में एक पुरानी `failed` selftest-पंक्ति है (403 वाली); हानिरहित।
+- **P0-gate की स्थिति:** card/phone नहीं माँगा ✔ · CI हरा ✔ · canaries 3/3 ✔ · Foreman का पूरा dispatch-चक्कर ✔ · Drive में test-फ़ाइल ✘ (क़दम 0.6–0.7 बाक़ी) · पहला audit-issue ✘ (क़दम 0.13 बाक़ी) · सूचना-परीक्षण (0.12) बाक़ी।
+- **अगले session के पहले काम, क्रम से:**
+  1. क़दम 0.6–0.7 (Drive: Google Cloud OAuth client → rclone `granth:`), मालिक के साथ एक-एक क़दम।
+  2. क़दम 0.12 (परीक्षण-issue) और 0.13 (साप्ताहिक audit cloud task; `policy/audit_prompt.md` में "दैनिक रिपोर्ट branch `audit-log` पर" जोड़कर)।
+  3. Kaggle: workflows में `KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}`; quota-पन्ने से GPU/TPU घंटे और reset-दिन (मालिक pane में login करें)।
+  4. ईश का text-lock: दूसरा काण्व गवाह + हिरियण्णा 1911 का PD-दर्जा (2 स्रोत) + Actions में Tesseract OCR।
+  5. `planTick` में dispatch-विफल `failed` jobs का retry; डेटा-PR `FOREMAN_DISPATCH_TOKEN` से खोलना।
+  6. बाक़ी बीज-सूचियाँ (उपपुराण, 28 आगम, पाञ्चरात्र), फिर P1 1.2 (ACC)।

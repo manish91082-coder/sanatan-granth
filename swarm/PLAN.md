@@ -20,7 +20,7 @@
 | 0.8 | public repo, branch protection, required checks, CODEOWNERS, `CLAUDE.md` | ✅ protection लगा; परीक्षण-PR #1 पर लाल check ने merge रोका |
 | 0.9 | schemas, ID-नियम, SPDX allow-list, `swarm/*`, `policy/*`, 3 canaries | ✅ CI में canaries 3/3 |
 | 0.10 | जाँचें v0: R1–R14, A3/D11, D2/D3/D6/D7/D8 | ✅ v0। D1, D4, D5, D9, D10, D12 अभी `not_run` (रूप-विश्लेषक P2 में); ईश पर चलाना बाक़ी |
-| 0.11 | Cloudflare D1 + Foreman Agent + dead-man cron + status-पन्ना | 🔶 deploy हो गया, status-पन्ना चल रहा है। ख़ाली batch का चक्कर dispatch पर रुका (HTTP 403: `FOREMAN_DISPATCH_TOKEN` में Contents write चाहिए)। Healthchecks/UptimeRobot नहीं जोड़े |
+| 0.11 | Cloudflare D1 + Foreman Agent + dead-man cron + status-पन्ना | ✅ deploy हुआ; ख़ाली batch का पूरा चक्कर सफल (dispatch → Actions → callback → बही, ~10 s)। Healthchecks/UptimeRobot नहीं जोड़े (वैकल्पिक) |
 | 0.12 | Escalation: GitHub mobile सूचना + Cloudflare status-पन्ना | ⏳ मालिक (परीक्षण-issue) |
 | 0.13 | साप्ताहिक meta-audit cloud task | ⏳ मालिक (prompt: `policy/audit_prompt.md`) |
 | 0.14 | दिन-8 की Drive-token जाँच | ⏳ 0.7 के 8 दिन बाद |
@@ -49,9 +49,9 @@
 
 ## अगले 3 काम
 
-1. मालिक के क़दम 0.2 → 0.7, एक-एक करके (`docs/USER_STEPS_hi.md`)।
-2. Foreman deploy (0.11) और एक ख़ाली batch का पूरा चक्कर।
-3. P1 1.1–1.4 (बीज-सूचियाँ, ACC, title-index, Wikidata): इन्हें keys नहीं चाहिए, PR से चलेंगे।
+1. Drive पुल: क़दम 0.6–0.7 (मालिक के साथ), फिर 0.14 की test-फ़ाइल।
+2. क़दम 0.12 और 0.13 (सूचना-परीक्षण; साप्ताहिक audit cloud task) → **P0-gate**।
+3. ईश का text-lock (दूसरा काण्व गवाह + PD छपे संस्करण का OCR), फिर Gemini/Groq से पहला ड्राफ़्ट (P2 2.1)।
 
 ---
-अंतिम अपडेट: 2026-11-14 · claude-fable-5-2 · निर्माण-session 1, turn 16
+अंतिम अपडेट: 2026-11-14 · claude-fable-5-2 · निर्माण-session 1, turn 17
