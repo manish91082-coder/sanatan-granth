@@ -13,8 +13,8 @@
 | 0.1 | फ़ैसले #1–#6 | ✅ `swarm/DECISIONS.md` में दर्ज |
 | 0.2 | usage credits बंद; Fable picker | ✅ credits बंद; Fable पर credits नहीं माँगता (`policy/quotas.md`) |
 | 0.3 | AI Studio: एक project, एक key; RPD/RPM; Batch परीक्षण | ✅ सीमाएँ दर्ज; key Actions से चली (Flash-Lite, strict JSON ठीक); मुफ़्त Batch ने HTTP 400 दिया, इसलिए Batch क्षमता में नहीं गिना। फ़ैसला: एक project, एक key (`DECISIONS.md`) |
-| 0.4 | Kaggle API token; quota, reset-दिन | ⏳ मालिक |
-| 0.5 | Groq key; Workers AI | ⏳ मालिक |
+| 0.4 | Kaggle API token; quota, reset-दिन | 🔶 token लगा और चला (नया `KGAT_` रूप → `KAGGLE_API_TOKEN`)। बाक़ी: quota-पन्ने से GPU/TPU घंटे और reset-दिन |
+| 0.5 | Groq key; Workers AI | 🔶 Groq चला (gpt-oss-120b, qwen3.8-27b)। Cloudflare token सक्रिय, पर `CLOUDFLARE_ACCOUNT_ID` ग़लत: मालिक ठीक करें |
 | 0.6 | Google Cloud project → Drive API → OAuth "In production" → `drive.file` → Desktop client | ⏳ मालिक |
 | 0.7 | rclone remote `granth:`; `Sanatan_Library/` tree; token Kaggle Secret में | ⏳ मालिक + Claude |
 | 0.8 | public repo, branch protection, required checks, CODEOWNERS, `CLAUDE.md` | ✅ protection लगा; परीक्षण-PR #1 पर लाल check ने merge रोका |
