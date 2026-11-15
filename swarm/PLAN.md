@@ -21,7 +21,7 @@
 | 0.9 | schemas, ID-नियम, SPDX allow-list, `swarm/*`, `policy/*`, 3 canaries | ✅ CI में canaries 3/3 |
 | 0.10 | जाँचें v0: R1–R14, A3/D11, D2/D3/D6/D7/D8 | ✅ v0। D1, D4, D5, D9, D10, D12 अभी `not_run` (रूप-विश्लेषक P2 में); ईश पर चलाना बाक़ी |
 | 0.11 | Cloudflare D1 + Foreman Agent + dead-man cron + status-पन्ना | ✅ deploy हुआ; ख़ाली batch का पूरा चक्कर सफल (dispatch → Actions → callback → बही, ~10 s)। Healthchecks/UptimeRobot नहीं जोड़े (वैकल्पिक) |
-| 0.12 | Escalation: GitHub mobile सूचना + Cloudflare status-पन्ना | 🔶 परीक्षण-issue #24 खुला; मालिक बताएँ कि सूचना आई या नहीं |
+| 0.12 | Escalation: GitHub mobile सूचना + Cloudflare status-पन्ना | ✅ bot-issue #27 की सूचना मालिक को पहुँची (15 नवंबर); मासिक जाँच: `notify-test` workflow |
 | 0.13 | साप्ताहिक meta-audit cloud task | ⏳ मालिक (prompt: `policy/audit_prompt.md`) |
 | 0.14 | दिन-8 की Drive-token जाँच | ⏳ 0.7 के 8 दिन बाद |
 
