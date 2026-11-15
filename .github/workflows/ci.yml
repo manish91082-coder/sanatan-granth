@@ -16,7 +16,8 @@ permissions:
 
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  # false: 'opened' और 'labeled' लगभग साथ आएँ तो रद्द हुआ run बाद का नतीजा बनकर PR को BLOCKED कर देता था (PR #18)
+  cancel-in-progress: false
 
 jobs:
   checks:
