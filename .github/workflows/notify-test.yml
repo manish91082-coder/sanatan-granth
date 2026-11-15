@@ -1,0 +1,25 @@
+name: notify-test
+
+# क़दम 0.12: सूचना-परीक्षण। यह issue github-actions[bot] के नाम से खुलता है, ठीक वैसे जैसे
+# दैनिक ऑडिट का लाल-issue खुलेगा। अपने ही खाते से बनाए issue की सूचना GitHub ख़ुद को नहीं भेजता,
+# इसलिए परीक्षण bot से ही सही होता है। हर महीने एक बार हाथ से चलाएँ।
+
+on:
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  issue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: परीक्षण-issue खोलें
+        run: |
+          gh label create "test" --color C5DEF5 >/dev/null 2>&1 || true
+          gh issue create --title "परीक्षण: सूचना-जाँच $(date -u +%F)" --label test \
+            --body "यह परीक्षण-issue bot ने खोला है (क़दम 0.12)। इसकी सूचना फ़ोन के GitHub app या ईमेल पर आई हो तो इसे बंद कर दें। न आई हो तो repo पर Watch → All Activity चुनें और GitHub app में Issues की सूचना चालू करें।"
