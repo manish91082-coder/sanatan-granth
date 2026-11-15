@@ -54,6 +54,18 @@ test("बहुत देर से running → timeout; retry-सीमा क�
   assert.equal((a2[0] as { requeue: boolean }).requeue, false);
 });
 
+test("failed में अटका job: backoff के बाद requeue; retry-सीमा के बाद needs_expert; backoff से पहले कुछ नहीं", () => {
+  const old = "2026-11-15T09:00:00.000Z";
+  const a1 = planTick([job({ status: "failed", attempts: 1, updated_at: old })], [], T, false);
+  assert.deepEqual(a1.map((x) => x.kind), ["retry"]);
+  assert.equal((a1[0] as { requeue: boolean }).requeue, true);
+  const a2 = planTick([job({ status: "failed", attempts: DEFAULT_LIMITS.maxRetryPerStep + 1, updated_at: old })], [], T, false);
+  assert.equal((a2[0] as { requeue: boolean }).requeue, false);
+  const a3 = planTick([job({ status: "failed", attempts: 1, updated_at: "2026-11-15T09:55:00.000Z" })], [], T, false);
+  assert.deepEqual(a3, []);
+  assert.deepEqual(planTick([job({ status: "failed", attempts: 1, updated_at: old })], [], T, true), []);
+});
+
 test("एक tick में dispatch की सीमा", () => {
   const jobs = Array.from({ length: 12 }, (_, i) => job({ job_key: "k" + i, lane: "L" + i }));
   assert.equal(planTick(jobs, [], T, false).length, DEFAULT_LIMITS.maxDispatchPerTick);

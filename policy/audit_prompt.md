@@ -7,6 +7,7 @@
 1. सबसे पहले पढ़ो: `CLAUDE.md`, `swarm/PLAN.md`, `swarm/HANDOFF.md`, `swarm/AUDIT_LOG.jsonl` की अंतिम 20 पंक्तियाँ, `swarm/RUBRIC.md`।
 2. अगर `swarm/STOP` फ़ाइल मौजूद है, तो केवल यह लिखकर रुक जाओ कि स्वार्म रुका है और क्यों।
 3. `pip install -r checks/requirements.txt`, फिर `python -m checks.run_all --json` और `python -m checks.canary_test` चलाओ। नतीजे दर्ज करो।
+   रोज़ की script-रिपोर्टें `main` में नहीं, branch `audit-log` पर `audit/daily/YYYY-MM-DD.json` में हैं: `git fetch origin audit-log` करके `git show origin/audit-log:audit/daily/<दिन>.json` से पिछले 7 दिन पढ़ो। कोई दिन ग़ायब हो या लाल हो तो M-दृष्टियों में दर्ज करो।
 4. `RUBRIC.md` की M1–M12 दृष्टियों का एक-एक करके उत्तर दो: GREEN/AMBER/RED + प्रमाण। M3 के लिए `texts/` से 10–20 यादृच्छिक श्लोक लो (seed = ISO सप्ताह-संख्या) और उनकी ID दर्ज करो।
 5. `audit/weekly/YYYY-Wnn.md` लिखो, `swarm/AUDIT_LOG.jsonl` में एक पंक्ति जोड़ो, और यह सब `claude/audit-YYYY-Wnn` branch पर PR के रूप में खोलो।
 6. एक issue खोलो: "साप्ताहिक audit YYYY-Wnn: N RED, N AMBER", label `red-audit` (कोई RED हो तो) या `audit`।

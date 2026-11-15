@@ -69,7 +69,7 @@ export class ForemanAgent extends Agent<Env, ForemanState> {
       }
 
       const jobs = (await db.prepare(
-        "SELECT job_key, text_id, batch_id, step, lane, status, provider, attempts, started_at, updated_at FROM jobs WHERE status IN ('queued','running','waiting_reset') ORDER BY updated_at LIMIT 200",
+        "SELECT job_key, text_id, batch_id, step, lane, status, provider, attempts, started_at, updated_at FROM jobs WHERE status IN ('queued','running','waiting_reset','failed') ORDER BY updated_at LIMIT 200",
       ).all<Job>()).results;
 
       const actions = planTick(jobs, provs, now, false, DEFAULT_LIMITS);
@@ -79,6 +79,8 @@ export class ForemanAgent extends Agent<Env, ForemanState> {
           const to: JobStatus = a.requeue ? "queued" : "needs_expert";
           await this.move(a.job, "failed", now, "timeout");
           await this.move({ ...a.job, status: "failed" }, to, now, a.requeue ? "retry" : "retry-सीमा पार");
+        } else if (a.kind === "retry") {
+          await this.move(a.job, a.requeue ? "queued" : "needs_expert", now, a.requeue ? "retry" : "retry-सीमा पार");
         } else if (a.kind === "sleep") await this.move(a.job, "waiting_reset", now, a.reason);
         else if (a.kind === "wake") await this.move(a.job, "queued", now, "reset हुआ");
       }

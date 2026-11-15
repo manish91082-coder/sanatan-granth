@@ -62,6 +62,7 @@ export interface Limits {
   sleepAt: number; // provider_budget.sleep_at (1.00)
   runningTimeoutS: number; // इतनी देर से 'running' हो तो विफल मानें
   maxDispatchPerTick: number;
+  retryBackoffS: number; // 'failed' में पड़ा job इतनी देर बाद ही दोबारा देखा जाए
 }
 
 export const DEFAULT_LIMITS: Limits = {
@@ -70,11 +71,13 @@ export const DEFAULT_LIMITS: Limits = {
   sleepAt: 1.0,
   runningTimeoutS: 7 * 3600, // Actions job की 6 घंटे की सीमा + गुंजाइश
   maxDispatchPerTick: 5,
+  retryBackoffS: 600,
 };
 
 export type Action =
   | { kind: "dispatch"; job: Job }
   | { kind: "timeout"; job: Job; requeue: boolean }
+  | { kind: "retry"; job: Job; requeue: boolean }
   | { kind: "sleep"; job: Job; until: string; reason: string }
   | { kind: "wake"; job: Job };
 
@@ -90,6 +93,7 @@ export function providerHasRoom(p: Provider | undefined, lim: Limits): boolean {
  *  - हर lane में एक समय में अधिकतम एक सक्रिय (running) dispatch।
  *  - provider का quota भरा हो तो job उसकी reset-घड़ी तक सोए (कभी दूसरी key/खाता नहीं)।
  *  - 'running' बहुत देर से हो तो timeout: retry-सीमा के भीतर दोबारा कतार में, वरना needs_expert (D)।
+ *  - 'failed' में अटका job (जैसे dispatch की HTTP-त्रुटि) backoff के बाद: retry-सीमा के भीतर दोबारा कतार में, वरना needs_expert (D)।
  *  - एक tick में अधिकतम maxDispatchPerTick dispatch।
  */
 export function planTick(
@@ -113,6 +117,12 @@ export function planTick(
     } else {
       busyLanes.add(j.lane);
     }
+  }
+
+  for (const j of jobs) {
+    if (j.status !== "failed") continue;
+    if ((now - Date.parse(j.updated_at)) / 1000 < lim.retryBackoffS) continue;
+    actions.push({ kind: "retry", job: j, requeue: j.attempts < lim.maxRetryPerStep + 1 });
   }
 
   for (const j of jobs) {
