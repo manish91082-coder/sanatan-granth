@@ -86,3 +86,9 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 
 - `CLOUDFLARE_ACCOUNT_ID` ठीक हुआ (मालिक ने dashboard का पता दिखाया; Account ID गुप्त key नहीं, पहचान है, इसलिए Claude ने `gh secret set` से लगाया)। `secrets-check` run 43685486596: Workers 200, D1 200 (0 databases), workers.dev subdomain मौजूद। **ऊपर turn 10 की "Account ID ग़लत" वाली बात अब पुरानी है।**
 - अब Foreman deploy (क़दम 0.11) के लिए सब तैयार है: पहली बार `foreman-deploy` को `create_d1=yes` के साथ चलाना है। किसके बटन से, यह मालिक से पूछा गया है।
+
+### session 1, turn 12 (2026-11-15, claude-fable-5-2)
+
+- मालिक ने कहा: Foreman का deploy Claude चलाए ("हाँ, चलाओ")। पहला run (43685780426) D1 बनाने पर रुका: Cloudflare token में **D1 Edit** नहीं है (D1 list चलता है, create नहीं; "Authentication error 10000")। मालिक को token में Account → D1 → Edit जोड़ना है।
+- **निजता-घटना:** wrangler ने त्रुटि-संदेश में मालिक का ईमेल public Actions log में छापा। वह run तुरंत मिटाया गया। `foreman-deploy.yml` में अब हर wrangler-आउटपुट ईमेल-filter (`REDACT`) से गुज़रता है। **नया कोई workflow जो wrangler या किसी खाते-CLI को चलाए, यही filter लगाए।**
+- अगला: token ठीक होते ही `gh workflow run foreman-deploy.yml -f create_d1=yes`, फिर ख़ाली batch का चक्कर (`/admin/enqueue-noop` + `/admin/tick`, HMAC के साथ; इसके लिए एक छोटा हाथ-से-चलने वाला workflow चाहिए, क्योंकि shared secret केवल GitHub/Cloudflare में है)।
