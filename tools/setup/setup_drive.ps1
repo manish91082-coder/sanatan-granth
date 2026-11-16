@@ -5,6 +5,11 @@
 #
 # Pehle kadam 0.6 poora ho: Google Cloud mein Desktop OAuth client bana ho (client ID aur secret haath mein).
 #
+# Agar laptop par pehle se koi rclone Drive remote apne OAuth client ke saath bana hai, to usi client ko
+# dobara istemal karo (kuch chipkana nahin padega):
+#   powershell -ExecutionPolicy Bypass -File E:\sanatan-granth\tools\setup\setup_drive.ps1 -ReuseFrom <us remote ka naam>
+# Naya remote phir bhi alag hota hai aur sirf 'drive.file' scope leta hai; purana remote chhua nahin jaata.
+#
 # Kya hota hai:
 #   1. Script client ID aur client secret poochhti hai (secret screen par nahin dikhta).
 #   2. rclone remote 'granth' banta hai, sirf 'drive.file' scope ke saath. Browser mein Google login khulega.
@@ -13,6 +18,8 @@
 # ID, secret aur token sirf is laptop ke rclone config mein rehte hain: na repo mein, na chat mein.
 #
 # Yeh file ASCII mein hai taaki Windows PowerShell 5.1 ise sahi padhe.
+
+param([string]$ReuseFrom = "")
 
 $ErrorActionPreference = "Stop"
 $remote = "granth"
@@ -24,6 +31,21 @@ if (-not (Get-Command rclone -ErrorAction SilentlyContinue)) { Write-Host "rclon
 $before = @(rclone listremotes)
 if ($before -contains "${remote}:") {
     Write-Host "Remote '$remote' pehle se hai; naya nahin banaya. Seedhe tree aur test par ja rahe hain."
+} elseif ($ReuseFrom) {
+    if ($before -notcontains "${ReuseFrom}:") { Write-Host "Remote '$ReuseFrom' nahin mila."; exit 1 }
+    # purane remote ke client ID/secret sirf memory mein padhe jaate hain; kuch chhapta nahin
+    $id = ""; $plain = ""
+    foreach ($line in @(rclone config show $ReuseFrom)) {
+        if ($line -match '^client_id\s*=\s*(\S+)') { $id = $Matches[1] }
+        if ($line -match '^client_secret\s*=\s*(\S+)') { $plain = $Matches[1] }
+    }
+    if (-not $id.EndsWith(".apps.googleusercontent.com") -or -not $plain) { Write-Host "Remote '$ReuseFrom' mein apna OAuth client nahin hai; ruk rahe hain."; exit 1 }
+    try {
+        Write-Host "Browser mein Google login khulega. Apna khaata chuno aur 'Allow' dabao..."
+        rclone config create $remote drive "scope=drive.file" "client_id=$id" "client_secret=$plain" | Out-Null
+        if ($LASTEXITCODE -ne 0) { Write-Host "rclone config create fail hua."; exit 1 }
+    }
+    finally { $plain = $null }
 } else {
     $id = (Read-Host "Client ID chipkao (....apps.googleusercontent.com)").Trim()
     $sec = Read-Host "Client secret chipkao (dikhega nahin)" -AsSecureString
