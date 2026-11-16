@@ -23,7 +23,8 @@
 | Kaggle | साप्ताहिक TPU घंटे | (बाक़ी: क़दम 0.4) | | |
 | Kaggle | reset का दिन | (बाक़ी: क़दम 0.4) | | |
 | Kaggle | T4×2 दोगुना गिनता है? | (बाक़ी: क़दम 0.4) | | |
-| Groq | मुफ़्त RPM / RPD / TPM / TPD (gpt-oss-120b) | (बाक़ी: क़दम 0.5) | | |
+| Groq | मुफ़्त स्तर पर दिखे मॉडल | `openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `qwen/qwen3.8-27b`, `allam-2-7b`, दो आवाज़-मॉडल। चौथा पाठ-परिवार (जैसे Llama) नहीं दिखा। | 2026-11-16 | pilot run 43875372883 (`state/pilot_metrics.json`) |
+| Groq | 429 का व्यवहार (console की सीमाएँ अब भी देखनी बाक़ी) | 18 मंत्रों के एक run में 7 बार HTTP 429 (qwen पर 5, 90 s इंतज़ार); 6 मंत्र/अनुरोध पर भी TPM-सीमा लगती है | 2026-11-16 | pilot run 43875372883 |
 | Cloudflare | Workers AI neurons/दिन; D1 और DO की Free सीमाएँ console में | (बाक़ी: क़दम 0.11) | | |
 | Cloudflare | Agent DO पर CPU-सीमा: 10 ms या 30 s? | (बाक़ी: क़दम 0.11, परीक्षण से) | | |
 
