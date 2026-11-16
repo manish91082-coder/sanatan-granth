@@ -30,7 +30,14 @@ if (-not (Get-Command rclone -ErrorAction SilentlyContinue)) { Write-Host "rclon
 
 $before = @(rclone listremotes)
 if ($before -contains "${remote}:") {
-    Write-Host "Remote '$remote' pehle se hai; naya nahin banaya. Seedhe tree aur test par ja rahe hain."
+    Write-Host "Remote '$remote' pehle se hai; naya nahin banaya."
+    # adhoora remote (token nahin): sirf login dobara
+    $hasToken = [bool](@(rclone config show $remote) -match '^token\s*=\s*\S')
+    if (-not $hasToken) {
+        Write-Host "Is remote mein token nahin hai. Browser mein Google login khulega: apna khaata chuno aur 'Allow' dabao..."
+        rclone config reconnect "${remote}:" --auto-confirm | Out-Null
+        if ($LASTEXITCODE -ne 0) { Write-Host "Login poora nahin hua."; exit 1 }
+    }
 } elseif ($ReuseFrom) {
     if ($before -notcontains "${ReuseFrom}:") { Write-Host "Remote '$ReuseFrom' nahin mila."; exit 1 }
     # purane remote ke client ID/secret sirf memory mein padhe jaate hain; kuch chhapta nahin
@@ -43,7 +50,7 @@ if ($before -contains "${remote}:") {
     try {
         Write-Host "Browser mein Google login khulega. Apna khaata chuno aur 'Allow' dabao..."
         rclone config create $remote drive "scope=drive.file" "client_id=$id" "client_secret=$plain" | Out-Null
-        if ($LASTEXITCODE -ne 0) { Write-Host "rclone config create fail hua."; exit 1 }
+        if ($LASTEXITCODE -ne 0) { Write-Host "Login poora nahin hua. Script dobara chalao; woh sirf login dobara karegi."; exit 1 }
     }
     finally { $plain = $null }
 } else {
@@ -57,7 +64,7 @@ if ($before -contains "${remote}:") {
         Write-Host "Browser mein Google login khulega. Apna khaata chuno aur 'Allow' dabao..."
         # stdout mein rclone poora config (token ke saath) chhaapta hai, isliye use phenk dete hain
         rclone config create $remote drive "scope=drive.file" "client_id=$id" "client_secret=$plain" | Out-Null
-        if ($LASTEXITCODE -ne 0) { Write-Host "rclone config create fail hua."; exit 1 }
+        if ($LASTEXITCODE -ne 0) { Write-Host "Login poora nahin hua. Script dobara chalao; woh sirf login dobara karegi."; exit 1 }
     }
     finally {
         [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr)
