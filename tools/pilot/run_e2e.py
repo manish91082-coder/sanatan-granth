@@ -33,7 +33,7 @@ from checks.common import canonical_segments_hash  # noqa: E402
 from checks.run_all import report as checks_report, run as checks_run  # noqa: E402
 from tools.pilot.llm import Model, Usage, chat_json, family_of, list_groq_models  # noqa: E402
 
-PIPELINE_VERSION = "pilot-e2e-0.1"
+PIPELINE_VERSION = "pilot-e2e-0.2"
 OK_LABELS = {"OK", "MINOR"}
 LABELS = {"OK", "MINOR", "CONTRADICTED", "UNSURE"}
 EXPECTED_RED = {"R2": "पाठ lock नहीं है (स्रोत का फ़ैसला बाक़ी)", "R6": "मूल-पाठ का वाहक गवाह CC BY-SA है; प्रदर्शन-योग्य स्रोत तय नहीं"}
@@ -149,7 +149,8 @@ def pick_models(mock: bool) -> dict:
         raise SystemExit(f"ज़रूरी Groq मॉडल नहीं मिले: qwen={qwen} gpt-oss={oss}")
     g = lambda n: Model("groq", n, family_of(n))  # noqa: E731
     judges = ([g(llama)] if llama else []) + [g(oss), Model("google_ai_studio", gem, "google"), g(qwen)]
-    return {"draft_a": g(qwen), "draft_b": Model("google_ai_studio", gem, "google"), "draft_c": g(oss), "judges": judges}
+    return {"draft_a": g(qwen), "draft_b": Model("google_ai_studio", gem, "google"), "draft_c": g(oss), "judges": judges,
+            "groq_models_seen": [i for i in ids if not re.search(r"whisper|tts|guard", i, re.I)]}
 
 
 def choose_judge(judges: list[Model], exclude: set[str]) -> Model:
@@ -344,8 +345,16 @@ def main() -> int:
             if j and inc and c:
                 src = inc if j["pick"] == "A" else (c, C)
                 final[i] = {**src[0], "model": src[1].name, "family": src[1].family}
+                pick_ok = j[("a" if j["pick"] == "A" else "b") + "_label"] in OK_LABELS
+                j1r = j1.get(i)
+                # दूसरे दौर में "A" वही ड्राफ़्ट है जिसे पहले जज ने चुना था। अगर दूसरे परिवार का जज भी उसी को चुनकर ठीक कहे,
+                # तो दो अलग परिवारों के जज एक ही ड्राफ़्ट पर सहमत हैं; हारे हुए ड्राफ़्ट की ग़लती से झंडा नहीं लगता।
+                confirmed_twice = (j["pick"] == "A" and pick_ok and j1r is not None and i in dA and i in dB
+                                   and j1r[("a" if j1r["pick"] == "A" else "b") + "_label"] in OK_LABELS)
                 if accepted(j):
                     record[i]["path"] = "cascade के बाद सहमति"
+                elif confirmed_twice:
+                    record[i]["path"] = "दो जजों ने वही ड्राफ़्ट चुना"
                 else:
                     record[i]["path"] = "cascade के बाद भी असहमति"
                     flags.setdefault(i, []).append("CONTRADICTED" if "CONTRADICTED" in (j["a_label"], j["b_label"]) else "JURY_DISAGREE")
@@ -404,13 +413,13 @@ def main() -> int:
         "segments": n, "segments_done": len(final), "batch_size": n,
         "silent_omissions": 0 if not missing else len(missing),
         "cascade": {"first_pass_agreed": first_pass, "sent_to_cascade": len(cascade), "agreement_rate": round(first_pass / n, 3) if n else None,
-                    "go_threshold": 0.6},
+                    "go_threshold": 0.6, "by_path": {k: sum(1 for i in ids if record[i].get("path") == k) for k in sorted({record[i].get("path") or "?" for i in ids})}},
         "badges": {"C": sum(1 for b in badges.values() if b == "C"), "D": sum(1 for b in badges.values() if b == "D")},
         "flags_by_code": {k: sum(1 for v in flags.values() for c in v if c.split(":")[0] == k) for k in sorted({c.split(":")[0] for v in flags.values() for c in v})},
         "d_checks": {"implemented": list(d_checks.IMPLEMENTED), "not_run": list(d_checks.NOT_RUN), "veto_counts": d_counts},
         "empirical_claims_flagged_by_judge": sum(1 for i in ids for j in (record[i].get("judge1"), record[i].get("judge2")) if j and j.get("has_empirical_claim")),
         "models": {"draft_a": f"{A.provider}/{A.name}", "draft_b": f"{B.provider}/{B.name}", "draft_c": f"{C.provider}/{C.name}",
-                   "judge_pool": [f"{m.provider}/{m.name}" for m in models["judges"]]},
+                   "judge_pool": [f"{m.provider}/{m.name}" for m in models["judges"]], "groq_models_seen": models.get("groq_models_seen", [])},
         "families": {"draft_a": A.family, "draft_b": B.family, "draft_c": C.family},
         "api": {"calls": sum(u["calls"] for u in usage_all.values()), "retries": sum(u["retries"] for u in usage_all.values()),
                 "http_429": sum(u["http_429"] for u in usage_all.values()), "prompt_tokens": sum(u["prompt_tokens"] for u in usage_all.values()),
