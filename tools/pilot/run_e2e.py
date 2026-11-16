@@ -33,7 +33,7 @@ from checks.common import canonical_segments_hash  # noqa: E402
 from checks.run_all import report as checks_report, run as checks_run  # noqa: E402
 from tools.pilot.llm import Model, Usage, available, chat_json, parse_model  # noqa: E402
 
-PIPELINE_VERSION = "pilot-e2e-0.3"
+PIPELINE_VERSION = "pilot-e2e-0.4"
 OK_LABELS = {"OK", "MINOR"}
 LABELS = {"OK", "MINOR", "CONTRADICTED", "UNSURE"}
 EXPECTED_RED = {"R2": "पाठ lock नहीं है (स्रोत का फ़ैसला बाक़ी)", "R6": "मूल-पाठ का वाहक गवाह CC BY-SA है; प्रदर्शन-योग्य स्रोत तय नहीं"}
@@ -79,18 +79,19 @@ JUDGE_ONE_SYSTEM = (
     "Do not label CONTRADICTED for a legitimate alternative reading of an ambiguous or traditionally disputed word. One item per given id and no other ids."
 )
 
-# मॉडलों का चुनाव (16 नवंबर 2026 की तुलना से: pilot-e2e run 43898284352 का log; swarm/HANDOFF.md turn 30)। env से बदला जा सकता है:
-# PILOT_DRAFT_A, PILOT_DRAFT_B, PILOT_DRAFT_C, PILOT_JUDGES (अल्पविराम से)।
-#   Draft A = Gemma 4 31B (तुलना में सबसे कम ग़लतियाँ; 14.4K अनुरोध/दिन)। Gemini Flash-Lite उस दिन 503 देता रहा और
-#   पिछले runs में सबसे कमज़ोर ड्राफ़्टर था; Flash-वर्ग का मुफ़्त quota (20/दिन) ख़त्म मिला। इसलिए दोनों default में नहीं।
-#   जजों का क्रम: पहला जो ड्राफ़्टरों के परिवार से अलग हो। दौर 1 = gpt-oss (openai); दौर 2 = Mistral (चौथा परिवार, Workers AI)।
+# मॉडलों का चुनाव। env से बदला जा सकता है: PILOT_DRAFT_A, PILOT_DRAFT_B, PILOT_DRAFT_C, PILOT_JUDGES (अल्पविराम से)।
+#   आधार: जज-परीक्षा (tools/pilot/judge_test.py; pilot-e2e run 43935550508, 16 नवंबर 2026)। Gemini 3.5 Flash-Lite ने 18 में से 17 डाली गई
+#   ग़लतियाँ पकड़ीं और आधार-मसौदे की तीन असली ग़लतियों (ईश 10, 13, 18) पर भी आपत्ति की; qwen ने 15 पकड़ीं; gpt-oss-120b ने असली run में
+#   इन्हीं तीन मंत्रों पर ग़लत ड्राफ़्ट चुना था। इसलिए जज = Flash-Lite (मास्टर योजना §3.3 की मूल रचना), और ड्राफ़्टर Google-परिवार
+#   से बाहर के (जज अपने परिवार का काम नहीं जाँचता)। क़ीमत: Gemma 4 31B, जो तुलना में सबसे अच्छा ड्राफ़्टर दिखा, ड्राफ़्टर नहीं रहता।
+#   यह चुनाव अस्थायी है: बाक़ी जजों (Gemma, Mistral, Llama, gpt-oss) की परीक्षा होने पर दोबारा देखा जाएगा।
 #   हर भूमिका की सूची क्रम से आज़माई जाती है: पहला मॉडल उत्तर न दे (503, quota) तो अगला। कभी दूसरी key या दूसरा खाता नहीं।
 DEFAULT_MODELS = {
-    "draft_a": ["google_ai_studio:gemma-4-31b-it", "google_ai_studio:gemma-4-26b-a4b-it", "google_ai_studio:gemini-3.5-flash-lite"],
-    "draft_b": ["groq:qwen/qwen3.8-27b", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct"],
-    "draft_c": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/openai/gpt-oss-120b"],
-    "judges": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
-               "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast", "google_ai_studio:gemma-4-31b-it", "groq:qwen/qwen3.8-27b"],
+    "draft_a": ["groq:qwen/qwen3.8-27b", "cloudflare:@cf/meta/llama-4-scout-17b-16e-instruct"],
+    "draft_b": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/openai/gpt-oss-120b"],
+    "draft_c": ["cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct", "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast"],
+    "judges": ["google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
+               "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"],
 }
 
 
@@ -466,6 +467,7 @@ def main() -> int:
     flags: dict[str, list[str]] = {}
     j2: dict[str, dict] = {}
     judge2_used: list[str] = []
+    j2_family: dict[str, str] = {}
     if cascade:
         C, dC, tried["draft_c"] = draft_fb(log, "draft_c", "ड्राफ़्ट C (केवल असहमति वाले)", models["draft_c"], {A.family, B.family}, dead, segs, cascade, uC)
         groups: dict[str, list[str]] = {}
@@ -486,6 +488,7 @@ def main() -> int:
             tried.setdefault("judge2", []).extend(t2)
             if J2m:
                 judge2_used.append(J2m.ref)
+                j2_family.update({i: J2m.family for i in res})
             j2.update(res)
         for i in cascade:
             j = j2.get(i)
@@ -499,7 +502,9 @@ def main() -> int:
                 j1r = j1.get(i)
                 # दूसरे दौर में "A" वही ड्राफ़्ट है जिसे पहले जज ने चुना था। अगर दूसरे परिवार का जज भी उसी को चुनकर ठीक कहे,
                 # तो दो अलग परिवारों के जज एक ही ड्राफ़्ट पर सहमत हैं; हारे हुए ड्राफ़्ट की ग़लती से झंडा नहीं लगता।
+                # यह छूट तभी है जब दूसरा जज सचमुच दूसरे परिवार का हो; वही जज दोबारा वही कहे तो वह स्वतंत्र पुष्टि नहीं है।
                 confirmed_twice = (j["pick"] == "A" and pick_ok and j1r is not None and i in dA and i in dB
+                                   and J1m is not None and j2_family.get(i) not in (None, J1m.family)
                                    and j1r[("a" if j1r["pick"] == "A" else "b") + "_label"] in OK_LABELS)
                 if accepted(j):
                     record[i]["path"] = "cascade के बाद सहमति"
