@@ -1,0 +1,172 @@
+{
+  "generated_at": "2026-11-16T12:44:50Z",
+  "text_id": "isha",
+  "tool": "tools/witness/ocr_collate.py v0",
+  "key": "tools/witness/key.py",
+  "reference_witness": {
+    "witness_id": "sa-ws-isha",
+    "host": "sa.wikisource.org",
+    "title": "ईशोपनिषत्",
+    "revid": 37761,
+    "timestamp": "2014-12-05T08:43:50Z",
+    "sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
+    "licence": "CC-BY-SA-4.0",
+    "usage": "compare"
+  },
+  "ocr_witness": {
+    "witness_id": "ia-nsp-108-1925",
+    "engine": "tesseract 5.5.0; tessdata_best 4.1.0 Devanagari; psm 3",
+    "source": "archive.org:ishadi-satattoroupanishads-sangraha-1925-i-nirnay-sagar-press leaves 13",
+    "pages": 1,
+    "ocr_key_len": 1472,
+    "ocr_key_sha256": "2a8a65fbc205fcdb1508d8397b720b5b7798581d4a849a828131e56912dd0576"
+  },
+  "thresholds": {
+    "ocr_strong": 0.95,
+    "ocr_partial": 0.8
+  },
+  "summary": {
+    "ocr_weak": 5,
+    "ocr_partial": 10,
+    "ocr_strong": 3
+  },
+  "coverage_min_mean_max": [
+    0.3333,
+    0.8313,
+    1.0
+  ],
+  "segments": [
+    {
+      "segment": "isha:1",
+      "a_key_sha256": "1dbc04e40c91991f854b033a017f059f701c49a88ca3f147ab38bdc246f36fb9",
+      "a_key_len": 74,
+      "coverage": 0.7838,
+      "status": "ocr_weak"
+    },
+    {
+      "segment": "isha:2",
+      "a_key_sha256": "04ff2c6fa320c0126186c3d616c293ffdc510275db0f8fd5adc38e2c97da33e6",
+      "a_key_len": 71,
+      "coverage": 0.9155,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:3",
+      "a_key_sha256": "b7c6de4452bdd0eaddfb5d2fedfc983ef3a55144e0bf3e1fa14dcf66062599aa",
+      "a_key_len": 70,
+      "coverage": 0.7571,
+      "status": "ocr_weak"
+    },
+    {
+      "segment": "isha:4",
+      "a_key_sha256": "b1a5a714455a92c20ff5ef01ed453b39b845a395d085e2cb5d5174ccf75c83e1",
+      "a_key_len": 93,
+      "coverage": 0.6774,
+      "status": "ocr_weak"
+    },
+    {
+      "segment": "isha:5",
+      "a_key_sha256": "7cb319262f4eed9ccc2ce8bbd4df436686e1e4bd7d7762c24bf9793252b0c256",
+      "a_key_len": 65,
+      "coverage": 0.8154,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:6",
+      "a_key_sha256": "1f9b4be3f71f2e1426a390ddd8d4d2cee6b7c78ea39936d54a08ce38559fc92e",
+      "a_key_len": 70,
+      "coverage": 0.9143,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:7",
+      "a_key_sha256": "4ba9a38b99f09fa5c0037ab59261455444d1a0e9487deaa6cac4438510d503b1",
+      "a_key_len": 68,
+      "coverage": 0.8676,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:8",
+      "a_key_sha256": "b644b125b5ec82117926b1b1a9998af9d65dd9ee78d23e1aafa46d95272baa04",
+      "a_key_len": 114,
+      "coverage": 0.8246,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:9",
+      "a_key_sha256": "1b6cd64b4640e317f680c02f69e70f8071e938bad1ffaffb7b57f6d514975916",
+      "a_key_len": 59,
+      "coverage": 0.8814,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:10",
+      "a_key_sha256": "6e34c346ffb6e905f91cc3e074554153406fc8e694fdaefa6a73d2e31cd35976",
+      "a_key_len": 69,
+      "coverage": 0.971,
+      "status": "ocr_strong"
+    },
+    {
+      "segment": "isha:11",
+      "a_key_sha256": "fee4b35509a41a0778bd721a45ff0d2eb6ee6e22d7b2ed05eba942b7f4a21862",
+      "a_key_len": 72,
+      "coverage": 0.8056,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:12",
+      "a_key_sha256": "dbfbf28eb266b3e8ae215f47ade64761aec6777bc7ff6d54568daff80edd41a5",
+      "a_key_len": 59,
+      "coverage": 0.9661,
+      "status": "ocr_strong"
+    },
+    {
+      "segment": "isha:13",
+      "a_key_sha256": "50d349da0c542976fba89223e8a23dad9d586cd2b3218866dab2d67ee4cfc53f",
+      "a_key_len": 66,
+      "coverage": 1.0,
+      "status": "ocr_strong"
+    },
+    {
+      "segment": "isha:14",
+      "a_key_sha256": "b541f8209accd78e0dde31ea74ae86dd7ec792ab052a04f7dbc3b2b46b9b305f",
+      "a_key_len": 70,
+      "coverage": 0.8429,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:15",
+      "a_key_sha256": "fb4f85612680a800f81c29c3ef28c2adfdbce82f24930085ba867c70e8e35d69",
+      "a_key_len": 68,
+      "coverage": 0.9412,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:16",
+      "a_key_sha256": "12fc58ed8cd7688831a7f101c420333c300e825832a7acb4c85a5e5a6105bfc9",
+      "a_key_len": 99,
+      "coverage": 0.9091,
+      "status": "ocr_partial"
+    },
+    {
+      "segment": "isha:17",
+      "a_key_sha256": "71c8758c5dca0f926e33abc14c4ea59475173fa67c1b70428741cc069389115f",
+      "a_key_len": 66,
+      "coverage": 0.7576,
+      "status": "ocr_weak"
+    },
+    {
+      "segment": "isha:18",
+      "a_key_sha256": "58dfb6e4e866fd420b99c48e515d13527041bd485d6fe52cadb3cd9a6a363c44",
+      "a_key_len": 96,
+      "coverage": 0.3333,
+      "status": "ocr_weak"
+    }
+  ],
+  "limits": [
+    "यह text-lock नहीं है",
+    "coverage OCR-भूल और असली पाठभेद में फ़र्क़ नहीं करता",
+    "संदर्भ-गवाह (विकिस्रोत) का नक़ल-परिवार अज्ञात है",
+    "रिपोर्ट में पाठ नहीं, केवल hash और अनुपात"
+  ]
+}

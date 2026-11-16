@@ -178,3 +178,24 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **terminal tool:** `run_in_terminal` ने तीन बार चलते command पर Ctrl-C भेज दिया (shell देर से "शुरू" बताता है)। लंबे या browser खोलने वाले command Bash में `run_in_background` से चलाएँ; वह चला।
 - **Bash heredoc की सीख:** heredoc के भीतर Python में backslash आधे हो जाते हैं (`\\n` → newline)। regex या backslash वाले बदलाव Write tool से बनी script-फ़ाइल से करें।
 - **मालिक के लिए बाक़ी:** Downloads में पड़ी `client_secret_*.json` हटाना (rclone config में मान आ चुका है); चाहें तो console में उस client का secret बदलना, क्योंकि फ़ाइल का पाठ chat में दिख चुका है।
+
+### session 1, turn 27 (2026-11-16, claude-fable-5-2) — ईश: छपे गवाहों का OCR मापा गया
+
+- मालिक ने Downloads वाली client-फ़ाइल रखने को कहा ("रहने दो"); उसे छुआ नहीं गया।
+- **नया औज़ार (PR #38):** `.github/workflows/ocr-witness.yml` (Tesseract 5, tessdata_best के `san` और `script/Devanagari`) + `tools/witness/ocr_collate.py` (हर मंत्र पर `contained` / `coverage`)। OCR-पाठ repo या artifact में नहीं जाता; केवल रिपोर्ट।
+- **नया गवाह:** `ia-roer-1850` (Bibliotheca Indica खंड 8; संपादक Röer की मृत्यु 1866, दो स्रोत) → `LicenseRef-PD-India-US`, उपयोग अभी `compare`, G1 बाक़ी। निर्णयसागर 1925 के संपादक (वासुदेव लक्ष्मण शास्त्री पणशीकर) की मृत्यु-तिथि नहीं मिली: LoC authority n82118487 में तिथि नहीं, Wikidata/VIAF में प्रविष्टि नहीं, web-खोज बेनतीजा।
+- **माप (रिपोर्टें `audit/witness/isha_ocr_*.json`; संदर्भ-गवाह = विकिस्रोत 'ईशोपनिषत्'):**
+
+| छपा गवाह | पन्ने | मॉडल | coverage न्यून/औसत/अधिक | strong ≥0.95 | partial ≥0.80 | weak |
+|---|---|---|---|---|---|---|
+| निर्णयसागर 1925 (पृ. 1; हाथ की लिखावट वाली प्रति) | 1 | script/Devanagari | 0.33 / 0.83 / 1.00 | 3 | 10 | 5 |
+| निर्णयसागर 1925 | 1 | san | 0.38 / 0.72 / 0.95 | 0 | 5 | 13 |
+| Röer 1850 (leaf 9–40) | 32 | script/Devanagari | 0.47 / 0.74 / 0.96 | 1 | 6 | 11 |
+| Röer 1850 | 32 | san | 0.47 / 0.70 / 0.94 | 0 | 5 | 13 |
+
+  - run: 43869298989 (निर्णयसागर), 43869307008 (Röer)। किसी भी मंत्र पर `key_contained` नहीं आया।
+  - निर्णयसागर में मंत्र 17–18 अगले पन्ने (leaf n14) पर जाते हैं; वह पन्ना इस run में नहीं था, इसलिए मंत्र 18 का 0.33 OCR की नहीं, दायरे की कमी है। Röer में ईश leaf 40 के बाद भी चल सकता है; यह जाँचा नहीं गया।
+  - `script/Devanagari` मॉडल दोनों जगह `san` से बेहतर रहा।
+- **निष्कर्ष [हमारा माप]:** पुराने छपे संस्करणों पर Tesseract अकेले "≥2 गवाह कुंजी पर सहमत" वाली शर्त पूरी नहीं कर सकता; वह केवल सहायक प्रमाण देता है (पन्ने पर लगभग वही पाठ है)। यह P2 का एक असली नतीजा है: text-lock की बाधा OCR है, मिलान नहीं।
+- **आगे के रास्ते (अभी कोई नहीं चुना गया):** (क) इसी संस्करण की बिना-लिखावट वाली प्रति; (ख) चित्र-सफ़ाई (grayscale, upscale, binarise) और `--psm 6`; (ग) दूसरा OCR-engine (vision-LLM, जैसे Gemini Flash-Lite) प्रयोग के रूप में। (ग) में जोखिम: प्रसिद्ध पाठ मॉडल को याद होता है, इसलिए वह छपे पाठभेद को "सुधार" सकता है; उसे अकेला स्वतंत्र गवाह न मानें। lock-नियम बदलना हो तो मालिक का फ़ैसला और `DECISIONS.md`।
+- **G1-batch मालिक के सामने रखना बाक़ी:** `witnesses/` के 6 रिकॉर्ड (`sa-ws-isha`, `sa-ws-vsm40`, `ia-anantacharya-1896`, `ia-hiriyanna-1911`, `ia-nsp-108-1925`, `ia-roer-1850`), सब `pending_owner`।
