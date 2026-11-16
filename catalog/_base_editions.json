@@ -1,0 +1,236 @@
+{
+  "_meta": {
+    "purpose": "हर ग्रंथ के आधार-संस्करण के उम्मीदवार: किसने संपादन/संकलन किया, किसने छापा, कब, इंटरनेट-प्रति कहाँ। कसौटी: docs/SOURCE_SELECTION_hi.md",
+    "status": "मसौदा; किसी ग्रंथ का आधार अभी तय नहीं। फ़ैसला मालिक का (G1)।",
+    "tranche": 1,
+    "updated": "2026-11-16",
+    "check_levels": {
+      "title_page_seen": "मुखपृष्ठ का चित्र देखा गया",
+      "catalogue_metadata": "पुस्तकालय/संग्रह के सूची-रिकॉर्ड से",
+      "uploader_metadata": "केवल upload करने वाले के लिखे शीर्षक से; मुखपृष्ठ देखना बाक़ी",
+      "from_memory": "Claude की याद से; किसी स्रोत से मिलाया नहीं गया; फ़ैसले का आधार नहीं"
+    },
+    "note": "e-text (विकिस्रोत आदि) संस्करण नहीं हैं; वे केवल मिलान के गवाह हैं और यहाँ उम्मीदवार नहीं गिने गए।"
+  },
+  "texts": {
+    "isha": {
+      "name": "ईशावास्योपनिषद्",
+      "what_it_is": "शुक्ल यजुर्वेद संहिता का 40वाँ अध्याय। दो शाखाओं में मिलता है: काण्व (18 मंत्र) और माध्यन्दिन (17 मंत्र, क्रम और कुछ पाठ अलग)। इसलिए इसके स्रोत दो तरह के हैं: उपनिषद्-संस्करण और संहिता-संस्करण।",
+      "what_it_is_check": "18 मंत्र/काण्व क्रम: निर्णयसागर 1925 के पन्ने पर देखा गया। 17 मंत्र/माध्यन्दिन: विकिस्रोत के गवाह से (audit/witness/isha_collation_v0.json)।",
+      "candidates": [
+        {
+          "edition_id": "nsp-108-1925",
+          "kind": "उपनिषद्-संग्रह (मूल-पाठ)",
+          "title": "ईशाद्यष्टोत्तरशतोपनिषदः (आद्यन्ततत्तच्छान्तियुजः; पाठान्तरटिप्पणयुतः), तृतीय संस्करण",
+          "editor_or_compiler": "वासुदेव शर्मा (पणशीकर; लक्ष्मण शर्मा के पुत्र)",
+          "publisher": "पाण्डुरङ्ग जावजी, निर्णयसागर यन्त्रालय, मुंबई",
+          "year": 1925,
+          "indian": true,
+          "recension": "काण्व क्रम, 18 मंत्र",
+          "internet_copy": "https://archive.org/details/ishadi-satattoroupanishads-sangraha-1925-i-nirnay-sagar-press",
+          "check_level": "title_page_seen",
+          "copyright": "अमेरिका: 1925 का प्रकाशन। भारत: संपादक की मृत्यु-तिथि नहीं मिली (LoC authority n82118487 में तिथि नहीं) → अभी सर्वाधिकार-युक्त माना गया।",
+          "strengths": ["संपादक और प्रकाशक मुखपृष्ठ पर नामित", "पाठान्तर-टिप्पणियाँ", "पूरे 108 उपनिषद् एक ही संस्करण में, इसलिए मुक्तिका-सूची पर एकरूप आधार", "छपाई साफ़"],
+          "concerns": ["संपादक की मृत्यु-तिथि अज्ञात: प्रदर्शन-पाठ नहीं बन सकता जब तक दो स्रोत न मिलें", "इस प्रति के पहले पन्ने पर हाथ की लिखावट; साफ़ प्रति चाहिए", "भूमिका में पांडुलिपि-आधार क्या बताया गया है, यह पढ़ना बाक़ी"],
+          "witness_id": "ia-nsp-108-1925"
+        },
+        {
+          "edition_id": "vanivilas-1910-v4",
+          "kind": "उपनिषद् + शांकरभाष्य",
+          "title": "The Works of Sri Sankaracharya, vol. 4: Upanishad Bhashya part 1 (Isa, Kena, Katha, Prasna)",
+          "editor_or_compiler": "metadata में नहीं; मुखपृष्ठ देखना बाक़ी",
+          "publisher": "Sri Vani Vilas Press, Srirangam",
+          "year": 1910,
+          "indian": true,
+          "recension": "देखना बाक़ी",
+          "internet_copy": "https://archive.org/details/wg1059",
+          "check_level": "uploader_metadata",
+          "copyright": "1910 का प्रकाशन; संपादक अज्ञात → तथ्य मिलने तक तय नहीं।",
+          "strengths": ["भारतीय प्रकाशन, शांकर-परंपरा का संग्रह", "ईश-केन-कठ-प्रश्न एक खंड में"],
+          "concerns": ["संपादक, पांडुलिपि-आधार और पाठ अभी नहीं देखे गए"]
+        },
+        {
+          "edition_id": "roer-1850",
+          "kind": "उपनिषद् + शांकरभाष्य + आनन्दगिरि-टीका",
+          "title": "The Ísá, Kéna, Katha, Praśna, Muṇḍa, Máṇḍukya Upanishads (Bibliotheca Indica, vol. 8)",
+          "editor_or_compiler": "Eduard Röer",
+          "publisher": "Asiatic Society of Bengal; Calcutta, printed by J. Thomas",
+          "year": 1850,
+          "indian": false,
+          "recension": "देखना बाक़ी (भाष्य-सहित पाठ)",
+          "internet_copy": "https://archive.org/details/sknakathapranam00benggoog",
+          "check_level": "catalogue_metadata",
+          "copyright": "सार्वजनिक डोमेन (भारत और अमेरिका): संपादक की मृत्यु 1866, दो स्रोत (witnesses/ia-roer-1850.json)।",
+          "strengths": ["सर्वाधिकार पूरी तरह साफ़", "कलकत्ता में छपा, Asiatic Society का संस्करण"],
+          "concerns": ["विदेशी संपादक", "पुराना टाइप; OCR कमज़ोर (औसत मेल 0.74)", "मुखपृष्ठ और भूमिका अभी नहीं देखे"],
+          "witness_id": "ia-roer-1850"
+        },
+        {
+          "edition_id": "kanva-samhita-1915",
+          "kind": "संहिता (काण्व)",
+          "title": "Kanva Sanhita",
+          "editor_or_compiler": "Sastri, Madhava (संग्रह के रिकॉर्ड के अनुसार)",
+          "publisher": "रिकॉर्ड में नहीं",
+          "year": 1915,
+          "indian": true,
+          "recension": "काण्व संहिता; अध्याय 40 = ईशावास्य",
+          "internet_copy": "https://archive.org/details/in.ernet.dli.2015.405425",
+          "check_level": "catalogue_metadata",
+          "copyright": "तय नहीं: संपादक की पहचान और मृत्यु-तिथि चाहिए।",
+          "strengths": ["मूल स्थान: उपनिषद् अपनी संहिता के भीतर", "भारतीय संस्करण, 1931 से पहले"],
+          "concerns": ["Digital Library of India के रिकॉर्ड में त्रुटियाँ आम हैं; मुखपृष्ठ देखना ज़रूरी", "प्रकाशक अज्ञात"]
+        },
+        {
+          "edition_id": "kanva-samhita-satavalekar-1956",
+          "kind": "संहिता (काण्व)",
+          "title": "Kanva Samhita, compiled and edited by Shripad Sharma (upload के शीर्षक के अनुसार)",
+          "editor_or_compiler": "श्रीपाद शर्मा (सातवलेकर), upload के शीर्षक के अनुसार",
+          "publisher": "upload के शीर्षक में 'Vasant Shripad Satvalekar'; मुखपृष्ठ देखना बाक़ी",
+          "year": 1956,
+          "indian": true,
+          "recension": "काण्व संहिता",
+          "internet_copy": "https://archive.org/details/AjVo_kanva-samhita-compiled-and-ed-by-shripad-sharma-1956-vasant-shripad-satvalekar",
+          "check_level": "uploader_metadata",
+          "copyright": "1956 का प्रकाशन → सर्वाधिकार-युक्त मानें; केवल मिलान।",
+          "strengths": ["वैदिक संहिता-संस्करणों की भारतीय परंपरा"],
+          "concerns": ["सर्वाधिकार", "मुखपृष्ठ नहीं देखा"]
+        },
+        {
+          "edition_id": "kanva-sayana-sampurnanand",
+          "kind": "संहिता (काण्व) + सायणभाष्य",
+          "title": "Shukla Yajurveda Kanva Samhita with Sayana Bhashya, edited by Chintamani Mishra Sharma",
+          "editor_or_compiler": "चिन्तामणि मिश्र शर्मा (upload के शीर्षक के अनुसार)",
+          "publisher": "Sampurnanand Sanskrit University, Varanasi (upload के शीर्षक के अनुसार)",
+          "year": null,
+          "indian": true,
+          "recension": "काण्व संहिता",
+          "internet_copy": "https://archive.org/details/cfbu_shukla-yajurveda-kanva-samhita-with-sayana-bhashya-edited-by-chintamani-mishra-s",
+          "check_level": "uploader_metadata",
+          "copyright": "आधुनिक विश्वविद्यालय-प्रकाशन → सर्वाधिकार-युक्त मानें; केवल मिलान।",
+          "strengths": ["विश्वविद्यालय का संस्करण, सायणभाष्य सहित"],
+          "concerns": ["सर्वाधिकार", "वर्ष और मुखपृष्ठ नहीं देखे"]
+        },
+        {
+          "edition_id": "nsp-madhyandina-1929",
+          "kind": "संहिता (माध्यन्दिन)",
+          "title": "Shukla Yajurveda Samhita, 1929",
+          "editor_or_compiler": "Wasudev Laxman Sastri Pansikar (upload के शीर्षक के अनुसार)",
+          "publisher": "Nirnaya Sagar Press (upload के शीर्षक के अनुसार)",
+          "year": 1929,
+          "indian": true,
+          "recension": "माध्यन्दिन संहिता; अध्याय 40 = ईशावास्य का माध्यन्दिन पाठ",
+          "internet_copy": "https://archive.org/details/ShuklaYajurvedaSamhita1929WLSPansikarNirnayaSagarPress",
+          "check_level": "uploader_metadata",
+          "copyright": "nsp-108-1925 जैसा: संपादक की मृत्यु-तिथि अज्ञात।",
+          "strengths": ["माध्यन्दिन पाठ का भारतीय मानक संस्करण (उम्मीदवार)"],
+          "concerns": ["वही संपादक, वही अनसुलझा सर्वाधिकार-तथ्य", "मुखपृष्ठ नहीं देखा"]
+        },
+        {
+          "edition_id": "weber-1852",
+          "kind": "संहिता (माध्यन्दिन और काण्व) + महीधर-भाष्य",
+          "title": "The White Yajurveda, Part I: The Vajasaneyi-Sanhita in the Madhyandina and the Kanva-Cakha, with the commentary of Mahidhara",
+          "editor_or_compiler": "Albrecht Weber",
+          "publisher": "Williams and Norgate, London (रिकॉर्ड के अनुसार)",
+          "year": 1852,
+          "indian": false,
+          "recension": "दोनों शाखाएँ",
+          "internet_copy": "https://archive.org/details/india.history.resource.93590",
+          "check_level": "catalogue_metadata",
+          "copyright": "1852 का प्रकाशन; संपादक की मृत्यु-तिथि पर दो स्रोत दर्ज करना बाक़ी।",
+          "strengths": ["दोनों शाखाओं का पाठ एक संस्करण में; शाखा-भेद देखने के लिए उपयोगी"],
+          "concerns": ["विदेशी संपादक", "मुखपृष्ठ नहीं देखा"]
+        },
+        {
+          "edition_id": "anantacharya-1896",
+          "kind": "उपनिषद्",
+          "title": "The Isavasyopanishad",
+          "editor_or_compiler": "Anantacharya (संग्रह के रिकॉर्ड के अनुसार); पहचान नहीं हुई",
+          "publisher": "रिकॉर्ड में नहीं",
+          "year": 1896,
+          "indian": true,
+          "recension": "देखना बाक़ी",
+          "internet_copy": "https://archive.org/details/in.ernet.dli.2015.405521",
+          "check_level": "catalogue_metadata",
+          "copyright": "तय नहीं: संपादक की पहचान नहीं।",
+          "strengths": ["भारतीय, पुराना"],
+          "concerns": ["संपादक और प्रकाशक अज्ञात; कसौटी 2 पर कमज़ोर"],
+          "witness_id": "ia-anantacharya-1896"
+        }
+      ],
+      "proposal": {
+        "status": "pending_owner",
+        "recension": "काण्व (18 मंत्र) को मुख्य पाठ रखें; माध्यन्दिन के भेद पाठभेद के रूप में दर्ज हों।",
+        "text_base": "nsp-108-1925, अगर उसके संपादक की मृत्यु-तिथि दो स्रोतों से मिल जाए; क्योंकि वही एक भारतीय संस्करण पूरे 108 उपनिषदों पर एक-सा आधार देता है।",
+        "until_then": "प्रदर्शन-पाठ के लिए सार्वजनिक-डोमेन संस्करण (roer-1850; या vanivilas-1910-v4, मुखपृष्ठ देखने के बाद)।",
+        "cross_check": ["kanva-samhita-1915", "kanva-samhita-satavalekar-1956", "weber-1852"],
+        "open_facts": ["वासुदेव लक्ष्मण शास्त्री पणशीकर की मृत्यु-तिथि (दो स्रोत)", "वाणी विलास 1910 और काण्व संहिता 1915 के मुखपृष्ठ", "निर्णयसागर 1925 की साफ़ प्रति"]
+      }
+    },
+    "gita": {
+      "name": "श्रीमद्भगवद्गीता",
+      "what_it_is": "महाभारत के भीष्मपर्व का अंश। प्रचलित पाठ 700 श्लोकों का है; महाभारत के समीक्षित संस्करण में इसका क्रमांक अलग चलता है (मास्टर योजना §3.1)।",
+      "what_it_is_check": "मास्टर योजना से; संस्करणों में श्लोक-गिनती अभी नहीं गिनी गई।",
+      "candidates": [
+        {
+          "edition_id": "anandashrama-gita-1909",
+          "kind": "गीता + शांकरभाष्य + आनन्दगिरि-टीका",
+          "title": "Shrimad Bhagavad Gita, compiled by Kashinath Shastri, with Anandagiri and Shankara (upload के शीर्षक के अनुसार)",
+          "editor_or_compiler": "काशीनाथ शास्त्री (upload के शीर्षक के अनुसार)",
+          "publisher": "Anandashram Press (upload के शीर्षक में 'Mumbai' लिखा है; जाँचना बाक़ी)",
+          "year": 1909,
+          "indian": true,
+          "recension": "प्रचलित पाठ (भाष्य-सहित); देखना बाक़ी",
+          "internet_copy": "https://archive.org/details/lfdw_shrimad-bhagavd-gita-compiled-by-kashinath-shastri-with-anandagiri-and-shaankar-",
+          "check_level": "uploader_metadata",
+          "copyright": "1909 का प्रकाशन; संपादक की मृत्यु-तिथि चाहिए।",
+          "strengths": ["आनन्दाश्रम ग्रंथमाला: भारतीय, संपादक नामित", "1931 से पहले"],
+          "concerns": ["मुखपृष्ठ नहीं देखा; स्थान पर संदेह", "संपादक की मृत्यु-तिथि अज्ञात"]
+        },
+        {
+          "edition_id": "nsp-gita-1936",
+          "kind": "गीता (टीकाओं सहित; देखना बाक़ी)",
+          "title": "Srimad Bhagavadgita",
+          "editor_or_compiler": "Wasudev Laxman Shastri Pansikar (संग्रह के रिकॉर्ड के अनुसार)",
+          "publisher": "रिकॉर्ड में नहीं (संभवतः निर्णयसागर; मुखपृष्ठ देखना बाक़ी)",
+          "year": 1936,
+          "indian": true,
+          "recension": "देखना बाक़ी",
+          "internet_copy": "https://archive.org/details/in.ernet.dli.2015.495984",
+          "check_level": "catalogue_metadata",
+          "copyright": "1936 का प्रकाशन: अमेरिका में सार्वजनिक डोमेन नहीं माना जा सकता; भारत में संपादक की मृत्यु-तिथि अज्ञात → केवल मिलान।",
+          "strengths": ["भारतीय मानक प्रेस का संस्करण (उम्मीदवार)"],
+          "concerns": ["सर्वाधिकार", "मुखपृष्ठ नहीं देखा"]
+        },
+        {
+          "edition_id": "bori-ce-bhishma",
+          "kind": "महाभारत का समीक्षित संस्करण, भीष्मपर्व",
+          "title": "The Mahabharata (Bhishma Parva), critically edited; ed. Belvalkar (upload के शीर्षक के अनुसार)",
+          "editor_or_compiler": "S. K. Belvalkar; प्रधान संपादक V. S. Sukthankar (upload के शीर्षक के अनुसार)",
+          "publisher": "Bhandarkar Oriental Research Institute, Poona (मास्टर योजना §3.1 के अनुसार यही आधार-संस्करण है)",
+          "year": null,
+          "indian": true,
+          "recension": "समीक्षित पाठ (पांडुलिपियों से)",
+          "internet_copy": "https://archive.org/details/izvp_the-mahabharata-bhishma-parva-part-16-ed.-belvalkar-critically-edited-by-sri-vis",
+          "check_level": "uploader_metadata",
+          "copyright": "बीसवीं सदी के मध्य का संस्थागत प्रकाशन → सर्वाधिकार-युक्त मानें; केवल मिलान और क्रमांक-map।",
+          "strengths": ["पांडुलिपि-आधार घोषित; विद्वानों में मानक"],
+          "concerns": ["सर्वाधिकार: प्रदर्शन-पाठ नहीं बन सकता", "वर्ष और मुखपृष्ठ नहीं देखे"]
+        }
+      ],
+      "not_yet_located": ["गीता प्रेस का मूल-पाठ संस्करण (इंटरनेट-प्रति नहीं ढूँढी गई)", "वाणी विलास 1910 का गीताभाष्य-खंड"],
+      "proposal": {
+        "status": "pending_owner",
+        "text_base": "प्रचलित 700-श्लोक पाठ, किसी सार्वजनिक-डोमेन भारतीय संस्करण से (उम्मीदवार: anandashrama-gita-1909, मुखपृष्ठ और संपादक-तथ्य देखने के बाद)।",
+        "cross_check": ["bori-ce-bhishma (क्रमांक-map और पाठभेद)", "nsp-gita-1936"],
+        "open_facts": ["आनन्दाश्रम 1909 का मुखपृष्ठ, स्थान और संपादक की मृत्यु-तिथि", "गीता प्रेस और वाणी विलास की प्रतियाँ", "हर संस्करण में श्लोक-गिनती"]
+      }
+    }
+  },
+  "next_tranches": [
+    "मुक्तिका के 108 उपनिषद् (संग्रह-स्तर पर: निर्णयसागर 1925; आनन्दाश्रम ग्रंथमाला; अड्यार)",
+    "चार वेद-संहिताएँ (शाखा-वार)",
+    "महाभारत और रामायण (समीक्षित संस्करण + प्रचलित पाठ)",
+    "18 महापुराण (वेंकटेश्वर, आनन्दाश्रम, काशिराज न्यास, गीता प्रेस)",
+    "आगे विषय-क्रम से (catalog/_taxonomy.json)"
+  ]
+}
