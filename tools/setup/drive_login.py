@@ -5,11 +5,12 @@ Kyon: rclone apna login hamesha 127.0.0.1:53682 par karta hai. Kuch Windows mach
 Yeh script wahi OAuth login (Desktop client, PKCE) ek khaali port par karti hai aur token ko rclone
 config ke usi remote mein likh deti hai. Scope sirf drive.file.
 
+    python tools/setup/drive_login.py --remote granth --client-json <file>  (naya client: Google se download hui client_secret_*.json)
     python tools/setup/drive_login.py --remote granth --ask-client          (naya client: ID aur secret poochhta hai)
     python tools/setup/drive_login.py --remote granth --reuse-from <remote>  (kisi purane remote ka client)
 
-- --ask-client: client ID aur secret terminal mein poochhe jaate hain (secret dikhta nahin). Agar remote pehle se
-  kisi doosre client ke saath bana hai, to uska client aur token naye se badal diye jaate hain.
+- --client-json / --ask-client: naya client file se padha jaata hai ya terminal mein poochha jaata hai (secret dikhta
+  nahin). Agar remote pehle se kisi doosre client ke saath bana hai, to uska client aur token naye se badal diye jaate hain.
 - --reuse-from: client ID/secret purane remote se sirf memory mein padhe jaate hain. Koi maan chhapta nahin.
 - rclone config mein sirf [--remote] wala section badalta hai (ek 'token = ...' line). Baaki file jaisi thi.
 - Token sirf is laptop ke rclone config mein rehta hai: na repo mein, na chat mein.
@@ -93,8 +94,29 @@ def wait_for_code(port: int, state: str) -> str:
     return got["code"]
 
 
+def conf_path() -> str:
+    return rclone("config", "file").strip().splitlines()[-1].strip()
+
+
+def new_section(remote: str, cid: str, sec: str) -> None:
+    """[remote] ko naye client ke saath likho (purana section, agar ho, pehle hata diya jaata hai)."""
+    if f"{remote}:" in rclone("listremotes").split():
+        subprocess.run(["rclone", "config", "delete", remote], check=True, capture_output=True)
+    path = conf_path()
+    with open(path, encoding="utf-8", newline="") as f:
+        text = f.read()
+    nl = "\r\n" if "\r\n" in text else "\n"
+    if text and not text.endswith(nl):
+        text += nl
+    text += nl.join([f"[{remote}]", "type = drive", "scope = drive.file", f"client_id = {cid}", f"client_secret = {sec}", "", ""])
+    tmp = path + ".tmp-drive-login"
+    with open(tmp, "w", encoding="utf-8", newline="") as f:
+        f.write(text)
+    os.replace(tmp, path)
+
+
 def write_token(remote: str, token_json: str) -> None:
-    path = rclone("config", "file").strip().splitlines()[-1].strip()
+    path = conf_path()
     with open(path, encoding="utf-8", newline="") as f:
         text = f.read()
     nl = "\r\n" if "\r\n" in text else "\n"
@@ -122,18 +144,23 @@ def main() -> None:
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--reuse-from", help="woh rclone remote jiska OAuth client dobara istemal ho")
     g.add_argument("--ask-client", action="store_true", help="client ID aur secret terminal mein poochho")
+    g.add_argument("--client-json", help="Google Cloud se download hui client_secret_*.json (Desktop client)")
     a = ap.parse_args()
 
     remotes = rclone("listremotes").split()
-    if a.ask_client:
-        cid = input("Client ID chipkao (....apps.googleusercontent.com): ").strip()
-        sec = getpass.getpass("Client secret chipkao (dikhega nahin), phir Enter: ").strip()
+    if a.ask_client or a.client_json:
+        if a.client_json:
+            with open(a.client_json, encoding="utf-8") as f:
+                inst = json.load(f).get("installed") or {}
+            cid, sec = inst.get("client_id", ""), inst.get("client_secret", "")
+        else:
+            cid = input("Client ID chipkao (....apps.googleusercontent.com): ").strip()
+            sec = getpass.getpass("Client secret chipkao (dikhega nahin), phir Enter: ").strip()
         if not cid.endswith(".apps.googleusercontent.com") or not sec:
-            sys.exit("Client ID ya secret sahi nahin dikhta; ruk rahe hain.")
-        if f"{a.remote}:" in remotes:
-            # purane client ka token naye client ke saath nahin chalega: section ko naye client par le aao
-            subprocess.run(["rclone", "config", "delete", a.remote], check=True, capture_output=True)
-            remotes = rclone("listremotes").split()
+            sys.exit("Client ID ya secret sahi nahin dikhta (Desktop client chahiye); ruk rahe hain.")
+        # purane client ka token naye client ke saath nahin chalega: section naye client par likho
+        new_section(a.remote, cid, sec)
+        remotes = rclone("listremotes").split()
     else:
         if f"{a.reuse_from}:" not in remotes:
             sys.exit(f"Remote '{a.reuse_from}' nahin mila.")
