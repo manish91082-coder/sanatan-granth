@@ -1,0 +1,327 @@
+{
+  "generated_at": "2026-11-16T13:19:39Z",
+  "text_id": "isha",
+  "pipeline_version": "pilot-e2e-0.1",
+  "mock": false,
+  "status": "ok",
+  "batch_id": "manual-43874308820",
+  "job_key": null,
+  "run": "43874308820",
+  "segments": 18,
+  "segments_done": 18,
+  "batch_size": 18,
+  "silent_omissions": 0,
+  "cascade": {
+    "first_pass_agreed": 5,
+    "sent_to_cascade": 13,
+    "agreement_rate": 0.278,
+    "go_threshold": 0.6
+  },
+  "badges": {
+    "C": 10,
+    "D": 8
+  },
+  "flags_by_code": {
+    "CONTRADICTED": 8
+  },
+  "d_checks": {
+    "implemented": [
+      "D2",
+      "D3",
+      "D6",
+      "D7",
+      "D8"
+    ],
+    "not_run": [
+      "D1",
+      "D4",
+      "D5",
+      "D9",
+      "D10",
+      "D12"
+    ],
+    "veto_counts": {}
+  },
+  "empirical_claims_flagged_by_judge": 0,
+  "models": {
+    "draft_a": "groq/qwen/qwen3.8-27b",
+    "draft_b": "google_ai_studio/gemini-3.5-flash-lite",
+    "draft_c": "groq/openai/gpt-oss-120b",
+    "judge_pool": [
+      "groq/openai/gpt-oss-120b",
+      "google_ai_studio/gemini-3.5-flash-lite",
+      "groq/qwen/qwen3.8-27b"
+    ]
+  },
+  "families": {
+    "draft_a": "alibaba-qwen",
+    "draft_b": "google",
+    "draft_c": "openai"
+  },
+  "api": {
+    "calls": 19,
+    "retries": 7,
+    "http_429": 3,
+    "prompt_tokens": 10947,
+    "output_tokens": 14709,
+    "by_role": {
+      "draft_a": {
+        "calls": 4,
+        "retries": 1,
+        "http_429": 1,
+        "prompt_tokens": 963,
+        "output_tokens": 1412,
+        "seconds": 6.05,
+        "waited_s": 4.0,
+        "errors": [
+          "HTTP 400: Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details."
+        ]
+      },
+      "draft_b": {
+        "calls": 5,
+        "retries": 4,
+        "http_429": 0,
+        "prompt_tokens": 1091,
+        "output_tokens": 2183,
+        "seconds": 13.91,
+        "waited_s": 60.0,
+        "errors": []
+      },
+      "draft_c": {
+        "calls": 5,
+        "retries": 2,
+        "http_429": 2,
+        "prompt_tokens": 1290,
+        "output_tokens": 4858,
+        "seconds": 11.63,
+        "waited_s": 30.0,
+        "errors": []
+      },
+      "judge1": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 3635,
+        "output_tokens": 4971,
+        "seconds": 11.04,
+        "waited_s": 0.0,
+        "errors": []
+      },
+      "judge2": {
+        "calls": 3,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 3968,
+        "output_tokens": 1285,
+        "seconds": 4.81,
+        "waited_s": 0.0,
+        "errors": []
+      }
+    }
+  },
+  "seconds_total": 142.0,
+  "stages": [
+    {
+      "agent": "source_witness",
+      "stage": "गवाह से पाठ लाना",
+      "started": "2026-11-16T13:17:17Z",
+      "status": "ok",
+      "duration_s": 0.4
+    },
+    {
+      "agent": "aligner",
+      "stage": "ID और गिनती (गवाह के चिह्नों से)",
+      "started": "2026-11-16T13:17:17Z",
+      "status": "ok",
+      "duration_s": 0.0
+    },
+    {
+      "agent": "foreman_code",
+      "stage": "मॉडल और परिवार चुनना",
+      "started": "2026-11-16T13:17:17Z",
+      "status": "ok",
+      "duration_s": 0.11
+    },
+    {
+      "agent": "draft_a",
+      "stage": "ड्राफ़्ट A",
+      "started": "2026-11-16T13:17:18Z",
+      "status": "ok",
+      "model": "groq/qwen/qwen3.8-27b",
+      "family": "alibaba-qwen",
+      "duration_s": 10.05,
+      "usage": {
+        "calls": 4,
+        "retries": 1,
+        "http_429": 1,
+        "prompt_tokens": 963,
+        "output_tokens": 1412,
+        "seconds": 6.05,
+        "waited_s": 4.0,
+        "errors": [
+          "HTTP 400: Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details."
+        ]
+      }
+    },
+    {
+      "agent": "draft_b",
+      "stage": "ड्राफ़्ट B",
+      "started": "2026-11-16T13:17:28Z",
+      "status": "ok",
+      "model": "google_ai_studio/gemini-3.5-flash-lite",
+      "family": "google",
+      "duration_s": 73.91,
+      "usage": {
+        "calls": 5,
+        "retries": 4,
+        "http_429": 0,
+        "prompt_tokens": 1091,
+        "output_tokens": 2183,
+        "seconds": 13.91,
+        "waited_s": 60.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "जज, पहला दौर",
+      "started": "2026-11-16T13:18:41Z",
+      "status": "ok",
+      "model": "groq/openai/gpt-oss-120b",
+      "family": "openai",
+      "duration_s": 11.04,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 3635,
+        "output_tokens": 4971,
+        "seconds": 11.04,
+        "waited_s": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "draft_c",
+      "stage": "ड्राफ़्ट C (केवल असहमति वाले)",
+      "started": "2026-11-16T13:18:53Z",
+      "status": "ok",
+      "model": "groq/openai/gpt-oss-120b",
+      "family": "openai",
+      "duration_s": 41.63,
+      "usage": {
+        "calls": 5,
+        "retries": 2,
+        "http_429": 2,
+        "prompt_tokens": 1290,
+        "output_tokens": 4858,
+        "seconds": 11.63,
+        "waited_s": 30.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "जज, दूसरा दौर (alibaba-qwen बनाम openai)",
+      "started": "2026-11-16T13:19:34Z",
+      "status": "ok",
+      "model": "google_ai_studio/gemini-3.5-flash-lite",
+      "family": "google",
+      "duration_s": 1.78,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 892,
+        "output_tokens": 342,
+        "seconds": 1.78,
+        "waited_s": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "जज, दूसरा दौर (google बनाम openai)",
+      "started": "2026-11-16T13:19:36Z",
+      "status": "ok",
+      "model": "groq/qwen/qwen3.8-27b",
+      "family": "alibaba-qwen",
+      "duration_s": 3.03,
+      "usage": {
+        "calls": 3,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 3968,
+        "output_tokens": 1285,
+        "seconds": 4.81,
+        "waited_s": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "hard_checks",
+      "stage": "पक्की जाँचें D2/D3/D6/D7/D8",
+      "started": "2026-11-16T13:19:39Z",
+      "status": "ok",
+      "duration_s": 0.01
+    },
+    {
+      "agent": "export_prep",
+      "stage": "परतों का पेड़ + R-जाँचें",
+      "started": "2026-11-16T13:19:39Z",
+      "status": "ok",
+      "duration_s": 0.08
+    }
+  ],
+  "gates": {
+    "R1": "green",
+    "R2": "red",
+    "R3": "green",
+    "R4": "green",
+    "R5": "green",
+    "R6": "red",
+    "R7": "green",
+    "R8": "green",
+    "R9": "green",
+    "R10": "green",
+    "R11": "green",
+    "R12": "green",
+    "R13": "green",
+    "R14": "green",
+    "A3/D11": "green"
+  },
+  "gates_expected_red": {
+    "R2": "पाठ lock नहीं है (स्रोत का फ़ैसला बाक़ी)",
+    "R6": "मूल-पाठ का वाहक गवाह CC BY-SA है; प्रदर्शन-योग्य स्रोत तय नहीं"
+  },
+  "gate_findings": [
+    {
+      "check": "R2",
+      "path": "texts/isha",
+      "msg": "text-lock से पहले अनुवाद-परत मौजूद है"
+    },
+    {
+      "check": "R6",
+      "path": "texts/isha/root/sa-Deva/1.json",
+      "msg": "परत का लाइसेंस 'CC-BY-SA-4.0' display allow-list में नहीं"
+    }
+  ],
+  "problems": [],
+  "source": {
+    "base_edition_provisional": "ia-nsp-108-1925",
+    "carrier_witness": "sa-ws-isha",
+    "carrier_licence": "CC-BY-SA-4.0",
+    "carrier_sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
+    "witness_status": "W1 (lock नहीं)",
+    "print_coverage_min_mean": [
+      0.3333,
+      0.8313
+    ]
+  },
+  "limits": [
+    "परीक्षण-run: स्रोत अस्थायी, पाठ lock नहीं; बना पेड़ repo में नहीं गया",
+    "बैज C/D मशीन-जाँच के हैं; किसी इंसान ने अनुवाद नहीं देखा",
+    "D1, D4, D5, D9, D10, D12 नहीं चलीं",
+    "एक छोटा ग्रंथ (18 मंत्र): दरें pilot-संकेत हैं, निष्कर्ष नहीं"
+  ]
+}
