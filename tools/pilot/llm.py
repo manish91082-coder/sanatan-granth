@@ -292,8 +292,8 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
         if st == 429:
             usage.http_429 += 1
             _otpm_learn(model, json.dumps(js))
-            if re.search(r"daily free allocation", json.dumps(js), re.I):
-                break  # Workers AI का दिन-भर का मुफ़्त हिस्सा ख़त्म: 00:00 UTC से पहले दोहराना बेकार है
+            if re.search(r"daily free allocation|tokens per day|requests per day|\(TPD\)|\(RPD\)|PerDay", json.dumps(js), re.I):
+                break  # दिन-भर का मुफ़्त हिस्सा ख़त्म (Workers AI neurons, Groq TPD/RPD, Gemini per-day): मिनटों इंतज़ार बेकार है
         if st in (429, 500, 502, 503, 504, 0):
             if st != 429:
                 hard_fails += 2 if st == 0 else 1  # समय-सीमा पार (st 0) सबसे महँगी विफलता है: उसे दो बार से ज़्यादा नहीं
