@@ -15,8 +15,8 @@
 | 0.3 | AI Studio: एक project, एक key; RPD/RPM; Batch परीक्षण | ✅ सीमाएँ दर्ज; key Actions से चली (Flash-Lite, strict JSON ठीक); मुफ़्त Batch ने HTTP 400 दिया, इसलिए Batch क्षमता में नहीं गिना। फ़ैसला: एक project, एक key (`DECISIONS.md`) |
 | 0.4 | Kaggle API token; quota, reset-दिन | 🔶 token लगा और चला (नया `KGAT_` रूप → `KAGGLE_API_TOKEN`)। बाक़ी: quota-पन्ने से GPU/TPU घंटे और reset-दिन |
 | 0.5 | Groq key; Workers AI | ✅ Groq चला (gpt-oss-120b, qwen3.8-27b); Cloudflare token और Account ID परखे गए (Workers 200, D1 200) |
-| 0.6 | Google Cloud project → Drive API → OAuth "In production" → `drive.file` → Desktop client | ✅ मालिक के फ़ैसले से मौजूदा project का Desktop client दोबारा उपयोग (consent "In production"); नया project नहीं बना। अलगाव अधूरा: `drive/README.md` देखें |
-| 0.7 | rclone remote `granth:`; `Sanatan_Library/` tree; token Kaggle Secret में | ✅ remote (`drive.file`), tree और `06_runs/` में test-फ़ाइल बनी (16 नवंबर)। Kaggle Secret **रुका**: पहले अलगाव पर मालिक का फ़ैसला |
+| 0.6 | Google Cloud project → Drive API → OAuth "In production" → `drive.file` → Desktop client | ✅ 16 नवंबर: मालिक के एक ख़ाली project में app "Sanatan Granth Library" (In production, Drive API चालू, billing नहीं); नया project नहीं बनाना पड़ा |
+| 0.7 | rclone remote `granth:`; `Sanatan_Library/` tree; token Kaggle Secret में | ✅ remote (अपना client, `drive.file`), tree और `06_runs/` में test-फ़ाइल; अलगाव जाँचा (केवल `Sanatan_Library` दिखता है)। Kaggle Secret `RCLONE_GRANTH_CONF` मालिक को डालना बाक़ी (Kaggle का काम शुरू होने पर) |
 | 0.8 | public repo, branch protection, required checks, CODEOWNERS, `CLAUDE.md` | ✅ protection लगा; परीक्षण-PR #1 पर लाल check ने merge रोका |
 | 0.9 | schemas, ID-नियम, SPDX allow-list, `swarm/*`, `policy/*`, 3 canaries | ✅ CI में canaries 3/3 |
 | 0.10 | जाँचें v0: R1–R14, A3/D11, D2/D3/D6/D7/D8 | ✅ v0। D1, D4, D5, D9, D10, D12 अभी `not_run` (रूप-विश्लेषक P2 में); ईश पर चलाना बाक़ी |
@@ -49,9 +49,9 @@
 
 ## अगले 3 काम
 
-1. **P0-gate की सातों शर्तें 16 नवंबर को पूरी हुईं।** बचा: Drive-अलगाव पर मालिक का फ़ैसला (अलग Cloud project या मौजूदा ही), फिर Kaggle Secret; 24 नवंबर को 0.14; Kaggle का quota-पन्ना (0.4)।
+1. **P0-gate की सातों शर्तें 16 नवंबर को पूरी हुईं; Drive का अलगाव भी पूरा।** बचा: 24 नवंबर को 0.14; Kaggle का quota-पन्ना (0.4) और Kaggle Secret।
 2. ईश का text-lock: निर्णयसागर 1925 (`ia-nsp-108-1925`) की साफ़ प्रति या टंकण; संपादक की मृत्यु-तिथि दो स्रोतों से; फिर e-text गवाहों से मिलान।
 3. Gemini/Groq से ईश का पहला ड्राफ़्ट + जूरी (P2 2.2–2.4); Hiriyanna 1911 का PD अंग्रेज़ी अनुवाद संदर्भ-गवाह।
 
 ---
-अंतिम अपडेट: 2026-11-16 · claude-fable-5-2 · निर्माण-session 1, turn 22
+अंतिम अपडेट: 2026-11-16 · claude-fable-5-2 · निर्माण-session 1, turn 26
