@@ -234,3 +234,11 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **v0.2 का नियम-बदलाव:** दूसरे दौर में अगर दूसरा जज भी पहले जज का चुना ड्राफ़्ट ही चुने और ठीक कहे, तो झंडा नहीं (हारे ड्राफ़्ट की ग़लती से D नहीं)।
 - **"स्वचालित" का सही अर्थ अभी:** एक बटन (`foreman-enqueue`) से लेकर merge तक कोई हाथ नहीं लगता। पर Foreman अभी अपने-आप अगला ग्रंथ नहीं चुनता (ग्रंथ-स्तर की state-machine P3 में)।
 - **न करें:** `texts/isha/` में कुछ न लिखें जब तक स्रोत तय और lock न हो; R2/R6 को "ठीक" करने के लिए लाइसेंस या lock न गढ़ें।
+
+### session 1, turn 30 (2026-11-16, claude-fable-5-2) — काम बीच में: pilot v0.3 (branch `pilot-v03`, PR अभी नहीं खुला)
+
+- **मालिक का चुनाव:** "कड़ी ठीक करो" (pilot की कमज़ोरियाँ)।
+- **branch `pilot-v03` पर हो चुका:** Workers AI provider (`tools/pilot/llm.py`), Groq pacing (TPM headers + OTPM), जज में प्रमाण-क्षेत्र और A/B क्रम-बदल, छूटे टुकड़ों का दोबारा प्रयास (`ask_items`), हर भूमिका की fallback-सूची (`draft_fb`, `judge_fb`), जज-स्थिरता का माप, अधूरी जूरी पर run विफल, `tools/pilot/bakeoff.py`, `tools/providers/probe.py`, workflows में Workers AI के secrets और `mode`/`open_pr` inputs।
+- **branch पर परखने का तरीका (PR के बिना):** `gh workflow run pilot-e2e.yml --ref pilot-v03 -f text_id=isha -f mode=pipeline -f open_pr=no`
+- **बाक़ी:** असली run का नतीजा पढ़ना; PR खोलना (protected paths: `.github/`, `tools/` → `owner-approved`); merge के बाद `foreman-enqueue` से एक run; PLAN/DECISIONS/quotas अपडेट।
+
