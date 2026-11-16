@@ -1,0 +1,141 @@
+"""मुफ़्त providers की जाँच (GitHub Actions में; keys केवल env से, कहीं छपती नहीं; खाते का ID रिपोर्ट में नहीं जाता)।
+
+  1. Cloudflare Workers AI: पाठ-मॉडलों की सूची; कुछ परिवारों पर एक छोटा JSON-अनुरोध (मौजूदा token चलता है या नहीं)
+  2. Groq: हर पाठ-मॉडल पर एक छोटा अनुरोध; rate-limit headers (असली मुफ़्त सीमाएँ)
+रिपोर्ट में केवल नाम, गिनतियाँ, अवस्थाएँ, headers के मान और छँटे हुए त्रुटि-संदेश। मॉडल का लिखा पाठ नहीं जाता।
+भेजा गया पाठ केवल सार्वजनिक है (मुण्डक 3.1.6 का अंश)।
+"""
+from __future__ import annotations
+
+import json
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+
+ACCT = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")
+CF_TOKEN = os.environ.get("CLOUDFLARE_API_TOKEN", "")
+GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
+UA = "sanatan-granth-probe/0.1 (open library project)"
+SYSTEM = 'Translate each Sanskrit segment into English. Output JSON only: {"items":[{"id":"<id>","en":"<English>"}]}. One item per given id.'
+USER = "smoke:1: सत्यमेव जयते नानृतम्\nsmoke:2: सत्येन पन्था विततो देवयानः"
+CF_FAMILIES = [("meta", r"llama-4|llama-3\.3-70b|llama.*70b|llama"), ("mistral", r"mistral-small|mistral"), ("openai", r"gpt-oss-120b|gpt-oss"),
+               ("alibaba-qwen", r"qwen3|qwen"), ("google", r"gemma-4|gemma-3|gemma"), ("deepseek", r"deepseek"), ("moonshot", r"kimi")]
+
+
+def scrub(s: object) -> str:
+    s = str(s)
+    for secret in (ACCT, CF_TOKEN, GROQ_KEY):
+        if secret:
+            s = s.replace(secret, "<hidden>")
+    s = re.sub(r"gsk_[0-9A-Za-z]{10,}", "<key>", s)
+    s = re.sub(r"\b[0-9a-f]{32}\b", "<id>", s)
+    return s[:300]
+
+
+def http(method: str, url: str, headers: dict, body: dict | None = None, timeout: int = 90) -> tuple[int, dict, dict, float]:
+    req = urllib.request.Request(url, method=method, data=json.dumps(body).encode() if body is not None else None,
+                                 headers={"content-type": "application/json", "user-agent": UA, **headers})
+    t0 = time.time()
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.status, json.loads(r.read() or b"{}"), {k.lower(): v for k, v in r.headers.items()}, time.time() - t0
+    except urllib.error.HTTPError as e:
+        try:
+            err = json.loads(e.read() or b"{}")
+        except Exception:
+            err = {}
+        return e.code, err, {k.lower(): v for k, v in (e.headers or {}).items()}, time.time() - t0
+    except Exception as e:  # noqa: BLE001
+        return 0, {"error": type(e).__name__}, {}, time.time() - t0
+
+
+def parse_ok(text: str) -> bool:
+    text = re.sub(r"<think>.*?</think>", "", text or "", flags=re.S).strip()
+    text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text)
+    try:
+        obj = json.loads(text[text.find("{"):text.rfind("}") + 1])
+        return sorted(i.get("id") for i in obj.get("items", [])) == ["smoke:1", "smoke:2"]
+    except Exception:
+        return False
+
+
+def chat(url: str, token: str, model: str, json_mode: bool) -> dict:
+    body = {"model": model, "temperature": 0, "max_tokens": 400,
+            "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": USER}]}
+    if json_mode:
+        body["response_format"] = {"type": "json_object"}
+    st, js, hd, dt = http("POST", url, {"authorization": "Bearer " + token}, body)
+    msg = ((js.get("choices") or [{}])[0].get("message") or {}) if st == 200 else {}
+    out = {"model": model, "json_mode": json_mode, "http": st, "seconds": round(dt, 2), "ids_ok": parse_ok(msg.get("content") or "") if st == 200 else False,
+           "usage": js.get("usage") if st == 200 else None,
+           "ratelimit": {k: v for k, v in hd.items() if k.startswith("x-ratelimit") or k == "retry-after"}}
+    if st != 200:
+        out["error"] = scrub(json.dumps(js.get("errors") or js.get("error") or js, ensure_ascii=False))
+    return out
+
+
+def cloudflare() -> dict:
+    rep: dict = {"token_present": bool(CF_TOKEN), "account_present": bool(ACCT)}
+    if not (CF_TOKEN and ACCT):
+        return rep
+    base = f"https://api.cloudflare.com/client/v4/accounts/{ACCT}/ai"
+    names: list[str] = []
+    for page in range(1, 4):
+        st, js, _, _ = http("GET", f"{base}/models/search?per_page=100&page={page}&task=" + urllib.parse.quote("Text Generation"), {"authorization": "Bearer " + CF_TOKEN})
+        if st != 200:
+            rep["models_http"] = st
+            rep["models_error"] = scrub(json.dumps(js.get("errors") or js, ensure_ascii=False))
+            break
+        got = [m.get("name", "") for m in js.get("result", [])]
+        names += got
+        if len(got) < 100:
+            break
+    rep["text_models"] = sorted(set(names))
+    tests = []
+    for fam, rx in CF_FAMILIES:
+        pick = None
+        for alt in rx.split("|"):
+            pick = next((n for n in sorted(names, reverse=True) if re.search(alt, n, re.I) and not re.search(r"guard|lora|vision|coder|embedding", n, re.I)), None)
+            if pick:
+                break
+        if not pick:
+            continue
+        r = chat(f"{base}/v1/chat/completions", CF_TOKEN, pick, True)
+        if r["http"] == 400:
+            r2 = chat(f"{base}/v1/chat/completions", CF_TOKEN, pick, False)
+            r2["json_mode_400"] = r.get("error")
+            r = r2
+        r["family"] = fam
+        tests.append(r)
+    rep["tests"] = tests
+    return rep
+
+
+def groq() -> dict:
+    rep: dict = {"key_present": bool(GROQ_KEY)}
+    if not GROQ_KEY:
+        return rep
+    st, js, _, _ = http("GET", "https://api.groq.com/openai/v1/models", {"authorization": "Bearer " + GROQ_KEY})
+    ids = sorted(m["id"] for m in js.get("data", [])) if st == 200 else []
+    rep["models"] = ids
+    rep["tests"] = [chat("https://api.groq.com/openai/v1/chat/completions", GROQ_KEY, i, True)
+                    for i in ids if not re.search(r"whisper|tts|guard|orpheus|allam", i, re.I)]
+    return rep
+
+
+def main() -> int:
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+    rep = {"generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "cloudflare_workers_ai": cloudflare(), "groq": groq()}
+    print(json.dumps(rep, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
