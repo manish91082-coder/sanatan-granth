@@ -19,6 +19,7 @@ GROQ_BASE = "https://api.groq.com/openai/v1"
 CF_BASE = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/v1"
 UA = "sanatan-granth-pilot/0.3 (open library project)"
 MAX_RETRY = 5
+MAX_RETRY_5XX = 3  # 5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
 PACE_MAX_WAIT_S = 62.0
 
 
@@ -217,6 +218,7 @@ def _openai_style(model: Model, system: str, user: str, max_out: int) -> tuple[i
 def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int = 1800) -> object:
     """एक JSON-उत्तर। विफल होने पर RuntimeError (संदेश में key नहीं)।"""
     last = "no attempt"
+    hard_fails = 0
     for attempt in range(MAX_RETRY):
         _pace_before(model, estimate_tokens(system, user, est_out), usage)
         t0 = time.time()
@@ -259,6 +261,10 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
         if st == 429:
             usage.http_429 += 1
         if st in (429, 500, 502, 503, 504, 0):
+            if st != 429:
+                hard_fails += 1
+                if hard_fails >= MAX_RETRY_5XX:
+                    break
             w = _wait_hint(js, hd, attempt)
             usage.retries += 1
             usage.waited_s += w
