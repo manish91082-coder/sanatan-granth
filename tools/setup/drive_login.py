@@ -5,9 +5,12 @@ Kyon: rclone apna login hamesha 127.0.0.1:53682 par karta hai. Kuch Windows mach
 Yeh script wahi OAuth login (Desktop client, PKCE) ek khaali port par karti hai aur token ko rclone
 config ke usi remote mein likh deti hai. Scope sirf drive.file.
 
-    python tools/setup/drive_login.py --remote granth --reuse-from <purane remote ka naam>
+    python tools/setup/drive_login.py --remote granth --ask-client          (naya client: ID aur secret poochhta hai)
+    python tools/setup/drive_login.py --remote granth --reuse-from <remote>  (kisi purane remote ka client)
 
-- Client ID/secret purane remote se sirf memory mein padhe jaate hain. Koi maan chhapta nahin.
+- --ask-client: client ID aur secret terminal mein poochhe jaate hain (secret dikhta nahin). Agar remote pehle se
+  kisi doosre client ke saath bana hai, to uska client aur token naye se badal diye jaate hain.
+- --reuse-from: client ID/secret purane remote se sirf memory mein padhe jaate hain. Koi maan chhapta nahin.
 - rclone config mein sirf [--remote] wala section badalta hai (ek 'token = ...' line). Baaki file jaisi thi.
 - Token sirf is laptop ke rclone config mein rehta hai: na repo mein, na chat mein.
 """
@@ -16,6 +19,7 @@ from __future__ import annotations
 import argparse
 import base64
 import datetime as dt
+import getpass
 import hashlib
 import http.server
 import json
@@ -115,13 +119,25 @@ def write_token(remote: str, token_json: str) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--remote", default="granth")
-    ap.add_argument("--reuse-from", required=True, help="woh rclone remote jiska OAuth client dobara istemal ho")
+    g = ap.add_mutually_exclusive_group(required=True)
+    g.add_argument("--reuse-from", help="woh rclone remote jiska OAuth client dobara istemal ho")
+    g.add_argument("--ask-client", action="store_true", help="client ID aur secret terminal mein poochho")
     a = ap.parse_args()
 
     remotes = rclone("listremotes").split()
-    if f"{a.reuse_from}:" not in remotes:
-        sys.exit(f"Remote '{a.reuse_from}' nahin mila.")
-    cid, sec = client_of(a.reuse_from)
+    if a.ask_client:
+        cid = input("Client ID chipkao (....apps.googleusercontent.com): ").strip()
+        sec = getpass.getpass("Client secret chipkao (dikhega nahin), phir Enter: ").strip()
+        if not cid.endswith(".apps.googleusercontent.com") or not sec:
+            sys.exit("Client ID ya secret sahi nahin dikhta; ruk rahe hain.")
+        if f"{a.remote}:" in remotes:
+            # purane client ka token naye client ke saath nahin chalega: section ko naye client par le aao
+            subprocess.run(["rclone", "config", "delete", a.remote], check=True, capture_output=True)
+            remotes = rclone("listremotes").split()
+    else:
+        if f"{a.reuse_from}:" not in remotes:
+            sys.exit(f"Remote '{a.reuse_from}' nahin mila.")
+        cid, sec = client_of(a.reuse_from)
     if f"{a.remote}:" not in remotes:
         subprocess.run(["rclone", "config", "create", a.remote, "drive", "scope=drive.file", f"client_id={cid}",
                         f"client_secret={sec}", "config_is_local=false", "--non-interactive", "--no-output"],
