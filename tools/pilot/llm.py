@@ -19,7 +19,8 @@ GROQ_BASE = "https://api.groq.com/openai/v1"
 CF_BASE = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/v1"
 UA = "sanatan-granth-pilot/0.3 (open library project)"
 MAX_RETRY = 5
-MAX_RETRY_5XX = 3  # 5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
+TIMEOUT_S = {"google_ai_studio": 300, "groq": 120, "cloudflare": 150}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
+MAX_RETRY_5XX = 3  #5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
 PACE_MAX_WAIT_S = 62.0
 
 
@@ -203,10 +204,10 @@ def _openai_style(model: Model, system: str, user: str, max_out: int) -> tuple[i
         url, token = CF_BASE.format(acct=os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")) + "/chat/completions", os.environ.get("CLOUDFLARE_API_TOKEN", "")
         body = {"model": model.name, "temperature": 0, "max_tokens": max_out, "response_format": {"type": "json_object"}}
     body["messages"] = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-    st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body)
+    st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body, TIMEOUT_S[model.provider])
     if st == 400 and re.search(r"response_format|json_validate_failed|Failed to (generate|validate) JSON|json", json.dumps(js), re.I):
         body.pop("response_format")  # JSON-mode विफल: सादा उत्तर माँगें, JSON हम ख़ुद निकालेंगे
-        st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body)
+        st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body, TIMEOUT_S[model.provider])
     content: object = ""
     if st == 200:
         msg = (js.get("choices") or [{}])[0].get("message") or {}
@@ -224,16 +225,17 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
         t0 = time.time()
         neurons = 0.0
         if model.provider == "google_ai_studio":
-            st, js, hd = _http("POST", f"{GEMINI_BASE}/models/{model.name}:generateContent",
-                               {"x-goog-api-key": os.environ.get("GEMINI_API_KEY", "")},
-                               {"systemInstruction": {"parts": [{"text": system}]},
-                                "contents": [{"role": "user", "parts": [{"text": user}]}],
-                                "generationConfig": {"temperature": 0, "responseMimeType": "application/json"}})
-            if st == 400 and re.search(r"system|developer instruction|json mode|mime", json.dumps(js), re.I):
-                # कुछ मॉडल (Gemma) systemInstruction या JSON-mode नहीं लेते: निर्देश संदेश में जोड़कर सादा अनुरोध
-                st, js, hd = _http("POST", f"{GEMINI_BASE}/models/{model.name}:generateContent",
-                                   {"x-goog-api-key": os.environ.get("GEMINI_API_KEY", "")},
-                                   {"contents": [{"role": "user", "parts": [{"text": system + "\n\n" + user}]}], "generationConfig": {"temperature": 0}})
+            plain = {"contents": [{"role": "user", "parts": [{"text": system + "\n\n" + user}]}], "generationConfig": {"temperature": 0}}
+            url, key = f"{GEMINI_BASE}/models/{model.name}:generateContent", {"x-goog-api-key": os.environ.get("GEMINI_API_KEY", "")}
+            if "gemma" in model.name.lower():
+                # Gemma systemInstruction और JSON-mode नहीं लेता: निर्देश संदेश में जोड़कर सादा अनुरोध
+                st, js, hd = _http("POST", url, key, plain, TIMEOUT_S[model.provider])
+            else:
+                st, js, hd = _http("POST", url, key, {"systemInstruction": {"parts": [{"text": system}]},
+                                                     "contents": [{"role": "user", "parts": [{"text": user}]}],
+                                                     "generationConfig": {"temperature": 0, "responseMimeType": "application/json"}}, TIMEOUT_S[model.provider])
+                if st == 400 and re.search(r"system|developer instruction|json mode|mime", json.dumps(js), re.I):
+                    st, js, hd = _http("POST", url, key, plain, TIMEOUT_S[model.provider])
             text: object = "".join(p.get("text", "") for p in (js.get("candidates") or [{}])[0].get("content", {}).get("parts", []) if not p.get("thought")) if st == 200 else ""
             um = js.get("usageMetadata", {}) if st == 200 else {}
             ptok, otok = um.get("promptTokenCount", 0), um.get("candidatesTokenCount", 0) + um.get("thoughtsTokenCount", 0)

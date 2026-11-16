@@ -23,13 +23,13 @@ sys.path.insert(0, str(REPO / "tools" / "witness"))
 from tools.pilot.llm import GEMINI_BASE, Model, Usage, _http, available, parse_model  # noqa: E402
 from tools.pilot.run_e2e import LABELS, OK_LABELS, draft, judge_one, load_source, now_iso, write_json  # noqa: E402
 
+# Flash-वर्ग (मुफ़्त quota 20/दिन, 16 नवंबर को ख़त्म मिला) और nemotron (अनुरोध अटकता रहा) default सूची में नहीं; --candidates से जोड़े जा सकते हैं।
 CANDIDATES = [
-    "groq:qwen/qwen3.8-27b", "groq:openai/gpt-oss-120b",
-    "google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:~gemma-4-31b-it$", "google_ai_studio:~gemini-3\\.8-flash$",
-    "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast", "cloudflare:@cf/meta/llama-4-scout-17b-16e-instruct",
-    "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct", "cloudflare:@cf/nvidia/nemotron-3-120b-a12b", "cloudflare:@cf/zai-org/glm-5.3-flash",
+    "google_ai_studio:~gemma-4-31b-it$", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b", "google_ai_studio:gemini-3.5-flash-lite",
+    "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct", "cloudflare:@cf/meta/llama-4-scout-17b-16e-instruct",
+    "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 ]
-PANEL = ["google_ai_studio:~gemini-3\\.8-flash$", "groq:openai/gpt-oss-120b", "google_ai_studio:~gemma-4-31b-it$", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct"]
+PANEL = ["groq:openai/gpt-oss-120b", "google_ai_studio:~gemma-4-31b-it$", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct"]
 _GEMINI_NAMES: list[str] | None = None
 
 

@@ -79,13 +79,17 @@ JUDGE_ONE_SYSTEM = (
     "Do not label CONTRADICTED for a legitimate alternative reading of an ambiguous or traditionally disputed word. One item per given id and no other ids."
 )
 
-# मॉडलों का चुनाव। env से बदला जा सकता है: PILOT_DRAFT_A, PILOT_DRAFT_B, PILOT_DRAFT_C, PILOT_JUDGES (अल्पविराम से)।
+# मॉडलों का चुनाव (16 नवंबर 2026 की तुलना से; audit/pilot/bakeoff_isha.json)। env से बदला जा सकता है:
+# PILOT_DRAFT_A, PILOT_DRAFT_B, PILOT_DRAFT_C, PILOT_JUDGES (अल्पविराम से)।
+#   Draft A = Gemma 4 31B (तुलना में सबसे कम ग़लतियाँ; 14.4K अनुरोध/दिन)। Gemini Flash-Lite उस दिन 503 देता रहा और
+#   पिछले runs में सबसे कमज़ोर ड्राफ़्टर था; Flash-वर्ग का मुफ़्त quota (20/दिन) ख़त्म मिला। इसलिए दोनों default में नहीं।
+#   जजों का क्रम: पहला जो ड्राफ़्टरों के परिवार से अलग हो। दौर 1 = gpt-oss (openai); दौर 2 = Mistral (चौथा परिवार, Workers AI)।
 DEFAULT_MODELS = {
-    "draft_a": "groq:qwen/qwen3.8-27b",
-    "draft_b": "google_ai_studio:gemini-3.5-flash-lite",
+    "draft_a": "google_ai_studio:gemma-4-31b-it",
+    "draft_b": "groq:qwen/qwen3.8-27b",
     "draft_c": "groq:openai/gpt-oss-120b",
-    "judges": ["cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct", "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-               "groq:openai/gpt-oss-120b", "google_ai_studio:gemini-3.5-flash-lite", "groq:qwen/qwen3.8-27b"],
+    "judges": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
+               "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast", "google_ai_studio:gemma-4-31b-it", "groq:qwen/qwen3.8-27b"],
 }
 
 
@@ -187,16 +191,20 @@ def ask_items(model: Model, system: str, make_user, ids: list[str], usage: Usage
     for _round in range(3):
         if not pending:
             break
-        any_ok = False
+        any_ok, failed_in_a_row = False, 0
         for k in range(0, len(pending), size):
             part = pending[k:k + size]
             if model.provider == "mock":
                 items = mock_items(part)
             else:
+                if failed_in_a_row >= 2:  # लगातार दो टुकड़े विफल: provider अभी नहीं चल रहा
+                    break
                 try:
                     obj = chat_json(model, system, make_user(part), usage, est_out=est_out_per_id * len(part))
                 except RuntimeError:
+                    failed_in_a_row += 1
                     continue
+                failed_in_a_row = 0
                 items = obj.get("items", []) if isinstance(obj, dict) else (obj if isinstance(obj, list) else [])
             any_ok = True
             for it in items if isinstance(items, list) else []:
