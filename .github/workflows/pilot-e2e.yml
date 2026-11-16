@@ -1,0 +1,53 @@
+name: pilot-e2e
+
+# P2 pilot: एक ग्रंथ पर पूरी कड़ी, हाथ से चलाने के लिए (Foreman के बिना)।
+#   स्रोत → ID → ड्राफ़्ट A/B (अलग परिवार) → जज → cascade → पक्की जाँचें → C/D बैज → R-जाँचें → रिपोर्ट → डेटा-PR
+# स्वचालित रास्ता: foreman-enqueue → Foreman → foreman-job (step=pilot_e2e); दोनों एक ही script चलाते हैं।
+# संस्कृत पाठ artifact या repo में नहीं जाता; केवल रिपोर्ट (अनुवाद के मसौदे + hash + माप)।
+
+on:
+  workflow_dispatch:
+    inputs:
+      text_id:
+        description: "ग्रंथ (अभी केवल isha)"
+        default: "isha"
+      mock:
+        description: "नक़ली मॉडल (कोई API-call नहीं)? yes/no"
+        default: "no"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pilot-e2e-${{ inputs.text_id }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: checks/requirements.txt
+      - run: pip install -q -r checks/requirements.txt
+      - name: पूरी कड़ी
+        env:
+          TEXT_ID: ${{ inputs.text_id }}
+          MOCK: ${{ inputs.mock }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          PR_TOKEN: ${{ secrets.FOREMAN_DISPATCH_TOKEN }}
+        run: bash tools/pilot/ci_run.sh "$TEXT_ID" "manual-${GITHUB_RUN_ID}" - "$MOCK"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pilot-report-${{ inputs.text_id }}
+          path: /tmp/pilot/report/
+          retention-days: 30
+          if-no-files-found: ignore

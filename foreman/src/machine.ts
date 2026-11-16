@@ -13,9 +13,15 @@ export type JobStatus = (typeof JOB_STATUSES)[number];
 
 export const STEPS = [
   "acquire", "normalise", "witness_diff", "text_lock", "analyse", "draft_a", "draft_b", "draft_c",
-  "judge", "revise", "checks", "science", "export", "noop",
+  "judge", "revise", "checks", "science", "export", "noop", "pilot_e2e",
 ] as const;
 export type Step = (typeof STEPS)[number];
+
+/** /admin/enqueue से केवल ये steps कतार में डाले जा सकते हैं; हर एक की अपनी lane (एक lane में एक समय में एक dispatch)। */
+export const ENQUEUEABLE: Record<string, { lane: string; promptHash: string; model: string }> = {
+  noop: { lane: "selftest", promptHash: "none", model: "none" },
+  pilot_e2e: { lane: "pilot", promptHash: "pilot-e2e-0.1", model: "cascade" },
+};
 
 /** ग्रंथ एक बार में केवल अगली अवस्था में जा सकता है; पीछे कभी नहीं। */
 export function validateBookTransition(from: BookState, to: BookState): boolean {

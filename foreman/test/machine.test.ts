@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  DEFAULT_LIMITS, jobKey, nextReset, planTick, validateBookTransition, validateJobTransition, hmacHex, timingSafeEqual,
+  DEFAULT_LIMITS, ENQUEUEABLE, jobKey, nextReset, planTick, validateBookTransition, validateJobTransition, hmacHex, timingSafeEqual,
   type Job, type Provider,
 } from "../src/machine.ts";
 
@@ -90,6 +90,14 @@ test("reset-घड़ियाँ", () => {
 test("job_key स्थिर और Python वाले से वही", async () => {
   // python -c "from checks.common import job_key; print(job_key('selftest','b1','noop','none','none'))"
   assert.equal(await jobKey("selftest", "b1", "noop", "none", "none"), "fa4f51f51c89e94219febbb07f9e2ed25964b2ffdbe6e7ee46bd63c7441f540a");
+});
+
+test("pilot_e2e का job_key Python वाले से वही; अनुमत steps की सूची", async () => {
+  // python -c "from checks.common import job_key; print(job_key('isha','b1','pilot_e2e','pilot-e2e-0.1','cascade'))"
+  const spec = ENQUEUEABLE["pilot_e2e"]!;
+  assert.equal(await jobKey("isha", "b1", "pilot_e2e", spec.promptHash, spec.model), "1aeb3c35d459f367747b7bc95810f28576337f5a30665e8473cb68b544edd0d0");
+  assert.deepEqual(Object.keys(ENQUEUEABLE).sort(), ["noop", "pilot_e2e"]);
+  assert.notEqual(ENQUEUEABLE["noop"]!.lane, spec.lane);
 });
 
 test("HMAC और समय-सुरक्षित तुलना", async () => {

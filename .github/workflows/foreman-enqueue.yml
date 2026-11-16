@@ -1,0 +1,64 @@
+name: foreman-enqueue
+
+# Foreman की कतार में एक job डालता है और उसके पूरा होने तक देखता है:
+#   enqueue (HMAC) → Foreman tick → repository_dispatch → foreman-job → callback → बही में 'done'
+# वही corpus/batch/step दोबारा डालने पर नया job नहीं बनता (idempotent)।
+
+on:
+  workflow_dispatch:
+    inputs:
+      text_id:
+        description: "ग्रंथ"
+        default: "isha"
+      step:
+        description: "step"
+        type: choice
+        options: [pilot_e2e, noop]
+        default: pilot_e2e
+      batch_id:
+        description: "batch (ख़ाली = इस run की संख्या)"
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  enqueue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      URL: ${{ vars.FOREMAN_URL }}
+      SECRET: ${{ secrets.FOREMAN_SHARED_SECRET }}
+      TEXT_ID: ${{ inputs.text_id }}
+      STEP: ${{ inputs.step }}
+      BATCH_IN: ${{ inputs.batch_id }}
+    steps:
+      - name: enqueue → tick → नतीजे की प्रतीक्षा
+        run: |
+          set -euo pipefail
+          [[ "$URL" =~ ^https://[a-z0-9.-]+\.workers\.dev$ ]] || { echo "::error::FOREMAN_URL variable नहीं या अमान्य"; exit 1; }
+          [[ "$TEXT_ID" =~ ^[a-z][a-z0-9_]{0,40}$ ]] || { echo "::error::text_id अमान्य"; exit 1; }
+          BATCH="${BATCH_IN:-}"; [ -z "$BATCH" ] && BATCH="e2e-${GITHUB_RUN_ID}"
+          [[ "$BATCH" =~ ^[A-Za-z0-9_.:-]{1,80}$ ]] || { echo "::error::batch_id अमान्य"; exit 1; }
+          post() { local path="$1" body="$2" sig; sig=$(printf '%s' "$body" | openssl dgst -sha256 -hmac "$SECRET" -r | cut -d' ' -f1)
+                   curl -sS -X POST "$URL$path" -H "content-type: application/json" -H "x-foreman-signature: $sig" --data "$body"; echo; }
+          OUT=$(post /admin/enqueue "{\"text_id\":\"$TEXT_ID\",\"batch_id\":\"$BATCH\",\"step\":\"$STEP\"}"); echo "enqueue: $OUT"
+          KEY=$(printf '%s' "$OUT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('job_key',''))")
+          [[ "$KEY" =~ ^[0-9a-f]{64}$ ]] || { echo "::error::enqueue विफल"; exit 1; }
+          echo "tick:"; post /admin/tick "{}" | head -c 400; echo
+          for i in $(seq 1 90); do
+            sleep 30
+            ROW=$(post /admin/export-jobs "{}" | KEY="$KEY" python3 -c "
+          import json, os, sys
+          rows = json.load(sys.stdin)
+          r = next((x for x in rows if x.get('job_key') == os.environ['KEY']), {})
+          print(json.dumps({k: r.get(k) for k in ('status', 'attempts', 'result_ref', 'duration_s', 'error')}, ensure_ascii=False))")
+            echo "t+$((i*30))s $ROW"
+            ST=$(printf '%s' "$ROW" | python3 -c "import json,sys; print(json.load(sys.stdin).get('status'))")
+            if [ "$ST" = "done" ]; then
+              { echo "### Foreman job पूरा: \`${KEY:0:12}…\`"; echo '```json'; echo "$ROW"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            if [ "$ST" = "needs_expert" ]; then echo "::error::job retry-सीमा पार करके रुक गया"; exit 1; fi
+          done
+          echo "::error::45 मिनट में job पूरा नहीं हुआ"; exit 1

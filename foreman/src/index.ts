@@ -9,7 +9,7 @@
 
 import { Agent, getAgentByName } from "agents";
 import {
-  DEFAULT_LIMITS, hmacHex, jobKey, nextReset, planTick, timingSafeEqual, validateJobTransition,
+  DEFAULT_LIMITS, ENQUEUEABLE, hmacHex, jobKey, nextReset, planTick, timingSafeEqual, validateJobTransition,
   type Job, type JobStatus, type Provider,
 } from "./machine";
 
@@ -193,6 +193,18 @@ export class ForemanAgent extends Agent<Env, ForemanState> {
     return { job_key: key, created: (r.meta.changes ?? 0) > 0 };
   }
 
+  /** अनुमत step का एक job कतार में (idempotent: वही corpus/batch/step दोबारा डालने पर नया job नहीं बनता)। */
+  async enqueue(textId: string, batchId: string, step: string): Promise<{ job_key: string; created: boolean } | { error: string }> {
+    const spec = ENQUEUEABLE[step];
+    if (!spec) return { error: "step अनुमत नहीं" };
+    const key = await jobKey(textId, batchId, step, spec.promptHash, spec.model);
+    const now = nowIso();
+    const r = await this.env.LEDGER.prepare(
+      "INSERT OR IGNORE INTO jobs (job_key, text_id, batch_id, step, lane, status, prompt_hash, model, updated_at) VALUES (?, ?, ?, ?, ?, 'queued', ?, ?, ?)",
+    ).bind(key, textId, batchId, step, spec.lane, spec.promptHash, spec.model, now).run();
+    return { job_key: key, created: (r.meta.changes ?? 0) > 0 };
+  }
+
   async setStop(stop: boolean, reason: string): Promise<void> {
     this.setState({ ...this.state, stopped: stop, stopReason: stop ? reason : null, consecutiveErrors: 0 });
     await this.event("stop", null, `${stop ? "रोका" : "चालू"}: ${reason}`);
@@ -274,6 +286,12 @@ export default {
       if (url.pathname === "/admin/enqueue-noop") {
         if (!/^[A-Za-z0-9_.:-]{1,80}$/.test(b.batch_id ?? "")) return json({ error: "batch_id अमान्य" }, 400);
         return json(await foreman.enqueueNoop(b.batch_id));
+      }
+      if (url.pathname === "/admin/enqueue") {
+        if (!/^[a-z][a-z0-9_]{0,40}$/.test(b.text_id ?? "")) return json({ error: "text_id अमान्य" }, 400);
+        if (!/^[A-Za-z0-9_.:-]{1,80}$/.test(b.batch_id ?? "")) return json({ error: "batch_id अमान्य" }, 400);
+        const r = await foreman.enqueue(b.text_id, b.batch_id, b.step ?? "");
+        return json(r, "error" in r ? 400 : 200);
       }
       if (url.pathname === "/admin/tick") return json(await foreman.tick("admin"));
       if (url.pathname === "/admin/stop") { await foreman.setStop(true, (b.reason ?? "admin").slice(0, 200)); return json({ ok: true }); }
