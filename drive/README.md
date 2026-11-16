@@ -1,6 +1,8 @@
 # Drive पुल: `MyDrive/Sanatan_Library/` (मास्टर योजना §4.2)
 
-Drive पूरा master-भंडार है; सत्य-स्रोत git ही रहता है। पहुँच केवल मालिक के **अपने OAuth client** और केवल **`drive.file`** scope से होती है। इस scope की चाबी केवल वही फ़ाइलें देख सकती है जो इसी client ने बनाई हों, इसलिए वह फ़िल्म के folder तक पहुँच ही नहीं सकती।
+Drive पूरा master-भंडार है; सत्य-स्रोत git ही रहता है। पहुँच केवल मालिक के **अपने OAuth client** और केवल **`drive.file`** scope से होती है। इस scope की चाबी केवल वही फ़ाइलें देख सकती है जो **इसी Google Cloud project के app** ने बनाई हों।
+
+> **16 नवंबर 2026 की स्थिति (मालिक का फ़ैसला):** नया project नहीं बना; मालिक के एक मौजूदा project का Desktop OAuth client दोबारा उपयोग हुआ (consent "In production")। जाँच में दिखा कि `granth:` को `Sanatan_Library/` के अलावा वे folders भी दिखते हैं जो उसी project के app ने मालिक के दूसरे काम के लिए पहले बनाए थे। फ़िल्म का folder नहीं दिखता। यानी अलगाव पूरा नहीं है: इस repo की scripts केवल `granth:Sanatan_Library/` छूती हैं, पर token की पहुँच उससे चौड़ी है। पूरा अलगाव चाहिए तो पुस्तकालय के लिए अलग Cloud project (बिना billing) का client बनाकर `granth` दोबारा बनाएँ। **यह token Kaggle Secret में तब तक न डालें जब तक मालिक यह तय न कर लें।**
 
 - rclone remote का नाम: **`granth:`** (क़दम 0.7 में मालिक बनाते हैं; client ID/secret और token केवल मालिक के लैपटॉप के rclone config और Kaggle Secret `RCLONE_GRANTH_CONF` में)।
 - **GitHub में कोई Drive token नहीं।** Actions Release assets बनाता है; Drive में लिखने का काम Kaggle kernel (official API से चला) या मालिक का लैपटॉप करता है।
@@ -24,16 +26,15 @@ Sanatan_Library/
 
 ## एक बार का setup (क़दम 0.7)
 
-```bash
-# 1. remote बनाएँ (मान मालिक भरें; browser में login खुलेगा)
-rclone config create granth drive scope=drive.file client_id=<CLIENT_ID> client_secret=<CLIENT_SECRET>
+```powershell
+# 1. login (किसी भी ख़ाली port पर; मौजूदा remote का OAuth client दोबारा उपयोग)
+python tools\setup\drive_login.py --remote granth --reuse-from <मौजूदा remote>
 
-# 2. tree बनाएँ
-bash drive/make_tree.sh
-
-# 3. जाँचें
-rclone lsd granth:Sanatan_Library
+# 2. tree + test-फ़ाइल + जाँच
+powershell -ExecutionPolicy Bypass -File tools\setup\setup_drive.ps1
 ```
+
+rclone का अपना login (`rclone config create` / `reconnect`) हमेशा port 53682 पर सुनता है। मालिक के Windows पर यह port "excluded port range" में है, इसलिए वह रास्ता वहाँ नहीं चलता; `drive_login.py` इसी कारण बना।
 
 `drive.file` की एक सीमा: इस remote से `rclone lsd granth:` में Drive की बाक़ी फ़ाइलें नहीं दिखतीं। यही अपेक्षित है।
 
