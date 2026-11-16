@@ -26,6 +26,7 @@
 | Groq | मुफ़्त स्तर पर दिखे मॉडल | `openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `qwen/qwen3.8-27b`, `allam-2-7b`, दो आवाज़-मॉडल। चौथा पाठ-परिवार (जैसे Llama) नहीं दिखा। | 2026-11-16 | pilot run 43875372883 (`state/pilot_metrics.json`) |
 | Groq | 429 का व्यवहार (console की सीमाएँ अब भी देखनी बाक़ी) | 18 मंत्रों के एक run में 7 बार HTTP 429 (qwen पर 5, 90 s इंतज़ार); 6 मंत्र/अनुरोध पर भी TPM-सीमा लगती है | 2026-11-16 | pilot run 43875372883 |
 | Groq | API के rate-limit headers (console नहीं): `openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `qwen/qwen3.8-27b` | हर एक पर **1,000 अनुरोध/दिन, 8,000 tokens/मिनट** | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
+| Groq | `openai/gpt-oss-120b` की दिन-भर की सीमा (429 के संदेश से) | **200,000 tokens/दिन**; 16 नवंबर को चार pilot-runs और एक तुलना में ख़त्म हो गई (एक pilot-run ≈ 60,000–95,000 tokens, ज़्यादातर reasoning) | 2026-11-16 | foreman-job run 43926279410 |
 | Groq | `qwen/qwen3.8-27b` की output-सीमा (429 के संदेश से) | **1,000 output-tokens/मिनट** (OTPM) | 2026-11-16 | pilot run 43915053026 |
 | Cloudflare | Workers AI: मौजूदा token से चला? मुफ़्त स्तर के मॉडल | **हाँ।** Llama 3.3 70B, Llama 4 Scout, Mistral Small 3.1, gpt-oss-120b/20b, qwen3.8-27b, Gemma 4 26B आदि चले; DeepSeek और Kimi पर 403 "not available on the Workers Free plan" | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
 | Cloudflare | Workers AI neurons/दिन (त्रुटि-संदेश से) | **10,000/दिन**; 16 नवंबर को तुलना के runs में ख़त्म हो गए (HTTP 429 "used up your daily free allocation") | 2026-11-16 | pilot run 43915053026 |
