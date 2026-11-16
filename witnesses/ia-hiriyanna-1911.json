@@ -3,35 +3,37 @@
   "text_ids": [
     "isha"
   ],
-  "kind": "print_scan_own_ocr",
-  "description": "प्रदर्शन-पाठ का उम्मीदवार: छपा संस्करण, Internet Archive पर scan (49 चित्र, University of California Libraries)। archive की मौजूदा OCR केवल अंग्रेज़ी है; देवनागरी मंत्रों के लिए अपना OCR चलाना बाक़ी है, और यह भी देखना बाक़ी है कि मंत्र देवनागरी में छपे हैं।",
+  "kind": "pd_translation",
+  "description": "अंग्रेज़ी अनुवाद (मंत्र + शांकरभाष्य), छपा संस्करण, Internet Archive पर scan (49 चित्र, University of California Libraries)। 16 नवंबर 2026 को पन्ने देखे गए (leaf n12 = पृ. 4, n20 = पृ. 12): मंत्र केवल अंग्रेज़ी में छपे हैं, देवनागरी में नहीं। इसलिए यह संस्कृत प्रदर्शन-पाठ का गवाह नहीं बन सकता; यह एक सार्वजनिक-डोमेन इंसानी अंग्रेज़ी अनुवाद है (संदर्भ-गवाह)।",
   "edition": {
     "title": "Īśāvāsyopaniṣad, with the commentary of Śrī Śaṅkarācārya",
     "editor_or_translator": "M. Hiriyanna",
-    "death_year": null,
+    "death_year": 1950,
     "publisher": "Sri Vani Vilas Press, Srirangam",
     "year": 1911
   },
-  "licence": "LicenseRef-unknown",
+  "licence": "LicenseRef-PD-India-US",
   "licence_evidence": [
-    "archive.org metadata: possible-copyright-status = NOT_IN_COPYRIGHT (identifier isavasyopanishad00sank)",
-    "archive.org metadata: date = 1911 (US में 1931 से पहले का प्रकाशन)"
+    "अनुवादक की मृत्यु 1950, स्रोत 1: Library of Congress name authority n50034752, शीर्षक 'Hiriyanna, Mysore, 1871-1950' (archive.org के UC Libraries catalogue-रिकॉर्ड में भी यही शीर्षक)",
+    "अनुवादक की मृत्यु 19 सितंबर 1950, स्रोत 2: Wikidata Q15452708 (P570), जिसका संदर्भ BnF authority है",
+    "भारत: Copyright Act 1957 धारा 22 (लेखक की मृत्यु के बाद 60 वर्ष) → 1 जनवरी 2011 से सार्वजनिक डोमेन [हमारी गणना]",
+    "अमेरिका: प्रकाशन 1911 (archive.org metadata: date = 1911; possible-copyright-status = NOT_IN_COPYRIGHT; identifier isavasyopanishad00sank) → 1931 से पहले का प्रकाशन"
   ],
-  "pd_india": "assume-copyright",
-  "pd_us": "assume-copyright",
-  "usage": "compare",
+  "pd_india": "yes",
+  "pd_us": "yes",
+  "usage": "reference",
   "copy_family": "print-hiriyanna-1911",
-  "copy_family_evidence": "छपा संस्करण; हमारा अपना OCR इसका स्वतंत्र गवाह बनेगा।",
+  "copy_family_evidence": "छपा अंग्रेज़ी अनुवाद; संस्कृत पाठ का गवाह नहीं।",
   "source_uri": "https://archive.org/details/isavasyopanishad00sank",
   "fetch": {
     "method": "http_get",
     "url": "https://archive.org/download/isavasyopanishad00sank/isavasyopanishad00sank_jp2.zip",
-    "parser": "बाक़ी: Tesseract san (Actions)"
+    "parser": "बाक़ी: archive की अंग्रेज़ी OCR (_djvu.txt) की सफ़ाई; पाठ git में तभी आएगा जब मालिक G1 में स्वीकृत करें"
   },
   "g1": {
     "status": "pending_owner",
-    "date": "2026-11-14",
-    "decision_ref": "पहला G1 batch (PR में मालिक की स्वीकृति बाक़ी)"
+    "date": "2026-11-16",
+    "decision_ref": "PD-तथ्य दो स्रोतों से मिले; मालिक की G1-स्वीकृति बाक़ी"
   },
-  "notes": "PD-दर्जा अभी तय नहीं: संपादक की मृत्यु-तिथि दो स्रोतों से मिलानी है (नियम: copyright-तथ्य पर ≥2 स्रोत)। तब तक लाइसेंस LicenseRef-unknown और उपयोग केवल तुलना। दोनों तथ्य मिलने और मालिक की G1-स्वीकृति के बाद ही display बनेगा।"
+  "notes": "PD-दर्जा अब दो स्रोतों पर टिका है (ऊपर)। उपयोग 'reference': P2 में यह AI-ड्राफ़्ट के सामने रखा जाने वाला इंसानी अनुवाद है, प्रदर्शन-पाठ नहीं। मालिक की G1-स्वीकृति तक इसका पाठ repo में नहीं आएगा।"
 }

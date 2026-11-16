@@ -44,3 +44,11 @@
 - मालिक ने कहा कि कई keys/projects से उन्हें आपत्ति नहीं, और नियम बदलना है या नहीं, यह Claude तय करे।
 - **तय हुआ: नियम नहीं बदला।** एक project, एक key। कारण: सीमाएँ प्रति project हैं, तो उसी project की और keys कुछ नहीं जोड़तीं; और अलग projects से quota जोड़ना मंच के नियमों और इस परियोजना की "quota बढ़ाने की कोई चाल नहीं" शर्त के ख़िलाफ़ जाता है, जबकि खाता एक ही है।
 - क्षमता कम पड़े तो रास्ते वही हैं जो योजना में हैं: Kaggle पर खुले मॉडल, Groq, Workers AI, और reset का इंतज़ार।
+
+## 2026-11-16 · साप्ताहिक meta-audit routine और Foreman का दूसरा deploy
+
+- साप्ताहिक सीमा reset के बाद मालिक ने कहा: "तुम तय करो और आगे बढ़ो।" इससे पहले Claude ने तीन बाक़ी काम गिनाए थे: Drive की चाबी, साप्ताहिक audit task, Foreman का नया deploy।
+- **Foreman:** Claude ने `foreman-deploy` चलाया (PR #23 का retry-नियम)। यह एक बार की अनुमति है; आगे के deploy भी मालिक के कहने पर ही।
+- **साप्ताहिक meta-audit:** मालिक ने "Create" चुना। routine: हर रविवार 03:37 UTC (9:07 AM IST), मॉडल `claude-sonnet-5-5` (pinned), repo केवल `sanatan-granth`, connectors हटे। routine कभी merge, label, tag, release या deploy नहीं करता; केवल रिपोर्ट-PR और issue खोलता है।
+- routine का prompt बदलना हो तो पहले `policy/audit_prompt.md` बदले (मालिक के label से), फिर routine।
+

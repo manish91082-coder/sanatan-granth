@@ -128,3 +128,21 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **सीख:** सूचना-परीक्षण हमेशा bot से बने issue से करें, `gh issue create` से नहीं।
 - **P0-gate में बाक़ी:** Drive की test-फ़ाइल (0.6–0.7) और पहला साप्ताहिक audit-issue (0.13)। Foreman का retry-नियम (PR #23) अब भी deploy नहीं हुआ।
 
+### session 1, turn 21 (2026-11-16, claude-fable-5-2) — साप्ताहिक सीमा reset के बाद
+
+मालिक ने कहा: "तुम तय करो और आगे बढ़ो।"
+
+- **Foreman:** `foreman-deploy` run 43847209611 सफल (log में कोई ईमेल नहीं)। selftest run 43847353730 सफल; पुरानी `failed` पंक्ति नए retry-नियम से `queued` हुई।
+- **क़दम 0.13 पूरा:** cloud routine `trig_01CZiRzJYuzdSkLRSqPpzMY8` ("sanatan-granth साप्ताहिक meta-audit"; cron `37 3 * * 0`; claude-sonnet-5-5; connectors हटे)। prompt routine में ही चिपका है (`policy/audit_prompt.md` का विस्तारित रूप)। पहला run ~2 मिनट चला: PR #30 (merge हुआ) और issue #31 (0 RED, 3 AMBER)।
+  - AMBER M2: 14 नवंबर का दैनिक run नहीं है। कारण: `daily-audit` workflow 15 नवंबर को बना; यह अपेक्षित है।
+  - AMBER M5: `sources/manifest.jsonl` ख़ाली, जबकि `witnesses/` में रिकॉर्ड हैं। खुला काम।
+  - AMBER M9: `state/heartbeat.json` नहीं, R14 रोज़ WARN देता है। खुला काम: R14 को Foreman के `/status.json` से जोड़ना या heartbeat लिखना।
+  - routine का environment "Default" है; उसका network "Limited" है या नहीं, यह API से नहीं दिखा। मालिक claude.ai/code में देखें। usage-% भी मालिक देखकर बताएँ।
+- **सूचना:** cloud routine issue मालिक के अपने खाते के नाम से खोलता है, जिसकी सूचना GitHub नहीं भेजता। `issue-notify` workflow (PR #32) ऐसे issue पर bot-टिप्पणी जोड़ता है; #31 पर परखा गया।
+- **Drive (0.6–0.7):** `tools/setup/setup_drive.ps1` तैयार (PR #29)। app के browser-pane में Google sign-in नहीं है (accounts.google.com का sign-in पन्ना आया); मालिक के sign-in के बाद ही 0.6 आगे बढ़ेगा। मौजूदा Google Cloud project उपयोग करें (नया नहीं), जैसा मास्टर योजना 0.6 कहती है।
+- **ईश के गवाह:**
+  - `ia-hiriyanna-1911`: पन्ने देखे गए; मंत्र देवनागरी में **नहीं** छपे (केवल अंग्रेज़ी अनुवाद)। अब `pd_translation` / `reference`। अनुवादक की मृत्यु 1950 दो स्रोतों से (LoC authority n50034752; Wikidata Q15452708 ← BnF) → `LicenseRef-PD-India-US`। G1 अब भी मालिक पर।
+  - नया `ia-nsp-108-1925`: निर्णयसागर का 108-उपनिषद् संग्रह (तृतीय संस्करण 1925, संपादक वासुदेव शर्मा पणशीकर)। ईश पृ. 1 (leaf n13), काण्व क्रम, 18 मंत्र। इस प्रति के पृ. 1 पर हाथ की लिखावट है और archive की OCR कमज़ोर है। संपादक की मृत्यु-तिथि नहीं मिली → `LicenseRef-unknown`, केवल तुलना।
+  - **न करें:** Claude का पन्ना "पढ़कर" टंकित पाठ गवाह न माना जाए (मॉडल को पाठ याद है; स्वतंत्र नहीं)।
+- **अगला:** PLAN के "अगले 3 काम"। Kaggle का quota-पन्ना (0.4) भी मालिक के sign-in पर टिका है।
+
