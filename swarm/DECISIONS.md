@@ -52,3 +52,9 @@
 - **साप्ताहिक meta-audit:** मालिक ने "Create" चुना। routine: हर रविवार 03:37 UTC (9:07 AM IST), मॉडल `claude-sonnet-5-5` (pinned), repo केवल `sanatan-granth`, connectors हटे। routine कभी merge, label, tag, release या deploy नहीं करता; केवल रिपोर्ट-PR और issue खोलता है।
 - routine का prompt बदलना हो तो पहले `policy/audit_prompt.md` बदले (मालिक के label से), फिर routine।
 
+## 2026-11-16 · Drive: मौजूदा OAuth client दोबारा उपयोग (मालिक का फ़ैसला)
+
+- मास्टर योजना क़दम 0.6 अलग Google Cloud project (बिना billing) कहती थी। मालिक ने कहा कि Drive के लिए पहले से बना rclone-client ही उपयोग हो।
+- **किया गया:** नया remote `granth` उसी client से, पर केवल `drive.file` scope के साथ। पुराना remote नहीं छुआ गया।
+- **ज्ञात कमी:** `drive.file` की पहुँच app (project) के स्तर पर है, इसलिए `granth` को उसी app के बनाए दूसरे folders भी दिखते हैं। इस repo की scripts केवल `granth:Sanatan_Library/` छूती हैं।
+- **खुला फ़ैसला (मालिक):** पूरा अलगाव चाहिए तो पुस्तकालय के लिए अलग project का client। जब तक यह तय न हो, Drive-token Kaggle Secret में नहीं जाएगा।

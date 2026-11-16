@@ -146,3 +146,13 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
   - **न करें:** Claude का पन्ना "पढ़कर" टंकित पाठ गवाह न माना जाए (मॉडल को पाठ याद है; स्वतंत्र नहीं)।
 - **अगला:** PLAN के "अगले 3 काम"। Kaggle का quota-पन्ना (0.4) भी मालिक के sign-in पर टिका है।
 
+### session 1, turn 22 (2026-11-16, claude-fable-5-2) — Drive का पुल बना; P0-gate
+
+- मालिक ने browser-pane में Google sign-in किया और कहा कि Drive के लिए पहले से बना OAuth client ही उपयोग हो।
+- Google Cloud में देखा: मालिक के एक मौजूदा project में दो Desktop clients हैं; consent screen "In production", External। लैपटॉप का पुराना Drive remote इन्हीं में से एक client से चलता है।
+- **rclone का अपना login नहीं चला:** Windows की "excluded port range" 53642–53741 में rclone का तय port 53682 आता है (`netsh interface ipv4 show excludedportrange protocol=tcp`)। यह sandbox की बात नहीं थी; मालिक के terminal में भी वही त्रुटि आई। दोबारा `rclone config reconnect` न आज़माएँ।
+- **हल:** `tools/setup/drive_login.py` (PKCE, ख़ाली loopback port, scope केवल `drive.file`; token केवल rclone config के `[granth]` section में)। मालिक ने browser में Allow दबाया; login सफल।
+- `tools/setup/setup_drive.ps1` से tree (9 folders) और `06_runs/setup_test_20261116T105414Z.txt` बने। पुराना remote जस का तस (scope और token वही)।
+- **अलगाव अधूरा (मालिक को बताया):** `rclone lsd granth:` में `Sanatan_Library` के अलावा उसी app के बनाए, मालिक के दूसरे काम के कुछ folders भी दिखते हैं। फ़िल्म का folder नहीं दिखता। `drive.file` की सीमा app (Cloud project) के स्तर पर है, client ID के स्तर पर नहीं; इसलिए उसी project में नया client बनाने से कुछ नहीं बदलेगा, अलग project चाहिए। तब तक token Kaggle Secret में न जाए।
+- **P0-gate:** सातों शर्तें पूरी (card/phone नहीं माँगा; CI हरा; canaries 3/3; Foreman का पूरा चक्कर; सूचना; Drive test-फ़ाइल; पहला साप्ताहिक audit-issue)।
+- terminal tool की सीख: `;` से जुड़े दो commands एक साथ भेजने पर tool ने Ctrl-C भेज दिया; एक बार में एक ही command भेजें।
