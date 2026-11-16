@@ -1,0 +1,38 @@
+{
+  "witness_id": "ia-nsp-108-1925",
+  "text_ids": [
+    "isha"
+  ],
+  "kind": "print_scan_own_ocr",
+  "description": "छपा संस्करण 'ईशाद्यष्टोत्तरशतोपनिषदः' (108 उपनिषदों का मूल-पाठ, पाठान्तर-टिप्पणियों के साथ), तृतीय संस्करण, निर्णयसागर, मुंबई, 1925; Internet Archive पर scan। देवनागरी, साफ़ छपाई, हर मंत्र के बाद ॥ N ॥। ईशावास्योपनिषद् पृ. 1 पर है (leaf n13): काण्व क्रम, 18 मंत्र। यह पूरी मुक्तिका-सूची (108) के लिए छपे गवाह का उम्मीदवार है।",
+  "edition": {
+    "title": "ईशाद्यष्टोत्तरशतोपनिषदः (आद्यन्ततत्तच्छान्तियुजः), तृतीयं संस्करणम्",
+    "editor_or_translator": "वासुदेव शर्मा (पणशीकर; लक्ष्मण शर्मा के पुत्र)",
+    "death_year": null,
+    "publisher": "निर्णयसागर यन्त्रालय, मुंबई (पाण्डुरङ्ग जावजी)",
+    "year": 1925
+  },
+  "licence": "LicenseRef-unknown",
+  "licence_evidence": [
+    "मुखपृष्ठ (leaf n0), 16 नवंबर 2026 को देखा: 'तृतीयं संस्करणम् ... शाके १८४७ वत्सरे, सनाब्दाः १९२५'",
+    "archive.org metadata में कोई अधिकार-कथन नहीं; date ग़लत भरा है (1225)"
+  ],
+  "pd_india": "assume-copyright",
+  "pd_us": "assume-copyright",
+  "usage": "compare",
+  "copy_family": "print-nsp-108-1925",
+  "copy_family_evidence": "छपा संस्करण (निर्णयसागर); e-text गवाहों से अलग परिवार। विकिस्रोत का पन्ना इसी संस्करण से टंकित हो सकता है; यह जाँचना बाक़ी है।",
+  "source_uri": "https://archive.org/details/ishadi-satattoroupanishads-sangraha-1925-i-nirnay-sagar-press",
+  "fetch": {
+    "method": "http_get",
+    "url": "https://archive.org/download/ishadi-satattoroupanishads-sangraha-1925-i-nirnay-sagar-press/page/n13/full/full/0/default.jpg",
+    "parser": "बाक़ी: Tesseract san (Actions) या मालिक/विशेषज्ञ का टंकण",
+    "page_map": "leaf = पुस्तक-पृष्ठ + 12 (पृ. 1 = n13 और पृ. 18 = n30 पर जाँचा)"
+  },
+  "g1": {
+    "status": "pending_owner",
+    "date": "2026-11-16",
+    "decision_ref": "संपादक की मृत्यु-तिथि नहीं मिली; मालिक की G1-स्वीकृति बाक़ी"
+  },
+  "notes": "सर्वाधिकार: संपादक की मृत्यु-तिथि दो स्रोतों से मिलानी है; तब तक LicenseRef-unknown और केवल तुलना। OCR: archive की मौजूदा Tesseract-OCR इस पन्ने पर बहुत कमज़ोर है। इस प्रति के पृ. 1 पर पंक्तियों के बीच और हाशिये में हाथ की लिखावट है, इसलिए ईश के लिए इसी संस्करण की साफ़ प्रति या हाथ का टंकण चाहिए; बाक़ी पन्ने (जैसे पृ. 18) साफ़ हैं। Claude ने पन्ना आँख से देखा है, पर उसका पढ़ा पाठ गवाह नहीं गिना गया: मॉडल को यह पाठ पहले से याद है, इसलिए वह स्वतंत्र नहीं।"
+}
