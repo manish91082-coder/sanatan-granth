@@ -169,3 +169,12 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **उससे पहले Claude:** पुराने app से बना `granth:Sanatan_Library` (9 ख़ाली folders + 1 test-फ़ाइल) Drive के trash में भेजे, वरना नए app को वह नहीं दिखेगा और उसी नाम का दूसरा folder बन जाएगा।
 - **फिर:** `tools\setup\setup_drive.ps1` से नया tree + test-फ़ाइल; `rclone lsd granth:` में केवल `Sanatan_Library` दिखना चाहिए (अलगाव की जाँच); `drive/README.md`, PLAN, DECISIONS अद्यतन।
 
+### session 1, turn 24–26 (2026-11-16, claude-fable-5-2) — Drive का अलगाव पूरा
+
+- मालिक ने pane में OAuth form पूरा किया। Claude ने Branding में homepage (repo) और privacy link (`docs/PRIVACY.md`, PR #36) भरे, authorized domain `github.com` जोड़ा, और app को "In production" किया। Desktop client "sanatan-granth rclone" का form भरा; Create मालिक ने दबाया।
+- मालिक ने download हुई client-फ़ाइल का पथ chat में दिया और कहा "तुम ही कर लो"। `drive_login.py --client-json` जोड़ा: script फ़ाइल ख़ुद पढ़ती है। **client secret का मान कहीं दोहराया या लिखा नहीं गया** (न repo, न commit, न log)।
+- **नतीजा:** `granth` अब नए client पर (project अलग), scope `drive.file`, token मौजूद। `rclone lsd granth:` में केवल `Sanatan_Library`। नया tree + `06_runs/setup_test_20261116T115854Z.txt`। पुराना remote जस का तस।
+- **Claude की चूक (दोहराएँ नहीं):** एक बार remote जाँचे बिना tree बना दिया, जो पुराने client से बन गया; उसे trash में भेजना पड़ा। नियम: पहले `rclone config show granth` से client-prefix और token देखें, फिर ही कुछ बनाएँ। Drive के trash में पुराने app के दो test-trees पड़े हैं (हानिरहित; 30 दिन में अपने-आप हटेंगे)।
+- **terminal tool:** `run_in_terminal` ने तीन बार चलते command पर Ctrl-C भेज दिया (shell देर से "शुरू" बताता है)। लंबे या browser खोलने वाले command Bash में `run_in_background` से चलाएँ; वह चला।
+- **Bash heredoc की सीख:** heredoc के भीतर Python में backslash आधे हो जाते हैं (`\\n` → newline)। regex या backslash वाले बदलाव Write tool से बनी script-फ़ाइल से करें।
+- **मालिक के लिए बाक़ी:** Downloads में पड़ी `client_secret_*.json` हटाना (rclone config में मान आ चुका है); चाहें तो console में उस client का secret बदलना, क्योंकि फ़ाइल का पाठ chat में दिख चुका है।

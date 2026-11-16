@@ -58,3 +58,10 @@
 - **किया गया:** नया remote `granth` उसी client से, पर केवल `drive.file` scope के साथ। पुराना remote नहीं छुआ गया।
 - **ज्ञात कमी:** `drive.file` की पहुँच app (project) के स्तर पर है, इसलिए `granth` को उसी app के बनाए दूसरे folders भी दिखते हैं। इस repo की scripts केवल `granth:Sanatan_Library/` छूती हैं।
 - **खुला फ़ैसला (मालिक):** पूरा अलगाव चाहिए तो पुस्तकालय के लिए अलग project का client। जब तक यह तय न हो, Drive-token Kaggle Secret में नहीं जाएगा।
+
+## 2026-11-16 · Drive: पुस्तकालय का अपना OAuth app (पिछला फ़ैसला बदला)
+
+- मौजूदा client दोबारा उपयोग करने पर token को मालिक के दूसरे काम के folders भी दिखे। मालिक ने कहा: "हाँ, अलग बनाओ।"
+- console ने दिखाया कि खाते में केवल 1 project-slot बचा है, इसलिए नया project नहीं बना; मालिक के एक पूरी तरह ख़ाली project में app "Sanatan Granth Library" बना (In production, केवल `drive.file`)। इसमें कोई Gemini key नहीं बनेगी।
+- "In production" के लिए Google homepage और privacy-policy link माँगता है: repo और `docs/PRIVACY.md` दिए गए।
+- अब `granth` की पहुँच केवल `Sanatan_Library/` तक है (जाँचा गया)। Kaggle Secret वाला क़दम अब खुला है।

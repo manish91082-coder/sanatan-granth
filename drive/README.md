@@ -2,7 +2,9 @@
 
 Drive पूरा master-भंडार है; सत्य-स्रोत git ही रहता है। पहुँच केवल मालिक के **अपने OAuth client** और केवल **`drive.file`** scope से होती है। इस scope की चाबी केवल वही फ़ाइलें देख सकती है जो **इसी Google Cloud project के app** ने बनाई हों।
 
-> **16 नवंबर 2026 की स्थिति (मालिक का फ़ैसला):** नया project नहीं बना; मालिक के एक मौजूदा project का Desktop OAuth client दोबारा उपयोग हुआ (consent "In production")। जाँच में दिखा कि `granth:` को `Sanatan_Library/` के अलावा वे folders भी दिखते हैं जो उसी project के app ने मालिक के दूसरे काम के लिए पहले बनाए थे। फ़िल्म का folder नहीं दिखता। यानी अलगाव पूरा नहीं है: इस repo की scripts केवल `granth:Sanatan_Library/` छूती हैं, पर token की पहुँच उससे चौड़ी है। पूरा अलगाव चाहिए तो पुस्तकालय के लिए अलग Cloud project (बिना billing) का client बनाकर `granth` दोबारा बनाएँ। **यह token Kaggle Secret में तब तक न डालें जब तक मालिक यह तय न कर लें।**
+> **16 नवंबर 2026 की स्थिति:** पुस्तकालय का अपना OAuth app है: "Sanatan Granth Library" (Desktop client "sanatan-granth rclone"), मालिक के एक अलग, पहले से ख़ाली Google Cloud project में; consent "In production"; Drive API चालू; billing नहीं। जाँच: `rclone lsd granth:` में केवल `Sanatan_Library` दिखता है, मालिक के दूसरे काम के folders नहीं। app की गोपनीयता नीति: `docs/PRIVACY.md`। इस project में कोई Gemini key नहीं बनेगी।
+>
+> पहली कोशिश में मालिक के दूसरे project का client दोबारा उपयोग हुआ था; तब token को उस app के बनाए दूसरे folders भी दिखते थे, इसलिए उसे उसी दिन बदल दिया गया। सीख: `drive.file` की सीमा app (project) के स्तर पर होती है, client ID के स्तर पर नहीं।
 
 - rclone remote का नाम: **`granth:`** (क़दम 0.7 में मालिक बनाते हैं; client ID/secret और token केवल मालिक के लैपटॉप के rclone config और Kaggle Secret `RCLONE_GRANTH_CONF` में)।
 - **GitHub में कोई Drive token नहीं।** Actions Release assets बनाता है; Drive में लिखने का काम Kaggle kernel (official API से चला) या मालिक का लैपटॉप करता है।
@@ -27,8 +29,8 @@ Sanatan_Library/
 ## एक बार का setup (क़दम 0.7)
 
 ```powershell
-# 1. login (किसी भी ख़ाली port पर; मौजूदा remote का OAuth client दोबारा उपयोग)
-python tools\setup\drive_login.py --remote granth --reuse-from <मौजूदा remote>
+# 1. login (किसी भी ख़ाली port पर; client Google Cloud से download हुई client_secret_*.json से)
+python tools\setup\drive_login.py --remote granth --client-json <client_secret_*.json का पथ>
 
 # 2. tree + test-फ़ाइल + जाँच
 powershell -ExecutionPolicy Bypass -File tools\setup\setup_drive.ps1
