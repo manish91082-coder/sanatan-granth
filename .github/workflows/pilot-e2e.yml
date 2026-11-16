@@ -14,6 +14,26 @@ on:
       mock:
         description: "नक़ली मॉडल (कोई API-call नहीं)? yes/no"
         default: "no"
+      mode:
+        description: "pipeline = पूरी कड़ी; bakeoff = ड्राफ़्टर-मॉडलों की तुलना (कोई PR नहीं)"
+        default: "pipeline"
+        type: choice
+        options: [pipeline, bakeoff]
+      open_pr:
+        description: "नतीजे का डेटा-PR खोलें? yes/no (branch पर परीक्षण के लिए no)"
+        default: "yes"
+      draft_a:
+        description: "Draft A का मॉडल (ख़ाली = default), जैसे groq:qwen/qwen3.8-27b"
+        default: ""
+      draft_b:
+        description: "Draft B का मॉडल (ख़ाली = default)"
+        default: ""
+      draft_c:
+        description: "Draft C का मॉडल (ख़ाली = default)"
+        default: ""
+      judges:
+        description: "जजों की सूची, अल्पविराम से (ख़ाली = default)"
+        default: ""
 
 permissions:
   contents: read
@@ -37,13 +57,35 @@ jobs:
           cache-dependency-path: checks/requirements.txt
       - run: pip install -q -r checks/requirements.txt
       - name: पूरी कड़ी
+        if: inputs.mode == 'pipeline'
         env:
           TEXT_ID: ${{ inputs.text_id }}
           MOCK: ${{ inputs.mock }}
+          OPEN_PR: ${{ inputs.open_pr }}
+          PILOT_DRAFT_A: ${{ inputs.draft_a }}
+          PILOT_DRAFT_B: ${{ inputs.draft_b }}
+          PILOT_DRAFT_C: ${{ inputs.draft_c }}
+          PILOT_JUDGES: ${{ inputs.judges }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           PR_TOKEN: ${{ secrets.FOREMAN_DISPATCH_TOKEN }}
-        run: bash tools/pilot/ci_run.sh "$TEXT_ID" "manual-${GITHUB_RUN_ID}" - "$MOCK"
+        run: bash tools/pilot/ci_run.sh "$TEXT_ID" "manual-${GITHUB_RUN_ID}" - "$MOCK" "$OPEN_PR"
+      - name: ड्राफ़्टर-मॉडलों की तुलना (bake-off)
+        if: inputs.mode == 'bakeoff'
+        env:
+          TEXT_ID: ${{ inputs.text_id }}
+          CANDIDATES: ${{ inputs.draft_a }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          [[ "$TEXT_ID" =~ ^[a-z][a-z0-9_]{0,40}$ ]] || { echo "::error::text_id अमान्य"; exit 2; }
+          set -o pipefail
+          python -m tools.pilot.bakeoff --text "$TEXT_ID" --out /tmp/pilot --candidates "$CANDIDATES" | tee /tmp/bakeoff_summary.json
+          { echo '```json'; cat /tmp/bakeoff_summary.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

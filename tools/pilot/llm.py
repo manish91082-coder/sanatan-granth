@@ -1,7 +1,8 @@
-"""Pilot के लिए मुफ़्त मॉडल-providers (Google AI Studio, Groq)। keys केवल env से; कहीं छपती नहीं।
+"""Pilot के लिए मुफ़्त मॉडल-providers (Google AI Studio, Groq, Cloudflare Workers AI)। keys केवल env से; कहीं छपती नहीं।
 
 हर मॉडल का "परिवार" कंपनी से गिना जाता है (मास्टर योजना §3.3): Gemini और Gemma दोनों google; gpt-oss openai।
 429 पर इंतज़ार और सीमित दोहराव; कभी दूसरी key या दूसरा खाता नहीं।
+Groq के rate-limit headers पढ़कर अगला अनुरोध पहले ही रोका जाता है (pacing), ताकि 429 तक बात न पहुँचे।
 """
 from __future__ import annotations
 
@@ -15,8 +16,12 @@ from dataclasses import dataclass, field
 
 GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta"
 GROQ_BASE = "https://api.groq.com/openai/v1"
-UA = "sanatan-granth-pilot/0.1 (open library project)"
+CF_BASE = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/v1"
+UA = "sanatan-granth-pilot/0.3 (open library project)"
 MAX_RETRY = 5
+TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
+MAX_RETRY_5XX = 3  #5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
+PACE_MAX_WAIT_S = 62.0
 
 
 @dataclass
@@ -28,26 +33,32 @@ class Usage:
     output_tokens: int = 0
     seconds: float = 0.0
     waited_s: float = 0.0
+    paced_s: float = 0.0
+    neurons: float = 0.0
     errors: list = field(default_factory=list)
 
     def as_dict(self) -> dict:
         return {"calls": self.calls, "retries": self.retries, "http_429": self.http_429, "prompt_tokens": self.prompt_tokens,
                 "output_tokens": self.output_tokens, "seconds": round(self.seconds, 2), "waited_s": round(self.waited_s, 1),
-                "errors": self.errors[:5]}
+                "paced_s": round(self.paced_s, 1), "neurons": round(self.neurons, 1), "errors": self.errors[:5]}
 
 
 @dataclass(frozen=True)
 class Model:
-    provider: str  # google_ai_studio | groq | mock
+    provider: str  # google_ai_studio | groq | cloudflare | mock
     name: str
     family: str
+
+    @property
+    def ref(self) -> str:
+        return f"{self.provider}:{self.name}"
 
 
 def family_of(name: str) -> str:
     n = name.lower()
-    if n.startswith("openai/") or "gpt-oss" in n:
+    if "openai/" in n or "gpt-oss" in n:
         return "openai"
-    if "qwen" in n:
+    if "qwen" in n or "qwq" in n:
         return "alibaba-qwen"
     if "llama" in n:
         return "meta"
@@ -59,47 +70,138 @@ def family_of(name: str) -> str:
         return "mistral"
     if "deepseek" in n:
         return "deepseek"
-    return "other-" + re.sub(r"[^a-z0-9]+", "-", n.split("/")[0])[:20]
+    if "nemotron" in n or "nvidia" in n:
+        return "nvidia"
+    if "glm" in n or "zai-org" in n:
+        return "zhipu"
+    return "other-" + re.sub(r"[^a-z0-9]+", "-", n.replace("@cf/", "").split("/")[0])[:20]
+
+
+def parse_model(ref: str) -> Model:
+    """'groq:qwen/qwen3.8-27b' → Model। provider के बिना नाम अमान्य है।"""
+    provider, _, name = ref.strip().partition(":")
+    if provider not in ("google_ai_studio", "groq", "cloudflare") or not name:
+        raise ValueError(f"मॉडल-संदर्भ अमान्य: {ref!r}")
+    return Model(provider, name, family_of(name))
 
 
 def scrub(s: object) -> str:
-    s = re.sub(r"AIza[0-9A-Za-z_-]{10,}", "<key>", str(s))
+    s = str(s)
+    for env in ("CLOUDFLARE_ACCOUNT_ID", "CLOUDFLARE_API_TOKEN", "GROQ_API_KEY", "GEMINI_API_KEY"):
+        v = os.environ.get(env)
+        if v:
+            s = s.replace(v, "<hidden>")
+    s = re.sub(r"AIza[0-9A-Za-z_-]{10,}", "<key>", s)
     s = re.sub(r"gsk_[0-9A-Za-z]{10,}", "<key>", s)
+    s = re.sub(r"org_[0-9a-z]{8,}", "<org>", s)  # Groq का संगठन-ID त्रुटि-संदेशों में आता है; रिपोर्ट में नहीं जाना चाहिए
+    s = re.sub(r"\([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\)", "", s)
     return s[:300]
 
 
-def _http(method: str, url: str, headers: dict, body: dict | None, timeout: int = 180) -> tuple[int, dict, dict]:
+def _http(method: str, url: str, headers: dict, body: dict | None, timeout: int = 240) -> tuple[int, dict, dict]:
     req = urllib.request.Request(url, method=method, data=json.dumps(body).encode() if body is not None else None,
                                  headers={"content-type": "application/json", "user-agent": UA, **headers})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
-            return r.status, json.loads(r.read() or b"{}"), dict(r.headers)
+            return r.status, json.loads(r.read() or b"{}"), {k.lower(): v for k, v in r.headers.items()}
     except urllib.error.HTTPError as e:
         try:
             err = json.loads(e.read() or b"{}")
         except Exception:
             err = {}
-        return e.code, err, dict(e.headers or {})
+        return e.code, err, {k.lower(): v for k, v in (e.headers or {}).items()}
     except Exception as e:  # noqa: BLE001
         return 0, {"error": {"message": type(e).__name__}}, {}
 
 
-def _wait_hint(status: int, js: dict, headers: dict, attempt: int) -> float:
-    for k in ("retry-after", "Retry-After"):
-        if k in headers:
-            try:
-                return min(float(headers[k]) + 1, 90)
-            except ValueError:
-                pass
-    m = re.search(r"(?:try again in|retry in)\s*([0-9.]+)\s*(ms|s|m)?", json.dumps(js), re.I)
+def _duration_s(text: str | None) -> float | None:
+    """'2m59.56s', '7.66s', '120ms' → सेकंड।"""
+    if not text:
+        return None
+    total, found = 0.0, False
+    for num, unit in re.findall(r"([0-9.]+)\s*(ms|h|m|s)", text):
+        total += float(num) * {"ms": 0.001, "s": 1, "m": 60, "h": 3600}[unit]
+        found = True
+    if not found:
+        try:
+            return float(text)
+        except ValueError:
+            return None
+    return total
+
+
+def _wait_hint(js: dict, headers: dict, attempt: int) -> float:
+    v = _duration_s(headers.get("retry-after"))
+    if v is not None:
+        return min(v + 1, 90)
+    m = re.search(r"(?:try again in|retry in)\s*([0-9.]+\s*(?:ms|s|m)?(?:[0-9.]+s)?)", json.dumps(js), re.I)
     if m:
-        v = float(m.group(1)) * {"ms": 0.001, "m": 60}.get((m.group(2) or "s").lower(), 1)
+        v = _duration_s(m.group(1)) or float(re.match(r"[0-9.]+", m.group(1)).group(0))
         return min(v + 1, 90)
     return min(10 * (attempt + 1), 60)
 
 
-def extract_json(text: str) -> object:
-    text = re.sub(r"<think>.*?</think>", "", text, flags=re.S).strip()
+# ---- pacing: provider के बताए बचे tokens से अगला अनुरोध पहले ही रोकना (केवल Groq headers देता है)
+_PACE: dict[str, dict] = {}
+# Groq की output-tokens-प्रति-मिनट सीमा headers में नहीं आती; पहली 429 के संदेश से सीखी जाती है, फिर उसी से pacing।
+_OTPM_LIMIT: dict[str, float] = {}
+_OUT_LOG: dict[str, list[tuple[float, int]]] = {}
+
+
+def _otpm_before(model: Model, est_out: int, usage: Usage) -> None:
+    limit = _OTPM_LIMIT.get(model.ref)
+    if not limit:
+        return
+    need = min(est_out, int(limit * 0.9))
+    for _ in range(8):
+        now = time.time()
+        log = [(t, n) for t, n in _OUT_LOG.get(model.ref, []) if now - t < 60]
+        _OUT_LOG[model.ref] = log
+        if not log or sum(n for _, n in log) + need <= limit:
+            return
+        w = min(60 - (now - log[0][0]) + 0.5, PACE_MAX_WAIT_S)
+        usage.paced_s += w
+        time.sleep(w)
+
+
+def _otpm_learn(model: Model, message: str) -> None:
+    m = re.search(r"output tokens per minute.*?Limit\s+([0-9]+)", message, re.I | re.S)
+    if m:
+        _OTPM_LIMIT[model.ref] = float(m.group(1))
+
+
+def estimate_tokens(system: str, user: str, est_out: int) -> int:
+    return int((len(system) + len(user)) * 0.6) + est_out
+
+
+def _pace_before(model: Model, est: int, usage: Usage) -> None:
+    st = _PACE.get(model.ref)
+    if not st:
+        return
+    elapsed = time.time() - st["at"]
+    rate = st["limit"] / 60.0
+    remaining = min(st["limit"], st["remaining"] + elapsed * rate)
+    need = min(est, st["limit"]) - remaining
+    if need > 0:
+        w = min(need / rate + 0.5, PACE_MAX_WAIT_S)
+        usage.paced_s += w
+        time.sleep(w)
+
+
+def _pace_after(model: Model, headers: dict) -> None:
+    try:
+        limit = float(headers["x-ratelimit-limit-tokens"])
+        remaining = float(headers["x-ratelimit-remaining-tokens"])
+    except (KeyError, ValueError):
+        return
+    if limit > 0:
+        _PACE[model.ref] = {"limit": limit, "remaining": remaining, "at": time.time()}
+
+
+def extract_json(text: object) -> object:
+    if isinstance(text, (dict, list)):
+        return text
+    text = re.sub(r"<think>.*?</think>", "", str(text), flags=re.S).strip()
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip())
     try:
         return json.loads(text)
@@ -115,30 +217,59 @@ def list_groq_models() -> list[str]:
     return sorted(m["id"] for m in js.get("data", [])) if st == 200 else []
 
 
-def chat_json(model: Model, system: str, user: str, usage: Usage) -> object:
+def available(model: Model) -> bool:
+    """इस provider की key env में है या नहीं (key का मान कभी नहीं देखा जाता)।"""
+    need = {"google_ai_studio": ["GEMINI_API_KEY"], "groq": ["GROQ_API_KEY"], "cloudflare": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"], "mock": []}
+    return all(os.environ.get(k) for k in need.get(model.provider, ["__none__"]))
+
+
+def _openai_style(model: Model, system: str, user: str, max_out: int) -> tuple[int, dict, dict, object, int, int, float]:
+    if model.provider == "groq":
+        url, token = f"{GROQ_BASE}/chat/completions", os.environ.get("GROQ_API_KEY", "")
+        body: dict = {"model": model.name, "temperature": 0, "response_format": {"type": "json_object"}}
+    else:
+        url, token = CF_BASE.format(acct=os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")) + "/chat/completions", os.environ.get("CLOUDFLARE_API_TOKEN", "")
+        body = {"model": model.name, "temperature": 0, "max_tokens": max_out, "response_format": {"type": "json_object"}}
+    body["messages"] = [{"role": "system", "content": system}, {"role": "user", "content": user}]
+    st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body, TIMEOUT_S[model.provider])
+    if st == 400 and re.search(r"response_format|json_validate_failed|Failed to (generate|validate) JSON|json", json.dumps(js), re.I):
+        body.pop("response_format")  # JSON-mode विफल: सादा उत्तर माँगें, JSON हम ख़ुद निकालेंगे
+        st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body, TIMEOUT_S[model.provider])
+    content: object = ""
+    if st == 200:
+        msg = (js.get("choices") or [{}])[0].get("message") or {}
+        content = msg.get("content") or ""
+    um = js.get("usage", {}) if st == 200 else {}
+    return st, js, hd, content, um.get("prompt_tokens", 0), um.get("completion_tokens", 0), float(um.get("neurons") or 0.0)
+
+
+def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int = 1800) -> object:
     """एक JSON-उत्तर। विफल होने पर RuntimeError (संदेश में key नहीं)।"""
     last = "no attempt"
+    hard_fails = 0
     for attempt in range(MAX_RETRY):
+        _pace_before(model, estimate_tokens(system, user, est_out), usage)
+        _otpm_before(model, est_out, usage)
         t0 = time.time()
+        neurons = 0.0
         if model.provider == "google_ai_studio":
-            st, js, hd = _http("POST", f"{GEMINI_BASE}/models/{model.name}:generateContent",
-                               {"x-goog-api-key": os.environ.get("GEMINI_API_KEY", "")},
-                               {"systemInstruction": {"parts": [{"text": system}]},
-                                "contents": [{"role": "user", "parts": [{"text": user}]}],
-                                "generationConfig": {"temperature": 0, "responseMimeType": "application/json"}})
-            text = "".join(p.get("text", "") for p in (js.get("candidates") or [{}])[0].get("content", {}).get("parts", [])) if st == 200 else ""
+            plain = {"contents": [{"role": "user", "parts": [{"text": system + "\n\n" + user}]}], "generationConfig": {"temperature": 0}}
+            url, key = f"{GEMINI_BASE}/models/{model.name}:generateContent", {"x-goog-api-key": os.environ.get("GEMINI_API_KEY", "")}
+            if "gemma" in model.name.lower():
+                # Gemma systemInstruction और JSON-mode नहीं लेता: निर्देश संदेश में जोड़कर सादा अनुरोध
+                st, js, hd = _http("POST", url, key, plain, TIMEOUT_S[model.provider])
+            else:
+                st, js, hd = _http("POST", url, key, {"systemInstruction": {"parts": [{"text": system}]},
+                                                     "contents": [{"role": "user", "parts": [{"text": user}]}],
+                                                     "generationConfig": {"temperature": 0, "responseMimeType": "application/json"}}, TIMEOUT_S[model.provider])
+                if st == 400 and re.search(r"system|developer instruction|json mode|mime", json.dumps(js), re.I):
+                    st, js, hd = _http("POST", url, key, plain, TIMEOUT_S[model.provider])
+            text: object = "".join(p.get("text", "") for p in (js.get("candidates") or [{}])[0].get("content", {}).get("parts", []) if not p.get("thought")) if st == 200 else ""
             um = js.get("usageMetadata", {}) if st == 200 else {}
             ptok, otok = um.get("promptTokenCount", 0), um.get("candidatesTokenCount", 0) + um.get("thoughtsTokenCount", 0)
-        elif model.provider == "groq":
-            body = {"model": model.name, "temperature": 0, "response_format": {"type": "json_object"},
-                    "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]}
-            st, js, hd = _http("POST", f"{GROQ_BASE}/chat/completions", {"authorization": "Bearer " + os.environ.get("GROQ_API_KEY", "")}, body)
-            if st == 400 and "response_format" in json.dumps(js):
-                body.pop("response_format")
-                st, js, hd = _http("POST", f"{GROQ_BASE}/chat/completions", {"authorization": "Bearer " + os.environ.get("GROQ_API_KEY", "")}, body)
-            text = ((js.get("choices") or [{}])[0].get("message", {}).get("content") or "") if st == 200 else ""
-            um = js.get("usage", {}) if st == 200 else {}
-            ptok, otok = um.get("prompt_tokens", 0), um.get("completion_tokens", 0)
+        elif model.provider in ("groq", "cloudflare"):
+            st, js, hd, text, ptok, otok, neurons = _openai_style(model, system, user, max(est_out * 2, 3000))
+            _pace_after(model, hd)
         else:
             raise RuntimeError(f"अनजान provider {model.provider}")
         usage.calls += 1
@@ -146,21 +277,33 @@ def chat_json(model: Model, system: str, user: str, usage: Usage) -> object:
         if st == 200:
             usage.prompt_tokens += ptok
             usage.output_tokens += otok
+            usage.neurons += neurons
+            _OUT_LOG.setdefault(model.ref, []).append((time.time(), otok))
             try:
                 return extract_json(text)
             except Exception:
                 last = "JSON parse नहीं हुआ"
                 usage.retries += 1
                 continue
-        last = f"HTTP {st}: {scrub((js.get('error') or {}).get('message', ''))}"
+        err = js.get("error") or js.get("errors") or ""
+        if isinstance(err, list):
+            err = (err[0] if err else {})
+        last = f"HTTP {st}: {scrub(err.get('message', '') if isinstance(err, dict) else err)}"
         if st == 429:
             usage.http_429 += 1
+            _otpm_learn(model, json.dumps(js))
+            if re.search(r"daily free allocation", json.dumps(js), re.I):
+                break  # Workers AI का दिन-भर का मुफ़्त हिस्सा ख़त्म: 00:00 UTC से पहले दोहराना बेकार है
         if st in (429, 500, 502, 503, 504, 0):
-            w = _wait_hint(st, js, hd, attempt)
+            if st != 429:
+                hard_fails += 2 if st == 0 else 1  # समय-सीमा पार (st 0) सबसे महँगी विफलता है: उसे दो बार से ज़्यादा नहीं
+                if hard_fails >= MAX_RETRY_5XX:
+                    break
+            w = _wait_hint(js, hd, attempt)
             usage.retries += 1
             usage.waited_s += w
             time.sleep(w)
             continue
         break
     usage.errors.append(last)
-    raise RuntimeError(f"{model.provider}/{model.name}: {last}")
+    raise RuntimeError(f"{model.ref}: {last}")

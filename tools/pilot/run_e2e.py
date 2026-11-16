@@ -31,9 +31,9 @@ sys.path.insert(0, str(REPO / "tools" / "witness"))
 from checks import d_checks  # noqa: E402
 from checks.common import canonical_segments_hash  # noqa: E402
 from checks.run_all import report as checks_report, run as checks_run  # noqa: E402
-from tools.pilot.llm import Model, Usage, chat_json, family_of, list_groq_models  # noqa: E402
+from tools.pilot.llm import Model, Usage, available, chat_json, parse_model  # noqa: E402
 
-PIPELINE_VERSION = "pilot-e2e-0.2"
+PIPELINE_VERSION = "pilot-e2e-0.3"
 OK_LABELS = {"OK", "MINOR"}
 LABELS = {"OK", "MINOR", "CONTRADICTED", "UNSURE"}
 EXPECTED_RED = {"R2": "पाठ lock नहीं है (स्रोत का फ़ैसला बाक़ी)", "R6": "मूल-पाठ का वाहक गवाह CC BY-SA है; प्रदर्शन-योग्य स्रोत तय नहीं"}
@@ -58,14 +58,40 @@ DRAFT_SYSTEM = (
 )
 JUDGE_SYSTEM = (
     "You are a strict judge of translation fidelity for Sanskrit scripture. For each id you receive the Sanskrit and two candidate "
-    "translations, A and B, each with English (en) and Hindi (hi). Output JSON only, exactly: "
-    '{"items":[{"id":"<id>","a_label":"OK|MINOR|CONTRADICTED|UNSURE","b_label":"OK|MINOR|CONTRADICTED|UNSURE","agree":true,'
-    '"pick":"A|B","rationale":"<at most 40 words, English>","has_empirical_claim":false}]}. '
-    "OK = faithful. MINOR = small loss or addition that does not change the meaning. CONTRADICTED = the meaning is wrong: a negation, "
-    "number, agent or clause is changed, dropped or invented. UNSURE = you cannot tell. agree = true only if A and B convey the same "
-    "meaning. pick = the more faithful one. has_empirical_claim = true only if the Sanskrit itself states a health or natural-science fact. "
-    "One item per given id and no other ids."
+    "translations, A and B, each with English (en) and Hindi (hi). Judge each candidate on its own against the Sanskrit, word by word; "
+    "the order A/B carries no information. Output JSON only, exactly: "
+    '{"items":[{"id":"<id>","a_label":"OK|MINOR|CONTRADICTED|UNSURE","a_evidence":"","b_label":"OK|MINOR|CONTRADICTED|UNSURE","b_evidence":"",'
+    '"agree":true,"pick":"A|B","has_empirical_claim":false}]}. '
+    "OK = faithful. MINOR = small loss, addition or awkwardness that does not change the meaning. CONTRADICTED = the meaning is wrong: a negation, "
+    "number, agent, object or clause is changed, dropped or invented, or en and hi say different things. UNSURE = you cannot tell. "
+    "For every label other than OK, the evidence field must name the Sanskrit word(s) in question and the wrong rendering, in at most 25 words; "
+    "for OK leave it empty. Do not label CONTRADICTED for a legitimate alternative reading of an ambiguous or traditionally disputed word. "
+    "agree = true only if A and B convey the same meaning. pick = the more faithful one. "
+    "has_empirical_claim = true only if the Sanskrit itself states a health or natural-science fact. One item per given id and no other ids."
 )
+JUDGE_ONE_SYSTEM = (
+    "You are a strict judge of translation fidelity for Sanskrit scripture. For each id you receive the Sanskrit and one translation with "
+    "English (en) and Hindi (hi). Check it against the Sanskrit word by word. Output JSON only, exactly: "
+    '{"items":[{"id":"<id>","label":"OK|MINOR|CONTRADICTED|UNSURE","evidence":""}]}. '
+    "OK = faithful. MINOR = small loss, addition or awkwardness that does not change the meaning. CONTRADICTED = the meaning is wrong: a negation, "
+    "number, agent, object or clause is changed, dropped or invented, or en and hi say different things. UNSURE = you cannot tell. "
+    "For every label other than OK, evidence must name the Sanskrit word(s) in question and the wrong rendering, in at most 25 words; for OK leave it empty. "
+    "Do not label CONTRADICTED for a legitimate alternative reading of an ambiguous or traditionally disputed word. One item per given id and no other ids."
+)
+
+# मॉडलों का चुनाव (16 नवंबर 2026 की तुलना से: pilot-e2e run 43898284352 का log; swarm/HANDOFF.md turn 30)। env से बदला जा सकता है:
+# PILOT_DRAFT_A, PILOT_DRAFT_B, PILOT_DRAFT_C, PILOT_JUDGES (अल्पविराम से)।
+#   Draft A = Gemma 4 31B (तुलना में सबसे कम ग़लतियाँ; 14.4K अनुरोध/दिन)। Gemini Flash-Lite उस दिन 503 देता रहा और
+#   पिछले runs में सबसे कमज़ोर ड्राफ़्टर था; Flash-वर्ग का मुफ़्त quota (20/दिन) ख़त्म मिला। इसलिए दोनों default में नहीं।
+#   जजों का क्रम: पहला जो ड्राफ़्टरों के परिवार से अलग हो। दौर 1 = gpt-oss (openai); दौर 2 = Mistral (चौथा परिवार, Workers AI)।
+#   हर भूमिका की सूची क्रम से आज़माई जाती है: पहला मॉडल उत्तर न दे (503, quota) तो अगला। कभी दूसरी key या दूसरा खाता नहीं।
+DEFAULT_MODELS = {
+    "draft_a": ["google_ai_studio:gemma-4-31b-it", "google_ai_studio:gemma-4-26b-a4b-it", "google_ai_studio:gemini-3.5-flash-lite"],
+    "draft_b": ["groq:qwen/qwen3.8-27b", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct"],
+    "draft_c": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/openai/gpt-oss-120b"],
+    "judges": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
+               "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast", "google_ai_studio:gemma-4-31b-it", "groq:qwen/qwen3.8-27b"],
+}
 
 
 def now_iso() -> str:
@@ -127,30 +153,58 @@ def print_evidence(text_id: str) -> dict:
 # ------------------------------------------------------------------ मॉडल
 def pick_models(mock: bool) -> dict:
     if mock:
-        return {"draft_a": Model("mock", "mock-a", "mock-a"), "draft_b": Model("mock", "mock-b", "mock-b"),
-                "draft_c": Model("mock", "mock-c", "mock-c"), "judges": [Model("mock", "mock-j", "mock-j"), Model("mock", "mock-a", "mock-a"),
-                                                                           Model("mock", "mock-b", "mock-b"), Model("mock", "mock-c", "mock-c")]}
-    ids = list_groq_models()
-    if not ids:
-        raise SystemExit("Groq के मॉडल नहीं मिले (GROQ_API_KEY?)")
+        return {"draft_a": [Model("mock", "mock-a", "mock-a")], "draft_b": [Model("mock", "mock-b", "mock-b")],
+                "draft_c": [Model("mock", "mock-c", "mock-c")], "judges": [Model("mock", "mock-j", "mock-j"), Model("mock", "mock-k", "mock-k"),
+                                                                             Model("mock", "mock-a", "mock-a"), Model("mock", "mock-b", "mock-b"),
+                                                                             Model("mock", "mock-c", "mock-c")], "unavailable": []}
+    out: dict = {"unavailable": []}
+    for role, env in (("draft_a", "PILOT_DRAFT_A"), ("draft_b", "PILOT_DRAFT_B"), ("draft_c", "PILOT_DRAFT_C"), ("judges", "PILOT_JUDGES")):
+        refs = [r.strip() for r in (os.environ.get(env) or "").split(",") if r.strip()] or DEFAULT_MODELS[role]
+        out[role] = []
+        for r in refs:
+            m = parse_model(r)
+            if available(m):
+                out[role].append(m)
+            else:
+                out["unavailable"].append(m.ref)
+        if not out[role]:
+            raise SystemExit(f"{role}: किसी मॉडल की key env में नहीं है")
+    return out
 
-    def first(*patterns: str, exclude: str = r"guard|whisper|tts|safeguard|prompt") -> str | None:
-        for rx in patterns:
-            for i in ids:
-                if re.search(rx, i, re.I) and not re.search(exclude, i, re.I):
-                    return i
-        return None
 
-    qwen = first(r"qwen")
-    oss = first(r"gpt-oss-120b", r"gpt-oss")
-    llama = first(r"llama.*(maverick|90b|70b|120b)", r"llama-?4", r"llama")
-    gem = os.environ.get("GEMINI_MODEL") or "gemini-3.5-flash-lite"
-    if not qwen or not oss:
-        raise SystemExit(f"ज़रूरी Groq मॉडल नहीं मिले: qwen={qwen} gpt-oss={oss}")
-    g = lambda n: Model("groq", n, family_of(n))  # noqa: E731
-    judges = ([g(llama)] if llama else []) + [g(oss), Model("google_ai_studio", gem, "google"), g(qwen)]
-    return {"draft_a": g(qwen), "draft_b": Model("google_ai_studio", gem, "google"), "draft_c": g(oss), "judges": judges,
-            "groq_models_seen": [i for i in ids if not re.search(r"whisper|tts|guard", i, re.I)]}
+def draft_fb(log: "Log", agent: str, title: str, cands: list[Model], taken: set[str], dead: set[str], segs: dict[str, str], ids: list[str],
+             usage: Usage) -> tuple[Model | None, dict[str, dict], list[dict]]:
+    """सूची का पहला मॉडल जो आधे से ज़्यादा ids का ड्राफ़्ट दे और जिसका परिवार `taken` में न हो। जो उत्तर न दे वह `dead` में जाता है।"""
+    best: tuple[Model | None, dict[str, dict]] = (None, {})
+    tried: list[dict] = []
+    for m in cands:
+        if m.family in taken or m.ref in dead:
+            continue
+        d = log.run(agent, f"{title} · {m.name}", lambda m=m: draft(m, segs, ids, usage), usage, m)
+        tried.append({"model": m.ref, "drafted": len(d)})
+        if not d:
+            dead.add(m.ref)
+        if best[0] is None or len(d) > len(best[1]):
+            best = (m, d)
+        if len(d) * 2 > len(ids):
+            break
+    return best[0], best[1], tried
+
+
+def judge_fb(log: "Log", title: str, pool: list[Model], exclude: set[str], dead: set[str], segs: dict[str, str], pairs: dict[str, tuple[dict, dict]],
+             usage: Usage) -> tuple[Model | None, dict[str, dict], list[dict]]:
+    """जज-सूची का पहला मॉडल जो `exclude` परिवारों से बाहर हो और आधे से ज़्यादा जोड़ों पर फ़ैसला दे।"""
+    tried: list[dict] = []
+    for m in pool:
+        if m.family in exclude or m.ref in dead:
+            continue
+        v = log.run("judge", f"{title} · {m.name}", lambda m=m: judge(m, segs, pairs, usage), usage, m)
+        tried.append({"model": m.ref, "judged": len(v)})
+        if not v:
+            dead.add(m.ref)
+        if len(v) * 2 > len(pairs):
+            return m, v, tried
+    return None, {}, tried
 
 
 def choose_judge(judges: list[Model], exclude: set[str]) -> Model:
@@ -160,9 +214,47 @@ def choose_judge(judges: list[Model], exclude: set[str]) -> Model:
     raise RuntimeError(f"इन परिवारों से अलग कोई जज नहीं: {sorted(exclude)}")
 
 
-def chunks(ids: list[str], model: Model) -> list[list[str]]:
-    n = 18 if model.provider == "google_ai_studio" else (6 if model.provider == "groq" else 18)
-    return [ids[i:i + n] for i in range(0, len(ids), n)]
+def chunk_size(model: Model) -> int:
+    return {"google_ai_studio": 18, "groq": 6, "cloudflare": 6}.get(model.provider, 18)
+
+
+def ask_items(model: Model, system: str, make_user, ids: list[str], usage: Usage, accept, est_out_per_id: int, mock_items=None) -> dict[str, dict]:
+    """ids को टुकड़ों में भेजता है। जो id न लौटे या अमान्य लौटे, वह छोटे टुकड़ों में दोबारा जाती है (कुल 3 दौर)।
+    किसी दौर में एक भी टुकड़ा सफल न हो तो आगे नहीं बढ़ता (provider बंद है; और अनुरोध बेकार हैं)।"""
+    out: dict[str, dict] = {}
+    pending, size = list(ids), chunk_size(model)
+    for _round in range(3):
+        if not pending:
+            break
+        any_ok, failed_in_a_row = False, 0
+        for k in range(0, len(pending), size):
+            part = pending[k:k + size]
+            if model.provider == "mock":
+                items = mock_items(part)
+            else:
+                if failed_in_a_row >= 2:  # लगातार दो टुकड़े विफल: provider अभी नहीं चल रहा
+                    break
+                try:
+                    obj = chat_json(model, system, make_user(part), usage, est_out=est_out_per_id * len(part))
+                except RuntimeError:
+                    failed_in_a_row += 1
+                    continue
+                failed_in_a_row = 0
+                items = obj.get("items", []) if isinstance(obj, dict) else (obj if isinstance(obj, list) else [])
+            any_ok = True
+            for it in items if isinstance(items, list) else []:
+                i = it.get("id") if isinstance(it, dict) else None
+                if i in part and i not in out:
+                    v = accept(i, it)
+                    if v is not None:
+                        out[i] = v
+        pending = [i for i in pending if i not in out]
+        if not any_ok:
+            break
+        if pending:
+            usage.retries += 1
+        size = max(1, size // 2)
+    return out
 
 
 # ------------------------------------------------------------------ ड्राफ़्ट
@@ -176,56 +268,94 @@ def _valid_draft(item: dict, sa: str) -> bool:
 
 
 def draft(model: Model, segs: dict[str, str], ids: list[str], usage: Usage) -> dict[str, dict]:
-    out: dict[str, dict] = {}
-    for part in chunks(ids, model):
-        todo = list(part)
-        for _attempt in range(2):
-            if not todo:
-                break
-            if model.provider == "mock":
-                items = [{"id": i, "en": f"Mock translation {model.name} of segment {i.split(':')[1]}.", "hi": f"नक़ली अनुवाद {model.name}, खंड {i.split(':')[1]}।"} for i in todo]
-            else:
-                user = "Translate these segments.\n" + "\n".join(f"{i}: {segs[i]}" for i in todo)
-                try:
-                    obj = chat_json(model, DRAFT_SYSTEM, user, usage)
-                except RuntimeError:
-                    break
-                items = obj.get("items", []) if isinstance(obj, dict) else (obj if isinstance(obj, list) else [])
-            for it in items:
-                i = it.get("id") if isinstance(it, dict) else None
-                if i in todo and i not in out and _valid_draft(it, segs[i]):
-                    out[i] = {"en": it["en"].strip(), "hi": it["hi"].strip()}
-            todo = [i for i in todo if i not in out]
-            if todo:
-                usage.retries += 1
-    return out
+    def mock_items(part: list[str]) -> list[dict]:
+        return [{"id": i, "en": f"Mock translation {model.name} of segment {i.split(':')[1]}.", "hi": f"नक़ली अनुवाद {model.name}, खंड {i.split(':')[1]}।"} for i in part]
+
+    def accept(i: str, it: dict) -> dict | None:
+        return {"en": it["en"].strip(), "hi": it["hi"].strip()} if _valid_draft(it, segs[i]) else None
+
+    return ask_items(model, DRAFT_SYSTEM, lambda part: "Translate these segments.\n" + "\n".join(f"{i}: {segs[i]}" for i in part),
+                     ids, usage, accept, 350, mock_items)
 
 
 # ------------------------------------------------------------------ जज
-def judge(model: Model, segs: dict[str, str], pairs: dict[str, tuple[dict, dict]], usage: Usage) -> dict[str, dict]:
-    out: dict[str, dict] = {}
-    for part in chunks(sorted(pairs, key=lambda s: int(s.split(":")[1])), model):
-        if model.provider == "mock":
-            items = [{"id": i, "a_label": "OK", "b_label": "OK", "agree": int(i.split(":")[1]) % 5 != 0, "pick": "A" if int(i.split(":")[1]) % 2 else "B",
-                      "rationale": "mock", "has_empirical_claim": False} for i in part]
-        else:
-            payload = [{"id": i, "sanskrit": segs[i], "A": pairs[i][0], "B": pairs[i][1]} for i in part]
-            try:
-                obj = chat_json(model, JUDGE_SYSTEM, "Judge these.\n" + json.dumps(payload, ensure_ascii=False), usage)
-            except RuntimeError:
-                continue
-            items = obj.get("items", []) if isinstance(obj, dict) else (obj if isinstance(obj, list) else [])
-        for it in items:
-            if not isinstance(it, dict) or it.get("id") not in part:
-                continue
-            if it.get("a_label") in LABELS and it.get("b_label") in LABELS and it.get("pick") in ("A", "B") and isinstance(it.get("agree"), bool):
-                out[it["id"]] = {"a_label": it["a_label"], "b_label": it["b_label"], "agree": it["agree"], "pick": it["pick"],
-                                 "rationale": " ".join(str(it.get("rationale", "")).split()[:40]), "has_empirical_claim": bool(it.get("has_empirical_claim"))}
-    return out
+def _swapped(i: str, flip: bool) -> bool:
+    """जज को A/B किस क्रम में दिखें, यह id के hash से तय होता है (स्थान-पक्षपात घटाने के लिए); flip उसे उलट देता है।"""
+    return bool(hashlib.sha256(i.encode("utf-8")).digest()[0] & 1) ^ flip
+
+
+def _evidence(v: object) -> str:
+    return " ".join(str(v or "").split()[:25])
+
+
+def judge(model: Model, segs: dict[str, str], pairs: dict[str, tuple[dict, dict]], usage: Usage, flip: bool = False) -> dict[str, dict]:
+    def view(d: dict) -> dict:
+        return {"en": d["en"], "hi": d["hi"]}
+
+    def make_user(part: list[str]) -> str:
+        payload = []
+        for i in part:
+            x, y = pairs[i]
+            if _swapped(i, flip):
+                x, y = y, x
+            payload.append({"id": i, "sanskrit": segs[i], "A": view(x), "B": view(y)})
+        return "Judge these.\n" + json.dumps(payload, ensure_ascii=False)
+
+    def mock_items(part: list[str]) -> list[dict]:
+        return [{"id": i, "a_label": "OK", "b_label": "OK", "a_evidence": "", "b_evidence": "", "agree": int(i.split(":")[1]) % 5 != 0,
+                 "pick": "A" if _swapped(i, flip) ^ bool(int(i.split(":")[1]) % 2) else "B", "has_empirical_claim": False} for i in part]
+
+    def accept(i: str, it: dict) -> dict | None:
+        if not (it.get("a_label") in LABELS and it.get("b_label") in LABELS and it.get("pick") in ("A", "B") and isinstance(it.get("agree"), bool)):
+            return None
+        r = {"a_label": it["a_label"], "b_label": it["b_label"], "a_evidence": _evidence(it.get("a_evidence")), "b_evidence": _evidence(it.get("b_evidence")),
+             "agree": it["agree"], "pick": it["pick"], "has_empirical_claim": bool(it.get("has_empirical_claim"))}
+        if _swapped(i, flip):
+            r["a_label"], r["b_label"] = r["b_label"], r["a_label"]
+            r["a_evidence"], r["b_evidence"] = r["b_evidence"], r["a_evidence"]
+            r["pick"] = "B" if r["pick"] == "A" else "A"
+        for side in ("a", "b"):  # बिना प्रमाण का CONTRADICTED नहीं माना जाता
+            if r[side + "_label"] == "CONTRADICTED" and not r[side + "_evidence"]:
+                r[side + "_label"] = "UNSURE"
+                r["downgraded_no_evidence"] = True
+        return r
+
+    return ask_items(model, JUDGE_SYSTEM, make_user, sorted(pairs, key=lambda s: int(s.split(":")[1])), usage, accept, 300, mock_items)
+
+
+def judge_one(model: Model, segs: dict[str, str], drafts: dict[str, dict], usage: Usage) -> dict[str, dict]:
+    """एक ही ड्राफ़्ट की जाँच (bake-off के लिए)।"""
+    def accept(i: str, it: dict) -> dict | None:
+        if it.get("label") not in LABELS:
+            return None
+        ev = _evidence(it.get("evidence"))
+        return {"label": "UNSURE" if it["label"] == "CONTRADICTED" and not ev else it["label"], "evidence": ev}
+
+    def make_user(part: list[str]) -> str:
+        return "Judge these.\n" + json.dumps([{"id": i, "sanskrit": segs[i], "translation": {"en": drafts[i]["en"], "hi": drafts[i]["hi"]}} for i in part], ensure_ascii=False)
+
+    return ask_items(model, JUDGE_ONE_SYSTEM, make_user, sorted(drafts, key=lambda s: int(s.split(":")[1])), usage, accept, 200,
+                     lambda part: [{"id": i, "label": "OK", "evidence": ""} for i in part])
 
 
 def accepted(j: dict | None) -> bool:
     return bool(j) and j["agree"] and j[("a" if j["pick"] == "A" else "b") + "_label"] in OK_LABELS
+
+
+def stability(j_ref: dict[str, dict], j_other: dict[str, dict]) -> dict:
+    """दो जज-दौरों की तुलना, एक ही ड्राफ़्ट-जोड़ों पर: label (ठीक/ग़लत), स्वीकार और चुनाव कितनी बार मिले।"""
+    ids = [i for i in j_ref if i in j_other]
+    if not ids:
+        return {"n": 0}
+
+    def ok(x: str) -> bool:
+        return x in OK_LABELS
+
+    lab = sum((ok(j_ref[i]["a_label"]) == ok(j_other[i]["a_label"])) + (ok(j_ref[i]["b_label"]) == ok(j_other[i]["b_label"])) for i in ids)
+    return {"n": len(ids), "label_match": round(lab / (2 * len(ids)), 3),
+            "accept_match": round(sum(accepted(j_ref[i]) == accepted(j_other[i]) for i in ids) / len(ids), 3),
+            "pick_match": round(sum(j_ref[i]["pick"] == j_other[i]["pick"] for i in ids) / len(ids), 3),
+            "accept_differs": [i for i in ids if accepted(j_ref[i]) != accepted(j_other[i])]}
 
 
 # ------------------------------------------------------------------ पेड़
@@ -270,6 +400,7 @@ def main() -> int:
     ap.add_argument("--mock", action="store_true", help="कोई API-call नहीं; केवल कड़ी की जाँच")
     ap.add_argument("--job-key", default=None)
     ap.add_argument("--batch-id", default="manual")
+    ap.add_argument("--no-probe", action="store_true", help="जज की स्थिरता का माप न चलाएँ (कम API-calls)")
     a = ap.parse_args()
     try:
         sys.stdout.reconfigure(encoding="utf-8")
@@ -290,18 +421,34 @@ def main() -> int:
     log.run("aligner", "ID और गिनती (गवाह के चिह्नों से)", align)
     evidence = print_evidence(a.text)
 
-    models = log.run("foreman_code", "मॉडल और परिवार चुनना", lambda: pick_models(a.mock))
-    A, B, C = models["draft_a"], models["draft_b"], models["draft_c"]
-    if len({A.family, B.family, C.family}) != 3:
-        raise SystemExit("ड्राफ़्टरों के परिवार अलग नहीं हैं")
+    models = log.run("foreman_code", "मॉडलों की सूचियाँ", lambda: pick_models(a.mock))
+    dead: set[str] = set()   # इस run में जो मॉडल उत्तर नहीं दे रहे
+    tried: dict[str, list] = {}
 
-    uA, uB, uC, uJ1, uJ2 = Usage(), Usage(), Usage(), Usage(), Usage()
-    dA = log.run("draft_a", "ड्राफ़्ट A", lambda: draft(A, segs, ids, uA), uA, A)
-    dB = log.run("draft_b", "ड्राफ़्ट B", lambda: draft(B, segs, ids, uB), uB, B)
+    uA, uB, uC, uJ1, uJ2, uP = Usage(), Usage(), Usage(), Usage(), Usage(), Usage()
+    A, dA, tried["draft_a"] = draft_fb(log, "draft_a", "ड्राफ़्ट A", models["draft_a"], set(), dead, segs, ids, uA)
+    B, dB, tried["draft_b"] = draft_fb(log, "draft_b", "ड्राफ़्ट B", models["draft_b"], {A.family} if A else set(), dead, segs, ids, uB)
+    if A is None or B is None:
+        raise SystemExit("ड्राफ़्ट A या B के लिए कोई मॉडल उपलब्ध नहीं")
+    C: Model | None = None
 
     both = [i for i in ids if i in dA and i in dB]
-    J1m = choose_judge(models["judges"], {A.family, B.family})
-    j1 = log.run("judge", "जज, पहला दौर", lambda: judge(J1m, segs, {i: (dA[i], dB[i]) for i in both}, uJ1), uJ1, J1m) if both else {}
+    pairs1 = {i: (dA[i], dB[i]) for i in both}
+    J1m, j1, tried["judge1"] = judge_fb(log, "जज, पहला दौर", models["judges"], {A.family, B.family}, dead, segs, pairs1, uJ1) if both else (None, {}, [])
+
+    # जज की स्थिरता का माप: वही जोड़े (1) उसी जज को उलटे क्रम में, (2) एक और परिवार के जज को। फ़ैसला इससे नहीं बदलता।
+    probe: dict = {}
+    if J1m and j1 and not a.no_probe:
+        try:
+            j1_flip = log.run("judge_probe", "स्थिरता: वही जज, उलटा क्रम", lambda: judge(J1m, segs, pairs1, uP, flip=True), uP, J1m)
+            probe["same_judge_flipped"] = {"model": J1m.ref, **stability(j1, j1_flip)}
+        except Exception as e:  # noqa: BLE001
+            probe["same_judge_flipped"] = {"error": type(e).__name__}
+        try:
+            Jalt, j1_alt, tried["judge_probe"] = judge_fb(log, "स्थिरता: दूसरे परिवार का जज", models["judges"], {A.family, B.family, J1m.family}, dead, segs, pairs1, uP)
+            probe["other_family_judge"] = {"model": Jalt.ref, "family": Jalt.family, **stability(j1, j1_alt)} if Jalt else {"error": "दूसरे परिवार का कोई जज उत्तर नहीं दे रहा"}
+        except Exception as e:  # noqa: BLE001
+            probe["other_family_judge"] = {"error": f"{type(e).__name__}: {str(e)[:120]}"}
 
     final: dict[str, dict] = {}
     record: dict[str, dict] = {i: {} for i in ids}
@@ -318,8 +465,9 @@ def main() -> int:
 
     flags: dict[str, list[str]] = {}
     j2: dict[str, dict] = {}
+    judge2_used: list[str] = []
     if cascade:
-        dC = log.run("draft_c", "ड्राफ़्ट C (केवल असहमति वाले)", lambda: draft(C, segs, cascade, uC), uC, C)
+        C, dC, tried["draft_c"] = draft_fb(log, "draft_c", "ड्राफ़्ट C (केवल असहमति वाले)", models["draft_c"], {A.family, B.family}, dead, segs, cascade, uC)
         groups: dict[str, list[str]] = {}
         incumbent: dict[str, tuple[dict, Model]] = {}
         for i in cascade:
@@ -333,9 +481,11 @@ def main() -> int:
             if i in incumbent and i in dC:
                 groups.setdefault(incumbent[i][1].family, []).append(i)
         for fam, gids in groups.items():
-            J2m = choose_judge(models["judges"], {fam, C.family})
-            res = log.run("judge", f"जज, दूसरा दौर ({fam} बनाम {C.family})",
-                          lambda gids=gids, J2m=J2m: judge(J2m, segs, {i: (incumbent[i][0], dC[i]) for i in gids}, uJ2), uJ2, J2m)
+            J2m, res, t2 = judge_fb(log, f"जज, दूसरा दौर ({fam} बनाम {C.family})", models["judges"], {fam, C.family}, dead, segs,
+                                    {i: (incumbent[i][0], dC[i]) for i in gids}, uJ2)
+            tried.setdefault("judge2", []).extend(t2)
+            if J2m:
+                judge2_used.append(J2m.ref)
             j2.update(res)
         for i in cascade:
             j = j2.get(i)
@@ -370,6 +520,11 @@ def main() -> int:
     missing = [i for i in ids if i not in final]
     if missing:
         status = "failed"
+    incomplete = [i for i in ids if record[i].get("path") in ("जूरी अधूरी", "कोई ड्राफ़्ट नहीं")]
+    if len(incomplete) * 2 > len(ids):
+        # provider बंद या quota ख़त्म: आधे से ज़्यादा मंत्रों पर जूरी पूरी नहीं हुई। ऐसा नतीजा PR नहीं बनता; Foreman बाद में दोबारा चलाए।
+        status = "failed"
+        problems.append(f"{len(incomplete)}/{len(ids)} मंत्रों पर जूरी अधूरी (मॉडल उत्तर नहीं दे रहे: {sorted(dead)}); बाद में दोबारा चलाएँ")
 
     def hard_checks() -> dict:
         counts: dict[str, int] = {}
@@ -406,24 +561,30 @@ def main() -> int:
 
     n = len(ids)
     first_pass = sum(1 for i in ids if record[i].get("path") == "पहले दौर में सहमति")
-    usage_all = {"draft_a": uA.as_dict(), "draft_b": uB.as_dict(), "draft_c": uC.as_dict(), "judge1": uJ1.as_dict(), "judge2": uJ2.as_dict()}
+    usage_all = {"draft_a": uA.as_dict(), "draft_b": uB.as_dict(), "draft_c": uC.as_dict(), "judge1": uJ1.as_dict(), "judge2": uJ2.as_dict(), "judge_probe": uP.as_dict()}
+    judged1 = [i for i in ids if j1.get(i)]
     metrics = {
         "generated_at": now_iso(), "text_id": a.text, "pipeline_version": PIPELINE_VERSION, "mock": a.mock, "status": status,
         "batch_id": a.batch_id, "job_key": a.job_key, "run": os.environ.get("GITHUB_RUN_ID"),
         "segments": n, "segments_done": len(final), "batch_size": n,
         "silent_omissions": 0 if not missing else len(missing),
         "cascade": {"first_pass_agreed": first_pass, "sent_to_cascade": len(cascade), "agreement_rate": round(first_pass / n, 3) if n else None,
+                    "judged_in_round1": len(judged1), "agreement_rate_of_judged": round(first_pass / len(judged1), 3) if judged1 else None,
+                    "draft_missing": {"a": [i for i in ids if i not in dA], "b": [i for i in ids if i not in dB]},
+                    "judge1_missing": [i for i in both if i not in j1],
                     "go_threshold": 0.6, "by_path": {k: sum(1 for i in ids if record[i].get("path") == k) for k in sorted({record[i].get("path") or "?" for i in ids})}},
         "badges": {"C": sum(1 for b in badges.values() if b == "C"), "D": sum(1 for b in badges.values() if b == "D")},
         "flags_by_code": {k: sum(1 for v in flags.values() for c in v if c.split(":")[0] == k) for k in sorted({c.split(":")[0] for v in flags.values() for c in v})},
+        "judge_stability": probe,
         "d_checks": {"implemented": list(d_checks.IMPLEMENTED), "not_run": list(d_checks.NOT_RUN), "veto_counts": d_counts},
         "empirical_claims_flagged_by_judge": sum(1 for i in ids for j in (record[i].get("judge1"), record[i].get("judge2")) if j and j.get("has_empirical_claim")),
-        "models": {"draft_a": f"{A.provider}/{A.name}", "draft_b": f"{B.provider}/{B.name}", "draft_c": f"{C.provider}/{C.name}",
-                   "judge_pool": [f"{m.provider}/{m.name}" for m in models["judges"]], "groq_models_seen": models.get("groq_models_seen", [])},
-        "families": {"draft_a": A.family, "draft_b": B.family, "draft_c": C.family},
+        "models": {"draft_a": A.ref, "draft_b": B.ref, "draft_c": C.ref if C else None, "judge1": J1m.ref if J1m else None, "judge2": sorted(set(judge2_used)),
+                   "judge_pool": [m.ref for m in models["judges"]], "tried": tried, "not_responding": sorted(dead), "no_key": models.get("unavailable", [])},
+        "families": {"draft_a": A.family, "draft_b": B.family, "draft_c": C.family if C else None, "judge1": J1m.family if J1m else None},
         "api": {"calls": sum(u["calls"] for u in usage_all.values()), "retries": sum(u["retries"] for u in usage_all.values()),
                 "http_429": sum(u["http_429"] for u in usage_all.values()), "prompt_tokens": sum(u["prompt_tokens"] for u in usage_all.values()),
-                "output_tokens": sum(u["output_tokens"] for u in usage_all.values()), "by_role": usage_all},
+                "output_tokens": sum(u["output_tokens"] for u in usage_all.values()), "paced_s": round(sum(u["paced_s"] for u in usage_all.values()), 1),
+                "waited_s": round(sum(u["waited_s"] for u in usage_all.values()), 1), "neurons": round(sum(u["neurons"] for u in usage_all.values()), 1), "by_role": usage_all},
         "seconds_total": round(time.time() - t_start, 1), "stages": log.stages,
         "gates": {k: v for k, v in gates.items() if not k.startswith("_")}, "gates_expected_red": EXPECTED_RED,
         "gate_findings": gates.get("_findings", []), "problems": problems,
@@ -441,10 +602,10 @@ def main() -> int:
     write_json(out / "report" / "pilot_metrics.json", metrics)
     write_json(out / "report" / f"{a.text}_e2e.json", {
         "_meta": {"label": "AI-मसौदा · मानव-समीक्षा नहीं", "ai_generated": True, "pipeline_version": PIPELINE_VERSION, "generated_at": metrics["generated_at"],
-                  "licence": "LicenseRef-sanatan-granth-draft", "note": "संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash। अनुवाद परीक्षण के हैं।",
+                  "licence": "LicenseRef-sanatan-granth-draft", "note": "पूरा संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash (जज के प्रमाण में एक-दो शब्द आ सकते हैं)। अनुवाद परीक्षण के हैं।",
                   "mock": a.mock, "run": metrics["run"], "job_key": a.job_key},
         "segments": segments_out})
-    print(json.dumps({k: metrics[k] for k in ("status", "segments", "segments_done", "cascade", "badges", "flags_by_code", "models", "api", "seconds_total", "gates", "problems")}, ensure_ascii=False))
+    print(json.dumps({k: metrics[k] for k in ("status", "segments", "segments_done", "cascade", "judge_stability", "badges", "flags_by_code", "models", "api", "seconds_total", "gates", "problems")}, ensure_ascii=False))
     return 0 if status == "ok" else 1
 
 

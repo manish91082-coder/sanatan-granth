@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Pilot की पूरी कड़ी CI में चलाता है और नतीजे का डेटा-PR खोलता है।
-#   tools/pilot/ci_run.sh <text_id> <batch_id> <job_key|-> <mock: yes|no>
+#   tools/pilot/ci_run.sh <text_id> <batch_id> <job_key|-> <mock: yes|no> [open_pr: yes|no]
 # env: GEMINI_API_KEY, GROQ_API_KEY (मॉडल-calls); PR_TOKEN (डेटा-PR के लिए; न हो तो PR नहीं खुलता, केवल artifact)
 # बाहर: /tmp/pilot/report/*.json; $GITHUB_OUTPUT में status, ref
 set -uo pipefail
 
-TEXT="${1:?text_id}"; BATCH="${2:?batch_id}"; JOBKEY="${3:--}"; MOCK="${4:-no}"
+TEXT="${1:?text_id}"; BATCH="${2:?batch_id}"; JOBKEY="${3:--}"; MOCK="${4:-no}"; OPEN_PR="${5:-yes}"
 [[ "$TEXT" =~ ^[a-z][a-z0-9_]{0,40}$ ]] || { echo "::error::text_id अमान्य"; exit 2; }
 [[ "$BATCH" =~ ^[A-Za-z0-9_.:-]{1,80}$ ]] || { echo "::error::batch_id अमान्य"; exit 2; }
 [[ "$JOBKEY" == "-" || "$JOBKEY" =~ ^[0-9a-f]{64}$ ]] || { echo "::error::job_key अमान्य"; exit 2; }
@@ -25,7 +25,7 @@ RC=${PIPESTATUS[0]}
 } >> "${GITHUB_STEP_SUMMARY:-/dev/null}"
 
 REF="run:${GITHUB_RUN_ID:-local}"
-if [ "$RC" -eq 0 ] && [ "$MOCK" != "yes" ] && [ -n "${PR_TOKEN:-}" ]; then
+if [ "$RC" -eq 0 ] && [ "$MOCK" != "yes" ] && [ "$OPEN_PR" = "yes" ] && [ -n "${PR_TOKEN:-}" ]; then
   KEY16="${JOBKEY:0:16}"; [ "$JOBKEY" = "-" ] && KEY16="run${GITHUB_RUN_ID:-0}"
   BRANCH="data/pilot-${TEXT}-${KEY16}"
   mkdir -p audit/pilot state
