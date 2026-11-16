@@ -1,26 +1,33 @@
 {
-  "generated_at": "2026-11-16T13:27:01Z",
+  "generated_at": "2026-11-16T18:06:25Z",
   "text_id": "isha",
-  "pipeline_version": "pilot-e2e-0.2",
+  "pipeline_version": "pilot-e2e-0.3",
   "mock": false,
   "status": "ok",
-  "batch_id": "e2e-43875348399",
-  "job_key": "fde72a2100bc2351ce61ef259c8b807b898a52fcb8c0591b5379c42c4cdb759b",
-  "run": "43875372883",
+  "batch_id": "manual-43920792204",
+  "job_key": null,
+  "run": "43920792204",
   "segments": 18,
   "segments_done": 18,
   "batch_size": 18,
   "silent_omissions": 0,
   "cascade": {
-    "first_pass_agreed": 6,
-    "sent_to_cascade": 12,
-    "agreement_rate": 0.333,
+    "first_pass_agreed": 9,
+    "sent_to_cascade": 9,
+    "agreement_rate": 0.5,
+    "judged_in_round1": 18,
+    "agreement_rate_of_judged": 0.5,
+    "draft_missing": {
+      "a": [],
+      "b": []
+    },
+    "judge1_missing": [],
     "go_threshold": 0.6,
     "by_path": {
-      "cascade के बाद भी असहमति": 8,
-      "cascade के बाद सहमति": 2,
-      "दो जजों ने वही ड्राफ़्ट चुना": 2,
-      "पहले दौर में सहमति": 6
+      "cascade के बाद भी असहमति": 2,
+      "जूरी अधूरी": 6,
+      "दो जजों ने वही ड्राफ़्ट चुना": 1,
+      "पहले दौर में सहमति": 9
     }
   },
   "badges": {
@@ -28,8 +35,25 @@
     "D": 8
   },
   "flags_by_code": {
-    "CONTRADICTED": 7,
-    "JURY_DISAGREE": 1
+    "CONTRADICTED": 1,
+    "JURY_DISAGREE": 1,
+    "JURY_INCOMPLETE": 6
+  },
+  "judge_stability": {
+    "same_judge_flipped": {
+      "model": "groq:openai/gpt-oss-120b",
+      "n": 18,
+      "label_match": 0.889,
+      "accept_match": 0.889,
+      "pick_match": 0.556,
+      "accept_differs": [
+        "isha:8",
+        "isha:3"
+      ]
+    },
+    "other_family_judge": {
+      "error": "दूसरे परिवार का कोई जज उत्तर नहीं दे रहा"
+    }
   },
   "d_checks": {
     "implemented": [
@@ -51,241 +75,451 @@
   },
   "empirical_claims_flagged_by_judge": 0,
   "models": {
-    "draft_a": "groq/qwen/qwen3.8-27b",
-    "draft_b": "google_ai_studio/gemini-3.5-flash-lite",
-    "draft_c": "groq/openai/gpt-oss-120b",
-    "judge_pool": [
-      "groq/openai/gpt-oss-120b",
-      "google_ai_studio/gemini-3.5-flash-lite",
-      "groq/qwen/qwen3.8-27b"
+    "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+    "draft_b": "groq:qwen/qwen3.8-27b",
+    "draft_c": "groq:openai/gpt-oss-120b",
+    "judge1": "groq:openai/gpt-oss-120b",
+    "judge2": [
+      "groq:qwen/qwen3.8-27b"
     ],
-    "groq_models_seen": [
-      "allam-2-7b",
-      "canopylabs/orpheus-arabic-saudi",
-      "canopylabs/orpheus-v1-english",
-      "openai/gpt-oss-120b",
-      "openai/gpt-oss-20b",
-      "qwen/qwen3.8-27b"
-    ]
+    "judge_pool": [
+      "groq:openai/gpt-oss-120b",
+      "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "google_ai_studio:gemma-4-31b-it",
+      "groq:qwen/qwen3.8-27b"
+    ],
+    "tried": {
+      "draft_a": [
+        {
+          "model": "google_ai_studio:gemma-4-31b-it",
+          "drafted": 0
+        },
+        {
+          "model": "google_ai_studio:gemma-4-26b-a4b-it",
+          "drafted": 0
+        },
+        {
+          "model": "google_ai_studio:gemini-3.5-flash-lite",
+          "drafted": 18
+        }
+      ],
+      "draft_b": [
+        {
+          "model": "groq:qwen/qwen3.8-27b",
+          "drafted": 18
+        }
+      ],
+      "judge1": [
+        {
+          "model": "groq:openai/gpt-oss-120b",
+          "judged": 18
+        }
+      ],
+      "judge_probe": [
+        {
+          "model": "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
+          "judged": 0
+        },
+        {
+          "model": "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+          "judged": 0
+        }
+      ],
+      "draft_c": [
+        {
+          "model": "groq:openai/gpt-oss-120b",
+          "drafted": 9
+        }
+      ],
+      "judge2": [
+        {
+          "model": "groq:qwen/qwen3.8-27b",
+          "judged": 3
+        }
+      ]
+    },
+    "not_responding": [
+      "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "google_ai_studio:gemma-4-26b-a4b-it",
+      "google_ai_studio:gemma-4-31b-it"
+    ],
+    "no_key": []
   },
   "families": {
-    "draft_a": "alibaba-qwen",
-    "draft_b": "google",
-    "draft_c": "openai"
+    "draft_a": "google",
+    "draft_b": "alibaba-qwen",
+    "draft_c": "openai",
+    "judge1": "openai"
   },
   "api": {
-    "calls": 19,
-    "retries": 8,
-    "http_429": 7,
-    "prompt_tokens": 10474,
-    "output_tokens": 13812,
+    "calls": 59,
+    "retries": 36,
+    "http_429": 22,
+    "prompt_tokens": 34676,
+    "output_tokens": 61007,
+    "paced_s": 747.9,
+    "waited_s": 290.0,
+    "neurons": 0.0,
     "by_role": {
       "draft_a": {
         "calls": 8,
         "retries": 5,
-        "http_429": 5,
-        "prompt_tokens": 963,
-        "output_tokens": 1399,
-        "seconds": 4.73,
-        "waited_s": 90.0,
+        "http_429": 0,
+        "prompt_tokens": 891,
+        "output_tokens": 1959,
+        "seconds": 263.42,
+        "waited_s": 70.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
         "errors": [
-          "HTTP 400: Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details."
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+          "HTTP 0: TimeoutError"
         ]
       },
       "draft_b": {
-        "calls": 2,
-        "retries": 1,
-        "http_429": 0,
-        "prompt_tokens": 1089,
-        "output_tokens": 2120,
-        "seconds": 7.49,
-        "waited_s": 0.0,
-        "errors": []
+        "calls": 9,
+        "retries": 6,
+        "http_429": 2,
+        "prompt_tokens": 3019,
+        "output_tokens": 4045,
+        "seconds": 20.0,
+        "waited_s": 25.0,
+        "paced_s": 352.9,
+        "neurons": 0.0,
+        "errors": [
+          "JSON parse नहीं हुआ"
+        ]
       },
       "draft_c": {
-        "calls": 3,
-        "retries": 1,
-        "http_429": 1,
-        "prompt_tokens": 1050,
-        "output_tokens": 4809,
-        "seconds": 10.52,
-        "waited_s": 21.0,
+        "calls": 5,
+        "retries": 3,
+        "http_429": 3,
+        "prompt_tokens": 895,
+        "output_tokens": 4428,
+        "seconds": 10.44,
+        "waited_s": 18.0,
+        "paced_s": 9.3,
+        "neurons": 0.0,
         "errors": []
       },
       "judge1": {
-        "calls": 2,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 3580,
-        "output_tokens": 4226,
-        "seconds": 9.35,
-        "waited_s": 0.0,
-        "errors": []
+        "calls": 15,
+        "retries": 10,
+        "http_429": 5,
+        "prompt_tokens": 14517,
+        "output_tokens": 26173,
+        "seconds": 97.19,
+        "waited_s": 73.0,
+        "paced_s": 179.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6660, Requested 5000. Please try again in 27.45s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings"
+        ]
       },
       "judge2": {
-        "calls": 4,
-        "retries": 1,
-        "http_429": 1,
-        "prompt_tokens": 3792,
-        "output_tokens": 1258,
-        "seconds": 3.82,
-        "waited_s": 11.0,
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 1288,
+        "output_tokens": 406,
+        "seconds": 1.11,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
         "errors": []
+      },
+      "judge_probe": {
+        "calls": 21,
+        "retries": 12,
+        "http_429": 12,
+        "prompt_tokens": 14066,
+        "output_tokens": 23996,
+        "seconds": 131.85,
+        "waited_s": 104.0,
+        "paced_s": 206.7,
+        "neurons": 0.0,
+        "errors": [
+          "JSON parse नहीं हुआ",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (39c67dfc-7f4a-4f55-bfc1-4428e1657410)",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (9b7a254c-4032-4d4d-af86-e7be6b9c3912)",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (3dd49218-8ce3-4ce3-bc2a-06ee7fdc2be4)",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (61ea7ec7-6975-46ef-8eaf-f470fe5da02d)"
+        ]
       }
     }
   },
-  "seconds_total": 158.6,
+  "seconds_total": 1562.5,
   "stages": [
     {
       "agent": "source_witness",
       "stage": "गवाह से पाठ लाना",
-      "started": "2026-11-16T13:24:22Z",
+      "started": "2026-11-16T17:40:22Z",
       "status": "ok",
-      "duration_s": 0.54
+      "duration_s": 0.38
     },
     {
       "agent": "aligner",
       "stage": "ID और गिनती (गवाह के चिह्नों से)",
-      "started": "2026-11-16T13:24:23Z",
+      "started": "2026-11-16T17:40:23Z",
       "status": "ok",
       "duration_s": 0.0
     },
     {
       "agent": "foreman_code",
-      "stage": "मॉडल और परिवार चुनना",
-      "started": "2026-11-16T13:24:23Z",
+      "stage": "मॉडलों की सूचियाँ",
+      "started": "2026-11-16T17:40:23Z",
       "status": "ok",
-      "duration_s": 0.04
+      "duration_s": 0.0
     },
     {
       "agent": "draft_a",
-      "stage": "ड्राफ़्ट A",
-      "started": "2026-11-16T13:24:23Z",
+      "stage": "ड्राफ़्ट A · gemma-4-31b-it",
+      "started": "2026-11-16T17:40:23Z",
       "status": "ok",
-      "model": "groq/qwen/qwen3.8-27b",
-      "family": "alibaba-qwen",
-      "duration_s": 94.74,
+      "model": "google_ai_studio/gemma-4-31b-it",
+      "family": "google",
+      "duration_s": 60.59,
+      "usage": {
+        "calls": 3,
+        "retries": 2,
+        "http_429": 0,
+        "prompt_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 30.58,
+        "waited_s": 30.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+        ]
+      }
+    },
+    {
+      "agent": "draft_a",
+      "stage": "ड्राफ़्ट A · gemma-4-26b-a4b-it",
+      "started": "2026-11-16T17:41:23Z",
+      "status": "ok",
+      "model": "google_ai_studio/gemma-4-26b-a4b-it",
+      "family": "google",
+      "duration_s": 210.32,
+      "usage": {
+        "calls": 5,
+        "retries": 3,
+        "http_429": 0,
+        "prompt_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 230.9,
+        "waited_s": 40.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+          "HTTP 0: TimeoutError"
+        ]
+      }
+    },
+    {
+      "agent": "draft_a",
+      "stage": "ड्राफ़्ट A · gemini-3.5-flash-lite",
+      "started": "2026-11-16T17:44:54Z",
+      "status": "ok",
+      "model": "google_ai_studio/gemini-3.5-flash-lite",
+      "family": "google",
+      "duration_s": 62.52,
       "usage": {
         "calls": 8,
         "retries": 5,
-        "http_429": 5,
-        "prompt_tokens": 963,
-        "output_tokens": 1399,
-        "seconds": 4.73,
-        "waited_s": 90.0,
+        "http_429": 0,
+        "prompt_tokens": 891,
+        "output_tokens": 1959,
+        "seconds": 263.42,
+        "waited_s": 70.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
         "errors": [
-          "HTTP 400: Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details."
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+          "HTTP 0: TimeoutError"
         ]
       }
     },
     {
       "agent": "draft_b",
-      "stage": "ड्राफ़्ट B",
-      "started": "2026-11-16T13:25:57Z",
+      "stage": "ड्राफ़्ट B · qwen/qwen3.8-27b",
+      "started": "2026-11-16T17:45:56Z",
       "status": "ok",
-      "model": "google_ai_studio/gemini-3.5-flash-lite",
-      "family": "google",
-      "duration_s": 7.49,
+      "model": "groq/qwen/qwen3.8-27b",
+      "family": "alibaba-qwen",
+      "duration_s": 397.94,
       "usage": {
-        "calls": 2,
-        "retries": 1,
-        "http_429": 0,
-        "prompt_tokens": 1089,
-        "output_tokens": 2120,
-        "seconds": 7.49,
-        "waited_s": 0.0,
-        "errors": []
+        "calls": 9,
+        "retries": 6,
+        "http_429": 2,
+        "prompt_tokens": 3019,
+        "output_tokens": 4045,
+        "seconds": 20.0,
+        "waited_s": 25.0,
+        "paced_s": 352.9,
+        "neurons": 0.0,
+        "errors": [
+          "JSON parse नहीं हुआ"
+        ]
       }
     },
     {
       "agent": "judge",
-      "stage": "जज, पहला दौर",
-      "started": "2026-11-16T13:26:05Z",
+      "stage": "जज, पहला दौर · openai/gpt-oss-120b",
+      "started": "2026-11-16T17:52:34Z",
       "status": "ok",
       "model": "groq/openai/gpt-oss-120b",
       "family": "openai",
-      "duration_s": 9.35,
+      "duration_s": 349.23,
       "usage": {
-        "calls": 2,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 3580,
-        "output_tokens": 4226,
-        "seconds": 9.35,
-        "waited_s": 0.0,
-        "errors": []
+        "calls": 15,
+        "retries": 10,
+        "http_429": 5,
+        "prompt_tokens": 14517,
+        "output_tokens": 26173,
+        "seconds": 97.19,
+        "waited_s": 73.0,
+        "paced_s": 179.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6660, Requested 5000. Please try again in 27.45s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings"
+        ]
+      }
+    },
+    {
+      "agent": "judge_probe",
+      "stage": "स्थिरता: वही जज, उलटा क्रम",
+      "started": "2026-11-16T17:58:23Z",
+      "status": "ok",
+      "model": "groq/openai/gpt-oss-120b",
+      "family": "openai",
+      "duration_s": 441.42,
+      "usage": {
+        "calls": 17,
+        "retries": 12,
+        "http_429": 8,
+        "prompt_tokens": 14066,
+        "output_tokens": 23996,
+        "seconds": 130.7,
+        "waited_s": 104.0,
+        "paced_s": 206.7,
+        "neurons": 0.0,
+        "errors": [
+          "JSON parse नहीं हुआ"
+        ]
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "स्थिरता: दूसरे परिवार का जज · @cf/mistralai/mistral-small-3.1-24b-instruct",
+      "started": "2026-11-16T18:05:45Z",
+      "status": "ok",
+      "model": "cloudflare/@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "family": "mistral",
+      "duration_s": 0.62,
+      "usage": {
+        "calls": 19,
+        "retries": 12,
+        "http_429": 10,
+        "prompt_tokens": 14066,
+        "output_tokens": 23996,
+        "seconds": 131.32,
+        "waited_s": 104.0,
+        "paced_s": 206.7,
+        "neurons": 0.0,
+        "errors": [
+          "JSON parse नहीं हुआ",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (39c67dfc-7f4a-4f55-bfc1-4428e1657410)",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (9b7a254c-4032-4d4d-af86-e7be6b9c3912)"
+        ]
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "स्थिरता: दूसरे परिवार का जज · @cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "started": "2026-11-16T18:05:45Z",
+      "status": "ok",
+      "model": "cloudflare/@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "family": "meta",
+      "duration_s": 0.53,
+      "usage": {
+        "calls": 21,
+        "retries": 12,
+        "http_429": 12,
+        "prompt_tokens": 14066,
+        "output_tokens": 23996,
+        "seconds": 131.85,
+        "waited_s": 104.0,
+        "paced_s": 206.7,
+        "neurons": 0.0,
+        "errors": [
+          "JSON parse नहीं हुआ",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (39c67dfc-7f4a-4f55-bfc1-4428e1657410)",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (9b7a254c-4032-4d4d-af86-e7be6b9c3912)",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (3dd49218-8ce3-4ce3-bc2a-06ee7fdc2be4)",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (61ea7ec7-6975-46ef-8eaf-f470fe5da02d)"
+        ]
       }
     },
     {
       "agent": "draft_c",
-      "stage": "ड्राफ़्ट C (केवल असहमति वाले)",
-      "started": "2026-11-16T13:26:14Z",
+      "stage": "ड्राफ़्ट C (केवल असहमति वाले) · openai/gpt-oss-120b",
+      "started": "2026-11-16T18:05:46Z",
       "status": "ok",
       "model": "groq/openai/gpt-oss-120b",
       "family": "openai",
-      "duration_s": 31.52,
+      "duration_s": 37.73,
       "usage": {
-        "calls": 3,
-        "retries": 1,
-        "http_429": 1,
-        "prompt_tokens": 1050,
-        "output_tokens": 4809,
-        "seconds": 10.52,
-        "waited_s": 21.0,
+        "calls": 5,
+        "retries": 3,
+        "http_429": 3,
+        "prompt_tokens": 895,
+        "output_tokens": 4428,
+        "seconds": 10.44,
+        "waited_s": 18.0,
+        "paced_s": 9.3,
+        "neurons": 0.0,
         "errors": []
       }
     },
     {
       "agent": "judge",
-      "stage": "जज, दूसरा दौर (alibaba-qwen बनाम openai)",
-      "started": "2026-11-16T13:26:46Z",
+      "stage": "जज, दूसरा दौर (google बनाम openai) · qwen/qwen3.8-27b",
+      "started": "2026-11-16T18:06:24Z",
       "status": "ok",
-      "model": "google_ai_studio/gemini-3.5-flash-lite",
-      "family": "google",
-      "duration_s": 2.08,
+      "model": "groq/qwen/qwen3.8-27b",
+      "family": "alibaba-qwen",
+      "duration_s": 1.11,
       "usage": {
         "calls": 1,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 1454,
-        "output_tokens": 553,
-        "seconds": 2.08,
+        "prompt_tokens": 1288,
+        "output_tokens": 406,
+        "seconds": 1.11,
         "waited_s": 0.0,
-        "errors": []
-      }
-    },
-    {
-      "agent": "judge",
-      "stage": "जज, दूसरा दौर (google बनाम openai)",
-      "started": "2026-11-16T13:26:48Z",
-      "status": "ok",
-      "model": "groq/qwen/qwen3.8-27b",
-      "family": "alibaba-qwen",
-      "duration_s": 12.74,
-      "usage": {
-        "calls": 4,
-        "retries": 1,
-        "http_429": 1,
-        "prompt_tokens": 3792,
-        "output_tokens": 1258,
-        "seconds": 3.82,
-        "waited_s": 11.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
         "errors": []
       }
     },
     {
       "agent": "hard_checks",
       "stage": "पक्की जाँचें D2/D3/D6/D7/D8",
-      "started": "2026-11-16T13:27:01Z",
+      "started": "2026-11-16T18:06:25Z",
       "status": "ok",
       "duration_s": 0.01
     },
     {
       "agent": "export_prep",
       "stage": "परतों का पेड़ + R-जाँचें",
-      "started": "2026-11-16T13:27:01Z",
+      "started": "2026-11-16T18:06:25Z",
       "status": "ok",
-      "duration_s": 0.05
+      "duration_s": 0.06
     }
   ],
   "gates": {

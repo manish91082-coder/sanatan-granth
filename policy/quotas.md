@@ -25,7 +25,13 @@
 | Kaggle | T4×2 दोगुना गिनता है? | (बाक़ी: क़दम 0.4) | | |
 | Groq | मुफ़्त स्तर पर दिखे मॉडल | `openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `qwen/qwen3.8-27b`, `allam-2-7b`, दो आवाज़-मॉडल। चौथा पाठ-परिवार (जैसे Llama) नहीं दिखा। | 2026-11-16 | pilot run 43875372883 (`state/pilot_metrics.json`) |
 | Groq | 429 का व्यवहार (console की सीमाएँ अब भी देखनी बाक़ी) | 18 मंत्रों के एक run में 7 बार HTTP 429 (qwen पर 5, 90 s इंतज़ार); 6 मंत्र/अनुरोध पर भी TPM-सीमा लगती है | 2026-11-16 | pilot run 43875372883 |
-| Cloudflare | Workers AI neurons/दिन; D1 और DO की Free सीमाएँ console में | (बाक़ी: क़दम 0.11) | | |
+| Groq | API के rate-limit headers (console नहीं): `openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `qwen/qwen3.8-27b` | हर एक पर **1,000 अनुरोध/दिन, 8,000 tokens/मिनट** | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
+| Groq | `qwen/qwen3.8-27b` की output-सीमा (429 के संदेश से) | **1,000 output-tokens/मिनट** (OTPM) | 2026-11-16 | pilot run 43915053026 |
+| Cloudflare | Workers AI: मौजूदा token से चला? मुफ़्त स्तर के मॉडल | **हाँ।** Llama 3.3 70B, Llama 4 Scout, Mistral Small 3.1, gpt-oss-120b/20b, qwen3.8-27b, Gemma 4 26B आदि चले; DeepSeek और Kimi पर 403 "not available on the Workers Free plan" | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
+| Cloudflare | Workers AI neurons/दिन (त्रुटि-संदेश से) | **10,000/दिन**; 16 नवंबर को तुलना के runs में ख़त्म हो गए (HTTP 429 "used up your daily free allocation") | 2026-11-16 | pilot run 43915053026 |
+| Cloudflare | neurons का ख़र्च (छोटे परीक्षण-अनुरोध) | mistral-small 144 tokens = 5.9; gpt-oss-120b 533 tokens = 31.5; qwen3.8-27b 535 tokens = 121.9; llama-4-scout 102 tokens = 3.6 | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
+| Google AI Studio | 16 नवंबर की उपलब्धता | Gemma 4 31B/26B और Gemini 3.5 Flash-Lite पर घंटों HTTP 503 "high demand"; Gemini 3.8 Flash पर HTTP 429 (quota ख़त्म) | 2026-11-16 | pilot runs 43898284352, 43915053026, 43917316702 |
+| Cloudflare | D1 और DO की Free सीमाएँ console में | (बाक़ी: क़दम 0.11) | | |
 | Cloudflare | Agent DO पर CPU-सीमा: 10 ms या 30 s? | (बाक़ी: क़दम 0.11, परीक्षण से) | | |
 
 ## नियम

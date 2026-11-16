@@ -235,10 +235,44 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **"स्वचालित" का सही अर्थ अभी:** एक बटन (`foreman-enqueue`) से लेकर merge तक कोई हाथ नहीं लगता। पर Foreman अभी अपने-आप अगला ग्रंथ नहीं चुनता (ग्रंथ-स्तर की state-machine P3 में)।
 - **न करें:** `texts/isha/` में कुछ न लिखें जब तक स्रोत तय और lock न हो; R2/R6 को "ठीक" करने के लिए लाइसेंस या lock न गढ़ें।
 
-### session 1, turn 30 (2026-11-16, claude-fable-5-2) — काम बीच में: pilot v0.3 (branch `pilot-v03`, PR अभी नहीं खुला)
+### session 1, turn 30 (2026-11-16, claude-fable-5-2) — कड़ी v0.3: कमज़ोरियाँ ठीक करने का पहला दौर
 
 - **मालिक का चुनाव:** "कड़ी ठीक करो" (pilot की कमज़ोरियाँ)।
-- **branch `pilot-v03` पर हो चुका:** Workers AI provider (`tools/pilot/llm.py`), Groq pacing (TPM headers + OTPM), जज में प्रमाण-क्षेत्र और A/B क्रम-बदल, छूटे टुकड़ों का दोबारा प्रयास (`ask_items`), हर भूमिका की fallback-सूची (`draft_fb`, `judge_fb`), जज-स्थिरता का माप, अधूरी जूरी पर run विफल, `tools/pilot/bakeoff.py`, `tools/providers/probe.py`, workflows में Workers AI के secrets और `mode`/`open_pr` inputs।
-- **branch पर परखने का तरीका (PR के बिना):** `gh workflow run pilot-e2e.yml --ref pilot-v03 -f text_id=isha -f mode=pipeline -f open_pr=no`
-- **बाक़ी:** असली run का नतीजा पढ़ना; PR खोलना (protected paths: `.github/`, `tools/` → `owner-approved`); merge के बाद `foreman-enqueue` से एक run; PLAN/DECISIONS/quotas अपडेट।
+- **v0.2 में मिला bug:** दोनों पुराने runs में Draft A (Groq qwen) का बीच का टुकड़ा (मंत्र 7–12) Groq के JSON-mode की 400-त्रुटि से गिरता था और चुपचाप छूट जाता था। इसलिए वे छह मंत्र बिना पहले जज के cascade में जाते थे। पुरानी "28–33% सहमति" इसी से कम दिखी: जिन 12 जोड़ों पर जज बैठा, उनमें 5/12 (42%) और 6/12 (50%) सहमत थे।
+- **v0.3 में बना (branch `pilot-v03`):**
+  1. **चौथा परिवार:** Cloudflare Workers AI provider (`tools/pilot/llm.py`)। मौजूदा `CLOUDFLARE_API_TOKEN` से चलता है (probe run 43897044579)। मुफ़्त स्तर पर Meta Llama, Mistral, gpt-oss, Qwen, Gemma मिले; DeepSeek और Kimi "Workers Free plan पर उपलब्ध नहीं" (403)।
+  2. **pacing:** Groq के headers (8,000 tokens/मिनट) और 429-संदेश से सीखी output-सीमा (qwen: 1,000 output-tokens/मिनट) के हिसाब से अनुरोध पहले ही रुकते हैं।
+  3. **छूटे टुकड़े:** `ask_items` छूटी ids को छोटे टुकड़ों में दोबारा भेजता है; JSON-mode की 400 पर सादा अनुरोध। अब `draft_missing` और `judge1_missing` माप में अलग दिखते हैं।
+  4. **fallback:** हर भूमिका की क्रमबद्ध सूची (`DEFAULT_MODELS`); पहला मॉडल उत्तर न दे तो अगला (`draft_fb`, `judge_fb`)। परिवार-नियम बना रहता है। कभी दूसरी key या खाता नहीं।
+  5. **जज:** हर ग़ैर-OK label के लिए प्रमाण-क्षेत्र (बिना प्रमाण का CONTRADICTED → UNSURE); A/B का क्रम id के hash से बदलता है (स्थान-पक्षपात के लिए)।
+  6. **स्थिरता-माप:** वही जोड़े उसी जज को उलटे क्रम में, और एक और परिवार के जज को (`judge_stability`)। फ़ैसला इससे नहीं बदलता।
+  7. **विफलता:** आधे से ज़्यादा मंत्रों पर जूरी अधूरी हो तो run विफल होता है और डेटा-PR नहीं खुलता (Foreman बाद में दोबारा चलाए)।
+  8. **औज़ार:** `tools/pilot/bakeoff.py` (ड्राफ़्टरों की तुलना; `pilot-e2e` में `mode=bakeoff`), `tools/providers/probe.py` (`provider-smoke` में `provider=probe`)। `pilot-e2e` के नए inputs: `mode`, `open_pr`, `draft_a/b/c`, `judges`।
+- **branch पर परखने का तरीका (PR के बिना):** `gh workflow run pilot-e2e.yml --ref <branch> -f text_id=isha -f mode=pipeline -f open_pr=no`
+- **ड्राफ़्टरों की तुलना [हमारा माप; run 43898284352 का log; run 45 मिनट पर कट गया, artifact नहीं बना; जज भी मॉडल हैं]:**
 
+| ड्राफ़्टर | बने | जज gpt-oss-120b: OK / MINOR / CONTRADICTED / UNSURE | जज mistral-small |
+|---|---|---|---|
+| Gemma 4 31B (AI Studio) | 18/18, 139 s | 12 / 3 / 3 / 0 | 6 / 10 / 2 / 0 |
+| qwen3.8-27b (Groq) | 18/18, 104 s | 9 / 3 / 5 / 1 | — |
+| llama-4-scout (Workers AI) | 18/18, 268 s | 10 / 2 / 5 / 1 | — |
+| mistral-small-3.1 (Workers AI) | 18/18, 35 s | 10 / 2 / 6 / 0 | — |
+| llama-3.3-70b (Workers AI) | 16/18, 83 s | 6 / 2 / 8 / 0 | — |
+| gpt-oss-120b (Groq) | 18/18, 67 s | — | 4 / 6 / 8 / 0 |
+| gemini-3.5-flash-lite | 0/18 (HTTP 503) | — | — |
+| gemini-3.8-flash | 0/18 (HTTP 429, quota) | — | — |
+
+  इसी से Draft A की सूची में Gemma 4 31B पहला रखा गया। यह तुलना पूरी नहीं है: दोबारा चलाकर `audit/pilot/` में रखनी है।
+- **v0.3 का असली run [हमारा माप; run 43920792204, branch पर, PR नहीं खोला]:**
+  - उस समय Gemma (503, फिर समय-सीमा) और Workers AI (दिन का quota ख़त्म) उत्तर नहीं दे रहे थे। fallback से Draft A = gemini-3.5-flash-lite, Draft B = qwen, जज 1 = gpt-oss-120b, Draft C = gpt-oss-120b, जज 2 = qwen (केवल google-ड्राफ़्ट वाले जोड़ों पर)।
+  - पहले दौर की सहमति **9/18 (50%)**, सभी 18 जोड़ों पर जज बैठा। बैज C 10 / D 8। झंडे: JURY_INCOMPLETE 6 (qwen-ड्राफ़्ट वाले जोड़ों के लिए कोई पात्र जज उत्तर नहीं दे रहा था), CONTRADICTED 1, JURY_DISAGREE 1।
+  - जज की स्थिरता (वही जज, उलटा क्रम, 18 जोड़े): label 0.889, स्वीकार 0.889, **चुनाव (pick) 0.556**। यानी "ठीक या ग़लत" काफ़ी स्थिर है, पर "कौन बेहतर" क्रम पर निर्भर है। दूसरे परिवार के जज से तुलना नहीं हो सकी (Workers AI बंद)।
+  - समय **1,562 s (26 मिनट)**; 59 API-calls, 22 बार 429, pacing में 748 s और 429 के बाद 290 s इंतज़ार। स्थिरता-माप अकेला 441 s।
+  - इससे पहले के दो runs (43915053026, 43917316702) में पूरा Google-परिवार 503 दे रहा था; दूसरा run नए नियम से विफल हुआ और कोई PR नहीं बना (यही अपेक्षित व्यवहार है)।
+- **जज की गुणवत्ता [निर्माता की अपनी पढ़त; विशेषज्ञ-समीक्षा नहीं]:** gpt-oss-120b ने मंत्र 10 और 13 में "विचचक्षिरे = समझाया" वाले सही ड्राफ़्ट को "उलटा" कहकर ग़लत ड्राफ़्ट ("जिन्होंने नहीं देखा") चुना; मंत्र 18 में "राये = धन के लिए" को "संस्कृत में नहीं" कहा; मंत्र 4 में "अनेजत् = अचल" को ग़लत कहा; मंत्र 1 में "भुञ्जीथाः = पालन करो" (शांकर-पाठ) को CONTRADICTED कहा। इन मंत्रों पर D लगा है, पर कारण संयोग है (जूरी अधूरी थी)। **निष्कर्ष: इस जज के C-बैज पर भरोसा नहीं किया जा सकता।**
+- **गति [हमारा माप]:** Groq का मुफ़्त स्तर प्रति मॉडल 8,000 tokens/मिनट और 1,000 अनुरोध/दिन देता है (headers से); gpt-oss हर अनुरोध में ~1,700 reasoning-tokens ख़र्च करता है। 18 मंत्र = 26 मिनट (स्थिरता-माप के बिना लगभग 19)। योजना का ~7,000 श्लोक/दिन इस रास्ते से नहीं निकलता।
+- **provider की घटनाएँ (16 नवंबर):** AI Studio पर Gemma और Flash-Lite घंटों 503 "high demand" देते रहे; Flash-वर्ग का मुफ़्त quota ख़त्म मिला। Workers AI के 10,000 neurons/दिन तुलना के runs में ख़त्म हो गए (00:00 UTC पर लौटते हैं); nemotron-3-120b पर अनुरोध अटकते रहे।
+- **हटाए गए runs:** 43915053026 और 43920792204 के log और artifact GitHub से हटा दिए गए, क्योंकि Groq की 429-त्रुटि के संदेश में खाते का संगठन-ID छपा था। उनके माप (ID हटाकर) `state/pilot_metrics.json` और `audit/pilot/isha_e2e.json` में हैं; `llm.py` का `scrub()` अब यह ID अपने-आप हटाता है।
+- **जानबूझकर नहीं किया:** Foreman का नया deploy नहीं (उसकी सूची का `promptHash: "pilot-e2e-0.1"` job-अनुबंध का नाम है; कड़ी का version नतीजे के `pipeline_version` में है)। Hiriyanna 1911 का पाठ जज को नहीं दिया (G1 बाक़ी; OCR में मंत्र और भाष्य मिले हुए हैं, parser चाहिए)। `texts/` ख़ाली है।
+- **खुला जोखिम:** pilot का क़दम अब `CLOUDFLARE_API_TOKEN` पढ़ता है, जो deploy वाला चौड़ा token है। Workers AI के लिए अलग, केवल-पढ़ने वाला token बेहतर है (मालिक का क़दम)।
+- **न करें:** `texts/isha/` में कुछ न लिखें जब तक स्रोत तय और lock न हो; R2/R6 को "ठीक" करने के लिए लाइसेंस या lock न गढ़ें; तुलना (bake-off) एक दिन में दो बार न चलाएँ (Workers AI का quota ख़त्म हो जाता है)।

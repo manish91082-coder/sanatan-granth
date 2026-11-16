@@ -93,6 +93,8 @@ def scrub(s: object) -> str:
             s = s.replace(v, "<hidden>")
     s = re.sub(r"AIza[0-9A-Za-z_-]{10,}", "<key>", s)
     s = re.sub(r"gsk_[0-9A-Za-z]{10,}", "<key>", s)
+    s = re.sub(r"org_[0-9a-z]{8,}", "<org>", s)  # Groq का संगठन-ID त्रुटि-संदेशों में आता है; रिपोर्ट में नहीं जाना चाहिए
+    s = re.sub(r"\([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\)", "", s)
     return s[:300]
 
 

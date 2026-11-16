@@ -2,42 +2,38 @@
   "_meta": {
     "label": "AI-मसौदा · मानव-समीक्षा नहीं",
     "ai_generated": true,
-    "pipeline_version": "pilot-e2e-0.2",
-    "generated_at": "2026-11-16T13:27:01Z",
+    "pipeline_version": "pilot-e2e-0.3",
+    "generated_at": "2026-11-16T18:06:25Z",
     "licence": "LicenseRef-sanatan-granth-draft",
-    "note": "संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash। अनुवाद परीक्षण के हैं।",
+    "note": "पूरा संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash (जज के प्रमाण में एक-दो शब्द आ सकते हैं)। अनुवाद परीक्षण के हैं।",
     "mock": false,
-    "run": "43875372883",
-    "job_key": "fde72a2100bc2351ce61ef259c8b807b898a52fcb8c0591b5379c42c4cdb759b"
+    "run": "43920792204",
+    "job_key": null
   },
   "segments": [
     {
       "id": "isha:1",
       "sa_sha256": "c5499b9317964d1a356d8897f3345541dda098714ea5d694dd50f439b8e525bf",
-      "badge": "C",
-      "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "badge": "D",
+      "flags": [
+        "JURY_INCOMPLETE"
+      ],
+      "path": "जूरी अधूरी",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
+        "a_label": "CONTRADICTED",
+        "b_label": "OK",
+        "a_evidence": "भूँजīथā rendered as \"protect yourself\" (should be \"enjoy\")",
+        "b_evidence": "",
         "agree": false,
-        "pick": "A",
-        "rationale": "A correctly renders pervasion, renunciation and non‑covetousness; B is garbled and misstates the meaning.",
+        "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "agree": false,
-        "pick": "A",
-        "rationale": "Translation A correctly translates the famous Isavasya Upanishad verse. B mistranslates 'ishavasyam' as a proper name and alters the meaning.",
-        "has_empirical_claim": false
-      },
+      "judge2": null,
       "print_coverage": 0.7838,
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
       "en": "Om. All this, whatever moves in this moving world, is pervaded by the Lord. Enjoy by renouncing it; do not covet anyone's wealth.",
-      "hi": "ॐ। इस चलती हुई जगत में जो कुछ भी चलता है, वह सब ईश्वर द्वारा व्याप्त है। उसे त्यागकर भोगो; किसी के धन की लालसा मत करो।"
+      "hi": "ॐ। इस चलती हुई जगत में जो कुछ भी चलता है, वह सब ईश्वर द्वारा व्याप्त है। उसे त्यागकर भोगो; किसी का धन लोभ मत करो।"
     },
     {
       "id": "isha:2",
@@ -46,26 +42,28 @@
       "flags": [],
       "path": "दो जजों ने वही ड्राफ़्ट चुना",
       "judge1": {
-        "a_label": "CONTRADICTED",
-        "b_label": "OK",
+        "a_label": "OK",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "",
+        "b_evidence": "समाः (hundred) rendered as sixty years",
         "agree": false,
-        "pick": "B",
-        "rationale": "A gives wrong lifespan (six hundred/sixty years); B correctly says desire to live a hundred years and the non‑binding of action.",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": {
-        "a_label": "OK",
+        "a_label": "MINOR",
         "b_label": "MINOR",
+        "a_evidence": "jijivishecchataṃ (desire to live) rendered as 'wish to live a hundred years' adds 'a hundred years' not in Sanskrit.",
+        "b_evidence": "jijivishecchataṃ (desire to live) rendered as 'be content' changes the meaning from desire to contentment.",
         "agree": false,
         "pick": "A",
-        "rationale": "A correctly translates 'jijivishecchatah' as wishing to live a hundred years. B incorrectly renders it as 'one is equal', losing the specific duration and intent.",
         "has_empirical_claim": false
       },
       "print_coverage": 0.9155,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
       "en": "Doing works indeed here, one should wish to live a hundred years. Thus in you, not otherwise than this is there, work does not cling to man.",
-      "hi": "यहाँ कर्म करते हुए ही सौ वर्ष जीने की इच्छा करनी चाहिए। इस प्रकार तुममें (कर्म न लिपटने का) यही मार्ग है, इसके अतिरिक्त दूसरा नहीं है, जिससे कर्म मनुष्य में लिप्त नहीं होता।"
+      "hi": "यहाँ कर्म करते हुए ही सौ वर्ष जीने की इच्छा करनी चाहिए। तुम्हारे लिए इस प्रकार (इसके अतिरिक्त) अन्यथारूप नहीं है जिससे कर्म मनुष्य में न लिपटे।"
     },
     {
       "id": "isha:3",
@@ -76,17 +74,18 @@
       "judge1": {
         "a_label": "OK",
         "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
         "agree": true,
-        "pick": "A",
-        "rationale": "Both convey sunless worlds covered by darkness and self‑killers going there.",
+        "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": 0.7571,
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
-      "en": "Those worlds are called sunless, covered by dark darkness. To them go the dead, those people who are self-slayers.",
-      "hi": "वे लोक सूर्यरहित कहलाते हैं, अंधे अंधकार से ढके हुए। वहाँ मृतक जाते हैं, वे लोग जो आत्महत्या करने वाले हैं।"
+      "en": "There are worlds called sunless, covered by dark darkness. To those worlds go the dead, those people who are self-slayers.",
+      "hi": ": वहाँ ऐसे लोक हैं जिन्हें अनेज कहते हैं, जो अंधेरे अंधकार से ढके हुए हैं। उन लोकों में वे मृतक जाते हैं, जो वे लोग हैं जो आत्महत्या करने वाले हैं।"
     },
     {
       "id": "isha:4",
@@ -99,24 +98,26 @@
       "judge1": {
         "a_label": "CONTRADICTED",
         "b_label": "CONTRADICTED",
-        "agree": false,
+        "a_evidence": "अनेजदेकं → 'Unmoving' (incorrect); मातरिश्वा दधाति → 'supports the waters' (misinterpretation)",
+        "b_evidence": "अनेजदेकं → 'unmoving' (incorrect); मातरिश्वा दधाति → 'supports the waters in the mother' (misrendered)",
+        "agree": true,
         "pick": "A",
-        "rationale": "Both distort the verse; A is slightly closer by mentioning gods, but both miss key concepts.",
         "has_empirical_claim": false
       },
       "judge2": {
         "a_label": "OK",
         "b_label": "CONTRADICTED",
+        "a_evidence": "",
+        "b_evidence": "anējadekaṃ (unmoving, one) rendered as 'born only of the mind'; apomātariṣvā (waters, Matarisvan) rendered as 'mother, world kills'.",
         "agree": false,
         "pick": "A",
-        "rationale": "Translation A gives a coherent and faithful rendering of the verse. B contains ellipsis and mistranslations.",
         "has_empirical_claim": false
       },
       "print_coverage": 0.6774,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "The one, unmoving, is swifter than the mind; the gods did not reach it first. In it, the wind, moving, does not reach the others; standing in it, the waters and the fire are established.",
-      "hi": "वह एक, अचल, मन से तेज है; देवता पहले उसे प्राप्त नहीं हुए। उसमें, चलती हुई हवा अन्य को नहीं पहुँचती; उसमें स्थित होकर, जल और अग्नि स्थापित हैं।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Unmoving, one, swifter than the mind. The gods did not reach it, it went first. That running past others, outstrips them standing. In it Matarisvan supports the waters.",
+      "hi": "अचल, एक, मन से भी अधिक वेगवान्। देवगण इसे प्राप्त नहीं कर सके, यह पहले ही पहुँच गया था। वह दौड़ते हुए अन्य सबको पीछे छोड़ देता है और स्थिर रहते हुए भी आगे निकल जाता है। उसमें मातरिश्वा (वायु) जल को धारण करता है।"
     },
     {
       "id": "isha:5",
@@ -127,30 +128,34 @@
       "judge1": {
         "a_label": "OK",
         "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
         "agree": true,
         "pick": "A",
-        "rationale": "Both accurately list the contrasting pairs of moving/non‑moving, far/near, within/outside.",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": 0.8154,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "That moves, that does not move; that is far, that is near; that is within all, that is outside of all this.",
-      "hi": "वह चलता है, वह नहीं चलता; वह दूर है, वह पास है; वह सबके भीतर है, वह इस सबके बाहर है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "That moves, that does not move. That is far, that is near. That is inside of all this, and that is outside of all this.",
+      "hi": "वह चलता है, वह नहीं चलता। वह दूर है, वह पास है। वह इस सब के भीतर है, और वह इस सब के बाहर है।"
     },
     {
       "id": "isha:6",
       "sa_sha256": "0484d1408b38bcbc0f6c8204022d4a2d23ec836fad2298690f51081437eb2796",
-      "badge": "C",
-      "flags": [],
-      "path": "पहले दौर में सहमति",
+      "badge": "D",
+      "flags": [
+        "JURY_INCOMPLETE"
+      ],
+      "path": "जूरी अधूरी",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "OK",
+        "a_label": "CONTRADICTED",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "विजुगुप्सते rendered as ‘does not feel disgusted’",
+        "b_evidence": "विजुगुप्सते rendered as ‘does not see himself with aversion’",
         "agree": true,
-        "pick": "A",
-        "rationale": "Both faithfully render seeing all beings in the Self and vice‑versa, and the lack of aversion thereafter.",
+        "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": null,
@@ -158,171 +163,165 @@
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
       "en": "But he who sees all beings in his own self, and his own self in all beings, he does not see himself with aversion.",
-      "hi": "लेकिन वह जो सभी प्राणियों को अपने आत्म में देखता है, और सभी प्राणियों में अपने आत्म को देखता है, वह अपने को घृणा से नहीं देखता।"
+      "hi": "लेकिन वह जो सभी प्राणियों को अपने आत्म में देखता है, और सभी प्राणियों में अपना आत्म को देखता है, वह अपने को घृणा से नहीं देखता।"
     },
     {
       "id": "isha:7",
       "sa_sha256": "466a09a75f5836a3812e3b92b8cea4e676a5c7f3a1f04d7adf9c9d92b9d7463a",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
-      "judge1": null,
-      "judge2": {
+      "path": "पहले दौर में सहमति",
+      "judge1": {
         "a_label": "OK",
-        "b_label": "OK",
+        "b_label": "MINOR",
+        "a_evidence": "",
+        "b_evidence": "विजानतः rendered as 'knower of the Veda' (adds Veda)",
         "agree": true,
         "pick": "A",
-        "rationale": "Both translations accurately convey the meaning of the verse regarding the Self, delusion, and sorrow. A is slightly more fluid but both are faithful.",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.8676,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "In whom all beings have become the Self alone for the one who knows, what delusion, what sorrow is there for the one who sees oneness?",
-      "hi": "जिस अवस्था में जानने वाले के लिए सभी भूत आत्मा ही हो गए हैं, उस एकत्व को देखने वाले के लिए वहाँ कौन सा मोह और कौन सा शोक है?"
+      "en": "In whom all beings have become the self itself of the one who knows, what delusion is there, what grief, of the one seeing oneness?",
+      "hi": "जिस अवस्था में जानने वाले के लिए सब भूत आत्मा ही हो गए हैं, उस एकत्व को देखने वाले को क्या मोह और क्या शोक?"
     },
     {
       "id": "isha:8",
       "sa_sha256": "28602737db191ac027798f15de9297c319afc6ea16eba40e88a9728eabcc9292",
-      "badge": "D",
-      "flags": [
-        "CONTRADICTED"
-      ],
-      "path": "cascade के बाद भी असहमति",
-      "judge1": null,
-      "judge2": {
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
         "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "agree": false,
+        "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
+        "agree": true,
         "pick": "A",
-        "rationale": "A correctly translates 'paryagaccha' as pervaded. B incorrectly translates it as 'gone beyond' and misinterprets 'akayam' as 'subtle body' instead of 'bodiless'.",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.8246,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "He has pervaded, bright, bodiless, scarless, without sinews, pure, untouched by evil. The seer, the thinker, the all-pervading, self-born, has duly assigned objects for eternal years.",
-      "hi": "वह सर्वव्याप्त है, दीप्तिमान है, शरीररहित है, क्षतरहित है, स्नायुहीन है, शुद्ध है, पाप से अछूता है। कवि, मनीषी, सर्वव्यापी, स्वयंभू ने शाश्वत वर्षों के लिए यथार्थ रूप से अर्थों (पदार्थों) का विधान किया है।"
+      "en": "He has pervaded: bright, bodiless, scarless, without sinew, pure, untouched by evil. The seer, thinker, all-pervading, self-born, has duly assigned objects for eternal years.",
+      "hi": "वह सब में व्याप्त है: दीप्तिमान्, शरीररहित, व्रणरहित, स्नायुहीन, शुद्ध, पाप से अप्रभावित। कवि (क्रान्तदर्शी), मनीषी, सर्वव्यापी, स्वयंभू ने शाश्वत वर्षों के लिए यथार्थ रूप से अर्थों (पदार्थों/कर्मों) को विधान किया है।"
     },
     {
       "id": "isha:9",
       "sa_sha256": "4cb81f90eaf291a557b0b9fb82ce14e923a0a84aa74979d01eec5562ed3103fc",
-      "badge": "D",
-      "flags": [
-        "CONTRADICTED"
-      ],
-      "path": "cascade के बाद भी असहमति",
-      "judge1": null,
-      "judge2": {
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
         "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "agree": false,
+        "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
+        "agree": true,
         "pick": "A",
-        "rationale": "A correctly identifies the agents entering darkness. B reverses the agency, stating darkness enters the people, which contradicts the Sanskrit grammar.",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.8814,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "Into blind darkness enter those who worship avidya (ignorance). Into darkness greater than that, as it were, those who delight in vidya (knowledge).",
-      "hi": "वे लोग अंधे अंधकार में प्रवेश करते हैं जो अविद्या (कर्म) की उपासना करते हैं। जो विद्या (ज्ञान) में रत हैं, वे मानो उससे भी अधिक अंधकार में प्रवेश करते हैं।"
+      "en": "Into blind darkness enter those who worship avidya (ignorance). Into greater than that, as it were, go those who are delighted in vidya (knowledge).",
+      "hi": "अविद्या की उपासना करने वाले अंधे अंधकार में प्रवेश करते हैं। जो विद्या में रत हैं, वे मानो उससे भी अधिक अंधकार में प्रवेश करते हैं।"
     },
     {
       "id": "isha:10",
       "sa_sha256": "f3d68ac9b1e2df49c0d747c10e00c516d245fca6927b237434062480848f31a9",
       "badge": "D",
       "flags": [
-        "CONTRADICTED"
+        "JURY_INCOMPLETE"
       ],
-      "path": "cascade के बाद भी असहमति",
-      "judge1": null,
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
+      "path": "जूरी अधूरी",
+      "judge1": {
+        "a_label": "CONTRADICTED",
+        "b_label": "OK",
+        "a_evidence": "नस्तद्विचचक्षिरे rendered as 'who have explained' (opposite)",
+        "b_evidence": "",
         "agree": false,
-        "pick": "A",
-        "rationale": "A correctly translates 'anyad eva' as 'other' (result/thing). B incorrectly inserts 'deity' (deva) which is not in the text, and misinterprets the final clause.",
+        "pick": "B",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.971,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Other they say, comes from vidya, other they say, comes from avidya. Thus we have heard from the wise who have explained that to us.",
-      "hi": "विद्या से कुछ और ही परिणाम कहा गया है, और अविद्या से कुछ और ही कहा गया है। ऐसा हमने उन धीर पुरुषों से सुना है जिन्होंने हमारे लिए उसकी व्याख्या की थी।"
+      "final_model": "qwen/qwen3.8-27b",
+      "final_family": "alibaba-qwen",
+      "en": "Other gods say, 'By knowledge,' others say, 'By ignorance.' Thus we have heard from the wise, who did not see that.",
+      "hi": "अन्य देव कहते हैं, 'विद्या द्वारा,' अन्य कहते हैं, 'अविद्या द्वारा।' इस प्रकार हमने विवेकी लोगों से सुना है, जिन्होंने उसका चिंतन नहीं किया।"
     },
     {
       "id": "isha:11",
       "sa_sha256": "ba67e78df0aeda82d7bc0d9c500e3b470e0bca86af2a46d32d1243487adae71a",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
-      "judge1": null,
-      "judge2": {
+      "path": "पहले दौर में सहमति",
+      "judge1": {
         "a_label": "OK",
         "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
         "agree": true,
         "pick": "A",
-        "rationale": "Both translations are faithful and convey the same meaning regarding the knowledge of vidya and avidya leading to immortality.",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.8056,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "Vidya and avidya too, he who knows both together, having crossed death by avidya, attains immortality by vidya.",
-      "hi": "जो विद्या और अविद्या दोनों को साथ-साथ जानता है, वह अविद्या से मृत्यु को पार करके विद्या से अमृतत्व को प्राप्त करता है।"
+      "en": "Vidya and avidya too, he who knows both together, having crossed death by avidya, enjoys amrita (immortality) by vidya.",
+      "hi": "विद्या और अविद्या दोनों को जो एक साथ जानता है, वह अविद्या से मृत्यु को पार करके विद्या से अमृतत्व का उपभोग करता है।"
     },
     {
       "id": "isha:12",
       "sa_sha256": "518c15e27e8f43cd14a04d01e3307c6755f4cbc6c0a29c92753e37b6271e29d6",
-      "badge": "D",
-      "flags": [
-        "CONTRADICTED"
-      ],
-      "path": "cascade के बाद भी असहमति",
-      "judge1": null,
-      "judge2": {
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
         "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "agree": false,
+        "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
+        "agree": true,
         "pick": "A",
-        "rationale": "A correctly identifies the second group as those delighting in Sambhuti (manifest). B incorrectly claims they are attached to Asambhuti, contradicting the Sanskrit text.",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.9661,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "Into blind darkness enter those who worship asambhuti (the unmanifest). Into darkness greater than that, as it were, those who delight in sambhuti.",
-      "hi": "वे अंधे अंधकार में प्रवेश करते हैं जो असम्भूति (प्रकृति या विनाशकारी असम्भूति) की उपासना करते हैं। जो सम्भूति में रत हैं, वे मानो उससे भी अधिक अंधकार में प्रवेश करते हैं।"
+      "en": "Into blind darkness enter those who worship asambhuti (non-manifestation/destruction). Into greater than that, as it were, go those who are delighted in sambhuti (manifestation).",
+      "hi": "असंभूति की उपासना करने वाले अंधे अंधकार में प्रवेश करते हैं। जो संभूति में रत हैं, वे मानो उससे भी अधिक अंधकार में प्रवेश करते हैं।"
     },
     {
       "id": "isha:13",
       "sa_sha256": "246e62f0bc5919e1ad7c79ab040eb4af20de8beb1566d7ccd3d54292ef267565",
       "badge": "D",
       "flags": [
-        "CONTRADICTED"
+        "JURY_INCOMPLETE"
       ],
-      "path": "cascade के बाद भी असहमति",
+      "path": "जूरी अधूरी",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "agree": false,
-        "pick": "A",
-        "rationale": "A follows the Sanskrit; B changes 'did not see' to 'explained'.",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "CONTRADICTED",
-        "b_label": "CONTRADICTED",
+        "b_label": "OK",
+        "a_evidence": "अन्यदे rendered as ‘different indeed’; नस्तद्विचचक्षिरे rendered as ‘who have explained that to us’",
+        "b_evidence": "",
         "agree": false,
-        "pick": "A",
-        "rationale": "Both miss the precise philosophical distinction between sambhuti (manifestation/creation) and asambhuti (unmanifest), though A is slightly less garbled in its attempt.",
+        "pick": "B",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 1.0,
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
       "en": "Some say that it is born from another, and some say that it is not born from another. Thus we have heard from the wise who did not see that.",
-      "hi": "कुछ कहते हैं कि यह दूसरे से उत्पन्न होता है, और कुछ कहते हैं कि यह दूसरे से उत्पन्न नहीं होता है। इस प्रकार हमने उन ज्ञानी लोगों से सुना है, जिन्होंने उसे नहीं देखा था।"
+      "hi": "कुछ कहते हैं कि यह दूसरे से उत्पन्न होता है, और कुछ कहते हैं कि यह दूसरे से उत्पन्न नहीं होता है। इस प्रकार हमने उन विद्वानों से सुना है जिन्होंने उसे नहीं देखा।"
     },
     {
       "id": "isha:14",
@@ -333,9 +332,10 @@
       "judge1": {
         "a_label": "OK",
         "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
         "agree": true,
-        "pick": "A",
-        "rationale": "Both render the verse accurately; minor wording differences only.",
+        "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": null,
@@ -343,7 +343,7 @@
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
       "en": "Who knows both birth and destruction together, having crossed death by destruction, he attains immortality by birth.",
-      "hi": "जो दोनों, उत्पत्ति और विनाश को साथ में जानता है, विनाश द्वारा मृत्यु को पार करके, वह उत्पत्ति द्वारा अमृतता को प्राप्त करता है।"
+      "hi": "जो जन्म और विनाश दोनों को साथ में जानता है, विनाश द्वारा मृत्यु को पार करके, वह जन्म द्वारा अमरत्व प्राप्त करता है।"
     },
     {
       "id": "isha:15",
@@ -354,16 +354,17 @@
       "judge1": {
         "a_label": "OK",
         "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
         "agree": true,
-        "pick": "A",
-        "rationale": "Both convey the golden covering of truth and request to uncover it.",
+        "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": 0.9412,
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
-      "en": "With a golden cover, the face of the truth is hidden. O Pusan, reveal it for the sight of the truth and dharma.",
+      "en": "With a golden vessel, the face of the truth is covered. O Pusan, reveal it for the sight of the truth and dharma.",
       "hi": "स्वर्ण के पात्र से सत्य का मुख ढका हुआ है। हे पूषन्, सत्य और धर्म के दर्शन के लिए उसे खोलो।"
     },
     {
@@ -377,37 +378,42 @@
       "judge1": {
         "a_label": "CONTRADICTED",
         "b_label": "CONTRADICTED",
+        "a_evidence": "एकर्षे rendered as 'sole seer' (misreading), व्यूह रश्मीन् rendered as 'scatter the rays' (opposite)",
+        "b_evidence": "एकर्षे rendered as 'do not draw away' (should be 'sole attractor'), तत्ते पश्यामि rendered as 'that I see you'",
         "agree": false,
         "pick": "A",
-        "rationale": "Both misinterpret the list of epithets as commands to withdraw or not draw away the sun.",
         "has_empirical_claim": false
       },
       "judge2": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "MINOR",
+        "a_evidence": "",
+        "b_evidence": "vyūha (scatter) rendered as 'array' (noun) instead of verb; ekarṣe (sole attractor) is a valid reading but less standard than 'seer'.",
         "agree": false,
         "pick": "A",
-        "rationale": "A has a minor phrasing issue with 'do not draw away', but B is overly literal and awkward ('single attraction'). A is more readable.",
         "has_empirical_claim": false
       },
       "print_coverage": 0.9091,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "O Pusan, do not draw away that sun, the Prajapatya, the arrangement of rays, the gathering of light. That which is your most beautiful form, that I see you, that is that person, I am he.",
-      "hi": "हे पूषन्, उस सूर्य को, जो प्राजापत्य है, किरणों का व्यूह है, तेज का समूह है, उससे दूर न करो। जो तुम्हारा सबसे सुंदर रूप है, उसे मैं तुम्हें देखता हूँ, जो वह पुरुष है, मैं वही हूँ।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "O Pushan, sole seer, Yama, Surya, son of Prajapati, scatter the rays, gather the light. Whatever your most auspicious form, that I see of you. He who is that person, he am I.",
+      "hi": "हे पूषन्, एक ऋषित्व वाले, यम, सूर्य, प्रजापति के पुत्र! अपनी रश्मियों को हटाओ, अपने तेज को समेटो। तुम्हारा जो अत्यंत कल्याणतम रूप है, उसे मैं देखता हूँ। जो वह पुरुष है, वही मैं हूँ।"
     },
     {
       "id": "isha:17",
       "sa_sha256": "4211f517531ed72b96cead9bd3febc354b393d8c3aab925ebcb97847f0104eb5",
-      "badge": "C",
-      "flags": [],
-      "path": "पहले दौर में सहमति",
+      "badge": "D",
+      "flags": [
+        "JURY_INCOMPLETE"
+      ],
+      "path": "जूरी अधूरी",
       "judge1": {
-        "a_label": "MINOR",
-        "b_label": "MINOR",
-        "agree": true,
-        "pick": "A",
-        "rationale": "Both capture the ash‑body and repeated reminder of Kratu, with slight lexical variations.",
+        "a_label": "CONTRADICTED",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "क्रतो rendered as “will” (en) and as “संकल्प/मन” (hi) instead of Kratu",
+        "b_evidence": "हिंदी miswrites “क्रतो” as “कृतो”, altering the word’s meaning",
+        "agree": false,
+        "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": null,
@@ -422,30 +428,24 @@
       "sa_sha256": "63ad3ef87c86f6ce2f1b44b823d5662d882b83ec6e6cff258612d81fa20e8af8",
       "badge": "D",
       "flags": [
-        "CONTRADICTED"
+        "JURY_INCOMPLETE"
       ],
-      "path": "cascade के बाद भी असहमति",
+      "path": "जूरी अधूरी",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "agree": false,
-        "pick": "A",
-        "rationale": "A stays close to the original; B adds concepts of wealth and sin removal not present.",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "CONTRADICTED",
-        "b_label": "CONTRADICTED",
+        "b_label": "OK",
+        "a_evidence": "Adds “wealth” for राये and “crooked sin”, which are not in the Sanskrit",
+        "b_evidence": "",
         "agree": false,
-        "pick": "A",
-        "rationale": "Both translations struggle with 'juhooranam enah' (crooked sin) and 'vayu-nani' (knowledge/paths). A translates 'ray' for path-adjacent term and misinterprets 'yuyodhy asmat' as fighting, but B is completely inaccurate.",
+        "pick": "B",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.3333,
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
-      "en": "O Agni, lead us by the good path, by the good ray, O all-knowing one, through all the winds. May we fight for the sake of the sacrifice, may we perform the most excellent praise to you.",
-      "hi": "हे अग्नि, हमें सुपथ से, सुप्रकाश से, हे सर्वज्ञ, सभी वायुओं के माध्यम से ले चलो। हम यज्ञ के लिए युद्ध करें, हम तुम्हें सबसे उत्तम स्तुति करें।"
+      "en": "O Agni, lead us by the good path, by the ray, O all-knowing one, through all the winds. May we fight for the sake of the sacrifice, may we perform the most excellent praise to you.",
+      "hi": "हे अग्नि, हमें अच्छे मार्ग से, किरण से, हे सर्वज्ञ, सभी वायुओं के माध्यम से ले चलो। हम यज्ञ के लिए युद्ध करें, हम तुम्हें सबसे उत्तम स्तुति करें।"
     }
   ]
 }
