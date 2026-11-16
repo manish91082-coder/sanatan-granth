@@ -1,0 +1,123 @@
+name: ocr-witness
+
+# छपे संस्करण (Internet Archive scan) के चुने पन्नों का OCR और e-text गवाह से मिलान (मास्टर योजना §3.1; P2 2.1)।
+# OCR का पाठ repo में कभी नहीं जाता। डिफ़ॉल्ट में वह artifact में भी नहीं जाता; केवल रिपोर्ट (hash + अनुपात) जाती है।
+# हाथ से चलाएँ। कोई secret नहीं चाहिए।
+
+on:
+  workflow_dispatch:
+    inputs:
+      identifier:
+        description: "archive.org identifier"
+        required: true
+      leaves:
+        description: "leaf-संख्याएँ: जैसे 13 या 11-20 या 11,12,15"
+        required: true
+      witness_id:
+        description: "witnesses/ वाला witness_id"
+        required: true
+      keep_text:
+        description: "OCR-पाठ artifact में रखें? केवल PD संस्करण पर yes"
+        default: "no"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ocr-witness-${{ inputs.witness_id }}
+  cancel-in-progress: false
+
+jobs:
+  ocr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      IDENT: ${{ inputs.identifier }}
+      LEAVES: ${{ inputs.leaves }}
+      WITNESS: ${{ inputs.witness_id }}
+      # tessdata_best: Tesseract का आधिकारिक मॉडल-भंडार, tag पर पिन
+      TESSDATA_URL: https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/4.1.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: इनपुट की जाँच
+        run: |
+          set -euo pipefail
+          [[ "$IDENT" =~ ^[A-Za-z0-9._-]{3,120}$ ]] || { echo "::error::identifier अमान्य"; exit 1; }
+          [[ "$LEAVES" =~ ^[0-9]+([,-][0-9]+)*$ ]] || { echo "::error::leaves अमान्य"; exit 1; }
+          [[ "$WITNESS" =~ ^[a-z0-9-]{3,60}$ ]] || { echo "::error::witness_id अमान्य"; exit 1; }
+          test -f "witnesses/$WITNESS.json" || { echo "::error::witnesses/$WITNESS.json नहीं है"; exit 1; }
+      - name: Tesseract और मॉडल
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tesseract-ocr >/dev/null
+          mkdir -p /tmp/tessdata/script
+          curl -sSfL --retry 3 -o /tmp/tessdata/san.traineddata "$TESSDATA_URL/san.traineddata"
+          curl -sSfL --retry 3 -o /tmp/tessdata/script/Devanagari.traineddata "$TESSDATA_URL/script/Devanagari.traineddata"
+          tesseract --version | head -1
+      - name: पन्ने उतारें
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pages
+          python3 - <<'PY'
+          import os, time, urllib.request
+          ident, spec = os.environ["IDENT"], os.environ["LEAVES"]
+          leaves = []
+          for part in spec.split(","):
+              if "-" in part:
+                  a, b = part.split("-", 1)
+                  leaves += list(range(int(a), int(b) + 1))
+              else:
+                  leaves.append(int(part))
+          if len(leaves) > 60:
+              raise SystemExit("एक run में 60 से ज़्यादा पन्ने नहीं")
+          for n in leaves:
+              url = f"https://archive.org/download/{ident}/page/n{n}/full/full/0/default.jpg"
+              req = urllib.request.Request(url, headers={"User-Agent": "sanatan-granth-ocr/0.1 (open library project)"})
+              for attempt in range(4):
+                  try:
+                      data = urllib.request.urlopen(req, timeout=120).read()
+                      break
+                  except Exception as e:
+                      if attempt == 3:
+                          raise
+                      time.sleep(5 * (attempt + 1))
+              open(f"/tmp/pages/n{n:04d}.jpg", "wb").write(data)
+              print(f"n{n}: {len(data)} bytes")
+              time.sleep(1)
+          PY
+      - name: OCR (दो मॉडल)
+        run: |
+          set -euo pipefail
+          for model in san script/Devanagari; do
+            out="/tmp/ocr/$(basename "$model")"; mkdir -p "$out"
+            for f in /tmp/pages/*.jpg; do
+              tesseract "$f" "$out/$(basename "$f" .jpg)" --tessdata-dir /tmp/tessdata -l "$model" --psm 3 >/dev/null 2>&1
+            done
+            echo "$model: $(cat "$out"/*.txt | wc -c) bytes"
+          done
+      - name: मिलान
+        run: |
+          set -euo pipefail
+          VER="$(tesseract --version | head -1)"
+          mkdir -p /tmp/report
+          for m in san Devanagari; do
+            python tools/witness/ocr_collate.py --ocr-dir "/tmp/ocr/$m" --witness-id "$WITNESS" \
+              --engine "$VER; tessdata_best 4.1.0 $m; psm 3" --source "archive.org:$IDENT leaves $LEAVES" \
+              --out "/tmp/report/isha_ocr_${WITNESS}_${m}.json" | tee "/tmp/report/summary_$m.json"
+            { echo "### $WITNESS · $m"; echo '```json'; cat "/tmp/report/summary_$m.json"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ocr-report-${{ inputs.witness_id }}
+          path: /tmp/report/*.json
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: inputs.keep_text == 'yes'
+        with:
+          name: ocr-text-${{ inputs.witness_id }}
+          path: /tmp/ocr/
+          retention-days: 7

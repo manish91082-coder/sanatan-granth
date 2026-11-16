@@ -1,0 +1,40 @@
+{
+  "witness_id": "ia-roer-1850",
+  "text_ids": [
+    "isha"
+  ],
+  "kind": "print_scan_own_ocr",
+  "description": "छपा संस्करण: Bibliotheca Indica खंड 8, 'The Ísá, Kéna, Katha, Praśna, Muṇḍa, Máṇḍukya Upanishads, with the commentary of Sankara Áchárya, and the gloss of Ánanda Giri', संपादक E. Röer, कलकत्ता 1850; Internet Archive पर Google-scan (611 चित्र, Oxford University)। देवनागरी (पुराना कलकत्ता-टाइप), मंत्र के साथ शांकरभाष्य और आनन्दगिरि-टीका एक ही पन्ने पर। पुस्तक-पृष्ठ 2 = leaf n10 (16 नवंबर 2026 को देखा)।",
+  "edition": {
+    "title": "The Ísá, Kéna, Katha, Praśna, Muṇḍa, Máṇḍukya Upanishads (Bibliotheca Indica, vol. 8)",
+    "editor_or_translator": "Eduard Röer (Edward Röer)",
+    "death_year": 1866,
+    "publisher": "Asiatic Society of Bengal; Calcutta, printed by J. Thomas",
+    "year": 1850
+  },
+  "licence": "LicenseRef-PD-India-US",
+  "licence_evidence": [
+    "संपादक की मृत्यु 1866, स्रोत 1: पुस्तकालय-शीर्षक 'Röer, Edward, 1805-1866' (archive.org के University of Toronto catalogue-रिकॉर्ड selectionsupanis00xxxxuoft में)",
+    "संपादक की मृत्यु 1866, स्रोत 2: Wikidata Q6086583 (Hans Heinrich Eduard Röer), P570 = 17 मार्च 1866, जिसके संदर्भ GND और BnF authority हैं",
+    "भारत: Copyright Act 1957 धारा 22 (लेखक की मृत्यु के बाद 60 वर्ष) → बहुत पहले से सार्वजनिक डोमेन [हमारी गणना]",
+    "अमेरिका: प्रकाशन 1850 (archive.org metadata: date = 1850; possible-copyright-status = NOT_IN_COPYRIGHT; identifier sknakathapranam00benggoog)"
+  ],
+  "pd_india": "yes",
+  "pd_us": "yes",
+  "usage": "compare",
+  "copy_family": "print-roer-bibliotheca-indica-1850",
+  "copy_family_evidence": "छपा संस्करण (Asiatic Society, 1850); e-text गवाहों और निर्णयसागर 1925 से अलग परिवार।",
+  "source_uri": "https://archive.org/details/sknakathapranam00benggoog",
+  "fetch": {
+    "method": "http_get",
+    "url": "https://archive.org/download/sknakathapranam00benggoog/page/n10/full/full/0/default.jpg",
+    "parser": ".github/workflows/ocr-witness.yml (Tesseract, tessdata_best) + tools/witness/ocr_collate.py",
+    "page_map": "leaf = पुस्तक-पृष्ठ + 8 (पृ. 2 = n10 पर जाँचा)"
+  },
+  "g1": {
+    "status": "pending_owner",
+    "date": "2026-11-16",
+    "decision_ref": "PD-तथ्य दो स्रोतों से; मालिक की G1-स्वीकृति बाक़ी"
+  },
+  "notes": "PD-दर्जा साफ़ है (संपादक की मृत्यु 1866), इसलिए G1-स्वीकृति के बाद यह प्रदर्शन-पाठ का स्रोत बन सकता है; तब तक usage 'compare'। कठिनाई: पुराना टाइप और bitonal scan, तथा मंत्र भाष्य/टीका के बीच छपे हैं; OCR की गुणवत्ता मापनी बाक़ी है।"
+}
