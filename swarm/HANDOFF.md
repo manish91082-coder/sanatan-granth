@@ -156,3 +156,16 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **अलगाव अधूरा (मालिक को बताया):** `rclone lsd granth:` में `Sanatan_Library` के अलावा उसी app के बनाए, मालिक के दूसरे काम के कुछ folders भी दिखते हैं। फ़िल्म का folder नहीं दिखता। `drive.file` की सीमा app (Cloud project) के स्तर पर है, client ID के स्तर पर नहीं; इसलिए उसी project में नया client बनाने से कुछ नहीं बदलेगा, अलग project चाहिए। तब तक token Kaggle Secret में न जाए।
 - **P0-gate:** सातों शर्तें पूरी (card/phone नहीं माँगा; CI हरा; canaries 3/3; Foreman का पूरा चक्कर; सूचना; Drive test-फ़ाइल; पहला साप्ताहिक audit-issue)।
 - terminal tool की सीख: `;` से जुड़े दो commands एक साथ भेजने पर tool ने Ctrl-C भेज दिया; एक बार में एक ही command भेजें।
+
+### session 1, turn 23 (2026-11-16, claude-fable-5-2) — Drive का अलग project: काम बीच में
+
+मालिक ने कहा: "हाँ, अलग बनाओ" (पुस्तकालय के Drive-token के लिए अलग Cloud project)।
+
+- **नया project नहीं बनाया:** console ने दिखाया कि मालिक के खाते में केवल 1 project-slot बचा है। मालिक का एक पूरी तरह ख़ाली project मिला ("Gemini Project GAG": कोई API key, OAuth client, service account या consent screen नहीं), इसलिए वही उपयोग हो रहा है। इसमें कोई Gemini key नहीं बनेगी (मास्टर योजना 0.6 की शर्त)।
+- **हो चुका:** उस project में Google Drive API चालू; OAuth "Project configuration" form में App name "Sanatan Granth Library" भरा गया।
+- **मालिक के हाथ से बाक़ी (pane में):** support email चुनना → Audience "External" → contact email → policy पर सहमति → Create।
+- **फिर Claude:** Audience पन्ने पर "Publish app" (In production); Clients → Create client → Desktop app का form भरना। **अंतिम "Create" और client secret की नक़ल मालिक करें; Claude वह dialog न पढ़े।**
+- **फिर terminal में (मालिक टाइप करें):** `python tools\setup\drive_login.py --remote granth --ask-client` (branch `claude/drive-own-project` में; अभी main में नहीं)। यह पुराने client वाला `granth` हटाकर नए client से बनाता है।
+- **उससे पहले Claude:** पुराने app से बना `granth:Sanatan_Library` (9 ख़ाली folders + 1 test-फ़ाइल) Drive के trash में भेजे, वरना नए app को वह नहीं दिखेगा और उसी नाम का दूसरा folder बन जाएगा।
+- **फिर:** `tools\setup\setup_drive.ps1` से नया tree + test-फ़ाइल; `rclone lsd granth:` में केवल `Sanatan_Library` दिखना चाहिए (अलगाव की जाँच); `drive/README.md`, PLAN, DECISIONS अद्यतन।
+
