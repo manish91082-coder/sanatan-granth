@@ -84,10 +84,11 @@ JUDGE_ONE_SYSTEM = (
 #   Draft A = Gemma 4 31B (तुलना में सबसे कम ग़लतियाँ; 14.4K अनुरोध/दिन)। Gemini Flash-Lite उस दिन 503 देता रहा और
 #   पिछले runs में सबसे कमज़ोर ड्राफ़्टर था; Flash-वर्ग का मुफ़्त quota (20/दिन) ख़त्म मिला। इसलिए दोनों default में नहीं।
 #   जजों का क्रम: पहला जो ड्राफ़्टरों के परिवार से अलग हो। दौर 1 = gpt-oss (openai); दौर 2 = Mistral (चौथा परिवार, Workers AI)।
+#   हर भूमिका की सूची क्रम से आज़माई जाती है: पहला मॉडल उत्तर न दे (503, quota) तो अगला। कभी दूसरी key या दूसरा खाता नहीं।
 DEFAULT_MODELS = {
-    "draft_a": "google_ai_studio:gemma-4-31b-it",
-    "draft_b": "groq:qwen/qwen3.8-27b",
-    "draft_c": "groq:openai/gpt-oss-120b",
+    "draft_a": ["google_ai_studio:gemma-4-31b-it", "google_ai_studio:gemma-4-26b-a4b-it", "google_ai_studio:gemini-3.5-flash-lite"],
+    "draft_b": ["groq:qwen/qwen3.8-27b", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct"],
+    "draft_c": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/openai/gpt-oss-120b"],
     "judges": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
                "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast", "google_ai_studio:gemma-4-31b-it", "groq:qwen/qwen3.8-27b"],
 }
@@ -152,24 +153,58 @@ def print_evidence(text_id: str) -> dict:
 # ------------------------------------------------------------------ मॉडल
 def pick_models(mock: bool) -> dict:
     if mock:
-        return {"draft_a": Model("mock", "mock-a", "mock-a"), "draft_b": Model("mock", "mock-b", "mock-b"),
-                "draft_c": Model("mock", "mock-c", "mock-c"), "judges": [Model("mock", "mock-j", "mock-j"), Model("mock", "mock-k", "mock-k"),
-                                                                           Model("mock", "mock-a", "mock-a"), Model("mock", "mock-b", "mock-b"),
-                                                                           Model("mock", "mock-c", "mock-c")], "unavailable": []}
-    out: dict = {"unavailable": [], "judges": []}
-    for role in ("draft_a", "draft_b", "draft_c"):
-        m = parse_model(os.environ.get("PILOT_" + role.upper()) or DEFAULT_MODELS[role])
-        if not available(m):
-            raise SystemExit(f"{role}: {m.ref} की key env में नहीं है")
-        out[role] = m
-    refs = [r for r in (os.environ.get("PILOT_JUDGES") or "").split(",") if r.strip()] or DEFAULT_MODELS["judges"]
-    for r in refs:
-        m = parse_model(r)
-        if available(m):
-            out["judges"].append(m)
-        else:
-            out["unavailable"].append(m.ref)
+        return {"draft_a": [Model("mock", "mock-a", "mock-a")], "draft_b": [Model("mock", "mock-b", "mock-b")],
+                "draft_c": [Model("mock", "mock-c", "mock-c")], "judges": [Model("mock", "mock-j", "mock-j"), Model("mock", "mock-k", "mock-k"),
+                                                                             Model("mock", "mock-a", "mock-a"), Model("mock", "mock-b", "mock-b"),
+                                                                             Model("mock", "mock-c", "mock-c")], "unavailable": []}
+    out: dict = {"unavailable": []}
+    for role, env in (("draft_a", "PILOT_DRAFT_A"), ("draft_b", "PILOT_DRAFT_B"), ("draft_c", "PILOT_DRAFT_C"), ("judges", "PILOT_JUDGES")):
+        refs = [r.strip() for r in (os.environ.get(env) or "").split(",") if r.strip()] or DEFAULT_MODELS[role]
+        out[role] = []
+        for r in refs:
+            m = parse_model(r)
+            if available(m):
+                out[role].append(m)
+            else:
+                out["unavailable"].append(m.ref)
+        if not out[role]:
+            raise SystemExit(f"{role}: किसी मॉडल की key env में नहीं है")
     return out
+
+
+def draft_fb(log: "Log", agent: str, title: str, cands: list[Model], taken: set[str], dead: set[str], segs: dict[str, str], ids: list[str],
+             usage: Usage) -> tuple[Model | None, dict[str, dict], list[dict]]:
+    """सूची का पहला मॉडल जो आधे से ज़्यादा ids का ड्राफ़्ट दे और जिसका परिवार `taken` में न हो। जो उत्तर न दे वह `dead` में जाता है।"""
+    best: tuple[Model | None, dict[str, dict]] = (None, {})
+    tried: list[dict] = []
+    for m in cands:
+        if m.family in taken or m.ref in dead:
+            continue
+        d = log.run(agent, f"{title} · {m.name}", lambda m=m: draft(m, segs, ids, usage), usage, m)
+        tried.append({"model": m.ref, "drafted": len(d)})
+        if not d:
+            dead.add(m.ref)
+        if best[0] is None or len(d) > len(best[1]):
+            best = (m, d)
+        if len(d) * 2 > len(ids):
+            break
+    return best[0], best[1], tried
+
+
+def judge_fb(log: "Log", title: str, pool: list[Model], exclude: set[str], dead: set[str], segs: dict[str, str], pairs: dict[str, tuple[dict, dict]],
+             usage: Usage) -> tuple[Model | None, dict[str, dict], list[dict]]:
+    """जज-सूची का पहला मॉडल जो `exclude` परिवारों से बाहर हो और आधे से ज़्यादा जोड़ों पर फ़ैसला दे।"""
+    tried: list[dict] = []
+    for m in pool:
+        if m.family in exclude or m.ref in dead:
+            continue
+        v = log.run("judge", f"{title} · {m.name}", lambda m=m: judge(m, segs, pairs, usage), usage, m)
+        tried.append({"model": m.ref, "judged": len(v)})
+        if not v:
+            dead.add(m.ref)
+        if len(v) * 2 > len(pairs):
+            return m, v, tried
+    return None, {}, tried
 
 
 def choose_judge(judges: list[Model], exclude: set[str]) -> Model:
@@ -386,31 +421,32 @@ def main() -> int:
     log.run("aligner", "ID और गिनती (गवाह के चिह्नों से)", align)
     evidence = print_evidence(a.text)
 
-    models = log.run("foreman_code", "मॉडल और परिवार चुनना", lambda: pick_models(a.mock))
-    A, B, C = models["draft_a"], models["draft_b"], models["draft_c"]
-    if len({A.family, B.family, C.family}) != 3:
-        raise SystemExit("ड्राफ़्टरों के परिवार अलग नहीं हैं")
+    models = log.run("foreman_code", "मॉडलों की सूचियाँ", lambda: pick_models(a.mock))
+    dead: set[str] = set()   # इस run में जो मॉडल उत्तर नहीं दे रहे
+    tried: dict[str, list] = {}
 
     uA, uB, uC, uJ1, uJ2, uP = Usage(), Usage(), Usage(), Usage(), Usage(), Usage()
-    dA = log.run("draft_a", "ड्राफ़्ट A", lambda: draft(A, segs, ids, uA), uA, A)
-    dB = log.run("draft_b", "ड्राफ़्ट B", lambda: draft(B, segs, ids, uB), uB, B)
+    A, dA, tried["draft_a"] = draft_fb(log, "draft_a", "ड्राफ़्ट A", models["draft_a"], set(), dead, segs, ids, uA)
+    B, dB, tried["draft_b"] = draft_fb(log, "draft_b", "ड्राफ़्ट B", models["draft_b"], {A.family} if A else set(), dead, segs, ids, uB)
+    if A is None or B is None:
+        raise SystemExit("ड्राफ़्ट A या B के लिए कोई मॉडल उपलब्ध नहीं")
+    C: Model | None = None
 
     both = [i for i in ids if i in dA and i in dB]
-    J1m = choose_judge(models["judges"], {A.family, B.family})
-    j1 = log.run("judge", "जज, पहला दौर", lambda: judge(J1m, segs, {i: (dA[i], dB[i]) for i in both}, uJ1), uJ1, J1m) if both else {}
+    pairs1 = {i: (dA[i], dB[i]) for i in both}
+    J1m, j1, tried["judge1"] = judge_fb(log, "जज, पहला दौर", models["judges"], {A.family, B.family}, dead, segs, pairs1, uJ1) if both else (None, {}, [])
 
     # जज की स्थिरता का माप: वही जोड़े (1) उसी जज को उलटे क्रम में, (2) एक और परिवार के जज को। फ़ैसला इससे नहीं बदलता।
     probe: dict = {}
-    if both and j1 and not a.no_probe:
+    if J1m and j1 and not a.no_probe:
         try:
-            j1_flip = log.run("judge_probe", "स्थिरता: वही जज, उलटा क्रम", lambda: judge(J1m, segs, {i: (dA[i], dB[i]) for i in both}, uP, flip=True), uP, J1m)
+            j1_flip = log.run("judge_probe", "स्थिरता: वही जज, उलटा क्रम", lambda: judge(J1m, segs, pairs1, uP, flip=True), uP, J1m)
             probe["same_judge_flipped"] = {"model": J1m.ref, **stability(j1, j1_flip)}
         except Exception as e:  # noqa: BLE001
             probe["same_judge_flipped"] = {"error": type(e).__name__}
         try:
-            Jalt = choose_judge(models["judges"], {A.family, B.family, J1m.family})
-            j1_alt = log.run("judge_probe", "स्थिरता: दूसरे परिवार का जज", lambda: judge(Jalt, segs, {i: (dA[i], dB[i]) for i in both}, uP), uP, Jalt)
-            probe["other_family_judge"] = {"model": Jalt.ref, "family": Jalt.family, **stability(j1, j1_alt)}
+            Jalt, j1_alt, tried["judge_probe"] = judge_fb(log, "स्थिरता: दूसरे परिवार का जज", models["judges"], {A.family, B.family, J1m.family}, dead, segs, pairs1, uP)
+            probe["other_family_judge"] = {"model": Jalt.ref, "family": Jalt.family, **stability(j1, j1_alt)} if Jalt else {"error": "दूसरे परिवार का कोई जज उत्तर नहीं दे रहा"}
         except Exception as e:  # noqa: BLE001
             probe["other_family_judge"] = {"error": f"{type(e).__name__}: {str(e)[:120]}"}
 
@@ -429,8 +465,9 @@ def main() -> int:
 
     flags: dict[str, list[str]] = {}
     j2: dict[str, dict] = {}
+    judge2_used: list[str] = []
     if cascade:
-        dC = log.run("draft_c", "ड्राफ़्ट C (केवल असहमति वाले)", lambda: draft(C, segs, cascade, uC), uC, C)
+        C, dC, tried["draft_c"] = draft_fb(log, "draft_c", "ड्राफ़्ट C (केवल असहमति वाले)", models["draft_c"], {A.family, B.family}, dead, segs, cascade, uC)
         groups: dict[str, list[str]] = {}
         incumbent: dict[str, tuple[dict, Model]] = {}
         for i in cascade:
@@ -444,9 +481,11 @@ def main() -> int:
             if i in incumbent and i in dC:
                 groups.setdefault(incumbent[i][1].family, []).append(i)
         for fam, gids in groups.items():
-            J2m = choose_judge(models["judges"], {fam, C.family})
-            res = log.run("judge", f"जज, दूसरा दौर ({fam} बनाम {C.family})",
-                          lambda gids=gids, J2m=J2m: judge(J2m, segs, {i: (incumbent[i][0], dC[i]) for i in gids}, uJ2), uJ2, J2m)
+            J2m, res, t2 = judge_fb(log, f"जज, दूसरा दौर ({fam} बनाम {C.family})", models["judges"], {fam, C.family}, dead, segs,
+                                    {i: (incumbent[i][0], dC[i]) for i in gids}, uJ2)
+            tried.setdefault("judge2", []).extend(t2)
+            if J2m:
+                judge2_used.append(J2m.ref)
             j2.update(res)
         for i in cascade:
             j = j2.get(i)
@@ -481,6 +520,11 @@ def main() -> int:
     missing = [i for i in ids if i not in final]
     if missing:
         status = "failed"
+    incomplete = [i for i in ids if record[i].get("path") in ("जूरी अधूरी", "कोई ड्राफ़्ट नहीं")]
+    if len(incomplete) * 2 > len(ids):
+        # provider बंद या quota ख़त्म: आधे से ज़्यादा मंत्रों पर जूरी पूरी नहीं हुई। ऐसा नतीजा PR नहीं बनता; Foreman बाद में दोबारा चलाए।
+        status = "failed"
+        problems.append(f"{len(incomplete)}/{len(ids)} मंत्रों पर जूरी अधूरी (मॉडल उत्तर नहीं दे रहे: {sorted(dead)}); बाद में दोबारा चलाएँ")
 
     def hard_checks() -> dict:
         counts: dict[str, int] = {}
@@ -534,9 +578,9 @@ def main() -> int:
         "judge_stability": probe,
         "d_checks": {"implemented": list(d_checks.IMPLEMENTED), "not_run": list(d_checks.NOT_RUN), "veto_counts": d_counts},
         "empirical_claims_flagged_by_judge": sum(1 for i in ids for j in (record[i].get("judge1"), record[i].get("judge2")) if j and j.get("has_empirical_claim")),
-        "models": {"draft_a": f"{A.provider}/{A.name}", "draft_b": f"{B.provider}/{B.name}", "draft_c": f"{C.provider}/{C.name}",
-                   "judge1": f"{J1m.provider}/{J1m.name}", "judge_pool": [f"{m.provider}/{m.name}" for m in models["judges"]], "unavailable": models.get("unavailable", [])},
-        "families": {"draft_a": A.family, "draft_b": B.family, "draft_c": C.family},
+        "models": {"draft_a": A.ref, "draft_b": B.ref, "draft_c": C.ref if C else None, "judge1": J1m.ref if J1m else None, "judge2": sorted(set(judge2_used)),
+                   "judge_pool": [m.ref for m in models["judges"]], "tried": tried, "not_responding": sorted(dead), "no_key": models.get("unavailable", [])},
+        "families": {"draft_a": A.family, "draft_b": B.family, "draft_c": C.family if C else None, "judge1": J1m.family if J1m else None},
         "api": {"calls": sum(u["calls"] for u in usage_all.values()), "retries": sum(u["retries"] for u in usage_all.values()),
                 "http_429": sum(u["http_429"] for u in usage_all.values()), "prompt_tokens": sum(u["prompt_tokens"] for u in usage_all.values()),
                 "output_tokens": sum(u["output_tokens"] for u in usage_all.values()), "paced_s": round(sum(u["paced_s"] for u in usage_all.values()), 1),

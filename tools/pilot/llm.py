@@ -141,6 +141,31 @@ def _wait_hint(js: dict, headers: dict, attempt: int) -> float:
 
 # ---- pacing: provider के बताए बचे tokens से अगला अनुरोध पहले ही रोकना (केवल Groq headers देता है)
 _PACE: dict[str, dict] = {}
+# Groq की output-tokens-प्रति-मिनट सीमा headers में नहीं आती; पहली 429 के संदेश से सीखी जाती है, फिर उसी से pacing।
+_OTPM_LIMIT: dict[str, float] = {}
+_OUT_LOG: dict[str, list[tuple[float, int]]] = {}
+
+
+def _otpm_before(model: Model, est_out: int, usage: Usage) -> None:
+    limit = _OTPM_LIMIT.get(model.ref)
+    if not limit:
+        return
+    need = min(est_out, int(limit * 0.9))
+    for _ in range(8):
+        now = time.time()
+        log = [(t, n) for t, n in _OUT_LOG.get(model.ref, []) if now - t < 60]
+        _OUT_LOG[model.ref] = log
+        if not log or sum(n for _, n in log) + need <= limit:
+            return
+        w = min(60 - (now - log[0][0]) + 0.5, PACE_MAX_WAIT_S)
+        usage.paced_s += w
+        time.sleep(w)
+
+
+def _otpm_learn(model: Model, message: str) -> None:
+    m = re.search(r"output tokens per minute.*?Limit\s+([0-9]+)", message, re.I | re.S)
+    if m:
+        _OTPM_LIMIT[model.ref] = float(m.group(1))
 
 
 def estimate_tokens(system: str, user: str, est_out: int) -> int:
@@ -222,6 +247,7 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
     hard_fails = 0
     for attempt in range(MAX_RETRY):
         _pace_before(model, estimate_tokens(system, user, est_out), usage)
+        _otpm_before(model, est_out, usage)
         t0 = time.time()
         neurons = 0.0
         if model.provider == "google_ai_studio":
@@ -250,6 +276,7 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
             usage.prompt_tokens += ptok
             usage.output_tokens += otok
             usage.neurons += neurons
+            _OUT_LOG.setdefault(model.ref, []).append((time.time(), otok))
             try:
                 return extract_json(text)
             except Exception:
@@ -262,6 +289,9 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
         last = f"HTTP {st}: {scrub(err.get('message', '') if isinstance(err, dict) else err)}"
         if st == 429:
             usage.http_429 += 1
+            _otpm_learn(model, json.dumps(js))
+            if re.search(r"daily free allocation", json.dumps(js), re.I):
+                break  # Workers AI का दिन-भर का मुफ़्त हिस्सा ख़त्म: 00:00 UTC से पहले दोहराना बेकार है
         if st in (429, 500, 502, 503, 504, 0):
             if st != 429:
                 hard_fails += 1
