@@ -1,0 +1,37 @@
+name: issue-notify
+
+# साप्ताहिक meta-audit का cloud task issue मालिक के अपने GitHub खाते के नाम से खोलता है, और GitHub अपनी
+# ही गतिविधि की सूचना नहीं भेजता (क़दम 0.12 की सीख)। इसलिए ऐसे issue पर bot एक टिप्पणी जोड़ता है:
+# टिप्पणी किसी और (bot) की है, तो मालिक के फ़ोन/ईमेल पर सूचना पहुँचती है।
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  issues: write
+
+concurrency:
+  group: issue-notify-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      (contains(github.event.issue.labels.*.name, 'audit') ||
+       contains(github.event.issue.labels.*.name, 'red-audit') ||
+       contains(github.event.issue.labels.*.name, 'needs-human'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      NUM: ${{ github.event.issue.number }}
+    steps:
+      - name: bot-टिप्पणी (एक ही बार)
+        run: |
+          set -euo pipefail
+          N=$(gh issue view "$NUM" --json comments -q '[.comments[] | select(.author.login == "github-actions")] | length')
+          if [ "$N" != "0" ]; then echo "टिप्पणी पहले से है"; exit 0; fi
+          gh issue comment "$NUM" --body "सूचना: यह issue ऑडिट ने खोला है और आपकी नज़र चाहता है। (यह टिप्पणी केवल इसलिए है कि सूचना आपके फ़ोन/ईमेल तक पहुँचे।)"
