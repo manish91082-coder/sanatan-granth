@@ -19,7 +19,7 @@ GROQ_BASE = "https://api.groq.com/openai/v1"
 CF_BASE = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/v1"
 UA = "sanatan-granth-pilot/0.3 (open library project)"
 MAX_RETRY = 5
-TIMEOUT_S = {"google_ai_studio": 300, "groq": 120, "cloudflare": 150}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
+TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
 MAX_RETRY_5XX = 3  #5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
 PACE_MAX_WAIT_S = 62.0
 
@@ -294,7 +294,7 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
                 break  # Workers AI का दिन-भर का मुफ़्त हिस्सा ख़त्म: 00:00 UTC से पहले दोहराना बेकार है
         if st in (429, 500, 502, 503, 504, 0):
             if st != 429:
-                hard_fails += 1
+                hard_fails += 2 if st == 0 else 1  # समय-सीमा पार (st 0) सबसे महँगी विफलता है: उसे दो बार से ज़्यादा नहीं
                 if hard_fails >= MAX_RETRY_5XX:
                     break
             w = _wait_hint(js, hd, attempt)
