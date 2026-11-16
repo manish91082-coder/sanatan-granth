@@ -1,0 +1,68 @@
+name: pilot-scheduled
+
+# मुफ़्त quota लौटने के बाद अपने-आप चलने वाला pilot-क्रम (laptop की ज़रूरत नहीं):
+#   1. जज-परीक्षा (tools/pilot/judge_test.py): जानबूझकर बिगाड़े गए अनुवाद कौन-सा जज पकड़ता है → डेटा-PR
+#   2. Foreman की कतार में पूरी कड़ी का एक job (foreman-enqueue) → foreman-job → डेटा-PR
+# समय एक ही तिथि पर बँधा है (17 नवंबर, 00:20 UTC = 05:50 IST; Workers AI का quota 00:00 UTC पर लौटता है)।
+# चल जाने के बाद यह schedule हटा दिया जाए; हाथ से चलाने के लिए workflow_dispatch रहेगा।
+
+on:
+  schedule:
+    - cron: "20 0 17 11 *"
+  workflow_dispatch:
+    inputs:
+      text_id:
+        description: "ग्रंथ"
+        default: "isha"
+      enqueue:
+        description: "जज-परीक्षा के बाद Foreman से पूरी कड़ी चलाएँ? yes/no"
+        default: "yes"
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: pilot-scheduled
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TEXT_ID: ${{ inputs.text_id || 'isha' }}
+      ENQUEUE: ${{ inputs.enqueue || 'yes' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: checks/requirements.txt
+      - run: pip install -q -r checks/requirements.txt
+      - name: जज-परीक्षा
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PR_TOKEN: ${{ secrets.FOREMAN_DISPATCH_TOKEN }}
+        run: bash tools/pilot/ci_judge_test.sh "$TEXT_ID" yes
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: judge-test-${{ env.TEXT_ID }}
+          path: /tmp/pilot/report/
+          retention-days: 30
+          if-no-files-found: ignore
+      - name: Foreman से पूरी कड़ी
+        if: always() && env.ENQUEUE == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [[ "$TEXT_ID" =~ ^[a-z][a-z0-9_]{0,40}$ ]] || { echo "::error::text_id अमान्य"; exit 2; }
+          gh workflow run foreman-enqueue.yml --repo "$GITHUB_REPOSITORY" -f text_id="$TEXT_ID" -f step=pilot_e2e
+          echo "foreman-enqueue शुरू किया गया" >> "$GITHUB_STEP_SUMMARY"
