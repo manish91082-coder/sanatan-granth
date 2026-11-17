@@ -26,10 +26,8 @@ from tools.pilot.run_e2e import LABELS, OK_LABELS, draft, judge_one, load_source
 # Flash-वर्ग (मुफ़्त quota 20/दिन, 16 नवंबर को ख़त्म मिला) और nemotron (अनुरोध अटकता रहा) default सूची में नहीं; --candidates से जोड़े जा सकते हैं।
 CANDIDATES = [
     "google_ai_studio:~gemma-4-31b-it$", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b", "google_ai_studio:gemini-3.5-flash-lite",
-    "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct", "cloudflare:@cf/meta/llama-4-scout-17b-16e-instruct",
-    "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 ]
-PANEL = ["groq:openai/gpt-oss-120b", "google_ai_studio:~gemma-4-31b-it$", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct"]
+PANEL = ["google_ai_studio:gemini-3.5-flash-lite", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"]
 _GEMINI_NAMES: list[str] | None = None
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # जज-परीक्षा CI में चलाता है और नतीजे का डेटा-PR खोलता है।
 #   tools/pilot/ci_judge_test.sh <text_id> [open_pr: yes|no]
-# env: JUDGES (वैकल्पिक: जजों की सूची, अल्पविराम से); GEMINI_API_KEY, GROQ_API_KEY, CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID; PR_TOKEN (न हो तो PR नहीं, केवल artifact)
+# env: JUDGES (वैकल्पिक: जजों की सूची, अल्पविराम से); GEMINI_API_KEY, GROQ_API_KEY, OPENROUTER_API_KEY; PR_TOKEN (न हो तो PR नहीं, केवल artifact)
 set -uo pipefail
 
 TEXT="${1:?text_id}"; OPEN_PR="${2:-yes}"

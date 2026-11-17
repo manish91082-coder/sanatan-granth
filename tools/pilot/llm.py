@@ -17,9 +17,12 @@ from dataclasses import dataclass, field
 GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta"
 GROQ_BASE = "https://api.groq.com/openai/v1"
 CF_BASE = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/v1"
+OR_BASE = "https://openrouter.ai/api/v1"
+OR_MIN_GAP_S = 3.5  # OpenRouter के मुफ़्त मॉडल: 20 अनुरोध/मिनट (उसके दस्तावेज़ से)
+_OR_LAST = [0.0]
 UA = "sanatan-granth-pilot/0.3 (open library project)"
 MAX_RETRY = 5
-TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
+TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150, "openrouter": 180}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
 MAX_RETRY_5XX = 3  #5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
 PACE_MAX_WAIT_S = 62.0
 
@@ -45,7 +48,7 @@ class Usage:
 
 @dataclass(frozen=True)
 class Model:
-    provider: str  # google_ai_studio | groq | cloudflare | mock
+    provider: str  # google_ai_studio | groq | openrouter | cloudflare | mock
     name: str
     family: str
 
@@ -80,19 +83,21 @@ def family_of(name: str) -> str:
 def parse_model(ref: str) -> Model:
     """'groq:qwen/qwen3.8-27b' → Model। provider के बिना नाम अमान्य है।"""
     provider, _, name = ref.strip().partition(":")
-    if provider not in ("google_ai_studio", "groq", "cloudflare") or not name:
+    if provider not in ("google_ai_studio", "groq", "cloudflare", "openrouter") or not name:
         raise ValueError(f"मॉडल-संदर्भ अमान्य: {ref!r}")
     return Model(provider, name, family_of(name))
 
 
 def scrub(s: object) -> str:
     s = str(s)
-    for env in ("CLOUDFLARE_ACCOUNT_ID", "CLOUDFLARE_API_TOKEN", "GROQ_API_KEY", "GEMINI_API_KEY"):
+    for env in ("CLOUDFLARE_ACCOUNT_ID", "CLOUDFLARE_API_TOKEN", "GROQ_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY"):
         v = os.environ.get(env)
         if v:
             s = s.replace(v, "<hidden>")
     s = re.sub(r"AIza[0-9A-Za-z_-]{10,}", "<key>", s)
     s = re.sub(r"gsk_[0-9A-Za-z]{10,}", "<key>", s)
+    s = re.sub(r"sk-or-[0-9A-Za-z_-]{10,}", "<key>", s)
+    s = re.sub(r"user_[0-9A-Za-z]{10,}", "<user>", s)  # OpenRouter के त्रुटि-संदेशों में खाते का ID आ सकता है
     s = re.sub(r"org_[0-9a-z]{8,}", "<org>", s)  # Groq का संगठन-ID त्रुटि-संदेशों में आता है; रिपोर्ट में नहीं जाना चाहिए
     s = re.sub(r"\([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\)", "", s)
     return s[:300]
@@ -219,7 +224,7 @@ def list_groq_models() -> list[str]:
 
 def available(model: Model) -> bool:
     """इस provider की key env में है या नहीं (key का मान कभी नहीं देखा जाता)।"""
-    need = {"google_ai_studio": ["GEMINI_API_KEY"], "groq": ["GROQ_API_KEY"], "cloudflare": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"], "mock": []}
+    need = {"google_ai_studio": ["GEMINI_API_KEY"], "groq": ["GROQ_API_KEY"], "cloudflare": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"], "openrouter": ["OPENROUTER_API_KEY"], "mock": []}
     return all(os.environ.get(k) for k in need.get(model.provider, ["__none__"]))
 
 
@@ -227,12 +232,19 @@ def _openai_style(model: Model, system: str, user: str, max_out: int) -> tuple[i
     if model.provider == "groq":
         url, token = f"{GROQ_BASE}/chat/completions", os.environ.get("GROQ_API_KEY", "")
         body: dict = {"model": model.name, "temperature": 0, "response_format": {"type": "json_object"}}
+    elif model.provider == "openrouter":
+        url, token = f"{OR_BASE}/chat/completions", os.environ.get("OPENROUTER_API_KEY", "")
+        body = {"model": model.name, "temperature": 0, "max_tokens": max_out, "response_format": {"type": "json_object"}}
+        gap = OR_MIN_GAP_S - (time.time() - _OR_LAST[0])
+        if gap > 0:
+            time.sleep(gap)
+        _OR_LAST[0] = time.time()
     else:
         url, token = CF_BASE.format(acct=os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")) + "/chat/completions", os.environ.get("CLOUDFLARE_API_TOKEN", "")
         body = {"model": model.name, "temperature": 0, "max_tokens": max_out, "response_format": {"type": "json_object"}}
     body["messages"] = [{"role": "system", "content": system}, {"role": "user", "content": user}]
     st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body, TIMEOUT_S[model.provider])
-    if st == 400 and re.search(r"response_format|json_validate_failed|Failed to (generate|validate) JSON|json", json.dumps(js), re.I):
+    if st in (400, 404) and "response_format" in body and re.search(r"response_format|json_validate_failed|Failed to (generate|validate) JSON|json|requested parameters|No endpoints", json.dumps(js), re.I):
         body.pop("response_format")  # JSON-mode विफल: सादा उत्तर माँगें, JSON हम ख़ुद निकालेंगे
         st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body, TIMEOUT_S[model.provider])
     content: object = ""
@@ -267,7 +279,7 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
             text: object = "".join(p.get("text", "") for p in (js.get("candidates") or [{}])[0].get("content", {}).get("parts", []) if not p.get("thought")) if st == 200 else ""
             um = js.get("usageMetadata", {}) if st == 200 else {}
             ptok, otok = um.get("promptTokenCount", 0), um.get("candidatesTokenCount", 0) + um.get("thoughtsTokenCount", 0)
-        elif model.provider in ("groq", "cloudflare"):
+        elif model.provider in ("groq", "cloudflare", "openrouter"):
             st, js, hd, text, ptok, otok, neurons = _openai_style(model, system, user, max(est_out * 2, 3000))
             _pace_after(model, hd)
         else:
@@ -292,7 +304,7 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
         if st == 429:
             usage.http_429 += 1
             _otpm_learn(model, json.dumps(js))
-            if re.search(r"daily free allocation|tokens per day|requests per day|\(TPD\)|\(RPD\)|PerDay", json.dumps(js), re.I):
+            if re.search(r"daily free allocation|tokens per day|requests per day|\(TPD\)|\(RPD\)|PerDay|free-models-per-day", json.dumps(js), re.I):
                 break  # दिन-भर का मुफ़्त हिस्सा ख़त्म (Workers AI neurons, Groq TPD/RPD, Gemini per-day): मिनटों इंतज़ार बेकार है
         if st in (429, 500, 502, 503, 504, 0):
             if st != 429:
