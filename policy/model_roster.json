@@ -1,6 +1,6 @@
 {
   "_comment": "स्वार्म किस मॉडल को किस भूमिका में ले सकता है। यह सूची main पर है और केवल PR + मालिक की स्वीकृति से बदलती है। मशीन (सेहत-बही, state branch) किसी मॉडल को केवल हटा सकती है (quota, रुकावट, canary-विफलता), जोड़ कभी नहीं सकती। सारे माप हमारे अपने हैं, एक-एक run के; मानव-समीक्षा नहीं।",
-  "version": "0.1",
+  "version": "0.2",
   "rules": {
     "judge_min_catch_rate": 0.85,
     "judge_min_items": 12,
@@ -18,15 +18,29 @@
       "gone_hours": 24
     },
     "max_consecutive_task_failures": 3,
-    "queued_stale_minutes": 100
+    "queued_stale_minutes": 100,
+    "_redundancy": "कोई एक provider पूरा बंद हो तो भी योग्य रचना बननी चाहिए; tools/swarm/selftest.py यह हर PR पर जाँचता है",
+    "_tier1": "पहला दर्जा: तुलना में 18/18 मंत्र बने और दूसरे परिवार के जज ने अधिकतम 1 को CONTRADICTED कहा"
   },
   "providers": {
-    "google_ai_studio": { "reset": "pacific_midnight" },
-    "groq": { "reset": "rolling_24h" },
+    "google_ai_studio": {
+      "reset": "pacific_midnight"
+    },
+    "groq": {
+      "reset": "rolling_24h"
+    },
     "openrouter": {
       "reset": "utc_midnight",
       "daily_requests": 40,
       "_why": "खाते की सीमा 50 अनुरोध/दिन है और मालिक की दो और keys उसी में से लेती हैं; 10 उनके लिए छोड़े गए"
+    },
+    "ovh": {
+      "reset": "utc_midnight",
+      "_why": "OVHcloud AI Endpoints, बिना खाते और बिना key: 2 अनुरोध/मिनट प्रति IP और प्रति मॉडल (llm.py हर मॉडल पर 31 s का अंतर रखता है)। दिन की सीमा उसके दस्तावेज़ में नहीं है; हर मॉडल पर हमारा अपना हिस्सा 400 अनुरोध/दिन रखा गया है"
+    },
+    "sambanova": {
+      "reset": "utc_midnight",
+      "_why": "मुफ़्त स्तर: हर मॉडल पर 20 अनुरोध/दिन, 200,000 tokens/दिन (उसके दस्तावेज़)। reset का समय पक्का नहीं; key अभी नहीं है"
     }
   },
   "models": {
@@ -35,62 +49,213 @@
       "chunk": 18,
       "daily_requests": 300,
       "_budget_why": "console की सीमा 500 अनुरोध/दिन; यही key मालिक के दूसरे काम में भी लगी है",
-      "draft": { "qualified": true, "tier": 1, "evidence": "bake-off run 44045798916: 18/18 बने, 18 s; qwen-जज: 17 OK, 1 CONTRADICTED" },
-      "judge": { "qualified": true, "catch_rate": 0.938, "items": 16, "measured": "2026-11-17", "evidence": "जज-परीक्षा run 44045781954: 15/16 (पहले 17/18 और 15/18)" }
+      "draft": {
+        "qualified": true,
+        "tier": 1,
+        "evidence": "bake-off run 44045798916: 18/18 बने, 18 s; qwen-जज: 17 OK, 1 CONTRADICTED"
+      },
+      "judge": {
+        "qualified": true,
+        "catch_rate": 0.938,
+        "items": 16,
+        "measured": "2026-11-17",
+        "evidence": "जज-परीक्षा run 44045781954: 15/16 (पहले 17/18 और 15/18)"
+      }
     },
     "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
       "family": "nvidia",
       "chunk": 9,
-      "draft": { "qualified": true, "tier": 1, "evidence": "bake-off run 44045798916: 18/18 बने, 54 s, 2 अनुरोध; Flash-Lite-जज: 11 OK, 6 MINOR, 1 CONTRADICTED" },
-      "judge": { "qualified": false, "evidence": "जज-परीक्षा run 44045781954: 0 पर फ़ैसला (उत्तर tokens की सीमा पर कटे); नई सीमा के साथ नापा नहीं गया" }
+      "draft": {
+        "qualified": true,
+        "tier": 1,
+        "evidence": "bake-off run 44045798916: 18/18 बने, 54 s, 2 अनुरोध; Flash-Lite-जज: 11 OK, 6 MINOR, 1 CONTRADICTED"
+      },
+      "judge": {
+        "qualified": false,
+        "evidence": "जज-परीक्षा run 44045781954: 0 पर फ़ैसला (उत्तर tokens की सीमा पर कटे); नई सीमा के साथ नापा नहीं गया"
+      }
     },
     "openrouter:baidu/ernie-5.5-flash-preview:free": {
       "family": "baidu",
       "chunk": 9,
-      "draft": { "qualified": false, "evidence": "bake-off run 44045798916: 9/18 (JSON-विफलताएँ, फिर दिन की सीमा)" },
-      "judge": { "qualified": true, "catch_rate": 1.0, "items": 16, "measured": "2026-11-17", "evidence": "जज-परीक्षा run 44045781954: 16/16, 70 s, 4 अनुरोध। एक ही run; preview-मॉडल" }
+      "draft": {
+        "qualified": false,
+        "evidence": "bake-off run 44045798916: 9/18 (JSON-विफलताएँ, फिर दिन की सीमा)"
+      },
+      "judge": {
+        "qualified": true,
+        "catch_rate": 1.0,
+        "items": 16,
+        "measured": "2026-11-17",
+        "evidence": "जज-परीक्षा run 44045781954: 16/16, 70 s, 4 अनुरोध। एक ही run; preview-मॉडल"
+      }
     },
     "groq:openai/gpt-oss-120b": {
       "family": "openai",
       "chunk": 6,
       "daily_requests": 800,
       "daily_tokens": 180000,
-      "draft": { "qualified": true, "tier": 2, "evidence": "v0.4 run 44028350640: Flash-Lite-जज ने 18 में से 3 मंत्र CONTRADICTED कहे" },
-      "judge": { "qualified": false, "evidence": "canary-परीक्षा में नापा नहीं गया" }
+      "draft": {
+        "qualified": true,
+        "tier": 2,
+        "evidence": "v0.4 run 44028350640: Flash-Lite-जज ने 18 में से 3 मंत्र CONTRADICTED कहे"
+      },
+      "judge": {
+        "qualified": false,
+        "evidence": "canary-परीक्षा में नापा नहीं गया"
+      }
     },
     "groq:qwen/qwen3.8-27b": {
       "family": "alibaba-qwen",
       "chunk": 6,
       "daily_requests": 800,
-      "draft": { "qualified": true, "tier": 2, "evidence": "v0.4 run 44028350640: Flash-Lite-जज ने 18 में से 6 मंत्र CONTRADICTED कहे; 1,000 output-tokens/मिनट" },
-      "judge": { "qualified": false, "catch_rate": 0.833, "items": 18, "measured": "2026-11-17", "evidence": "जज-परीक्षा: 15/18, सीमा 0.85 से नीचे; आधार की ग़लतियों पर कोई आपत्ति नहीं (नरम जज)" }
+      "draft": {
+        "qualified": true,
+        "tier": 2,
+        "evidence": "v0.4 run 44028350640: Flash-Lite-जज ने 18 में से 6 मंत्र CONTRADICTED कहे; 1,000 output-tokens/मिनट"
+      },
+      "judge": {
+        "qualified": false,
+        "catch_rate": 0.833,
+        "items": 18,
+        "measured": "2026-11-17",
+        "evidence": "जज-परीक्षा: 15/18, सीमा 0.85 से नीचे; आधार की ग़लतियों पर कोई आपत्ति नहीं (नरम जज)"
+      }
     },
     "google_ai_studio:gemma-4-31b-it": {
       "family": "google",
       "chunk": 18,
       "daily_requests": 2000,
-      "draft": { "qualified": true, "tier": 2, "evidence": "batch-माप run 44035253282: आकार 30 पर 119/119, पर 8.3 s/श्लोक और 503; गुणवत्ता का माप नहीं" },
-      "judge": { "qualified": false, "evidence": "canary-परीक्षा में नापा नहीं गया" }
+      "draft": {
+        "qualified": true,
+        "tier": 2,
+        "evidence": "batch-माप run 44035253282: आकार 30 पर 119/119, पर 8.3 s/श्लोक और 503; गुणवत्ता का माप नहीं"
+      },
+      "judge": {
+        "qualified": false,
+        "evidence": "canary-परीक्षा में नापा नहीं गया"
+      }
+    },
+    "ovh:gpt-oss-120b": {
+      "family": "openai",
+      "chunk": 18,
+      "daily_requests": 400,
+      "draft": {
+        "qualified": false,
+        "evidence": "bake-off run 44075870884 (17 नवंबर, 18 मंत्र, एक अनुरोध): 18/18 बने, पर Flash-Lite-जज ने 15 और qwen-जज ने 12 मंत्र CONTRADICTED कहे (यही मॉडल Groq पर 3/18 रहा था)"
+      },
+      "judge": {
+        "qualified": true,
+        "catch_rate": 1.0,
+        "items": 16,
+        "measured": "2026-11-17",
+        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 92 s, 1 अनुरोध। एक ही run"
+      }
+    },
+    "ovh:DeepSeek-V4.1-Flash-1017": {
+      "family": "deepseek",
+      "chunk": 18,
+      "daily_requests": 400,
+      "draft": {
+        "qualified": true,
+        "tier": 1,
+        "evidence": "bake-off run 44075870884 (17 नवंबर, 18 मंत्र, एक अनुरोध): 18/18 बने, 37 s; Flash-Lite-जज: 18 OK; qwen-जज: 18 OK"
+      },
+      "judge": {
+        "qualified": true,
+        "catch_rate": 1.0,
+        "items": 16,
+        "measured": "2026-11-17",
+        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 207 s, 3 अनुरोध; आधार के 2 मंत्रों पर भी आपत्ति। एक ही run"
+      }
+    },
+    "ovh:Qwen3.5-397B-A17B": {
+      "family": "alibaba-qwen",
+      "chunk": 18,
+      "daily_requests": 400,
+      "draft": {
+        "qualified": true,
+        "tier": 1,
+        "evidence": "bake-off run 44075870884 (17 नवंबर, 18 मंत्र, एक अनुरोध): 18/18 बने, 287 s (धीमा); Flash-Lite-जज: 14 OK, 4 MINOR, 0 CONTRADICTED"
+      },
+      "judge": {
+        "qualified": true,
+        "catch_rate": 1.0,
+        "items": 16,
+        "measured": "2026-11-17",
+        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 415 s, 1 अनुरोध (धीमा)। एक ही run"
+      }
+    },
+    "ovh:Qwen3.8-27B": {
+      "family": "alibaba-qwen",
+      "chunk": 18,
+      "daily_requests": 400,
+      "draft": {
+        "qualified": false,
+        "evidence": "bake-off run 44075870884 (17 नवंबर, 18 मंत्र, एक अनुरोध): 0/18; पाँच अनुरोधों में JSON नहीं बना (45 मिनट, 82,400 output-tokens)"
+      },
+      "judge": {
+        "qualified": false,
+        "catch_rate": 1.0,
+        "items": 16,
+        "measured": "2026-11-17",
+        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 280 s; पर यही मॉडल Groq पर 15/18 रहा था, और Qwen-परिवार का बड़ा मॉडल पहले से जज है: अभी जज नहीं बनाया गया"
+      }
+    },
+    "sambanova:DeepSeek-V3.1": {
+      "family": "deepseek",
+      "chunk": 18,
+      "daily_requests": 18,
+      "draft": {
+        "qualified": false,
+        "evidence": "ड्राफ़्टर के रूप में नापा नहीं गया"
+      },
+      "judge": {
+        "qualified": false,
+        "evidence": "canary-परीक्षा में नापा नहीं गया"
+      }
+    },
+    "sambanova:Meta-Llama-3.3-70B-Instruct": {
+      "family": "meta",
+      "chunk": 18,
+      "daily_requests": 18,
+      "draft": {
+        "qualified": false,
+        "evidence": "ड्राफ़्टर के रूप में नापा नहीं गया"
+      },
+      "judge": {
+        "qualified": false,
+        "evidence": "canary-परीक्षा में नापा नहीं गया"
+      }
     }
   },
   "roles": {
     "drafters": [
       "google_ai_studio:gemini-3.5-flash-lite",
+      "ovh:DeepSeek-V4.1-Flash-1017",
       "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+      "ovh:Qwen3.5-397B-A17B",
       "groq:openai/gpt-oss-120b",
       "groq:qwen/qwen3.8-27b",
       "google_ai_studio:gemma-4-31b-it"
     ],
     "judges": [
       "openrouter:baidu/ernie-5.5-flash-preview:free",
+      "ovh:Qwen3.5-397B-A17B",
+      "ovh:DeepSeek-V4.1-Flash-1017",
+      "ovh:gpt-oss-120b",
       "google_ai_studio:gemini-3.5-flash-lite"
     ],
     "judge_candidates": [
       "openrouter:baidu/ernie-5.5-flash-preview:free",
+      "ovh:Qwen3.5-397B-A17B",
+      "ovh:DeepSeek-V4.1-Flash-1017",
+      "ovh:gpt-oss-120b",
       "google_ai_studio:gemini-3.5-flash-lite",
       "groq:openai/gpt-oss-120b",
-      "groq:qwen/qwen3.8-27b",
-      "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free"
+      "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+      "sambanova:DeepSeek-V3.1",
+      "sambanova:Meta-Llama-3.3-70B-Instruct"
     ]
   }
 }

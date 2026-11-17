@@ -396,8 +396,8 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
                 last = "JSON parse नहीं हुआ"
                 usage.retries += 1
                 json_fails += 1
-                if model.provider == "openrouter" and json_fails >= 2:
-                    break  # हर दोहराव दिन के 50 अनुरोधों में से एक लेता है
+                if json_fails >= 2:
+                    break  # वही अनुरोध तीसरी बार भेजना बेकार है: OpenRouter पर हर दोहराव दिन के हिस्से से जाता है, OVH पर मिनटों लेता है
                 continue
         err = js.get("error") or js.get("errors") or ""
         if isinstance(err, list):

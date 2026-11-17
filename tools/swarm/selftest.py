@@ -46,22 +46,52 @@ def hold(h: dict, ref: str, reason: str, minutes: int) -> None:
     h["models"][ref] = {"cooldown_until": health.iso(NOW + dt.timedelta(minutes=minutes)), "reason": reason}
 
 
-ROSTER = health.load_roster()
+# नियमों की जाँच एक जमे हुए roster पर होती है (17 नवंबर 2026 का v0.1), ताकि असली roster बदलने पर ये जाँचें न बदलें।
+# असली roster (policy/model_roster.json) की अपनी जाँचें अलग हैं: संगति, और "कोई एक provider बंद हो तो भी रचना बने"।
+ROSTER = health.load_roster(Path(__file__).resolve().parent / "fixtures" / "roster_v0_1.json")
+LIVE = health.load_roster()
 
 
 @test
 def roster_is_consistent():
-    models, roles = ROSTER["models"], ROSTER["roles"]
-    for role in ("drafters", "judges", "judge_candidates"):
-        for ref in roles[role]:
-            assert ref in models, f"{role}: {ref} models में नहीं"
-    for ref in roles["drafters"]:
-        assert models[ref]["draft"]["qualified"], f"ड्राफ़्टर-सूची में अयोग्य मॉडल: {ref}"
-    for ref in roles["judges"]:
-        j = models[ref]["judge"]
-        assert j["qualified"] and j["catch_rate"] >= ROSTER["rules"]["judge_min_catch_rate"] and j["items"] >= ROSTER["rules"]["judge_min_items"], ref
-    for ref, cfg in models.items():
-        assert llm.parse_model(ref).family == cfg["family"], f"{ref}: roster का परिवार code के परिवार से अलग"
+    for roster in (ROSTER, LIVE):
+        models, roles, rules = roster["models"], roster["roles"], roster["rules"]
+        for role in ("drafters", "judges", "judge_candidates"):
+            for ref in roles[role]:
+                assert ref in models, f"{role}: {ref} models में नहीं"
+        for ref in roles["drafters"]:
+            assert models[ref]["draft"]["qualified"], f"ड्राफ़्टर-सूची में अयोग्य मॉडल: {ref}"
+            assert models[ref]["draft"].get("evidence"), f"ड्राफ़्टर बिना प्रमाण के: {ref}"
+        for ref in roles["judges"]:
+            jd = models[ref]["judge"]
+            assert jd["qualified"] and jd["catch_rate"] >= rules["judge_min_catch_rate"] and jd["items"] >= rules["judge_min_items"], ref
+            assert jd.get("evidence") and jd.get("measured"), f"जज बिना प्रमाण के: {ref}"
+        for ref, cfg in models.items():
+            assert llm.parse_model(ref).family == cfg["family"], f"{ref}: roster का परिवार code के परिवार से अलग"
+            assert health.provider_of(ref) in roster["providers"], f"{ref}: provider का reset-नियम roster में नहीं"
+            if not (cfg.get("judge") or {}).get("qualified"):
+                assert ref not in roles["judges"], f"अयोग्य जज सूची में: {ref}"
+
+
+@test
+def live_roster_survives_any_single_provider_outage():
+    """quota की रुकावट का हल, जाँच के रूप में: कोई एक provider पूरा बंद हो (या उसका दिन का हिस्सा ख़त्म हो) तो भी योग्य रचना बने।"""
+    assert health.plan(fresh(), LIVE, NOW, 18, check_key=False)["feasible"]
+    used = {health.provider_of(r) for r in LIVE["roles"]["drafters"] + LIVE["roles"]["judges"]}
+    assert len(used) >= 3, f"योग्य मॉडल केवल {sorted(used)} पर हैं"
+    for prov in sorted(used):
+        h = fresh()
+        for ref in LIVE["models"]:
+            if health.provider_of(ref) == prov:
+                hold(h, ref, "overloaded", 24 * 60)  # दिन-भर बंद: "बेहतर का इंतज़ार" लागू न हो
+        pl = health.plan(h, LIVE, NOW, 18, check_key=False)
+        assert pl["feasible"], f"{prov} बंद हो तो कोई रचना नहीं बनती: {pl.get('reason')}"
+        refs = list(pl["chosen"].values())
+        assert all(health.provider_of(r) != prov for r in refs), (prov, refs)
+        fams = pl["families"]
+        assert len({fams["draft_a"], fams["draft_b"], fams["judge"]}) == 3
+        tiers = [LIVE["models"][pl["chosen"][k]]["draft"]["tier"] for k in ("draft_a", "draft_b")]
+        assert 1 in tiers, f"{prov} बंद: कोई पहले दर्जे का ड्राफ़्टर नहीं"
 
 
 @test

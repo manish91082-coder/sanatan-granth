@@ -25,7 +25,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 70   # Foreman की अपनी सीमा 90 मिनट है (machine.ts stepTimeoutS)
     permissions:
       contents: read
       issues: write    # संचालक: काम अटके तो मालिक के लिए issue

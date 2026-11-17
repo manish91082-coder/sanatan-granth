@@ -239,6 +239,12 @@ def cmd_tick(a) -> int:
     meta = tasks.setdefault("_meta", {})
     notes: list[str] = []
     alerts: list[str] = []
+    if meta.get("roster_version") != roster.get("version"):
+        for tid, st in tasks.items():
+            if tid != "_meta" and isinstance(st, dict) and st.get("status") == "blocked":
+                st.pop("blocked_until", None)  # नए roster में वह रचना बन सकती है जो पहले नहीं बनती थी
+        notes.append(f"roster {meta.get('roster_version')} → {roster.get('version')}: रुके काम दोबारा परखे गए")
+        meta["roster_version"] = roster.get("version")
 
     used = None if a.dry_run else openrouter_used()
     if used is not None and sd:
