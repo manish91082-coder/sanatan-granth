@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-11-17T06:57:46Z",
+  "generated_at": "2026-11-17T13:13:07Z",
   "text_id": "isha",
-  "pipeline_version": "pilot-e2e-0.5",
+  "pipeline_version": "pilot-e2e-0.7",
   "mock": false,
   "status": "ok",
-  "batch_id": "e2e-44033376952",
-  "job_key": "a6433d13ec5e02eae96f301380c492da3c62c72a98716b28cd5c763823ece347",
-  "run": "44033394368",
+  "batch_id": "isha-e2e.20261117.1",
+  "job_key": "31c295e1686c9b2457a8f4840d31b30268bec39f64518b91ea27d70af7019739",
+  "run": "44087537183",
   "segments": 18,
   "segments_done": 18,
   "batch_size": 18,
   "silent_omissions": 0,
   "cascade": {
-    "first_pass_agreed": 2,
-    "sent_to_cascade": 16,
-    "agreement_rate": 0.111,
+    "first_pass_agreed": 16,
+    "sent_to_cascade": 2,
+    "agreement_rate": 0.889,
     "judged_in_round1": 18,
-    "agreement_rate_of_judged": 0.111,
+    "agreement_rate_of_judged": 0.889,
     "draft_missing": {
       "a": [],
       "b": []
@@ -24,34 +24,39 @@
     "judge1_missing": [],
     "go_threshold": 0.6,
     "by_path": {
-      "cascade के बाद भी असहमति": 8,
-      "cascade के बाद सहमति": 8,
-      "पहले दौर में सहमति": 2
+      "cascade के बाद भी असहमति": 2,
+      "पहले दौर में सहमति": 16
     }
   },
   "badges": {
-    "C": 10,
-    "D": 8
+    "C": 16,
+    "D": 2
   },
   "flags_by_code": {
-    "CONTRADICTED": 6,
-    "JURY_DISAGREE": 2
+    "CONTRADICTED": 2
   },
   "judge_stability": {
     "same_judge_flipped": {
-      "model": "google_ai_studio:gemini-3.5-flash-lite",
+      "model": "ovh:Qwen3.5-397B-A17B",
       "n": 18,
-      "label_match": 0.889,
-      "accept_match": 0.833,
-      "pick_match": 0.667,
+      "label_match": 1.0,
+      "accept_match": 0.889,
+      "pick_match": 0.278,
       "accept_differs": [
-        "isha:3",
-        "isha:9",
-        "isha:15"
+        "isha:15",
+        "isha:17"
       ]
     },
     "other_family_judge": {
-      "error": "दूसरे परिवार का कोई जज उत्तर नहीं दे रहा"
+      "model": "ovh:gpt-oss-120b",
+      "family": "openai",
+      "n": 18,
+      "label_match": 0.944,
+      "accept_match": 0.944,
+      "pick_match": 0.722,
+      "accept_differs": [
+        "isha:15"
+      ]
     }
   },
   "d_checks": {
@@ -74,54 +79,58 @@
   },
   "empirical_claims_flagged_by_judge": 0,
   "models": {
-    "draft_a": "groq:qwen/qwen3.8-27b",
-    "draft_b": "groq:openai/gpt-oss-120b",
-    "draft_c": "google_ai_studio:gemma-4-31b-it",
-    "judge1": "google_ai_studio:gemini-3.5-flash-lite",
+    "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+    "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
+    "draft_c": "groq:openai/gpt-oss-120b",
+    "judge1": "ovh:Qwen3.5-397B-A17B",
     "judge2": [
-      "groq:openai/gpt-oss-120b",
-      "groq:qwen/qwen3.8-27b"
+      "ovh:Qwen3.5-397B-A17B"
     ],
     "judge_pool": [
-      "google_ai_studio:gemini-3.5-flash-lite",
-      "google_ai_studio:gemma-4-31b-it",
-      "groq:openai/gpt-oss-120b",
-      "groq:qwen/qwen3.8-27b"
+      "ovh:Qwen3.5-397B-A17B",
+      "ovh:DeepSeek-V4.1-Flash-1017",
+      "ovh:gpt-oss-120b",
+      "google_ai_studio:gemini-3.5-flash-lite"
     ],
     "tried": {
       "draft_a": [
         {
-          "model": "groq:qwen/qwen3.8-27b",
+          "model": "google_ai_studio:gemini-3.5-flash-lite",
           "drafted": 18
         }
       ],
       "draft_b": [
         {
-          "model": "groq:openai/gpt-oss-120b",
+          "model": "ovh:DeepSeek-V4.1-Flash-1017",
           "drafted": 18
         }
       ],
       "judge1": [
         {
-          "model": "google_ai_studio:gemini-3.5-flash-lite",
+          "model": "ovh:Qwen3.5-397B-A17B",
           "judged": 18
         }
       ],
-      "judge_probe": [],
+      "judge_probe": [
+        {
+          "model": "ovh:gpt-oss-120b",
+          "judged": 18
+        }
+      ],
       "draft_c": [
         {
-          "model": "google_ai_studio:gemma-4-31b-it",
-          "drafted": 16
+          "model": "groq:openai/gpt-oss-120b",
+          "drafted": 2
         }
       ],
       "judge2": [
         {
-          "model": "groq:openai/gpt-oss-120b",
-          "judged": 10
+          "model": "ovh:Qwen3.5-397B-A17B",
+          "judged": 1
         },
         {
-          "model": "groq:qwen/qwen3.8-27b",
-          "judged": 6
+          "model": "ovh:Qwen3.5-397B-A17B",
+          "judged": 1
         }
       ]
     },
@@ -129,55 +138,107 @@
     "no_key": []
   },
   "families": {
-    "draft_a": "alibaba-qwen",
-    "draft_b": "openai",
-    "draft_c": "google",
-    "judge1": "google"
+    "draft_a": "google",
+    "draft_b": "deepseek",
+    "draft_c": "openai",
+    "judge1": "alibaba-qwen"
+  },
+  "swarm": {
+    "task": "isha-e2e",
+    "model_source": "roster",
+    "roster_version": "0.2",
+    "plan": {
+      "chosen": {
+        "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+        "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
+        "judge": "ovh:Qwen3.5-397B-A17B",
+        "draft_c": "groq:openai/gpt-oss-120b"
+      },
+      "families": {
+        "draft_a": "google",
+        "draft_b": "deepseek",
+        "judge": "alibaba-qwen",
+        "draft_c": "openai"
+      },
+      "tier_sum": 2,
+      "why_not": {
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free (draft)": "रुका: daily_quota → 2026-11-18T00:05:00Z",
+        "openrouter:baidu/ernie-5.5-flash-preview:free (judge)": "दिन का हिस्सा पूरा → 2026-11-18T00:05:00Z"
+      }
+    },
+    "judge_canary": {
+      "ovh:Qwen3.5-397B-A17B": {
+        "passed": true,
+        "items": 4,
+        "answered": 4,
+        "caught": 4,
+        "need": 3,
+        "rules": [
+          "नाम: Pushan→Varuna",
+          "निषेध हटाना",
+          "विलोम: knowledge→ignorance"
+        ]
+      },
+      "ovh:gpt-oss-120b": {
+        "passed": true,
+        "items": 4,
+        "answered": 4,
+        "caught": 4,
+        "need": 3,
+        "rules": [
+          "नाम: Pushan→Varuna",
+          "निषेध हटाना",
+          "विलोम: knowledge→ignorance"
+        ]
+      }
+    },
+    "resumed_stages": [],
+    "held": [],
+    "blocked_until": null,
+    "state_dir": true
   },
   "api": {
-    "calls": 31,
-    "retries": 18,
-    "http_429": 10,
-    "prompt_tokens": 25329,
-    "output_tokens": 34891,
-    "paced_s": 384.5,
-    "waited_s": 191.0,
+    "calls": 12,
+    "retries": 2,
+    "http_429": 0,
+    "prompt_tokens": 21119,
+    "output_tokens": 59746,
+    "paced_s": 0.0,
+    "waited_s": 30.0,
     "neurons": 0.0,
     "by_role": {
       "draft_a": {
-        "calls": 11,
-        "retries": 8,
-        "http_429": 6,
-        "prompt_tokens": 2063,
-        "output_tokens": 2771,
-        "seconds": 11.32,
-        "waited_s": 137.0,
-        "paced_s": 242.0,
+        "calls": 3,
+        "retries": 2,
+        "http_429": 0,
+        "prompt_tokens": 891,
+        "output_tokens": 1873,
+        "seconds": 9.22,
+        "waited_s": 30.0,
+        "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": [
-          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1982. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor"
-        ]
+        "errors": []
       },
       "draft_b": {
-        "calls": 4,
-        "retries": 1,
+        "calls": 1,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 1844,
-        "output_tokens": 7357,
-        "seconds": 16.6,
+        "prompt_tokens": 1205,
+        "output_tokens": 8888,
+        "seconds": 41.31,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
         "errors": []
       },
       "draft_c": {
-        "calls": 2,
-        "retries": 1,
+        "calls": 1,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 817,
-        "output_tokens": 3515,
-        "seconds": 129.23,
-        "waited_s": 10.0,
+        "prompt_tokens": 309,
+        "output_tokens": 1580,
+        "seconds": 3.63,
+        "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
         "errors": []
@@ -186,35 +247,45 @@
         "calls": 1,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 4216,
-        "output_tokens": 1688,
-        "seconds": 3.86,
+        "prompt_tokens": 5128,
+        "output_tokens": 10806,
+        "seconds": 287.67,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
         "errors": []
       },
       "judge2": {
-        "calls": 11,
-        "retries": 7,
-        "http_429": 4,
-        "prompt_tokens": 10165,
-        "output_tokens": 17411,
-        "seconds": 72.97,
-        "waited_s": 44.0,
-        "paced_s": 142.5,
+        "calls": 2,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 1169,
+        "output_tokens": 9479,
+        "seconds": 220.65,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": [
-          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3997, Requested 4933. Please try again in 6.975s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
-        ]
+        "errors": []
       },
       "judge_probe": {
         "calls": 2,
-        "retries": 1,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 6224,
-        "output_tokens": 2149,
-        "seconds": 5.59,
+        "prompt_tokens": 9838,
+        "output_tokens": 19116,
+        "seconds": 346.57,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      },
+      "judge_canary": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 2579,
+        "output_tokens": 8004,
+        "seconds": 169.82,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -222,67 +293,86 @@
       }
     }
   },
-  "seconds_total": 815.8,
+  "seconds_total": 1109.2,
   "stages": [
     {
       "agent": "source_witness",
       "stage": "गवाह से पाठ लाना",
-      "started": "2026-11-17T06:44:10Z",
+      "started": "2026-11-17T12:54:38Z",
       "status": "ok",
-      "duration_s": 0.67
+      "duration_s": 0.18
     },
     {
       "agent": "aligner",
       "stage": "ID और गिनती (गवाह के चिह्नों से)",
-      "started": "2026-11-17T06:44:11Z",
+      "started": "2026-11-17T12:54:38Z",
       "status": "ok",
       "duration_s": 0.0
     },
     {
       "agent": "foreman_code",
       "stage": "मॉडलों की सूचियाँ",
-      "started": "2026-11-17T06:44:11Z",
+      "started": "2026-11-17T12:54:38Z",
       "status": "ok",
       "duration_s": 0.0
     },
     {
       "agent": "draft_a",
-      "stage": "ड्राफ़्ट A · qwen/qwen3.8-27b",
-      "started": "2026-11-17T06:44:11Z",
+      "stage": "ड्राफ़्ट A · gemini-3.5-flash-lite",
+      "started": "2026-11-17T12:54:38Z",
       "status": "ok",
-      "model": "groq/qwen/qwen3.8-27b",
-      "family": "alibaba-qwen",
-      "duration_s": 390.33,
+      "model": "google_ai_studio/gemini-3.5-flash-lite",
+      "family": "google",
+      "duration_s": 39.23,
       "usage": {
-        "calls": 11,
-        "retries": 8,
-        "http_429": 6,
-        "prompt_tokens": 2063,
-        "output_tokens": 2771,
-        "seconds": 11.32,
-        "waited_s": 137.0,
-        "paced_s": 242.0,
+        "calls": 3,
+        "retries": 2,
+        "http_429": 0,
+        "prompt_tokens": 891,
+        "output_tokens": 1873,
+        "seconds": 9.22,
+        "waited_s": 30.0,
+        "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": [
-          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1982. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor"
-        ]
+        "errors": []
       }
     },
     {
       "agent": "draft_b",
-      "stage": "ड्राफ़्ट B · openai/gpt-oss-120b",
-      "started": "2026-11-17T06:50:41Z",
+      "stage": "ड्राफ़्ट B · DeepSeek-V4.1-Flash-1017",
+      "started": "2026-11-17T12:55:17Z",
       "status": "ok",
-      "model": "groq/openai/gpt-oss-120b",
-      "family": "openai",
-      "duration_s": 16.6,
+      "model": "ovh/DeepSeek-V4.1-Flash-1017",
+      "family": "deepseek",
+      "duration_s": 41.31,
       "usage": {
-        "calls": 4,
-        "retries": 1,
+        "calls": 1,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 1844,
-        "output_tokens": 7357,
-        "seconds": 16.6,
+        "prompt_tokens": 1205,
+        "output_tokens": 8888,
+        "seconds": 41.31,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge_canary",
+      "stage": "जज की चलती जाँच · Qwen3.5-397B-A17B",
+      "started": "2026-11-17T12:55:59Z",
+      "status": "ok",
+      "model": "ovh/Qwen3.5-397B-A17B",
+      "family": "alibaba-qwen",
+      "duration_s": 128.21,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 1313,
+        "output_tokens": 5323,
+        "seconds": 128.21,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -291,19 +381,19 @@
     },
     {
       "agent": "judge",
-      "stage": "जज, पहला दौर · gemini-3.5-flash-lite",
-      "started": "2026-11-17T06:50:58Z",
+      "stage": "जज, पहला दौर · Qwen3.5-397B-A17B",
+      "started": "2026-11-17T12:58:07Z",
       "status": "ok",
-      "model": "google_ai_studio/gemini-3.5-flash-lite",
-      "family": "google",
-      "duration_s": 3.86,
+      "model": "ovh/Qwen3.5-397B-A17B",
+      "family": "alibaba-qwen",
+      "duration_s": 287.67,
       "usage": {
         "calls": 1,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 4216,
-        "output_tokens": 1688,
-        "seconds": 3.86,
+        "prompt_tokens": 5128,
+        "output_tokens": 10806,
+        "seconds": 287.67,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -313,18 +403,60 @@
     {
       "agent": "judge_probe",
       "stage": "स्थिरता: वही जज, उलटा क्रम",
-      "started": "2026-11-17T06:51:02Z",
+      "started": "2026-11-17T13:02:54Z",
       "status": "ok",
-      "model": "google_ai_studio/gemini-3.5-flash-lite",
-      "family": "google",
-      "duration_s": 5.59,
+      "model": "ovh/Qwen3.5-397B-A17B",
+      "family": "alibaba-qwen",
+      "duration_s": 204.68,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 5127,
+        "output_tokens": 11088,
+        "seconds": 204.68,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge_canary",
+      "stage": "जज की चलती जाँच · gpt-oss-120b",
+      "started": "2026-11-17T13:06:19Z",
+      "status": "ok",
+      "model": "ovh/gpt-oss-120b",
+      "family": "openai",
+      "duration_s": 41.61,
       "usage": {
         "calls": 2,
-        "retries": 1,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 6224,
-        "output_tokens": 2149,
-        "seconds": 5.59,
+        "prompt_tokens": 2579,
+        "output_tokens": 8004,
+        "seconds": 169.82,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "स्थिरता: दूसरे परिवार का जज · gpt-oss-120b",
+      "started": "2026-11-17T13:07:01Z",
+      "status": "ok",
+      "model": "ovh/gpt-oss-120b",
+      "family": "openai",
+      "duration_s": 141.89,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 9838,
+        "output_tokens": 19116,
+        "seconds": 346.57,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -333,20 +465,20 @@
     },
     {
       "agent": "draft_c",
-      "stage": "ड्राफ़्ट C (केवल असहमति वाले) · gemma-4-31b-it",
-      "started": "2026-11-17T06:51:07Z",
+      "stage": "ड्राफ़्ट C (केवल असहमति वाले) · openai/gpt-oss-120b",
+      "started": "2026-11-17T13:09:23Z",
       "status": "ok",
-      "model": "google_ai_studio/gemma-4-31b-it",
-      "family": "google",
-      "duration_s": 139.23,
+      "model": "groq/openai/gpt-oss-120b",
+      "family": "openai",
+      "duration_s": 3.63,
       "usage": {
-        "calls": 2,
-        "retries": 1,
+        "calls": 1,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 817,
-        "output_tokens": 3515,
-        "seconds": 129.23,
-        "waited_s": 10.0,
+        "prompt_tokens": 309,
+        "output_tokens": 1580,
+        "seconds": 3.63,
+        "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
         "errors": []
@@ -354,63 +486,59 @@
     },
     {
       "agent": "judge",
-      "stage": "जज, दूसरा दौर (alibaba-qwen बनाम google) · openai/gpt-oss-120b",
-      "started": "2026-11-17T06:53:27Z",
+      "stage": "जज, दूसरा दौर (deepseek बनाम openai) · Qwen3.5-397B-A17B",
+      "started": "2026-11-17T13:09:26Z",
       "status": "ok",
-      "model": "groq/openai/gpt-oss-120b",
-      "family": "openai",
-      "duration_s": 257.6,
+      "model": "ovh/Qwen3.5-397B-A17B",
+      "family": "alibaba-qwen",
+      "duration_s": 85.4,
       "usage": {
-        "calls": 10,
-        "retries": 7,
-        "http_429": 4,
-        "prompt_tokens": 8294,
-        "output_tokens": 16721,
-        "seconds": 71.13,
-        "waited_s": 44.0,
-        "paced_s": 142.5,
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 557,
+        "output_tokens": 5445,
+        "seconds": 85.4,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": [
-          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3997, Requested 4933. Please try again in 6.975s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
-        ]
+        "errors": []
       }
     },
     {
       "agent": "judge",
-      "stage": "जज, दूसरा दौर (openai बनाम google) · qwen/qwen3.8-27b",
-      "started": "2026-11-17T06:57:44Z",
+      "stage": "जज, दूसरा दौर (google बनाम openai) · Qwen3.5-397B-A17B",
+      "started": "2026-11-17T13:10:52Z",
       "status": "ok",
-      "model": "groq/qwen/qwen3.8-27b",
+      "model": "ovh/Qwen3.5-397B-A17B",
       "family": "alibaba-qwen",
-      "duration_s": 1.85,
+      "duration_s": 135.26,
       "usage": {
-        "calls": 11,
-        "retries": 7,
-        "http_429": 4,
-        "prompt_tokens": 10165,
-        "output_tokens": 17411,
-        "seconds": 72.97,
-        "waited_s": 44.0,
-        "paced_s": 142.5,
+        "calls": 2,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 1169,
+        "output_tokens": 9479,
+        "seconds": 220.65,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": [
-          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3997, Requested 4933. Please try again in 6.975s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
-        ]
+        "errors": []
       }
     },
     {
       "agent": "hard_checks",
       "stage": "पक्की जाँचें D2/D3/D6/D7/D8",
-      "started": "2026-11-17T06:57:46Z",
+      "started": "2026-11-17T13:13:07Z",
       "status": "ok",
       "duration_s": 0.01
     },
     {
       "agent": "export_prep",
       "stage": "परतों का पेड़ + R-जाँचें",
-      "started": "2026-11-17T06:57:46Z",
+      "started": "2026-11-17T13:13:07Z",
       "status": "ok",
-      "duration_s": 0.09
+      "duration_s": 0.08
     }
   ],
   "gates": {
