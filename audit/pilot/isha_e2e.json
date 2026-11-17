@@ -2,13 +2,13 @@
   "_meta": {
     "label": "AI-मसौदा · मानव-समीक्षा नहीं",
     "ai_generated": true,
-    "pipeline_version": "pilot-e2e-0.5",
-    "generated_at": "2026-11-17T06:57:46Z",
+    "pipeline_version": "pilot-e2e-0.7",
+    "generated_at": "2026-11-17T13:13:07Z",
     "licence": "LicenseRef-sanatan-granth-draft",
     "note": "पूरा संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash (जज के प्रमाण में एक-दो शब्द आ सकते हैं)। अनुवाद परीक्षण के हैं।",
     "mock": false,
-    "run": "44033394368",
-    "job_key": "a6433d13ec5e02eae96f301380c492da3c62c72a98716b28cd5c763823ece347"
+    "run": "44087537183",
+    "job_key": "31c295e1686c9b2457a8f4840d31b30268bec39f64518b91ea27d70af7019739"
   },
   "segments": [
     {
@@ -16,141 +16,96 @@
       "sa_sha256": "c5499b9317964d1a356d8897f3345541dda098714ea5d694dd50f439b8e525bf",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
+      "path": "पहले दौर में सहमति",
       "judge1": {
         "a_label": "OK",
-        "b_label": "MINOR",
+        "b_label": "OK",
         "a_evidence": "",
-        "b_evidence": "Vasyam translated as covered instead of pervaded",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
-        "a_label": "MINOR",
-        "b_label": "MINOR",
-        "a_evidence": "जगत् rendered as “moving world” (adds motion)",
-        "b_evidence": "जगत् rendered as “moving world” (adds motion)",
+        "b_evidence": "",
         "agree": true,
         "pick": "A",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.7838,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "Om. All this, whatever moves in this moving world, is pervaded by the Lord. Enjoy by renouncing it; do not covet anyone's wealth.",
-      "hi": "ॐ। इस चलती हुई जगत में जो कुछ भी चलता है, वह सब ईश्वर द्वारा व्याप्त है। उसे त्यागकर भोगो; किसी का धन लोभ मत करो।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Om. All this whatsoever moves in this moving world is enveloped by the Lord. By that renounced, thou shouldst enjoy. Do not covet, for whose is wealth?",
+      "hi": "ॐ। इस जगत में जो कुछ भी गतिमान संसार है, वह सब ईश्वर से आच्छादित है। उस त्यागे हुए द्वारा तुम उपभोग करो। लालच मत करो, धन किसका है?"
     },
     {
       "id": "isha:2",
       "sa_sha256": "7eaca918b948d0a870dee4374ab62e9f94bc3c707b3345a363ebcce342c80ac9",
-      "badge": "D",
-      "flags": [
-        "JURY_DISAGREE"
-      ],
-      "path": "cascade के बाद भी असहमति",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
-        "b_label": "MINOR",
-        "a_evidence": "Shatam samah translated as sixty years instead of a hundred years",
-        "b_evidence": "Jijivishet rendered loosely as wish to live",
-        "agree": false,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "jijivishe (wish to live) rendered as 'wish to live' but 'shatam samah' (100 years) is dropped.",
+        "a_evidence": "",
         "b_evidence": "",
-        "agree": false,
-        "pick": "B",
+        "agree": true,
+        "pick": "A",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.9155,
-      "final_model": "gemma-4-31b-it",
+      "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "Performing works here, one should desire to live for a hundred years. Thus, for you there is no other way; the work does not cling to the man.",
-      "hi": "यहाँ कर्म करते हुए ही सौ वर्षों तक जीने की इच्छा करनी चाहिए। तुम्हारे लिए इसके अलावा और कोई मार्ग नहीं है, मनुष्य कर्म से लिप्त नहीं होता।"
+      "en": "Performing works indeed here, one should wish to live a hundred years. Thus it is in thee, not otherwise than this; action does not cling to man.",
+      "hi": "यहाँ कर्म करते हुए ही सौ वर्ष जीने की इच्छा करनी चाहिए। तुम्हारे लिए इस प्रकार (कर्म करना ही) है, इसके अन्यथा नहीं है; मनुष्य से कर्म लिप्त नहीं होता।"
     },
     {
       "id": "isha:3",
       "sa_sha256": "da76739ca4e12ab9b4abccb0482770db3f7a756fc7e35a7c1cfb4984a41e1a02",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
-        "b_label": "OK",
-        "a_evidence": "Asurya translated as sunless",
-        "b_evidence": "",
-        "agree": false,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "OK",
         "b_label": "OK",
         "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.7571,
-      "final_model": "gemma-4-31b-it",
+      "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "Those worlds are called Asuric, covered by blind darkness. Those who are self-killing people reach them after death.",
-      "hi": "वे लोक असुर नाम के हैं, जो घोर अंधकार से ढके हुए हैं। जो आत्मघाती लोग हैं, वे मृत्यु के बाद उन्हें प्राप्त करते हैं।"
+      "en": "Asuryan by name are those worlds, covered with blind darkness. To them go after death those people who are slayers of the Self.",
+      "hi": "असुरीय नाम वाले वे लोक हैं, जो अंधे अंधकार से ढके हैं। जो कोई भी आत्मा को मारने वाले लोग हैं, वे मरने के पश्चात् उन्हीं को प्राप्त होते हैं।"
     },
     {
       "id": "isha:4",
       "sa_sha256": "6bb545081f906a4494b0924ea64bc19a47af82e70c39c6005b86394fd511b2e1",
-      "badge": "D",
-      "flags": [
-        "CONTRADICTED"
-      ],
-      "path": "cascade के बाद भी असहमति",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
       "judge1": {
         "a_label": "OK",
-        "b_label": "CONTRADICTED",
+        "b_label": "OK",
         "a_evidence": "",
-        "b_evidence": "Anejad ekam javeeyah completely mistranslated as born of the mind the brave",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
-        "a_label": "CONTRADICTED",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "अनेजदेकं rendered as “unmoving”; नैनद्देवा आप्नुवन्पूर्वम् rendered as “did not reach it first”",
-        "b_evidence": "अनेजदेकं rendered as “unmoving”; नैनद्देवा आप्नुवन्पूर्वम् rendered as “it leaped first”",
+        "b_evidence": "",
         "agree": true,
-        "pick": "A",
+        "pick": "B",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.6774,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "The one, unmoving, is swifter than the mind; the gods did not reach it first. There, standing, it supports the moving one; in that, the mother of the waters, Matarishva, is established.",
-      "hi": "वह एक, अचल, मन से तेज है; देवताओं ने पहले उसे प्राप्त नहीं किया। वहाँ, खड़े होकर, वह चलने वाले को धारण करता है; उसमें, जल की माता, मतरिश्वा, स्थापित है।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "It is one, unmoving, swifter than mind. The gods did not reach it; it went before them. Standing, it outruns others who run. Matarishvan places waters in it.",
+      "hi": "वह एक अचल है, मन से भी वेगवान्। देवता उसे नहीं पा सके; वह उनसे पहले चला। खड़ा रहते हुए भी वह दौड़ने वाले अन्यों से आगे निकल जाता है। मातरिश्वा उसमें जल रखता है।"
     },
     {
       "id": "isha:5",
       "sa_sha256": "037199c179427f9b22e0d0e35bce106bf988d216aff5a9357cb276ab8fd57465",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "",
-        "b_evidence": "Ejati translated as conquered",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "OK",
         "b_label": "OK",
         "a_evidence": "",
@@ -159,60 +114,42 @@
         "pick": "A",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.8154,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "That moves, that does not move; that is far, that is near; that is within all, that is outside all this.",
-      "hi": "वह चलता है, वह नहीं चलता; वह दूर है, वह पास है; वह सबके भीतर है, वह इस सबके बाहर है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "It moves, that does not move; that is far, that is near. That is inside of all this, and that is outside of all this.",
+      "hi": "यह चलता है, यह नहीं चलता; वह दूर है, वह पास है। वह इस सब के भीतर है, और वह इस सब के बाहर है।"
     },
     {
       "id": "isha:6",
       "sa_sha256": "0484d1408b38bcbc0f6c8204022d4a2d23ec836fad2298690f51081437eb2796",
-      "badge": "D",
-      "flags": [
-        "CONTRADICTED"
-      ],
-      "path": "cascade के बाद भी असहमति",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "MINOR",
-        "a_evidence": "",
-        "b_evidence": "Vijugupsate translated as hide himself",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
-        "a_label": "CONTRADICTED",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "विजुगुप्सते rendered as 'does not see with aversion'",
-        "b_evidence": "विजुगुप्सते rendered as 'does not hate'",
+        "a_label": "MINOR",
+        "b_label": "OK",
+        "a_evidence": "'tu' (but) translated as 'And' loses contrastive nuance.",
+        "b_evidence": "",
         "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.9143,
-      "final_model": "gemma-4-31b-it",
-      "final_family": "google",
-      "en": "He who sees all beings in the self alone, and the self in all beings, he then does not hate.",
-      "hi": "जो मनुष्य सभी भूतों को अपनी आत्मा में ही देखता है और सभी भूतों में अपनी आत्मा को, वह फिर घृणा नहीं करता।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "But he who sees all beings in the Self alone, and the Self in all beings, thereafter does not abhor.",
+      "hi": "जो सभी भूतों को आत्मा में ही देखता है, और सभी भूतों में आत्मा को, वह फिर घृणा नहीं करता।"
     },
     {
       "id": "isha:7",
       "sa_sha256": "466a09a75f5836a3812e3b92b8cea4e676a5c7f3a1f04d7adf9c9d92b9d7463a",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
-        "b_label": "OK",
-        "a_evidence": "Vijanatoh rendered loosely",
-        "b_evidence": "",
-        "agree": false,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "OK",
         "b_label": "OK",
         "a_evidence": "",
@@ -221,60 +158,42 @@
         "pick": "A",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.8676,
-      "final_model": "openai/gpt-oss-120b",
-      "final_family": "openai",
-      "en": "In that where all beings are indeed the Self alone, known, there what delusion, what sorrow, when one beholds oneness?",
-      "hi": "जिसमें सभी प्राणियों को केवल आत्मा ही माना गया है, ज्ञात है, वहाँ कौन‑सा मोह, कौन‑सा शोक, जब एकत्व को देखा जाता है?"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "In whom all beings have become the Self itself for the knower, what delusion is there, what grief, for one who sees oneness?",
+      "hi": "जिस (अवस्था) में जानने वाले के लिए सभी भूत आत्मा ही हो गए हैं, उस एकता को देखने वाले के लिए वहाँ कौन सा मोह है और कौन सा शोक है?"
     },
     {
       "id": "isha:8",
       "sa_sha256": "28602737db191ac027798f15de9297c319afc6ea16eba40e88a9728eabcc9292",
-      "badge": "D",
-      "flags": [
-        "JURY_DISAGREE"
-      ],
-      "path": "cascade के बाद भी असहमति",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "MINOR",
-        "a_evidence": "",
-        "b_evidence": "Apsnaviram rendered incorrectly as wound and impurity",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "MINOR",
-        "b_label": "MINOR",
-        "a_evidence": "adds 'Supreme', omits 'tendonless'",
-        "b_evidence": "'reached' vs 'beyond', 'eternal years' vs 'eternal worlds'",
-        "agree": false,
+        "b_label": "OK",
+        "a_evidence": "'yāthātathyataḥ' rendered as 'duly' is vague compared to 'true nature'.",
+        "b_evidence": "",
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.8246,
-      "final_model": "gemma-4-31b-it",
-      "final_family": "google",
-      "en": "He reached the luminous, bodiless, woundless, tendonless, pure, untouched by sin. The seer, the thinker, the all-pervading, the self-born, he established the meanings as they are for eternal years.",
-      "hi": "उसने प्रकाशमय, शरीररहित, घाव-रहित, स्नायु-रहित, शुद्ध, पाप से अछूते को प्राप्त किया। कवि, मनीषी, सर्वव्यापी, स्वयंभू ने शाश्वत वर्षों के लिए अर्थों को वैसा ही स्थापित किया जैसा वे हैं।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "He pervaded all—bright, bodiless, unscarred, sinewless, pure, unpierced by evil. The seer, the wise, the all-pervading, the self-existent, arranged objects according to their true nature for eternal years.",
+      "hi": "वह सब में व्याप्त हुआ—दीप्त, अशरीर, अव्रण, अस्नायु, शुद्ध, पाप से अविद्ध। कवि, मनीषी, परिभू, स्वयम्भू ने शाश्वत वर्षों के लिए अर्थों को यथातथ्य रूप से व्यवस्थित किया।"
     },
     {
       "id": "isha:9",
       "sa_sha256": "4cb81f90eaf291a557b0b9fb82ce14e923a0a84aa74979d01eec5562ed3103fc",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "MINOR",
-        "a_evidence": "",
-        "b_evidence": "Awkward grammar in English and Hindi",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "OK",
         "b_label": "OK",
         "a_evidence": "",
@@ -283,43 +202,34 @@
         "pick": "A",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.8814,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "Those who worship ignorance enter into blind darkness. And those who are devoted to knowledge enter into darkness still greater.",
-      "hi": "जो अविद्या की उपासना करते हैं, वे अंधेरे अंधकार में प्रवेश करते हैं। और जो विद्या में रत हैं, वे उससे भी अधिक अंधकार में प्रवेश करते हैं।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Into blind darkness enter they who worship non-knowledge. Into greater darkness than that, as it were, go they who are attached to knowledge.",
+      "hi": "अंधे अंधकार में वे प्रवेश करते हैं जो अविद्या की उपासना करते हैं। उससे भी अधिक अंधकार में मानो वे जाते हैं जो विद्या में रत हैं।"
     },
     {
       "id": "isha:10",
       "sa_sha256": "f3d68ac9b1e2df49c0d747c10e00c516d245fca6927b237434062480848f31a9",
-      "badge": "D",
-      "flags": [
-        "CONTRADICTED"
-      ],
-      "path": "cascade के बाद भी असहमति",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
+        "a_label": "MINOR",
         "b_label": "OK",
-        "a_evidence": "Devah, vidyaya, avidyaya mistranslated as other gods say by knowledge",
+        "a_evidence": "Hindi adds 'फल' (fruit) not explicit in Sanskrit text.",
         "b_evidence": "",
-        "agree": false,
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": {
-        "a_label": "CONTRADICTED",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "ye na tat vicacchire (who did not discern it) rendered as 'who have not discerned it' but context implies 'who did not see it [as",
-        "b_evidence": "ye na tat vicacchire (who did not discern it) rendered as 'who told us this', changing the agent and action.",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
+      "judge2": null,
       "print_coverage": 0.971,
-      "final_model": "openai/gpt-oss-120b",
-      "final_family": "openai",
-      "en": "Other gods are called by knowledge, other (things) are called by ignorance. Thus have been heard, the wise, those who have not discerned it.",
-      "hi": "अन्य देवों को विद्या द्वारा कहा जाता है, अन्य को अविद्या द्वारा कहा जाता है। इस प्रकार शुश्रुति है, वे धीर जो इसे नहीं विचक्षण किए।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "They say it is one thing by knowledge, another by ignorance. Thus we have heard from the wise who explained that to us.",
+      "hi": "विद्या से अन्य ही कहा जाता है, अविद्या से अन्य ही कहा जाता है। ऐसा हमने उन धीरों से सुना है जिन्होंने हमें वह समझाया।"
     },
     {
       "id": "isha:11",
@@ -338,27 +248,18 @@
       },
       "judge2": null,
       "print_coverage": 0.8056,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "He who knows both knowledge and ignorance together, crosses death by ignorance and attains immortality by knowledge.",
-      "hi": "जो विद्या और अविद्या दोनों को साथ में जानता है, वह अविद्या द्वारा मृत्यु को पार कर जाता है और विद्या द्वारा अमृत को प्राप्त करता है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Knowledge and non-knowledge—he who knows both these together, by non-knowledge crossing over death, by knowledge attains immortality.",
+      "hi": "विद्या और अविद्या—जो इन दोनों को एकसाथ जानता है, वह अविद्या से मृत्यु को पार करके विद्या से अमृतत्व का उपभोग करता है।"
     },
     {
       "id": "isha:12",
       "sa_sha256": "518c15e27e8f43cd14a04d01e3307c6755f4cbc6c0a29c92753e37b6271e29d6",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "OK",
-        "b_label": "MINOR",
-        "a_evidence": "",
-        "b_evidence": "Asambhutim translated awkwardly as not manifested",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "OK",
         "b_label": "OK",
         "a_evidence": "",
@@ -367,189 +268,164 @@
         "pick": "A",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": 0.9661,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "Those who worship non-existence enter a blind darkness; and then, for those who are absorbed in existence, there is a darkness still greater.",
-      "hi": "जो असम्भूति की उपासना करते हैं, वे अंधे अंधकार में प्रवेश करते हैं; और फिर, जो सम्भूति में रत हैं, उनके लिए अंधकार और भी अधिक होता है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Into blind darkness enter they who worship non-becoming. Into greater darkness than that, as it were, go they who are attached to becoming.",
+      "hi": "अंधे अंधकार में वे प्रवेश करते हैं जो असम्भूति (प्रलय या विनाश) की उपासना करते हैं। उससे भी अधिक अंधकार में मानो वे जाते हैं जो सम्भूति (उत्पत्ति) में रत हैं।"
     },
     {
       "id": "isha:13",
       "sa_sha256": "246e62f0bc5919e1ad7c79ab040eb4af20de8beb1566d7ccd3d54292ef267565",
-      "badge": "D",
-      "flags": [
-        "CONTRADICTED"
-      ],
-      "path": "cascade के बाद भी असहमति",
-      "judge1": {
-        "a_label": "CONTRADICTED",
-        "b_label": "OK",
-        "a_evidence": "Sambhavat asambhavat mistranslated completely as born from another",
-        "b_evidence": "",
-        "agree": false,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": {
-        "a_label": "CONTRADICTED",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "ye na tat vicacchire (who did not discern it) rendered as 'who have not discerned that', but context implies 'who did not see it [as",
-        "b_evidence": "ye na tat vicacchire (who did not discern it) rendered as 'who told us this', changing the agent and action.",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "print_coverage": 1.0,
-      "final_model": "openai/gpt-oss-120b",
-      "final_family": "openai",
-      "en": "Others say, 'From existence they say something else, from non‑existence.' Thus, having heard, the wise who have not discerned that.",
-      "hi": "अन्य लोग कहते हैं, ‘संबव से वे कुछ और कहते हैं, असंबव से।’ इस प्रकार सुनने के बाद, वे धीर जो उस बात को नहीं देख पाए।"
-    },
-    {
-      "id": "isha:14",
-      "sa_sha256": "ffd7a4341364272777b0a04b70060ffdf32a24c43702cae05c446db2747ad28c",
-      "badge": "C",
-      "flags": [],
-      "path": "cascade के बाद सहमति",
-      "judge1": {
-        "a_label": "OK",
-        "b_label": "MINOR",
-        "a_evidence": "",
-        "b_evidence": "Sambhutim translated as existence",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "OK",
-        "a_evidence": "",
-        "b_evidence": "",
-        "agree": true,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "print_coverage": 0.8429,
-      "final_model": "gemma-4-31b-it",
-      "final_family": "google",
-      "en": "He who knows both manifestation and destruction together; having crossed death by destruction, he attains immortality by manifestation.",
-      "hi": "जो सम्भूति और विनाश दोनों को एक साथ जानता है, वह विनाश द्वारा मृत्यु को पार करके सम्भूति से अमृत को प्राप्त करता है।"
-    },
-    {
-      "id": "isha:15",
-      "sa_sha256": "b9da9bae2eed52ebd09c6cddfa75898527fd665bfa77bc8533a16b3ee7edc04c",
       "badge": "C",
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
         "a_label": "MINOR",
         "b_label": "OK",
-        "a_evidence": "Satyadharmaya translated as truth and dharma",
+        "a_evidence": "Hindi adds 'फल' (fruit) not explicit in Sanskrit text.",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": null,
-      "print_coverage": 0.9412,
-      "final_model": "openai/gpt-oss-120b",
-      "final_family": "openai",
-      "en": "With a golden vessel, the face of truth is concealed. O Pūṣan, uncover the truth for the sake of true dharma, that it may be seen.",
-      "hi": "हिरण्मय पात्र में सत्य का मुख छिपा है। हे पूष, सत्य को उजागर करो, सत्यधर्म के लिये, ताकि वह देखा जा सके।"
+      "print_coverage": 1.0,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "They say it is one thing from becoming, another from non-becoming. Thus we have heard from the wise who explained that to us.",
+      "hi": "सम्भव से अन्य ही कहा जाता है, असम्भव से अन्य ही कहा जाता है। ऐसा हमने उन धीरों से सुना है जिन्होंने हमें वह समझाया।"
     },
     {
-      "id": "isha:16",
-      "sa_sha256": "5a3a56847df1b668c915024c526826bc80155e27f6182177a8df444532e89075",
-      "badge": "D",
-      "flags": [
-        "CONTRADICTED"
-      ],
-      "path": "cascade के बाद भी असहमति",
-      "judge1": {
-        "a_label": "CONTRADICTED",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "Do not draw away the sun mistranslated",
-        "b_evidence": "Vyuha rashmin samuh tejas mistranslated",
-        "agree": false,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": {
-        "a_label": "CONTRADICTED",
-        "b_label": "OK",
-        "a_evidence": "ekarke (sole attraction/one draw) rendered as 'sole attraction' but 'Yama' is treated as a separate entity rather than part of the address or list.",
-        "b_evidence": "",
-        "agree": false,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "print_coverage": 0.9091,
-      "final_model": "gemma-4-31b-it",
-      "final_family": "google",
-      "en": "O Pushan, O Surya, O Prajapatya, you who scatter the rays, the collection of brilliance. Your form which is most auspicious, that I see of yours; that person who is he, I am he.",
-      "hi": "हे पूषन, हे सूर्य, हे प्राजापत्य, आप किरणों को फैलाते हैं, तेज का समूह हैं। आपका जो रूप अत्यंत कल्याणकारी है, उसे मैं देखता हूँ; वह जो पुरुष है, वह मैं हूँ।"
-    },
-    {
-      "id": "isha:17",
-      "sa_sha256": "4211f517531ed72b96cead9bd3febc354b393d8c3aab925ebcb97847f0104eb5",
+      "id": "isha:14",
+      "sa_sha256": "ffd7a4341364272777b0a04b70060ffdf32a24c43702cae05c446db2747ad28c",
       "badge": "C",
       "flags": [],
-      "path": "cascade के बाद सहमति",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "Vayur anilam amritam mistranslated",
-        "b_evidence": "Anilam translated as water",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
-      "judge2": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "क्रतो स्मर कृतं स्मर rendered as separate words and wrong order 'Kratu, remember, created, remember'",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
-      "print_coverage": 0.7576,
-      "final_model": "gemma-4-31b-it",
-      "final_family": "google",
-      "en": "Air is wind, immortal, and then this body which ends in ashes. Om, Krato remember, remember what was done; Krato remember, remember what was done.",
-      "hi": "वायु अनिल है, अमर है, और यह शरीर भस्म में समाप्त होने वाला है। ॐ क्रतो स्मरण करो, किए हुए का स्मरण करो; क्रतो स्मरण करो, किए हुए का स्मरण करो।"
+      "judge2": null,
+      "print_coverage": 0.8429,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "He who knows both becoming and destruction together crosses death by destruction and attains immortality by becoming.",
+      "hi": "जो सम्भूति और विनाश दोनों को साथ जानता है, वह विनाश से मृत्यु को पार करके सम्भूति से अमृत को प्राप्त होता है।"
     },
     {
-      "id": "isha:18",
-      "sa_sha256": "63ad3ef87c86f6ce2f1b44b823d5662d882b83ec6e6cff258612d81fa20e8af8",
+      "id": "isha:15",
+      "sa_sha256": "b9da9bae2eed52ebd09c6cddfa75898527fd665bfa77bc8533a16b3ee7edc04c",
       "badge": "D",
       "flags": [
         "CONTRADICTED"
       ],
       "path": "cascade के बाद भी असहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
+        "a_label": "MINOR",
+        "b_label": "OK",
+        "a_evidence": "'satya-dharmāya' interpreted as 'truthful person' vs 'truth and dharma'.",
+        "b_evidence": "",
+        "agree": false,
+        "pick": "B",
+        "has_empirical_claim": false
+      },
+      "judge2": {
+        "a_label": "OK",
         "b_label": "CONTRADICTED",
-        "a_evidence": "Yuyodhy asmac juhuranam enah mistranslated as fight for the sake of sacrifice",
-        "b_evidence": "Vayunani vidvan mistranslated",
+        "a_evidence": "",
+        "b_evidence": "हिरण्मयेन (golden) rendered as 'diamond'. अपावृणु (uncover) rendered as 'do not veil'.",
+        "agree": false,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
+      "print_coverage": 0.9412,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "The face of truth is covered by a golden vessel. O Pushan, uncover it for the sight of truth and dharma.",
+      "hi": "सत्य का मुख स्वर्ण के पात्र से ढका है। हे पूषन्, उसे सत्य-धर्म के दर्शन के लिए खोलो।"
+    },
+    {
+      "id": "isha:16",
+      "sa_sha256": "5a3a56847df1b668c915024c526826bc80155e27f6182177a8df444532e89075",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
+        "a_label": "OK",
+        "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
+        "agree": true,
+        "pick": "B",
+        "has_empirical_claim": false
+      },
+      "judge2": null,
+      "print_coverage": 0.9091,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "O Pushan, O sole seer, O Yama, O Surya, O son of Prajapati, withdraw your rays, gather your light. That form of yours which is most auspicious, that I see. That person yonder, I am he.",
+      "hi": "हे पूषन्, हे एकर्षि, हे यम, हे सूर्य, हे प्राजापत्य, अपनी रश्मियों को व्यूहित करो, तेज को समेटो। तुम्हारा जो रूप सबसे कल्याणकारी है, वह मैं देखता हूँ। जो वहाँ वह पुरुष है, वह मैं हूँ।"
+    },
+    {
+      "id": "isha:17",
+      "sa_sha256": "4211f517531ed72b96cead9bd3febc354b393d8c3aab925ebcb97847f0104eb5",
+      "badge": "D",
+      "flags": [
+        "CONTRADICTED"
+      ],
+      "path": "cascade के बाद भी असहमति",
+      "judge1": {
+        "a_label": "OK",
+        "b_label": "MINOR",
+        "a_evidence": "",
+        "b_evidence": "B adds verb 'enter/merge' to nominal phrase 'vāyuḥ anilam amṛtam'.",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "CONTRADICTED",
-        "a_evidence": "राये rendered as 'by the ray' not matching likely meaning 'king' or 'splendor'",
-        "b_evidence": "adds 'to prosperity' and 'remove sin of cruelty' not present in Sanskrit",
+        "a_evidence": "",
+        "b_evidence": "anilam/amṛtam rendered as water/fire instead of wind/immortal; krato vocative address omitted.",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
       },
+      "print_coverage": 0.7576,
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Air, breath, immortal; then this body ends in ashes. Om. O mind, remember, remember the deed. O mind, remember, remember the deed.",
+      "hi": "वायु (प्राण), अनिल, अमृत; और अंत में यह शरीर भस्मांत है। ॐ। हे क्रतु (संकल्पवान मन), स्मरण कर, कर्म का स्मरण कर। हे क्रतु, स्मरण कर, कर्म का स्मरण कर।"
+    },
+    {
+      "id": "isha:18",
+      "sa_sha256": "63ad3ef87c86f6ce2f1b44b823d5662d882b83ec6e6cff258612d81fa20e8af8",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
+        "a_label": "MINOR",
+        "b_label": "OK",
+        "a_evidence": "'vidhema' is optative ('would offer'), A uses present ('offer').",
+        "b_evidence": "",
+        "agree": true,
+        "pick": "B",
+        "has_empirical_claim": false
+      },
+      "judge2": null,
       "print_coverage": 0.3333,
-      "final_model": "qwen/qwen3.8-27b",
-      "final_family": "alibaba-qwen",
-      "en": "O Agni, lead us by the good path, by the ray, O all-knowing one, through all the winds. May we fight for the sake of the sacrifice, may we perform the most excellent praise to you.",
-      "hi": "हे अग्नि, हमें अच्छे मार्ग से, किरण से, हे सर्वज्ञ, सभी वायुओं के माध्यम से ले चलो। हम यज्ञ के लिए युद्ध करें, हम तुम्हें सबसे उत्तम स्तुति करें।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "O Agni, lead us by a good path to wealth, O god, knowing all ways. Drive away from us the crooked sin. We would offer you the most abundant salutation.",
+      "hi": "हे अग्ने, हमें सुपथ से धन की ओर ले चल, हे देव, सभी मार्गों को जानने वाले। हमसे कुटिल पाप को दूर कर। हम तुम्हें सर्वाधिक नमस्कार-वाणी अर्पित करें।"
     }
   ]
 }
