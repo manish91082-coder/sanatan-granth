@@ -16,6 +16,34 @@
    "reason": "daily_quota",
    "requests": 2,
    "window": "2026-11-17"
+  },
+  "ovh:DeepSeek-V4.1-Flash-1017": {
+   "fails": 0,
+   "last_ok": "2026-11-17T11:55:20Z",
+   "output_tokens": 44756,
+   "requests": 3,
+   "window": "2026-11-17"
+  },
+  "ovh:Qwen3.5-397B-A17B": {
+   "fails": 0,
+   "last_ok": "2026-11-17T11:55:20Z",
+   "output_tokens": 8984,
+   "requests": 1,
+   "window": "2026-11-17"
+  },
+  "ovh:Qwen3.8-27B": {
+   "fails": 0,
+   "last_ok": "2026-11-17T11:55:20Z",
+   "output_tokens": 12243,
+   "requests": 1,
+   "window": "2026-11-17"
+  },
+  "ovh:gpt-oss-120b": {
+   "fails": 0,
+   "last_ok": "2026-11-17T11:55:20Z",
+   "output_tokens": 5174,
+   "requests": 1,
+   "window": "2026-11-17"
   }
  },
  "providers": {
@@ -27,10 +55,18 @@
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
    "output_tokens": 0,
+   "reported_at": "2026-11-17T11:00:21Z",
+   "reported_used": 52,
+   "reported_window": "2026-11-17",
    "requests": 2,
+   "window": "2026-11-17"
+  },
+  "ovh": {
+   "output_tokens": 71157,
+   "requests": 6,
    "window": "2026-11-17"
   }
  },
- "updated_at": "2026-11-17T10:57:40Z",
+ "updated_at": "2026-11-17T11:55:20Z",
  "version": 1
 }
