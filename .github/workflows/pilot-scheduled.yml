@@ -3,12 +3,10 @@ name: pilot-scheduled
 # मुफ़्त quota लौटने के बाद अपने-आप चलने वाला pilot-क्रम (laptop की ज़रूरत नहीं):
 #   1. जज-परीक्षा (tools/pilot/judge_test.py): जानबूझकर बिगाड़े गए अनुवाद कौन-सा जज पकड़ता है → डेटा-PR
 #   2. Foreman की कतार में पूरी कड़ी का एक job (foreman-enqueue) → foreman-job → डेटा-PR
-# समय एक ही तिथि पर बँधा है (17 नवंबर, 00:20 UTC = 05:50 IST; Workers AI का quota 00:00 UTC पर लौटता है)।
-# चल जाने के बाद यह schedule हटा दिया जाए; हाथ से चलाने के लिए workflow_dispatch रहेगा।
+# केवल हाथ से (workflow_dispatch)। 17 नवंबर 2026 के लिए एक बार का schedule (00:20 UTC) रखा गया था; वह 05:40 UTC तक नहीं चला
+# (उसी दिन daily-audit का schedule 5 घंटे 38 मिनट देर से चला), इसलिए हटा दिया गया। समय-बद्ध काम के लिए GitHub का schedule भरोसेमंद नहीं है।
 
 on:
-  schedule:
-    - cron: "20 0 17 11 *"
   workflow_dispatch:
     inputs:
       text_id:
