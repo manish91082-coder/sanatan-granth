@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Pilot की पूरी कड़ी CI में चलाता है और नतीजे का डेटा-PR खोलता है।
 #   tools/pilot/ci_run.sh <text_id> <batch_id> <job_key|-> <mock: yes|no> [open_pr: yes|no]
-# env: GEMINI_API_KEY, GROQ_API_KEY (मॉडल-calls); PR_TOKEN (डेटा-PR के लिए; न हो तो PR नहीं खुलता, केवल artifact)
-# बाहर: /tmp/pilot/report/*.json; $GITHUB_OUTPUT में status, ref
+# env: GEMINI_API_KEY, GROQ_API_KEY, OPENROUTER_API_KEY (मॉडल-calls); PR_TOKEN (डेटा-PR के लिए; न हो तो PR नहीं खुलता, केवल artifact);
+#      SWARM_STATE_DIR (वैकल्पिक: सेहत-बही और अधूरे काम; tools/swarm/state_sync.sh)
+# बाहर: /tmp/pilot/report/*.json; $GITHUB_OUTPUT में status, ref, rc (75 = रुका)
 set -uo pipefail
 
 TEXT="${1:?text_id}"; BATCH="${2:?batch_id}"; JOBKEY="${3:--}"; MOCK="${4:-no}"; OPEN_PR="${5:-yes}"
@@ -58,5 +59,12 @@ if [ "$RC" -eq 0 ] && [ "$MOCK" != "yes" ] && [ "$OPEN_PR" = "yes" ] && [ -n "${
 fi
 
 STATUS=failed; [ "$RC" -eq 0 ] && STATUS=done
-{ echo "status=$STATUS"; echo "ref=$REF"; } >> "${GITHUB_OUTPUT:-/dev/null}"
+# 75 = रुका: बाहर की रुकावट (quota, बंद मॉडल, कोई योग्य रचना नहीं)। Foreman के लिए यह चक्कर पूरा है (दोबारा कब चलाना है,
+# यह स्वार्म का संचालक तय करता है; बचा काम state branch में है); job लाल नहीं होता।
+if [ "$RC" -eq 75 ]; then
+  STATUS=done; REF="blocked:run${GITHUB_RUN_ID:-0}"
+  echo "::notice::run रुका (मॉडल या quota): $(head -c 300 "$OUT/report/blocked.json" 2>/dev/null | tr '\n' ' ')"
+fi
+{ echo "status=$STATUS"; echo "ref=$REF"; echo "rc=$RC"; } >> "${GITHUB_OUTPUT:-/dev/null}"
+[ "$RC" -eq 75 ] && exit 0
 exit "$RC"

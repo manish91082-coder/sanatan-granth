@@ -1,0 +1,96 @@
+{
+  "_comment": "स्वार्म किस मॉडल को किस भूमिका में ले सकता है। यह सूची main पर है और केवल PR + मालिक की स्वीकृति से बदलती है। मशीन (सेहत-बही, state branch) किसी मॉडल को केवल हटा सकती है (quota, रुकावट, canary-विफलता), जोड़ कभी नहीं सकती। सारे माप हमारे अपने हैं, एक-एक run के; मानव-समीक्षा नहीं।",
+  "version": "0.1",
+  "rules": {
+    "judge_min_catch_rate": 0.85,
+    "judge_min_items": 12,
+    "inline_canaries": 4,
+    "inline_canary_min_caught": 3,
+    "min_tier1_drafters": 1,
+    "wait_for_better_hours": 6,
+    "quality_hold_hours": 168,
+    "cooldown": {
+      "overloaded_base_min": 15,
+      "overloaded_max_min": 360,
+      "rate_limited_min": 10,
+      "rolling_probe_min": 60,
+      "auth_hours": 24,
+      "gone_hours": 24
+    },
+    "max_consecutive_task_failures": 3,
+    "queued_stale_minutes": 100
+  },
+  "providers": {
+    "google_ai_studio": { "reset": "pacific_midnight" },
+    "groq": { "reset": "rolling_24h" },
+    "openrouter": {
+      "reset": "utc_midnight",
+      "daily_requests": 40,
+      "_why": "खाते की सीमा 50 अनुरोध/दिन है और मालिक की दो और keys उसी में से लेती हैं; 10 उनके लिए छोड़े गए"
+    }
+  },
+  "models": {
+    "google_ai_studio:gemini-3.5-flash-lite": {
+      "family": "google",
+      "chunk": 18,
+      "daily_requests": 300,
+      "_budget_why": "console की सीमा 500 अनुरोध/दिन; यही key मालिक के दूसरे काम में भी लगी है",
+      "draft": { "qualified": true, "tier": 1, "evidence": "bake-off run 44045798916: 18/18 बने, 18 s; qwen-जज: 17 OK, 1 CONTRADICTED" },
+      "judge": { "qualified": true, "catch_rate": 0.938, "items": 16, "measured": "2026-11-17", "evidence": "जज-परीक्षा run 44045781954: 15/16 (पहले 17/18 और 15/18)" }
+    },
+    "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
+      "family": "nvidia",
+      "chunk": 9,
+      "draft": { "qualified": true, "tier": 1, "evidence": "bake-off run 44045798916: 18/18 बने, 54 s, 2 अनुरोध; Flash-Lite-जज: 11 OK, 6 MINOR, 1 CONTRADICTED" },
+      "judge": { "qualified": false, "evidence": "जज-परीक्षा run 44045781954: 0 पर फ़ैसला (उत्तर tokens की सीमा पर कटे); नई सीमा के साथ नापा नहीं गया" }
+    },
+    "openrouter:baidu/ernie-5.5-flash-preview:free": {
+      "family": "baidu",
+      "chunk": 9,
+      "draft": { "qualified": false, "evidence": "bake-off run 44045798916: 9/18 (JSON-विफलताएँ, फिर दिन की सीमा)" },
+      "judge": { "qualified": true, "catch_rate": 1.0, "items": 16, "measured": "2026-11-17", "evidence": "जज-परीक्षा run 44045781954: 16/16, 70 s, 4 अनुरोध। एक ही run; preview-मॉडल" }
+    },
+    "groq:openai/gpt-oss-120b": {
+      "family": "openai",
+      "chunk": 6,
+      "daily_requests": 800,
+      "daily_tokens": 180000,
+      "draft": { "qualified": true, "tier": 2, "evidence": "v0.4 run 44028350640: Flash-Lite-जज ने 18 में से 3 मंत्र CONTRADICTED कहे" },
+      "judge": { "qualified": false, "evidence": "canary-परीक्षा में नापा नहीं गया" }
+    },
+    "groq:qwen/qwen3.8-27b": {
+      "family": "alibaba-qwen",
+      "chunk": 6,
+      "daily_requests": 800,
+      "draft": { "qualified": true, "tier": 2, "evidence": "v0.4 run 44028350640: Flash-Lite-जज ने 18 में से 6 मंत्र CONTRADICTED कहे; 1,000 output-tokens/मिनट" },
+      "judge": { "qualified": false, "catch_rate": 0.833, "items": 18, "measured": "2026-11-17", "evidence": "जज-परीक्षा: 15/18, सीमा 0.85 से नीचे; आधार की ग़लतियों पर कोई आपत्ति नहीं (नरम जज)" }
+    },
+    "google_ai_studio:gemma-4-31b-it": {
+      "family": "google",
+      "chunk": 18,
+      "daily_requests": 2000,
+      "draft": { "qualified": true, "tier": 2, "evidence": "batch-माप run 44035253282: आकार 30 पर 119/119, पर 8.3 s/श्लोक और 503; गुणवत्ता का माप नहीं" },
+      "judge": { "qualified": false, "evidence": "canary-परीक्षा में नापा नहीं गया" }
+    }
+  },
+  "roles": {
+    "drafters": [
+      "google_ai_studio:gemini-3.5-flash-lite",
+      "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+      "groq:openai/gpt-oss-120b",
+      "groq:qwen/qwen3.8-27b",
+      "google_ai_studio:gemma-4-31b-it"
+    ],
+    "judges": [
+      "openrouter:baidu/ernie-5.5-flash-preview:free",
+      "google_ai_studio:gemini-3.5-flash-lite"
+    ],
+    "judge_candidates": [
+      "openrouter:baidu/ernie-5.5-flash-preview:free",
+      "google_ai_studio:gemini-3.5-flash-lite",
+      "groq:openai/gpt-oss-120b",
+      "groq:qwen/qwen3.8-27b",
+      "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free"
+    ]
+  }
+}

@@ -13,7 +13,7 @@ export type JobStatus = (typeof JOB_STATUSES)[number];
 
 export const STEPS = [
   "acquire", "normalise", "witness_diff", "text_lock", "analyse", "draft_a", "draft_b", "draft_c",
-  "judge", "revise", "checks", "science", "export", "noop", "pilot_e2e",
+  "judge", "revise", "checks", "science", "export", "noop", "pilot_e2e", "judge_test", "conduct",
 ] as const;
 export type Step = (typeof STEPS)[number];
 
@@ -21,7 +21,19 @@ export type Step = (typeof STEPS)[number];
 export const ENQUEUEABLE: Record<string, { lane: string; promptHash: string; model: string }> = {
   noop: { lane: "selftest", promptHash: "none", model: "none" },
   pilot_e2e: { lane: "pilot", promptHash: "pilot-e2e-0.1", model: "cascade" },
+  // जज-परीक्षा उसी lane में: मॉडलों का quota साझा है, इसलिए मॉडल-काम एक समय में एक
+  judge_test: { lane: "pilot", promptHash: "judge-test-0.1", model: "roster" },
+  // स्वार्म का संचालक (tools/swarm/conductor.py): कतार से अगला काम चुनता है; कोई मॉडल-अनुरोध नहीं
+  conduct: { lane: "conduct", promptHash: "conduct-0.1", model: "none" },
 };
+
+/** स्वार्म की घड़ी: इतने सेकंड पर संचालक का एक चक्कर। */
+export const CONDUCT_EVERY_S = 1200;
+
+/** संचालक के चक्कर का batch_id समय-खाँचा है: उसी खाँचे में दोबारा डालना no-op (job_key वही)। */
+export function conductBatch(nowIso: string, everyS: number = CONDUCT_EVERY_S): string {
+  return `slot-${Math.floor(Date.parse(nowIso) / (everyS * 1000))}`;
+}
 
 /** ग्रंथ एक बार में केवल अगली अवस्था में जा सकता है; पीछे कभी नहीं। */
 export function validateBookTransition(from: BookState, to: BookState): boolean {
@@ -67,6 +79,7 @@ export interface Limits {
   switchAt: number; // provider_budget.switch_at (0.90)
   sleepAt: number; // provider_budget.sleep_at (1.00)
   runningTimeoutS: number; // इतनी देर से 'running' हो तो विफल मानें
+  stepTimeoutS: Record<string, number>; // step की अपनी सीमा (Actions job की timeout-minutes + गुंजाइश); न हो तो runningTimeoutS
   maxDispatchPerTick: number;
   retryBackoffS: number; // 'failed' में पड़ा job इतनी देर बाद ही दोबारा देखा जाए
 }
@@ -76,6 +89,8 @@ export const DEFAULT_LIMITS: Limits = {
   switchAt: 0.9,
   sleepAt: 1.0,
   runningTimeoutS: 7 * 3600, // Actions job की 6 घंटे की सीमा + गुंजाइश
+  // foreman-job 45 मिनट पर कटता है; callback न लौटे तो lane घंटों बंद न रहे
+  stepTimeoutS: { conduct: 1200, noop: 1200, pilot_e2e: 5400, judge_test: 5400 },
   maxDispatchPerTick: 5,
   retryBackoffS: 600,
 };
@@ -118,7 +133,7 @@ export function planTick(
   for (const j of jobs) {
     if (j.status !== "running") continue;
     const started = j.started_at ? Date.parse(j.started_at) : now;
-    if ((now - started) / 1000 > lim.runningTimeoutS) {
+    if ((now - started) / 1000 > (lim.stepTimeoutS[j.step] ?? lim.runningTimeoutS)) {
       actions.push({ kind: "timeout", job: j, requeue: j.attempts < lim.maxRetryPerStep + 1 });
     } else {
       busyLanes.add(j.lane);

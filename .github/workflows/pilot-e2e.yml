@@ -46,6 +46,10 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 75
+    env:
+      # स्वार्म की सेहत-बही: हाथ के runs का ख़र्च भी दिन के हिस्से में गिना जाता है, और रुके मॉडल नहीं बुलाए जाते
+      SWARM_STATE_DIR: ${{ github.workspace }}/.cache/swarm-state
+      STATE_TOKEN: ${{ inputs.mock != 'yes' && secrets.FOREMAN_DISPATCH_TOKEN || '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -56,6 +60,9 @@ jobs:
           cache: pip
           cache-dependency-path: checks/requirements.txt
       - run: pip install -q -r checks/requirements.txt
+      - name: स्वार्म की हालत लाएँ
+        if: inputs.mode == 'pipeline' || inputs.mode == 'judgetest'
+        run: bash tools/swarm/state_sync.sh pull
       - name: पूरी कड़ी
         if: inputs.mode == 'pipeline'
         env:
@@ -106,6 +113,11 @@ jobs:
           set -o pipefail
           python -m tools.pilot.batch_ab --out /tmp/pilot --models "$MODELS" | tee /tmp/batch_ab_summary.json
           { echo '```json'; cat /tmp/batch_ab_summary.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: स्वार्म की हालत लौटाएँ
+        if: always() && (inputs.mode == 'pipeline' || inputs.mode == 'judgetest')
+        run: |
+          git checkout -q --detach 2>/dev/null || true
+          bash tools/swarm/state_sync.sh push "manual ${{ inputs.mode }} run ${GITHUB_RUN_ID}" || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:

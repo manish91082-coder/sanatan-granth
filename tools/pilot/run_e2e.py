@@ -31,9 +31,12 @@ sys.path.insert(0, str(REPO / "tools" / "witness"))
 from checks import d_checks  # noqa: E402
 from checks.common import canonical_segments_hash  # noqa: E402
 from checks.run_all import report as checks_report, run as checks_run  # noqa: E402
+from tools.pilot import llm  # noqa: E402
+from tools.pilot.canary import pick as canary_pick  # noqa: E402
 from tools.pilot.llm import Model, Usage, available, chat_json, parse_model  # noqa: E402
+from tools.swarm import health  # noqa: E402
 
-PIPELINE_VERSION = "pilot-e2e-0.6"
+PIPELINE_VERSION = "pilot-e2e-0.7"
 OK_LABELS = {"OK", "MINOR"}
 LABELS = {"OK", "MINOR", "CONTRADICTED", "UNSURE"}
 EXPECTED_RED = {"R2": "पाठ lock नहीं है (स्रोत का फ़ैसला बाक़ी)", "R6": "मूल-पाठ का वाहक गवाह CC BY-SA है; प्रदर्शन-योग्य स्रोत तय नहीं"}
@@ -97,13 +100,15 @@ JUDGE_ONE_SYSTEM = (
 #   जज: ERNIE 5.5 Flash ने जज-परीक्षा में 16/16 डाली गई ग़लतियाँ पकड़ीं (Flash-Lite 15/16)। वह न चले तो qwen, फिर gpt-oss।
 #   OpenRouter (Nemotron, ERNIE) पर दिन के 50 अनुरोध हैं: एक run में llm.py उसे PILOT_OPENROUTER_MAX_CALLS (24) पर रोक देता है।
 #   यह रचना असली मॉडलों पर पूरी कड़ी में अभी नहीं चली (17 नवंबर को OpenRouter का दिन का हिस्सा परीक्षणों में चला गया)।
-DEFAULT_MODELS = {
-    "draft_a": ["google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it"],
-    "draft_b": ["openrouter:nvidia/nemotron-3-ultra-550b-a55b:free", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"],
-    "draft_c": ["groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b", "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free"],
-    "judges": ["openrouter:baidu/ernie-5.5-flash-preview:free", "groq:qwen/qwen3.8-27b", "groq:openai/gpt-oss-120b",
-               "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free", "google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it"],
-}
+# 17 नवंबर 2026 (v0.7): मॉडलों की सूचियाँ अब यहाँ नहीं हैं। कौन-सा मॉडल किस भूमिका के योग्य है, यह policy/model_roster.json
+#   (main, PR से) बताता है; अभी कौन चल रहा है, यह सेहत-बही (state branch); और हर run की रचना tools/swarm/health.py का plan()
+#   चुनता है: तीन अलग परिवार, योग्य जज, कम से कम एक पहले दर्जे का ड्राफ़्टर। कोई योग्य रचना न बने तो run रुकता है (exit 75) और
+#   अगला समय बताता है; अयोग्य मॉडल पर कभी नहीं जाता। हर जज को असली फ़ैसले से पहले canary के कुछ मंत्र मिलते हैं (जानबूझकर बिगाड़ा
+#   अनुवाद): न पकड़े तो उस run में वह जज नहीं रहता और बही में उस पर गुणवत्ता की रोक लगती है। अधूरे run के ड्राफ़्ट और पहले दौर के
+#   फ़ैसले state branch में बचते हैं, ताकि quota लौटने पर वही काम दोबारा न हो।
+#   हाथ के परीक्षणों के लिए PILOT_DRAFT_A / _B / _C / PILOT_JUDGES अब भी सूची बदल सकते हैं (रिपोर्ट में "env-override" लिखा जाता है)।
+ROLE_ENV = (("draft_a", "PILOT_DRAFT_A"), ("draft_b", "PILOT_DRAFT_B"), ("draft_c", "PILOT_DRAFT_C"), ("judges", "PILOT_JUDGES"))
+EXIT_BLOCKED = 75  # बाहर की रुकावट (quota, बंद मॉडल, कोई योग्य रचना नहीं): विफलता नहीं; संचालक बाद में दोबारा चलाएगा
 
 
 def now_iso() -> str:
@@ -168,15 +173,61 @@ def print_evidence(text_id: str) -> dict:
 
 
 # ------------------------------------------------------------------ मॉडल
-def pick_models(mock: bool) -> dict:
+def model_from_ref(ref: str) -> Model:
+    provider, _, name = ref.partition(":")
+    return Model("mock", name, name) if provider == "mock" else parse_model(ref)
+
+
+class Ckpt:
+    """अधूरे run का बचा हुआ काम (ड्राफ़्ट और पहले दौर के फ़ैसले), ताकि quota लौटने पर वही काम दोबारा न करना पड़े।
+    फ़ाइल state branch में रहती है। कुंजी = ग्रंथ, pipeline_version और स्रोत का hash: इनमें से कुछ भी बदले तो पुराना काम नहीं लिया जाता।"""
+
+    def __init__(self, path: Path | None, key: dict) -> None:
+        self.path, self.key, self.data, self.used = path, key, {}, []
+        if path and path.exists():
+            try:
+                d = json.loads(path.read_text(encoding="utf-8"))
+                if d.get("key") == key and isinstance(d.get("stages"), dict):
+                    self.data = d["stages"]
+            except Exception:  # noqa: BLE001  टूटी फ़ाइल: बिना बचे काम के शुरू
+                self.data = {}
+
+    def get(self, stage: str) -> dict | None:
+        return self.data.get(stage)
+
+    def put(self, stage: str, model_ref: str, items: dict, extra: dict | None = None) -> None:
+        if not self.path:
+            return
+        self.data[stage] = {"model": model_ref, "items": items, "saved_at": now_iso(), **(extra or {})}
+        write_json(self.path, {"key": self.key, "stages": self.data})
+
+    def clear(self) -> None:
+        self.data = {}
+        if self.path and self.path.exists():
+            self.path.unlink()
+
+
+def pairs_sha(pairs: dict[str, tuple[dict, dict]]) -> str:
+    blob = json.dumps({i: [[x["en"], x["hi"]], [y["en"], y["hi"]]] for i, (x, y) in sorted(pairs.items())}, ensure_ascii=False)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def _can_call(m: Model, dead: set[str]) -> bool:
+    return m.ref not in dead and m.ref not in llm.BLOCKED and (m.provider == "mock" or available(m))
+
+
+def pick_models(mock: bool, lists: dict | None = None) -> dict:
     if mock:
         return {"draft_a": [Model("mock", "mock-a", "mock-a")], "draft_b": [Model("mock", "mock-b", "mock-b")],
                 "draft_c": [Model("mock", "mock-c", "mock-c")], "judges": [Model("mock", "mock-j", "mock-j"), Model("mock", "mock-k", "mock-k"),
                                                                              Model("mock", "mock-a", "mock-a"), Model("mock", "mock-b", "mock-b"),
                                                                              Model("mock", "mock-c", "mock-c")], "unavailable": []}
-    out: dict = {"unavailable": []}
-    for role, env in (("draft_a", "PILOT_DRAFT_A"), ("draft_b", "PILOT_DRAFT_B"), ("draft_c", "PILOT_DRAFT_C"), ("judges", "PILOT_JUDGES")):
-        refs = [r.strip() for r in (os.environ.get(env) or "").split(",") if r.strip()] or DEFAULT_MODELS[role]
+    out: dict = {"unavailable": [], "source": "roster"}
+    for role, env in ROLE_ENV:
+        over = [r.strip() for r in (os.environ.get(env) or "").split(",") if r.strip()]
+        refs = over or (lists or {}).get(role) or []
+        if over:
+            out["source"] = "env-override"
         out[role] = []
         for r in refs:
             m = parse_model(r)
@@ -185,15 +236,28 @@ def pick_models(mock: bool) -> dict:
             else:
                 out["unavailable"].append(m.ref)
         if not out[role]:
-            raise SystemExit(f"{role}: किसी मॉडल की key env में नहीं है")
+            raise SystemExit(f"{role}: कोई मॉडल नहीं (roster की रचना नहीं बनी, या key env में नहीं है)")
     return out
 
 
 def draft_fb(log: "Log", agent: str, title: str, cands: list[Model], taken: set[str], dead: set[str], segs: dict[str, str], ids: list[str],
-             usage: Usage) -> tuple[Model | None, dict[str, dict], list[dict]]:
-    """सूची का पहला मॉडल जो आधे से ज़्यादा ids का ड्राफ़्ट दे और जिसका परिवार `taken` में न हो। जो उत्तर न दे वह `dead` में जाता है।"""
+             usage: Usage, ck: "Ckpt | None" = None) -> tuple[Model | None, dict[str, dict], list[dict]]:
+    """सूची का पहला मॉडल जो आधे से ज़्यादा ids का ड्राफ़्ट दे और जिसका परिवार `taken` में न हो। जो उत्तर न दे वह `dead` में जाता है।
+    पिछले अधूरे run का ड्राफ़्ट (ck) हो तो वही लिया जाता है; बचे ids वही मॉडल भरता है, अगर वह अभी चल रहा हो।"""
     best: tuple[Model | None, dict[str, dict]] = (None, {})
     tried: list[dict] = []
+    have = ck.get(agent) if ck else None
+    if have and have.get("items"):
+        m0 = model_from_ref(have["model"])
+        got = {i: v for i, v in have["items"].items() if i in ids}
+        if m0.family not in taken and len(got) * 2 > len(ids):
+            missing = [i for i in ids if i not in got]
+            if missing and _can_call(m0, dead):
+                got.update(log.run(agent, f"{title} · {m0.name} (बचे {len(missing)})", lambda: draft(m0, segs, missing, usage), usage, m0))
+            tried.append({"model": m0.ref, "drafted": len(got), "resumed": True})
+            ck.used.append(agent)
+            ck.put(agent, m0.ref, got)
+            return m0, got, tried
     for m in cands:
         if m.family in taken or m.ref in dead:
             continue
@@ -205,21 +269,44 @@ def draft_fb(log: "Log", agent: str, title: str, cands: list[Model], taken: set[
             best = (m, d)
         if len(d) * 2 > len(ids):
             break
+    if ck and best[0] is not None and len(best[1]) * 2 > len(ids):
+        ck.put(agent, best[0].ref, best[1])
     return best[0], best[1], tried
 
 
 def judge_fb(log: "Log", title: str, pool: list[Model], exclude: set[str], dead: set[str], segs: dict[str, str], pairs: dict[str, tuple[dict, dict]],
-             usage: Usage) -> tuple[Model | None, dict[str, dict], list[dict]]:
-    """जज-सूची का पहला मॉडल जो `exclude` परिवारों से बाहर हो और आधे से ज़्यादा जोड़ों पर फ़ैसला दे।"""
+             usage: Usage, gate=None, ck: "Ckpt | None" = None, stage: str | None = None) -> tuple[Model | None, dict[str, dict], list[dict]]:
+    """जज-सूची का पहला मॉडल जो `exclude` परिवारों से बाहर हो और आधे से ज़्यादा जोड़ों पर फ़ैसला दे।
+    `gate(m)`: असली फ़ैसले से पहले जज की canary-जाँच; विफल जज इस run में नहीं लिया जाता।
+    `ck` + `stage`: पिछले अधूरे run के फ़ैसले, अगर ड्राफ़्ट-जोड़े अक्षरशः वही हों।"""
     tried: list[dict] = []
+    sha = pairs_sha(pairs) if ck and stage else None
+    have = ck.get(stage) if ck and stage else None
+    if have and have.get("pairs_sha") == sha and have.get("items"):
+        m0 = model_from_ref(have["model"])
+        got = {i: v for i, v in have["items"].items() if i in pairs}
+        if m0.family not in exclude and len(got) * 2 > len(pairs):
+            missing = {i: pairs[i] for i in pairs if i not in got}
+            if missing and _can_call(m0, dead):
+                got.update(log.run("judge", f"{title} · {m0.name} (बचे {len(missing)})", lambda: judge(m0, segs, missing, usage), usage, m0))
+            tried.append({"model": m0.ref, "judged": len(got), "resumed": True})
+            ck.used.append(stage)
+            ck.put(stage, m0.ref, got, {"pairs_sha": sha})
+            return m0, got, tried
     for m in pool:
         if m.family in exclude or m.ref in dead:
+            continue
+        if gate and not gate(m):
+            tried.append({"model": m.ref, "judged": 0, "canary": "विफल"})
+            dead.add(m.ref)
             continue
         v = log.run("judge", f"{title} · {m.name}", lambda m=m: judge(m, segs, pairs, usage), usage, m)
         tried.append({"model": m.ref, "judged": len(v)})
         if not v:
             dead.add(m.ref)
         if len(v) * 2 > len(pairs):
+            if ck and stage:
+                ck.put(stage, m.ref, v, {"pairs_sha": sha})
             return m, v, tried
     return None, {}, tried
 
@@ -231,8 +318,18 @@ def choose_judge(judges: list[Model], exclude: set[str]) -> Model:
     raise RuntimeError(f"इन परिवारों से अलग कोई जज नहीं: {sorted(exclude)}")
 
 
+_CHUNK: dict[str, int] = {}
+
+
 def chunk_size(model: Model) -> int:
-    return {"google_ai_studio": 18, "groq": 6, "cloudflare": 6, "openrouter": 9}.get(model.provider, 18)
+    """एक अनुरोध में कितने खंड: roster में मॉडल का `chunk`, वरना provider का सामान्य आकार।"""
+    if not _CHUNK:
+        try:
+            _CHUNK.update({r: int(c["chunk"]) for r, c in health.load_roster().get("models", {}).items() if c.get("chunk")})
+        except Exception:  # noqa: BLE001
+            pass
+        _CHUNK.setdefault("_loaded", 0)
+    return _CHUNK.get(model.ref) or {"google_ai_studio": 18, "groq": 6, "cloudflare": 6, "openrouter": 9}.get(model.provider, 18)
 
 
 def ask_items(model: Model, system: str, make_user, ids: list[str], usage: Usage, accept, est_out_per_id: int, mock_items=None) -> dict[str, dict]:
@@ -438,20 +535,98 @@ def main() -> int:
     log.run("aligner", "ID और गिनती (गवाह के चिह्नों से)", align)
     evidence = print_evidence(a.text)
 
-    models = log.run("foreman_code", "मॉडलों की सूचियाँ", lambda: pick_models(a.mock))
+    # ---- स्वार्म: roster (किसे ले सकते हैं) + सेहत-बही (अभी कौन चल रहा है) → इस run की रचना
+    sd = health.state_dir()
+    roster = health.load_roster()
+    rules = roster.get("rules", {})
+    H = health.load(sd)
+    task = os.environ.get("SWARM_TASK") or a.batch_id.split(".")[0]
+    ck = Ckpt((sd / "work" / f"{task}.json") if sd else None,
+              {"text": a.text, "pipeline_version": PIPELINE_VERSION, "source_sha256": src_meta["sha256"], "mock": a.mock})
+    plan_rec: dict | None = None
+    t_now = health.now_utc()
+
+    def blocked_exit(reason: str, until: str | None, detail: dict) -> int:
+        rep = {"status": "blocked", "generated_at": now_iso(), "text_id": a.text, "batch_id": a.batch_id, "task": task, "pipeline_version": PIPELINE_VERSION,
+               "reason": reason, "blocked_until": until, "detail": detail, "run": os.environ.get("GITHUB_RUN_ID")}
+        write_json(out / "report" / "blocked.json", rep)
+        print(json.dumps(rep, ensure_ascii=False))
+        return EXIT_BLOCKED
+
+    if not a.mock and not all(os.environ.get(env) for _, env in ROLE_ENV):
+        fixed = {st: ck.get(st)["model"] for st in ("draft_a", "draft_b") if ck.get(st)}
+        if ck.get("judge1"):
+            fixed["judge"] = ck.get("judge1")["model"]
+        plan_rec = health.plan(H, roster, t_now, n_segments=len(ids), fixed=fixed)
+        if not plan_rec["feasible"] and fixed:
+            nt = health.parse_iso(plan_rec.get("next_try"))
+            if nt is None or nt > t_now + dt.timedelta(hours=24):
+                # बचे हुए काम वाली रचना एक दिन के भीतर नहीं बनेगी: पुराना काम छोड़कर नई रचना
+                ck.clear()
+                plan_rec = health.plan(H, roster, t_now, n_segments=len(ids))
+        if not plan_rec["feasible"]:
+            return blocked_exit(plan_rec["reason"], plan_rec.get("next_try"), {"why": plan_rec.get("why"), "would_be": plan_rec.get("would_be")})
+        llm.BLOCKED.update(health.blocked_refs(H, t_now))
+        llm.BUDGET.update(health.run_budgets(H, roster, t_now))
+
+    models = log.run("foreman_code", "मॉडलों की सूचियाँ", lambda: pick_models(a.mock, plan_rec["lists"] if plan_rec else None))
     dead: set[str] = set()   # इस run में जो मॉडल उत्तर नहीं दे रहे
     tried: dict[str, list] = {}
 
-    uA, uB, uC, uJ1, uJ2, uP = Usage(), Usage(), Usage(), Usage(), Usage(), Usage()
-    A, dA, tried["draft_a"] = draft_fb(log, "draft_a", "ड्राफ़्ट A", models["draft_a"], set(), dead, segs, ids, uA)
-    B, dB, tried["draft_b"] = draft_fb(log, "draft_b", "ड्राफ़्ट B", models["draft_b"], {A.family} if A else set(), dead, segs, ids, uB)
-    if A is None or B is None:
-        raise SystemExit("ड्राफ़्ट A या B के लिए कोई मॉडल उपलब्ध नहीं")
+    def give_up(reason: str) -> int:
+        """ड्राफ़्ट नहीं बना: बाहर की रुकावट हो तो run रुकता है और संचालक तुरंत नई रचना चुनता है (बही अब जानती है कौन रुका);
+        वरना यह असली विफलता है।"""
+        if a.mock:
+            raise SystemExit(reason)
+        held0 = health.absorb(H, llm.STATS, roster)
+        health.save(sd, H)
+        if any(x["reason"] in health.BLOCKING_KINDS for x in held0):
+            return blocked_exit(reason, now_iso(), {"held": held0, "tried": tried, "replan": True})
+        print(json.dumps({"status": "failed", "reason": reason, "tried": tried}, ensure_ascii=False))
+        return 1
+
+    uA, uB, uC, uJ1, uJ2, uP, uCan = Usage(), Usage(), Usage(), Usage(), Usage(), Usage(), Usage()
+    A, dA, tried["draft_a"] = draft_fb(log, "draft_a", "ड्राफ़्ट A", models["draft_a"], set(), dead, segs, ids, uA, ck)
+    if A is None or len(dA) * 2 <= len(ids):
+        return give_up("ड्राफ़्ट A नहीं बना (आधे से कम खंड)")
+    B, dB, tried["draft_b"] = draft_fb(log, "draft_b", "ड्राफ़्ट B", models["draft_b"], {A.family}, dead, segs, ids, uB, ck)
+    if B is None or len(dB) * 2 <= len(ids):
+        return give_up("ड्राफ़्ट B नहीं बना (आधे से कम खंड)")
     C: Model | None = None
+
+    # ---- जज की चलती जाँच (canary): असली फ़ैसले से पहले हर जज को ड्राफ़्ट A के कुछ मंत्र और उनकी जानबूझकर बिगाड़ी नक़ल मिलती है
+    canary_log: dict[str, dict] = {}
+    quality_fail: list[str] = []
+
+    def judge_gate(m: Model) -> bool:
+        if m.ref in canary_log:
+            return canary_log[m.ref]["passed"]
+        if m.provider == "mock":
+            canary_log[m.ref] = {"passed": True, "note": "mock: लागू नहीं"}
+            return True
+        items = canary_pick(dA, [i for i in ids if i in dA], int(rules.get("inline_canaries", 4)))
+        if len(items) < 2:
+            canary_log[m.ref] = {"passed": True, "items": len(items), "note": "बिगाड़ने का कोई नियम इन ड्राफ़्टों पर लागू नहीं हुआ"}
+            return True
+        need = min(int(rules.get("inline_canary_min_caught", 3)), len(items) - 1)
+        cp = {i: (dA[i], {"en": c["en"], "hi": c["hi"]}) for i, c in items.items()}
+        try:
+            v = log.run("judge_canary", f"जज की चलती जाँच · {m.name}", lambda: judge(m, segs, cp, uCan), uCan, m)
+        except Exception:  # noqa: BLE001
+            v = {}
+        caught = sum(1 for x in v.values() if x["b_label"] == "CONTRADICTED")
+        rec = {"passed": caught >= need, "items": len(items), "answered": len(v), "caught": caught, "need": need, "rules": sorted({c["rule"] for c in items.values()})}
+        if not rec["passed"] and len(v) >= need:
+            # उत्तर आए, पर बिगाड़ी नक़ल नहीं पकड़ी: गुणवत्ता की रोक। उत्तर ही न आएँ तो वह उपलब्धता का मामला है (बही उसे अलग गिनती है)।
+            quality_fail.append(m.ref)
+            rec["held"] = "quality"
+        canary_log[m.ref] = rec
+        return rec["passed"]
 
     both = [i for i in ids if i in dA and i in dB]
     pairs1 = {i: (dA[i], dB[i]) for i in both}
-    J1m, j1, tried["judge1"] = judge_fb(log, "जज, पहला दौर", models["judges"], {A.family, B.family}, dead, segs, pairs1, uJ1) if both else (None, {}, [])
+    J1m, j1, tried["judge1"] = (judge_fb(log, "जज, पहला दौर", models["judges"], {A.family, B.family}, dead, segs, pairs1, uJ1, judge_gate, ck, "judge1")
+                                if both else (None, {}, []))
 
     # जज की स्थिरता का माप: वही जोड़े (1) उसी जज को उलटे क्रम में, (2) एक और परिवार के जज को। फ़ैसला इससे नहीं बदलता।
     probe: dict = {}
@@ -462,7 +637,7 @@ def main() -> int:
         except Exception as e:  # noqa: BLE001
             probe["same_judge_flipped"] = {"error": type(e).__name__}
         try:
-            Jalt, j1_alt, tried["judge_probe"] = judge_fb(log, "स्थिरता: दूसरे परिवार का जज", models["judges"], {A.family, B.family, J1m.family}, dead, segs, pairs1, uP)
+            Jalt, j1_alt, tried["judge_probe"] = judge_fb(log, "स्थिरता: दूसरे परिवार का जज", models["judges"], {A.family, B.family, J1m.family}, dead, segs, pairs1, uP, judge_gate)
             probe["other_family_judge"] = {"model": Jalt.ref, "family": Jalt.family, **stability(j1, j1_alt)} if Jalt else {"error": "दूसरे परिवार का कोई जज उत्तर नहीं दे रहा"}
         except Exception as e:  # noqa: BLE001
             probe["other_family_judge"] = {"error": f"{type(e).__name__}: {str(e)[:120]}"}
@@ -485,7 +660,7 @@ def main() -> int:
     judge2_used: list[str] = []
     j2_family: dict[str, str] = {}
     if cascade:
-        C, dC, tried["draft_c"] = draft_fb(log, "draft_c", "ड्राफ़्ट C (केवल असहमति वाले)", models["draft_c"], {A.family, B.family}, dead, segs, cascade, uC)
+        C, dC, tried["draft_c"] = draft_fb(log, "draft_c", "ड्राफ़्ट C (केवल असहमति वाले)", models["draft_c"], {A.family, B.family}, dead, segs, cascade, uC, ck)
         groups: dict[str, list[str]] = {}
         incumbent: dict[str, tuple[dict, Model]] = {}
         for i in cascade:
@@ -500,7 +675,7 @@ def main() -> int:
                 groups.setdefault(incumbent[i][1].family, []).append(i)
         for fam, gids in groups.items():
             J2m, res, t2 = judge_fb(log, f"जज, दूसरा दौर ({fam} बनाम {C.family})", models["judges"], {fam, C.family}, dead, segs,
-                                    {i: (incumbent[i][0], dC[i]) for i in gids}, uJ2)
+                                    {i: (incumbent[i][0], dC[i]) for i in gids}, uJ2, judge_gate)
             tried.setdefault("judge2", []).extend(t2)
             if J2m:
                 judge2_used.append(J2m.ref)
@@ -580,9 +755,32 @@ def main() -> int:
             status = "failed"
             problems.append(f"अनपेक्षित लाल जाँचें: {unexpected}")
 
+    # ---- स्वार्म: इस run का हिसाब बही में; रुकावट बाहर की हो तो run "रुका" है, "विफल" नहीं
+    held: list[dict] = []
+    blocked_until: str | None = None
+    if not a.mock:
+        held = health.absorb(H, llm.STATS, roster)
+        for r in quality_fail:
+            health.hold_quality(H, roster, r, "run की canary-जाँच में बिगाड़ी नक़ल नहीं पकड़ी")
+            held.append({"model": r, "reason": "quality", "until": H["models"][r].get("cooldown_until")})
+        health.save(sd, H)
+        outside = [x for x in held if x["reason"] in health.BLOCKING_KINDS or x["reason"] == "quality"]
+        if status == "failed" and outside:
+            # बाहर की रुकावट: run "रुका" है। समय "अभी" इसलिए कि संचालक तुरंत नई रचना चुने (बही अब जानती है कौन रुका);
+            # कोई रचना न बने तो वही अगला समय लिखेगा। बचा काम (ड्राफ़्ट, पहले दौर के फ़ैसले) state में है।
+            status = "blocked"
+            blocked_until = now_iso()
+            write_json(out / "report" / "blocked.json", {
+                "status": "blocked", "generated_at": now_iso(), "text_id": a.text, "batch_id": a.batch_id, "task": task, "pipeline_version": PIPELINE_VERSION,
+                "reason": "run के बीच मॉडल रुक गए; बचा काम state में है", "blocked_until": blocked_until,
+                "detail": {"held": held, "problems": problems, "replan": True}, "run": os.environ.get("GITHUB_RUN_ID")})
+    if status == "ok":
+        ck.clear()
+
     n = len(ids)
     first_pass = sum(1 for i in ids if record[i].get("path") == "पहले दौर में सहमति")
-    usage_all = {"draft_a": uA.as_dict(), "draft_b": uB.as_dict(), "draft_c": uC.as_dict(), "judge1": uJ1.as_dict(), "judge2": uJ2.as_dict(), "judge_probe": uP.as_dict()}
+    usage_all = {"draft_a": uA.as_dict(), "draft_b": uB.as_dict(), "draft_c": uC.as_dict(), "judge1": uJ1.as_dict(), "judge2": uJ2.as_dict(),
+                 "judge_probe": uP.as_dict(), "judge_canary": uCan.as_dict()}
     judged1 = [i for i in ids if j1.get(i)]
     metrics = {
         "generated_at": now_iso(), "text_id": a.text, "pipeline_version": PIPELINE_VERSION, "mock": a.mock, "status": status,
@@ -602,6 +800,10 @@ def main() -> int:
         "models": {"draft_a": A.ref, "draft_b": B.ref, "draft_c": C.ref if C else None, "judge1": J1m.ref if J1m else None, "judge2": sorted(set(judge2_used)),
                    "judge_pool": [m.ref for m in models["judges"]], "tried": tried, "not_responding": sorted(dead), "no_key": models.get("unavailable", [])},
         "families": {"draft_a": A.family, "draft_b": B.family, "draft_c": C.family if C else None, "judge1": J1m.family if J1m else None},
+        "swarm": {"task": task, "model_source": models.get("source", "mock"), "roster_version": roster.get("version"),
+                  "plan": {k: plan_rec.get(k) for k in ("chosen", "families", "tier_sum", "why_not")} if plan_rec else None,
+                  "judge_canary": canary_log, "resumed_stages": ck.used, "held": held, "blocked_until": blocked_until,
+                  "state_dir": bool(sd)},
         "api": {"calls": sum(u["calls"] for u in usage_all.values()), "retries": sum(u["retries"] for u in usage_all.values()),
                 "http_429": sum(u["http_429"] for u in usage_all.values()), "prompt_tokens": sum(u["prompt_tokens"] for u in usage_all.values()),
                 "output_tokens": sum(u["output_tokens"] for u in usage_all.values()), "paced_s": round(sum(u["paced_s"] for u in usage_all.values()), 1),
@@ -626,8 +828,8 @@ def main() -> int:
                   "licence": "LicenseRef-sanatan-granth-draft", "note": "पूरा संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash (जज के प्रमाण में एक-दो शब्द आ सकते हैं)। अनुवाद परीक्षण के हैं।",
                   "mock": a.mock, "run": metrics["run"], "job_key": a.job_key},
         "segments": segments_out})
-    print(json.dumps({k: metrics[k] for k in ("status", "segments", "segments_done", "cascade", "judge_stability", "badges", "flags_by_code", "models", "api", "seconds_total", "gates", "problems")}, ensure_ascii=False))
-    return 0 if status == "ok" else 1
+    print(json.dumps({k: metrics[k] for k in ("status", "segments", "segments_done", "cascade", "judge_stability", "badges", "flags_by_code", "models", "swarm", "api", "seconds_total", "gates", "problems")}, ensure_ascii=False))
+    return 0 if status == "ok" else (EXIT_BLOCKED if status == "blocked" else 1)
 
 
 if __name__ == "__main__":
