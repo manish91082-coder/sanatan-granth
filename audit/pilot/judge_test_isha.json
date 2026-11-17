@@ -1,57 +1,114 @@
 {
-  "generated_at": "2026-11-17T05:54:14Z",
+  "generated_at": "2026-11-17T08:40:00Z",
   "text_id": "isha",
-  "run": "44026092918",
+  "run": "44045781954",
   "mock": false,
   "base_file": "audit/pilot/isha_e2e.json",
-  "base_sha256": "dae40f0c0c08f142095ac71a8d02fc9da581e7afa59178e2ad551d2386905598",
+  "base_sha256": "baad5e8a332edb4dcea7de592788cc7e38a8883f51013b5b2521dea75014bdb2",
   "carrier_sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
-  "items": 18,
+  "items": 16,
   "rules_used": [
     "नाम: Agni→Indra",
     "नाम: Pushan→Varuna",
     "निषेध हटाना",
     "विलोम: all beings→no beings",
     "विलोम: darkness→light",
+    "विलोम: golden→iron",
     "विलोम: immortality→death",
     "विलोम: knowledge→ignorance",
-    "विलोम: pervaded→abandoned",
+    "विलोम: remember→forget",
     "विलोम: swifter→slower"
   ],
   "no_key": [],
-  "seconds_total": 631.3,
+  "seconds_total": 1208.1,
   "results": [
+    {
+      "judge": "openrouter:baidu/ernie-5.5-flash-preview:free",
+      "family": "other-baidu",
+      "judged": 16,
+      "of": 16,
+      "caught": 16,
+      "catch_rate": 1.0,
+      "picked_base": 16,
+      "pick_rate": 1.0,
+      "passed_corrupt_as_ok": 0,
+      "passed_ids": [],
+      "said_same_meaning": 0,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 0,
+      "missed_ids": [],
+      "seconds": 70.0,
+      "usage": {
+        "calls": 4,
+        "retries": 2,
+        "http_429": 0,
+        "prompt_tokens": 9982,
+        "output_tokens": 14131,
+        "seconds": 70.05,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "judge": "openrouter:nvidia/nemotron-3.5-super-vl:free",
+      "family": "nvidia",
+      "judged": 7,
+      "of": 16,
+      "caught": 7,
+      "catch_rate": 1.0,
+      "picked_base": 7,
+      "pick_rate": 1.0,
+      "passed_corrupt_as_ok": 0,
+      "passed_ids": [],
+      "said_same_meaning": 0,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 0,
+      "missed_ids": [],
+      "seconds": 521.7,
+      "usage": {
+        "calls": 18,
+        "retries": 18,
+        "http_429": 0,
+        "prompt_tokens": 30722,
+        "output_tokens": 69235,
+        "seconds": 521.72,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "JSON parse नहीं हुआ",
+          "JSON parse नहीं हुआ",
+          "JSON parse नहीं हुआ"
+        ]
+      }
+    },
     {
       "judge": "google_ai_studio:gemini-3.5-flash-lite",
       "family": "google",
-      "judged": 18,
-      "of": 18,
+      "judged": 16,
+      "of": 16,
       "caught": 15,
-      "catch_rate": 0.833,
-      "picked_base": 18,
+      "catch_rate": 0.938,
+      "picked_base": 16,
       "pick_rate": 1.0,
-      "passed_corrupt_as_ok": 3,
-      "passed_ids": [
-        "isha:3",
-        "isha:10",
-        "isha:13"
-      ],
-      "said_same_meaning": 3,
+      "passed_corrupt_as_ok": 0,
+      "passed_ids": [],
+      "said_same_meaning": 0,
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 1,
       "missed_ids": [
-        "isha:3",
-        "isha:10",
-        "isha:13"
+        "isha:18"
       ],
-      "seconds": 28.6,
+      "seconds": 18.7,
       "usage": {
         "calls": 2,
         "retries": 1,
         "http_429": 0,
-        "prompt_tokens": 4278,
-        "output_tokens": 1710,
-        "seconds": 18.64,
+        "prompt_tokens": 3641,
+        "output_tokens": 1127,
+        "seconds": 8.72,
         "waited_s": 10.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -59,124 +116,23 @@
       }
     },
     {
-      "judge": "groq:qwen/qwen3.8-27b",
-      "family": "alibaba-qwen",
-      "judged": 18,
-      "of": 18,
-      "caught": 15,
-      "catch_rate": 0.833,
-      "picked_base": 17,
-      "pick_rate": 0.944,
-      "passed_corrupt_as_ok": 3,
-      "passed_ids": [
-        "isha:3",
-        "isha:15",
-        "isha:16"
-      ],
-      "said_same_meaning": 0,
-      "accepted_corrupt": 0,
-      "base_flagged_contradicted": 0,
-      "missed_ids": [
-        "isha:3",
-        "isha:15",
-        "isha:16"
-      ],
-      "seconds": 387.6,
+      "judge": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+      "family": "nvidia",
+      "judged": 0,
+      "seconds": 597.2,
       "usage": {
-        "calls": 13,
+        "calls": 10,
         "retries": 10,
-        "http_429": 9,
-        "prompt_tokens": 6190,
-        "output_tokens": 1889,
-        "seconds": 6.08,
-        "waited_s": 200.0,
-        "paced_s": 181.5,
-        "neurons": 0.0,
-        "errors": [
-          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1110. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor"
-        ]
-      }
-    },
-    {
-      "judge": "google_ai_studio:gemma-4-31b-it",
-      "family": "google",
-      "judged": 0,
-      "seconds": 211.5,
-      "usage": {
-        "calls": 2,
-        "retries": 1,
         "http_429": 0,
-        "prompt_tokens": 0,
-        "output_tokens": 0,
-        "seconds": 201.5,
-        "waited_s": 10.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": [
-          "HTTP 0: TimeoutError"
-        ]
-      }
-    },
-    {
-      "judge": "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
-      "family": "mistral",
-      "judged": 0,
-      "seconds": 1.0,
-      "usage": {
-        "calls": 2,
-        "retries": 0,
-        "http_429": 2,
-        "prompt_tokens": 0,
-        "output_tokens": 0,
-        "seconds": 0.96,
+        "prompt_tokens": 22385,
+        "output_tokens": 48000,
+        "seconds": 597.21,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
         "errors": [
-          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. ",
-          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. "
-        ]
-      }
-    },
-    {
-      "judge": "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-      "family": "meta",
-      "judged": 0,
-      "seconds": 0.6,
-      "usage": {
-        "calls": 2,
-        "retries": 0,
-        "http_429": 2,
-        "prompt_tokens": 0,
-        "output_tokens": 0,
-        "seconds": 0.57,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": [
-          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. ",
-          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. "
-        ]
-      }
-    },
-    {
-      "judge": "cloudflare:@cf/openai/gpt-oss-120b",
-      "family": "openai",
-      "judged": 0,
-      "seconds": 0.2,
-      "usage": {
-        "calls": 2,
-        "retries": 0,
-        "http_429": 2,
-        "prompt_tokens": 0,
-        "output_tokens": 0,
-        "seconds": 0.21,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": [
-          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. ",
-          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. "
+          "JSON parse नहीं हुआ",
+          "JSON parse नहीं हुआ"
         ]
       }
     }
@@ -186,13 +142,13 @@
       "rule": "निषेध हटाना",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -204,13 +160,13 @@
       "rule": "निषेध हटाना",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -222,31 +178,31 @@
       "rule": "विलोम: darkness→light",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
-          "corrupt": "MINOR",
+          "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
-          "base": "MINOR",
-          "corrupt": "OK",
-          "pick_base": false,
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
           "agree": false
         }
       }
     },
     "isha:4": {
       "rule": "विलोम: swifter→slower",
-      "hi_changed": true,
+      "hi_changed": false,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -258,13 +214,13 @@
       "rule": "निषेध हटाना",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -274,15 +230,15 @@
     },
     "isha:6": {
       "rule": "विलोम: all beings→no beings",
-      "hi_changed": true,
+      "hi_changed": false,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -294,31 +250,13 @@
       "rule": "विलोम: all beings→no beings",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
-          "base": "OK",
-          "corrupt": "CONTRADICTED",
-          "pick_base": true,
-          "agree": false
-        }
-      }
-    },
-    "isha:8": {
-      "rule": "विलोम: pervaded→abandoned",
-      "hi_changed": true,
-      "verdicts": {
         "google_ai_studio:gemini-3.5-flash-lite": {
-          "base": "OK",
-          "corrupt": "CONTRADICTED",
-          "pick_base": true,
-          "agree": false
-        },
-        "groq:qwen/qwen3.8-27b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -330,13 +268,13 @@
       "rule": "विलोम: knowledge→ignorance",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -345,16 +283,16 @@
       }
     },
     "isha:10": {
-      "rule": "निषेध हटाना",
+      "rule": "विलोम: knowledge→ignorance",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
-          "base": "OK",
-          "corrupt": "OK",
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
+          "base": "MINOR",
+          "corrupt": "CONTRADICTED",
           "pick_base": true,
-          "agree": true
+          "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -366,13 +304,19 @@
       "rule": "विलोम: immortality→death",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -384,31 +328,19 @@
       "rule": "विलोम: darkness→light",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
-        }
-      }
-    },
-    "isha:13": {
-      "rule": "निषेध हटाना",
-      "hi_changed": true,
-      "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
-          "base": "OK",
-          "corrupt": "OK",
-          "pick_base": true,
-          "agree": true
         },
-        "groq:qwen/qwen3.8-27b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -420,13 +352,19 @@
       "rule": "विलोम: immortality→death",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -435,18 +373,24 @@
       }
     },
     "isha:15": {
-      "rule": "नाम: Pushan→Varuna",
-      "hi_changed": true,
+      "rule": "विलोम: golden→iron",
+      "hi_changed": false,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
           "base": "OK",
-          "corrupt": "MINOR",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         }
@@ -456,31 +400,43 @@
       "rule": "नाम: Pushan→Varuna",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
           "base": "OK",
-          "corrupt": "MINOR",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         }
       }
     },
     "isha:17": {
-      "rule": "विलोम: immortality→death",
+      "rule": "विलोम: remember→forget",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:qwen/qwen3.8-27b": {
+        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -492,15 +448,21 @@
       "rule": "नाम: Agni→Indra",
       "hi_changed": true,
       "verdicts": {
-        "google_ai_studio:gemini-3.5-flash-lite": {
-          "base": "CONTRADICTED",
-          "corrupt": "CONTRADICTED",
-          "pick_base": true,
-          "agree": true
-        },
-        "groq:qwen/qwen3.8-27b": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "CONTRADICTED",
+          "corrupt": "UNSURE",
           "pick_base": true,
           "agree": false
         }
