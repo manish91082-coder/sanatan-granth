@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "digest": "e3cfcf56a2edc7c1",
+  "foreman_unreachable": 0,
+  "updated_at": "2026-11-17T11:00:21Z"
+ },
+ "gita-1-2-e2e": {
+  "enabled": false,
+  "fails": 0,
+  "seq": 0,
+  "status": "pending",
+  "step": "pilot_e2e"
+ },
+ "isha-e2e": {
+  "blocked_until": "2026-11-18T00:05:00Z",
+  "enabled": true,
+  "fails": 0,
+  "reason": "कोई योग्य रचना अभी नहीं बनती (अलग परिवार + योग्य जज + पहले दर्जे का ड्राफ़्टर)",
+  "seq": 0,
+  "status": "blocked",
+  "step": "pilot_e2e"
+ },
+ "judge-requal": {
+  "blocked_until": "2026-11-17T17:00:21Z",
+  "enabled": true,
+  "fails": 0,
+  "reason": "Foreman इस step को अभी नहीं जानता (नया deploy बाक़ी)",
+  "seq": 0,
+  "status": "blocked",
+  "step": "judge_test"
+ }
+}
