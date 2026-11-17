@@ -1,0 +1,36 @@
+{
+ "models": {
+  "google_ai_studio:gemini-3.5-flash-lite": {
+   "fails": 0,
+   "last_ok": "2026-11-17T10:57:40Z",
+   "output_tokens": 1804,
+   "requests": 2,
+   "window": "2026-11-17"
+  },
+  "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
+   "cooldown_until": "2026-11-18T00:05:00Z",
+   "fails": 1,
+   "last_error": "HTTP 429: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day: https://openrouter.ai/settings/credits?utm_source=api&utm_campaign=free_daily_limit",
+   "last_error_at": "2026-11-17T10:57:40Z",
+   "output_tokens": 0,
+   "reason": "daily_quota",
+   "requests": 2,
+   "window": "2026-11-17"
+  }
+ },
+ "providers": {
+  "google_ai_studio": {
+   "output_tokens": 1804,
+   "requests": 2,
+   "window": "2026-11-17"
+  },
+  "openrouter": {
+   "exhausted_until": "2026-11-18T00:05:00Z",
+   "output_tokens": 0,
+   "requests": 2,
+   "window": "2026-11-17"
+  }
+ },
+ "updated_at": "2026-11-17T10:57:40Z",
+ "version": 1
+}

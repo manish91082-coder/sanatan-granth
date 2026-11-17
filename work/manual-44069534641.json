@@ -1,0 +1,88 @@
+{
+  "key": {
+    "text": "isha",
+    "pipeline_version": "pilot-e2e-0.7",
+    "source_sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
+    "mock": false
+  },
+  "stages": {
+    "draft_a": {
+      "model": "google_ai_studio:gemini-3.5-flash-lite",
+      "items": {
+        "isha:1": {
+          "en": "Om. By the Lord should this whole world be clothed, whatever moves in the world. By that renounced, enjoy. Do not covet, whose is whose wealth?",
+          "hi": "ॐ। इस संसार में जो कुछ भी गतिमान है, वह सब ईश द्वारा आच्छादित होना चाहिए। उस त्यागे हुए द्वारा भोग करो। लोभ मत करो, धन किसका है?"
+        },
+        "isha:2": {
+          "en": "Doing indeed works here, one should wish to live a hundred years. Thus in you, not otherwise than this is, work is not tainted in man.",
+          "hi": "यहाँ कर्म करते हुए ही सौ वर्ष जीने की इच्छा करनी चाहिए। इस प्रकार आपमें, इसके अलावा अन्य प्रकार से नहीं है, मनुष्य में कर्म लिप्त नहीं होता है।"
+        },
+        "isha:3": {
+          "en": "Sunless are named those worlds, covered by blind darkness. To them they go after departing, who indeed are slayers of the self.",
+          "hi": "असुरों से संबंधित वे लोक हैं, जो अंधे अंधकार से ढके हुए हैं। जो लोग वास्तव में आत्मा की हत्या करने वाले हैं, वे मरने के बाद उन्हीं के पास जाते हैं।"
+        },
+        "isha:4": {
+          "en": "Unmoving, one, swifter than the mind; the gods did not reach it, it went first. Running, it outstrips others as they stand. In it Matarisvan sets water.",
+          "hi": "न हिलने वाला, एक, मन से भी तेज; देवताओं ने इसे नहीं पाया, यह पहले ही पहुँच गया। दौड़ते हुए यह दूसरों को पीछे छोड़ देता है जो खड़े रहते हैं। इसमें मातरिश्वा जल स्थापित करता है।"
+        },
+        "isha:5": {
+          "en": "That moves, that does not move; that is far, that is near. That is inside of all this, and that is outside of all this.",
+          "hi": "वह चलता है, वह नहीं चलता; वह दूर है, वह पास है। वह इस सबके भीतर है, और वह इस सबके बाहर है।"
+        },
+        "isha:6": {
+          "en": "And he who sees all beings in the self itself, and the self in all beings, does not shrink from that.",
+          "hi": "और जो व्यक्ति सभी भूतों को अपनी आत्मा में ही देखता है और सभी भूतों में आत्मा को देखता है, वह उससे घृणा नहीं करता है।"
+        },
+        "isha:7": {
+          "en": "In whom all beings have become the very self for the knower, then what delusion, what grief is there for one who sees oneness?",
+          "hi": "जानने वाले के लिए जिसमें सभी भूत स्वयं आत्मा ही हो गए हैं, तब एकरूपता को देखने वाले के लिए कौन सा मोह, कौन सा शोक है?"
+        },
+        "isha:8": {
+          "en": "He pervaded—bright, bodiless, scarless, sinewless, pure, untouched by evil, wise, intelligent, all-transcending, self-existent. He duly allotted objects for eternal years.",
+          "hi": "उसने व्याप्त किया—शुद्ध, शरीररहित, क्षत-रहित, स्नायु-रहित, पवित्र, पाप से अछूता, कवि, मनीषी, सर्वोत्कृष्ट, स्वयंभू। उसने शाश्वत वर्षों के लिए पदार्थों का यथोचित विधान किया।"
+        },
+        "isha:9": {
+          "en": "Blind darkness they enter, who worship avidya (ignorance). Into greater darkness than that, as it were, go they who are attached to vidya (knowledge).",
+          "hi": "अंधे अंधकार में वे प्रवेश करते हैं, जो अविद्या की उपासना करते हैं। उससे भी अधिक अंधकार में मानो वे जाते हैं जो विद्या में रत हैं।"
+        },
+        "isha:10": {
+          "en": "Other, they say, is from vidya; other, they say, is from avidya. Thus we have heard from the wise who explained that to us.",
+          "hi": "अन्य ही विद्या से (प्राप्त फल) कहते हैं, अन्य ही अविद्या से कहते हैं। ऐसा हमने धीर पुरुषों से सुना है जिन्होंने हमें वह समझाया।"
+        },
+        "isha:11": {
+          "en": "Vidya and avidya—he who knows both together, crossing death by avidya, attains immortality by vidya.",
+          "hi": "विद्या और अविद्या—जो इन दोनों को एकसाथ जानता है, वह अविद्या से मृत्यु को पार करके, विद्या से अमृतत्व प्राप्त करता है।"
+        },
+        "isha:12": {
+          "en": "Blind darkness they enter, who worship non-becoming. Into greater darkness than that, as it were, go they who are attached to becoming.",
+          "hi": "अंधे अंधकार में वे प्रवेश करते हैं जो असम्भूति की उपासना करते हैं। उससे भी अधिक अंधकार में मानो वे जाते हैं जो सम्भूति में रत हैं।"
+        },
+        "isha:13": {
+          "en": "Other, they say, is from becoming; other, they say, is from non-becoming. Thus we have heard from the wise who explained that to us.",
+          "hi": "अन्य ही संभव से (प्राप्त फल) कहते हैं, अन्य ही असंभव से कहते हैं। ऐसा हमने धीर पुरुषों से सुना है जिन्होंने हमें वह समझाया।"
+        },
+        "isha:14": {
+          "en": "Becoming and destruction—he who knows both together, crossing death by destruction, attains immortality by becoming.",
+          "hi": "सम्भूति और विनाश—जो इन दोनों को एकसाथ जानता है, वह विनाश से मृत्यु को पार करके, सम्भूति से अमृतत्व प्राप्त करता है।"
+        },
+        "isha:15": {
+          "en": "By a golden vessel, the face of truth is covered. That, O Pusan, uncover, for the sight of the truth-dharma.",
+          "hi": "स्वर्णमय पात्र से सत्य का मुख ढका हुआ है। हे पूषन्! सत्य-धर्म की दृष्टि के लिए उस (आवरण) को हटा दीजिए।"
+        },
+        "isha:16": {
+          "en": "O Pusan, lone seer, Yama, Surya, son of Prajapati, withdraw the rays, gather the light. That form of yours which is most auspicious, that I see. He who is that person, he am I.",
+          "hi": "हे पूषन्! एकर्षे! यम! सूर्य! प्राजापत्य! रश्मियों को समेटो, तेज को इकट्ठा करो। आपका जो सबसे कल्याणकारी रूप है, उसे मैं देखता हूँ। जो वह पुरुष है, वह मैं हूँ।"
+        },
+        "isha:17": {
+          "en": "Wind, breath, the immortal, and now this body ends in ashes. Om, O resolve, remember the deed! Remember, O resolve, the deed!",
+          "hi": "वायु, अनिल, अमृत और अब यह शरीर भस्मांत है। ॐ, हे क्रतो (संकल्प)! किए हुए को याद कर। हे क्रतो, किए हुए को याद कर।"
+        },
+        "isha:18": {
+          "en": "O Agni, lead us by the good path to wealth, O god, knowing all ways. Disjoin from us the crooked sin. We offer to you the most abundant word of salutation.",
+          "hi": "हे अग्ने! सभी कर्मों को जानने वाले हे देव! हमें धन के लिए अच्छे मार्ग से ले चल। हमसे कुटिल पाप को दूर कर। हम आपके लिए अत्यधिक नमस्कारोक्ति अर्पित करते हैं।"
+        }
+      },
+      "saved_at": "2026-11-17T10:57:36Z"
+    }
+  }
+}
