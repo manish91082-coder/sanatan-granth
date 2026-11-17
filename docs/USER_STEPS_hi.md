@@ -51,6 +51,13 @@
 2. repo → Actions → `foreman-deploy` → Run workflow।
 3. healthchecks.io और uptimerobot.com के मुफ़्त खाते (card माँगें तो छोड़ दें; GitHub सूचना काफ़ी है)।
 
+### Foreman का दोबारा deploy (जब भी `foreman/` का code बदले)
+
+17 नवंबर 2026 को Foreman में स्वार्म की घड़ी जुड़ी (हर 20 मिनट पर संचालक)। नया code तभी चलेगा जब आप एक बार यह करें:
+
+1. repo → Actions → `foreman-deploy` → Run workflow (`create_d1` को `no` ही रहने दें)।
+2. हरा होने पर Foreman का `/status` पन्ना खोलें: कुछ मिनट में "हाल की घटनाएँ" में `conduct` दिखेगा।
+
 ## 0.12 · सूचना की जाँच (15 मिनट)
 
 phone में GitHub mobile app → इस repo की notifications चालू। Claude एक परीक्षण-issue खोलेगा; सूचना आई या नहीं, बताएँ।

@@ -9,7 +9,7 @@
 
 import { Agent, getAgentByName } from "agents";
 import {
-  DEFAULT_LIMITS, ENQUEUEABLE, hmacHex, jobKey, nextReset, planTick, timingSafeEqual, validateJobTransition,
+  conductBatch, DEFAULT_LIMITS, ENQUEUEABLE, hmacHex, jobKey, nextReset, planTick, timingSafeEqual, validateJobTransition,
   type Job, type JobStatus, type Provider,
 } from "./machine";
 
@@ -65,6 +65,18 @@ export class ForemanAgent extends Agent<Env, ForemanState> {
           await db.prepare("UPDATE provider_state SET used = 0, window_reset_utc = ?, updated_at = ? WHERE provider = ?")
             .bind(nextReset(p.reset_rule, now), now, p.provider).run();
           p.used = 0;
+        }
+      }
+
+      // स्वार्म की घड़ी: हर समय-खाँचे में संचालक का एक चक्कर कतार में (पहले से कोई कतार में या चलता हो तो नहीं)।
+      // संचालक GitHub Actions में चलता है और repo की कतार (swarm/BACKLOG.json) से अगला काम चुनकर यहीं enqueue करता है।
+      const pendingConduct = await db.prepare("SELECT 1 AS x FROM jobs WHERE step = 'conduct' AND status IN ('queued','running') LIMIT 1").first();
+      if (!pendingConduct) {
+        const c = await this.enqueue("swarm", conductBatch(now), "conduct");
+        if ("created" in c && c.created) {
+          // बही छोटी रहे: संचालक के दो दिन से पुराने, निपट चुके चक्कर हटें
+          await db.prepare("DELETE FROM jobs WHERE step = 'conduct' AND status IN ('done','needs_expert') AND updated_at < ?")
+            .bind(new Date(Date.parse(now) - 2 * 86400 * 1000).toISOString()).run();
         }
       }
 

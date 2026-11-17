@@ -425,3 +425,22 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **जोखिम:** (1) ERNIE की 16/16 और दोनों ड्राफ़्टरों के label एक-एक run के हैं। (2) ERNIE का मॉडल `preview` है और OpenRouter की मुफ़्त सूची बदलती रहती है; हट जाए तो जज qwen पर गिरेगा, जो नरम है। (3) कड़ी अब रोज़ के 50 OpenRouter-अनुरोधों पर टिकी है: 18 मंत्रों के run में लगभग 10–14 लगेंगे (अनुमान, नापा नहीं)।
 - **अगला क़दम कब:** OpenRouter 00:00 UTC (05:30 IST, 18 नवंबर) पर लौटता है; Groq gpt-oss की खिड़की 24 घंटे की चलती हुई है। तब `foreman-enqueue` एक बार।
 - **न करें:** OpenRouter पर credit न ख़रीदें; `PILOT_OPENROUTER_MAX_CALLS` बिना कारण न बढ़ाएँ; एक ही दिन में जज-परीक्षा, bake-off और कड़ी तीनों OpenRouter के मॉडलों के साथ न चलाएँ।
+
+### session 1, turn 35 (2026-11-17, claude-fable-5-2) — स्वार्म 24×7 (v0.1): roster, सेहत-बही, संचालक, Foreman की घड़ी; कड़ी v0.7
+
+- **मालिक (17 नवंबर):** "24×7 चलने वाला स्वार्म plan करो और बनाओ: resource block, timeout या quota ख़त्म होने पर दूसरे पर अपने-आप जाए, लक्ष्य से न भटके, गुणवत्ता से समझौता न हो; तुम तय करो।"
+- **रचना और नियम:** `swarm/SWARM_24x7.md` (पहले वही पढ़ें)। फ़ैसले: `swarm/DECISIONS.md` (17 नवंबर, स्वार्म 24×7)।
+- **नया code:**
+  - `policy/model_roster.json`: कौन-सा मॉडल किस भूमिका के योग्य है (प्रमाण के साथ), दर्जा, दिन का हमारा हिस्सा। जज: ERNIE, Flash-Lite। ड्राफ़्टर: Flash-Lite और Nemotron (दर्जा 1); gpt-oss, qwen, Gemma (दर्जा 2)।
+  - `tools/swarm/health.py`: सेहत-बही (कौन कब तक रुका), `plan()` (रचना का चुनाव), दिन का हिस्सा।
+  - `tools/swarm/conductor.py`: `tick` (कतार से अगला काम Foreman को), `report` (नतीजा दर्ज), `kick` (काम ख़त्म होते ही अगला चुनना)। `tools/swarm/state_sync.sh`, `ci_conduct.sh`।
+  - `tools/swarm/selftest.py`: 17 जाँचें, required check `checks` में चलती हैं।
+  - `tools/pilot/llm.py`: विफलता का प्रकार (`classify`), `STATS`, `BLOCKED`, `BUDGET`। `tools/pilot/canary.py`: बिगाड़ने के नियम (जज-परीक्षा और run की canary-जाँच, दोनों के लिए)।
+  - `tools/pilot/run_e2e.py` v0.7: `DEFAULT_MODELS` हटा; रचना `plan()` से; `Ckpt` (अधूरा काम `work/<task>.json` में); `judge_gate` (canary); exit 75 = रुका।
+  - `foreman/`: steps `conduct` और `judge_test`; हर 20 मिनट पर `conduct` अपने-आप कतार में; step की अपनी समय-सीमा (conduct 20 मिनट, pilot 90 मिनट)। **deploy नहीं हुआ।**
+  - workflows: `foreman-job.yml` (नए steps, हालत का आना-जाना), `swarm-conduct.yml` (नया: हाथ से और घंटे का schedule), `pilot-e2e.yml` (हाथ के runs भी बही में गिने जाते हैं), `ci.yml` (कतार संरक्षित; selftest)। `pilot-scheduled.yml` हटा।
+- **जाँचा गया [इस मशीन पर, बिना असली मॉडल के]:** selftest 17/17; `checks.run_all` FAIL 0; canaries 3/3; नक़ली मॉडलों से पूरी कड़ी हरी; OpenRouter का हिस्सा पूरा मानकर run बिना किसी अनुरोध के रुका (exit 75, अगला समय 18 नवंबर 00:05 UTC); बचे हुए ड्राफ़्ट (12/18) से run आगे बढ़ा और केवल बचे 6 माँगे।
+- **जाँचा नहीं गया:** Foreman के नए code की typecheck और tests इस मशीन पर नहीं चले (node नहीं है); वे CI के `foreman` job में चलते हैं। v0.7 असली मॉडलों पर। `state_sync.sh` असली branch पर। OpenRouter के `GET /api/v1/key` के उत्तर में गिनती किस रूप में आती है, यह पक्का नहीं (`openrouter_used()` कई रूप समझता है; न समझे तो बही अपनी गिनती से चलती है)।
+- **मालिक का क़दम (एक):** Actions → `foreman-deploy` → Run workflow। उसके बाद Foreman हर 20 मिनट पर संचालक चलाएगा।
+- **अगला session पहले यह देखे:** `git fetch origin swarm-state && git show origin/swarm-state:STATUS.md`; फिर `runs/` की नई फ़ाइलें। कोई काम `needs_owner` हो तो issue (label `swarm-alert`) पढ़ें।
+- **न करें:** roster में बिना माप के मॉडल को योग्य न लिखें; `judge_min_catch_rate` न घटाएँ; `PILOT_*` env से चले हाथ के run को स्वार्म का नतीजा न मानें (रिपोर्ट में `model_source: env-override` लिखा होता है); state branch की फ़ाइलें हाथ से न बदलें (संचालक और jobs के अपने-अपने लेखक हैं)।

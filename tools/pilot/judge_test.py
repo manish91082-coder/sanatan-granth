@@ -15,7 +15,6 @@ import argparse
 import hashlib
 import json
 import os
-import re
 import sys
 import time
 from pathlib import Path
@@ -24,47 +23,14 @@ REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "tools" / "witness"))
 
+from tools.pilot import llm  # noqa: E402
+from tools.pilot.canary import corrupt  # noqa: E402
 from tools.pilot.llm import Model, Usage, available, parse_model  # noqa: E402
+from tools.swarm import health  # noqa: E402
 from tools.pilot.run_e2e import OK_LABELS, accepted, judge, load_source, seg_key, now_iso, write_json  # noqa: E402
 
-JUDGES = [
-    "openrouter:baidu/ernie-5.5-flash-preview:free", "google_ai_studio:gemini-3.5-flash-lite", "groq:qwen/qwen3.8-27b", "groq:openai/gpt-oss-120b",
-    "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
-]
-HI = "[ऀ-ॿ]"
-# (नाम, अंग्रेज़ी pattern, बदलाव, [(हिंदी pattern, बदलाव), ...])। हर मंत्र पर पहला लागू नियम, केवल पहली जगह।
-RULES: list[tuple[str, str, str, list[tuple[str, str]]]] = [
-    ("संख्या: hundred→sixty", r"\bhundred\b", "sixty", [(rf"सौ(?!{HI})", "साठ")]),
-    ("नाम: Agni→Indra", r"\bAgni\b", "Indra", [(r"अग्नि", "इंद्र"), (r"अग्ने", "इंद्र")]),
-    ("नाम: Pushan→Varuna", r"\bPus(?:h)?an\b", "Varuna", [(r"पूषन्", "वरुण"), (r"पूषन", "वरुण")]),
-    ("विलोम: darkness→light", r"\bdarkness\b", "light", [(r"अंधकार", "प्रकाश"), (r"अन्धकार", "प्रकाश")]),
-    ("विलोम: far→near", r"\bfar\b", "near", [(r"दूर", "पास")]),
-    ("विलोम: swifter→slower", r"\bswifter\b", "slower", [(r"अधिक वेगवान्?", "अधिक धीमा"), (r"तेज़", "धीमा")]),
-    ("विलोम: golden→iron", r"\bgolden\b", "iron", [(r"स्वर्ण", "लोहे"), (r"सुनहर[ेा]", "लोहे के")]),
-    ("विलोम: all beings→no beings", r"\ball beings\b", "no beings", [(r"सभी प्राणियों", "किसी भी प्राणी"), (r"सब भूत", "कोई भूत नहीं")]),
-    ("विलोम: immortality→death", r"\bimmortality\b", "death", [(r"अमृतत्व", "मृत्यु"), (r"अमरत्व", "मृत्यु"), (r"अमृत", "मृत्यु")]),
-    ("विलोम: knowledge→ignorance", r"\bknowledge\b", "ignorance", [(r"(?<!अ)विद्या", "अविद्या")]),
-    ("निषेध हटाना", r"\b(does|do|did|is|are|was|were|should|can|will) not\b", r"\1", [(r"नहीं\s*", ""), (rf"(?<!{HI})मत\s+", "")]),
-    ("विलोम: pervaded→abandoned", r"\bpervaded\b", "abandoned", [(r"व्याप्त", "त्यक्त")]),
-    ("विलोम: remember→forget", r"\bremember\b", "forget", [(r"स्मर", "भूल")]),
-]
-
-
-def corrupt(n: int, en: str, hi: str) -> dict | None:
-    """मंत्र-संख्या के हिसाब से नियमों का क्रम घुमाया जाता है, ताकि हर मंत्र पर एक ही तरह की ग़लती न पड़े।"""
-    k = n % len(RULES)
-    for name, en_rx, en_to, hi_alts in RULES[k:] + RULES[:k]:
-        en2, hits = re.subn(en_rx, en_to, en, count=1)
-        if not hits or en2 == en:
-            continue
-        hi2, hi_changed = hi, False
-        for hi_rx, hi_to in hi_alts:
-            cand, h = re.subn(hi_rx, hi_to, hi, count=1)
-            if h and cand != hi:
-                hi2, hi_changed = cand, True
-                break
-        return {"rule": name, "en": en2, "hi": hi2, "hi_changed": hi_changed}
-    return None
+# जजों की सूची: policy/model_roster.json की `judge_candidates` (--judges या env JUDGES से बदली जा सकती है)।
+# बिगाड़ने के नियम tools/pilot/canary.py में हैं (वही नियम हर run की चलती canary-जाँच में भी लगते हैं)।
 
 
 def score(items: dict[str, dict], verdicts: dict[str, dict]) -> dict:
@@ -118,9 +84,14 @@ def main() -> int:
         judges = [Model("mock", "mock-j", "mock-j")]
         skipped: list[str] = []
     else:
-        refs = [r.strip() for r in a.judges.split(",") if r.strip()] or JUDGES
-        judges = [m for m in (parse_model(r) for r in refs) if available(m)]
-        skipped = [r for r in refs if not available(parse_model(r))]
+        sd, roster = health.state_dir(), health.load_roster()
+        H = health.load(sd)
+        refs = [r.strip() for r in a.judges.split(",") if r.strip()] or list(roster["roles"]["judge_candidates"])
+        # बही में रुके मॉडल (quota, रुकावट) नहीं बुलाए जाते; गुणवत्ता की रोक वाले बुलाए जाते हैं (यही परीक्षा उन्हें लौटा सकती है)
+        llm.BLOCKED.update({r: why for r, why in health.blocked_refs(H).items() if (H["models"].get(r) or {}).get("reason") != "quality"})
+        llm.BUDGET.update(health.run_budgets(H, roster))
+        judges = [m for m in (parse_model(r) for r in refs) if available(m) and m.ref not in llm.BLOCKED]
+        skipped = [r for r in refs if not available(parse_model(r))] + [f"{r} (बही में रुका)" for r in refs if r in llm.BLOCKED]
 
     results, detail = [], {i: {"rule": c["rule"], "hi_changed": c["hi_changed"], "verdicts": {}} for i, c in items.items()}
 
@@ -146,6 +117,9 @@ def main() -> int:
         print(f"[जज] {m.ref}: {({k: row.get(k) for k in ('judged', 'caught', 'picked_base', 'passed_corrupt_as_ok', 'base_flagged_contradicted', 'seconds')})} errors={u.errors[:1]}", file=sys.stderr)
         save()
     rep = save()
+    if not a.mock:
+        health.absorb(H, llm.STATS, roster)
+        health.save(sd, H)
     print(json.dumps({"items": rep["items"], "no_key": skipped, "seconds_total": rep["seconds_total"],
                       "results": [{k: r.get(k) for k in ("judge", "judged", "caught", "catch_rate", "picked_base", "pick_rate", "passed_corrupt_as_ok",
                                                          "accepted_corrupt", "base_flagged_contradicted", "seconds")} for r in rep["results"]]}, ensure_ascii=False, indent=1))

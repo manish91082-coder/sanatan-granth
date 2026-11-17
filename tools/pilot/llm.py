@@ -1,4 +1,4 @@
-"""Pilot के लिए मुफ़्त मॉडल-providers (Google AI Studio, Groq, Cloudflare Workers AI)। keys केवल env से; कहीं छपती नहीं।
+"""Pilot के लिए मुफ़्त मॉडल-providers (Google AI Studio, Groq, OpenRouter)। keys केवल env से; कहीं छपती नहीं।
 
 हर मॉडल का "परिवार" कंपनी से गिना जाता है (मास्टर योजना §3.3): Gemini और Gemma दोनों google; gpt-oss openai।
 429 पर इंतज़ार और सीमित दोहराव; कभी दूसरी key या दूसरा खाता नहीं।
@@ -32,6 +32,45 @@ MAX_RETRY = 5
 TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150, "openrouter": 180}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
 MAX_RETRY_5XX = 3  #5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
 PACE_MAX_WAIT_S = 62.0
+
+# ---- स्वार्म की सेहत-बही के लिए (tools/swarm/health.py इन्हें भरता और पढ़ता है)
+# STATS: मॉडल → {"requests", "ok", "output_tokens", "fail": {"kind", "message", "retry_after_s"} | None}
+STATS: dict[str, dict] = {}
+BLOCKED: dict[str, str] = {}   # मॉडल → कारण: बही के हिसाब से अभी रुका है; उसे अनुरोध नहीं जाता
+BUDGET: dict[str, int] = {}    # मॉडल → दिन के हमारे हिस्से में से बचे अनुरोध; शून्य पर अनुरोध नहीं जाता
+_HTTP_N = [0]
+DAILY_RX = r"daily free allocation|tokens per day|requests per day|\(TPD\)|\(RPD\)|PerDay|free-models-per-day"
+
+
+def _stat(ref: str) -> dict:
+    return STATS.setdefault(ref, {"requests": 0, "ok": 0, "output_tokens": 0, "fail": None})
+
+
+def classify(status: int, message: str) -> str:
+    """विफलता का प्रकार; बही इसी से तय करती है कि मॉडल कितनी देर रुके।"""
+    if status == 429:
+        if re.search(DAILY_RX, message, re.I):
+            return "daily_quota"
+        if re.search(r"Request too large", message, re.I):
+            return "too_large"
+        return "rate_limited"
+    if status in (401, 403):
+        return "auth"
+    if status == 404:
+        return "gone"
+    if status == 0:
+        return "timeout"
+    if status >= 500:
+        return "overloaded"
+    return "bad_request"
+
+
+def _retry_after_raw(message: str, headers: dict) -> float | None:
+    """'try again in 3h2m5s' जैसा पूरा समय (बिना ऊपरी सीमा के): दिन की सीमा पर बही इसी तक मॉडल को रोकती है।"""
+    m = re.search(r"(?:try again in|retry in)\s*((?:[0-9.]+\s*(?:ms|h|m|s)\s*)+)", message, re.I)
+    if m:
+        return _duration_s(m.group(1))
+    return _duration_s(headers.get("retry-after"))
 
 
 @dataclass
@@ -113,6 +152,7 @@ def scrub(s: object) -> str:
 
 
 def _http(method: str, url: str, headers: dict, body: dict | None, timeout: int = 240) -> tuple[int, dict, dict]:
+    _HTTP_N[0] += 1
     req = urllib.request.Request(url, method=method, data=json.dumps(body).encode() if body is not None else None,
                                  headers={"content-type": "application/json", "user-agent": UA, **headers})
     try:
@@ -270,7 +310,18 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
     last = "no attempt"
     hard_fails = 0
     json_fails = 0
+    stat = _stat(model.ref)
+    fail: dict | None = None
+    if model.ref in BLOCKED:
+        usage.errors.append(f"बही में रुका: {BLOCKED[model.ref]}")
+        raise RuntimeError(f"{model.ref}: बही के हिसाब से अभी रुका है ({BLOCKED[model.ref]})")
+    budget_keys = [k for k in (model.ref, "provider:" + model.provider) if k in BUDGET]
     for attempt in range(MAX_RETRY):
+        if any(BUDGET[k] <= 0 for k in budget_keys):
+            last = "दिन का हमारा हिस्सा पूरा"
+            fail = {"kind": "budget", "message": last, "retry_after_s": None}
+            break
+        n0 = _HTTP_N[0]
         _pace_before(model, estimate_tokens(system, user, est_out), usage)
         _otpm_before(model, est_out, usage)
         t0 = time.time()
@@ -293,6 +344,7 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
         elif model.provider in ("groq", "cloudflare", "openrouter"):
             if model.provider == "openrouter" and _OR_CALLS[0] >= OR_RUN_BUDGET:
                 usage.errors.append(f"OpenRouter की run-सीमा ({OR_RUN_BUDGET} अनुरोध) पूरी")
+                stat["fail"] = {"kind": "run_cap", "message": f"run-सीमा {OR_RUN_BUDGET}", "retry_after_s": None}
                 raise RuntimeError(f"{model.ref}: इस run में OpenRouter के {OR_RUN_BUDGET} अनुरोध हो चुके")
             st, js, hd, text, ptok, otok, neurons = _openai_style(model, system, user, max(est_out * 2, 3000))
             _pace_after(model, hd)
@@ -300,13 +352,21 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
             raise RuntimeError(f"अनजान provider {model.provider}")
         usage.calls += 1
         usage.seconds += time.time() - t0
+        sent = max(1, _HTTP_N[0] - n0)
+        stat["requests"] += sent
+        for k in budget_keys:
+            BUDGET[k] -= sent
         if st == 200:
             usage.prompt_tokens += ptok
             usage.output_tokens += otok
             usage.neurons += neurons
+            stat["output_tokens"] += otok
             _OUT_LOG.setdefault(model.ref, []).append((time.time(), otok))
             try:
-                return extract_json(text)
+                obj = extract_json(text)
+                stat["ok"] += 1
+                stat["fail"] = None
+                return obj
             except Exception:
                 last = "JSON parse नहीं हुआ"
                 usage.retries += 1
@@ -318,10 +378,13 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
         if isinstance(err, list):
             err = (err[0] if err else {})
         last = f"HTTP {st}: {scrub(err.get('message', '') if isinstance(err, dict) else err)}"
+        raw = json.dumps(js)
+        kind = classify(st, raw)
+        fail = {"kind": kind, "message": last, "retry_after_s": _retry_after_raw(raw, hd) if kind == "daily_quota" else None}
         if st == 429:
             usage.http_429 += 1
-            _otpm_learn(model, json.dumps(js))
-            if re.search(r"daily free allocation|tokens per day|requests per day|\(TPD\)|\(RPD\)|PerDay|free-models-per-day", json.dumps(js), re.I):
+            _otpm_learn(model, raw)
+            if kind == "daily_quota":
                 break  # दिन-भर का मुफ़्त हिस्सा ख़त्म (Workers AI neurons, Groq TPD/RPD, Gemini per-day): मिनटों इंतज़ार बेकार है
             if re.search(r"Request too large", json.dumps(js), re.I):
                 break  # एक ही अनुरोध मिनट की सीमा से बड़ा है: इंतज़ार से नहीं, छोटे टुकड़े से ही चलेगा
@@ -336,5 +399,6 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
             time.sleep(w)
             continue
         break
+    stat["fail"] = fail or {"kind": "bad_json", "message": last, "retry_after_s": None}
     usage.errors.append(last)
     raise RuntimeError(f"{model.ref}: {last}")

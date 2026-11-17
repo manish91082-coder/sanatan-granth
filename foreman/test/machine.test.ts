@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  DEFAULT_LIMITS, ENQUEUEABLE, jobKey, nextReset, planTick, validateBookTransition, validateJobTransition, hmacHex, timingSafeEqual,
+  conductBatch, CONDUCT_EVERY_S, DEFAULT_LIMITS, ENQUEUEABLE, jobKey, nextReset, planTick, validateBookTransition, validateJobTransition, hmacHex, timingSafeEqual,
   type Job, type Provider,
 } from "../src/machine.ts";
 
@@ -96,7 +96,7 @@ test("pilot_e2e का job_key Python वाले से वही; अनु�
   // python -c "from checks.common import job_key; print(job_key('isha','b1','pilot_e2e','pilot-e2e-0.1','cascade'))"
   const spec = ENQUEUEABLE["pilot_e2e"]!;
   assert.equal(await jobKey("isha", "b1", "pilot_e2e", spec.promptHash, spec.model), "1aeb3c35d459f367747b7bc95810f28576337f5a30665e8473cb68b544edd0d0");
-  assert.deepEqual(Object.keys(ENQUEUEABLE).sort(), ["noop", "pilot_e2e"]);
+  assert.deepEqual(Object.keys(ENQUEUEABLE).sort(), ["conduct", "judge_test", "noop", "pilot_e2e"]);
   assert.notEqual(ENQUEUEABLE["noop"]!.lane, spec.lane);
 });
 
@@ -105,4 +105,31 @@ test("HMAC और समय-सुरक्षित तुलना", async () 
   assert.equal(h.length, 64);
   assert.ok(timingSafeEqual(h, h));
   assert.ok(!timingSafeEqual(h, h.replace(/.$/, "0") === h ? h.replace(/.$/, "1") : h.replace(/.$/, "0")));
+});
+
+test("स्वार्म की घड़ी: एक ही समय-खाँचे में एक ही batch; अगले खाँचे में नया", () => {
+  const a = conductBatch("2026-11-17T10:00:00.000Z");
+  assert.equal(a, conductBatch("2026-11-17T10:19:59.000Z"));
+  assert.notEqual(a, conductBatch("2026-11-17T10:20:00.000Z"));
+  assert.match(a, /^slot-[0-9]+$/);
+  assert.equal(CONDUCT_EVERY_S, 1200);
+});
+
+test("संचालक और जज-परीक्षा कतार में डाले जा सकते हैं; मॉडल-काम एक ही lane में", () => {
+  assert.equal(ENQUEUEABLE["conduct"]!.lane, "conduct");
+  assert.equal(ENQUEUEABLE["judge_test"]!.lane, ENQUEUEABLE["pilot_e2e"]!.lane);
+  const a = planTick([
+    job({ job_key: "p", step: "pilot_e2e", lane: "pilot", status: "running", started_at: T }),
+    job({ job_key: "j", step: "judge_test", lane: "pilot" }),
+    job({ job_key: "c", step: "conduct", lane: "conduct" }),
+  ], [], T, false);
+  assert.deepEqual(a.map((x) => [x.kind, x.job.job_key]), [["dispatch", "c"]]);
+});
+
+test("step की अपनी समय-सीमा: संचालक 20 मिनट पर, pilot 90 मिनट पर", () => {
+  const started = "2026-11-15T09:30:00.000Z"; // 30 मिनट पहले
+  const c = planTick([job({ step: "conduct", lane: "conduct", status: "running", started_at: started, attempts: 1 })], [], T, false);
+  assert.deepEqual(c.map((x) => x.kind), ["timeout"]);
+  const p = planTick([job({ step: "pilot_e2e", lane: "pilot", status: "running", started_at: started, attempts: 1 })], [], T, false);
+  assert.equal(p.length, 0);
 });

@@ -34,6 +34,8 @@ jobs:
       - run: pip install -q -r checks/requirements.txt
       - name: R1–R14 + A3/D11
         run: python -m checks.run_all --out /tmp/checks.json
+      - name: स्वार्म के नियमों की आत्म-परीक्षा (रचना का चुनाव, रुकना, बही, संचालक)
+        run: python -m tools.swarm.selftest
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -76,7 +78,7 @@ jobs:
       - run: npm test
 
   protected-paths:
-    # workflows, policy, canaries, schema, checks, foreman, CLAUDE.md, RUBRIC में बदलाव
+    # workflows, policy, canaries, schema, checks, foreman, CLAUDE.md, RUBRIC और स्वार्म की कतार (swarm/BACKLOG.json) में बदलाव
     # तभी पास, जब repo-मालिक ने PR पर 'owner-approved' label लगाया हो (CLAUDE.md सीमा #3)।
     # नया commit आते ही label हट जाता है।
     name: protected-paths
@@ -88,7 +90,7 @@ jobs:
       issues: write
     env:
       GH_TOKEN: ${{ github.token }}
-      PROTECTED: '^(\.github/|policy/|canaries/|schema/|checks/|foreman/|kaggle/|drive/|tools/|CLAUDE\.md$|LICENSE|swarm/RUBRIC\.md$|swarm/DECISIONS\.md$)'
+      PROTECTED: '^(\.github/|policy/|canaries/|schema/|checks/|foreman/|kaggle/|drive/|tools/|CLAUDE\.md$|LICENSE|swarm/RUBRIC\.md$|swarm/DECISIONS\.md$|swarm/BACKLOG\.json$)'
     steps:
       - uses: actions/checkout@v4
         with:
