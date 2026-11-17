@@ -1,0 +1,495 @@
+{
+  "generated_at": "2026-11-17T07:08:56Z",
+  "text_id": "gita",
+  "chapters": [
+    1,
+    2
+  ],
+  "segments": 119,
+  "sizes": [
+    10,
+    30,
+    60
+  ],
+  "run": "44035249289",
+  "mock": false,
+  "witnesses": [
+    {
+      "witness_id": "sa-ws-gita-1",
+      "revid": 343151,
+      "sha256": "8101c174c0d07676c2eacc1e166298f4f6567961f8b75892412991811818bbde",
+      "licence": "CC-BY-SA-4.0"
+    },
+    {
+      "witness_id": "sa-ws-gita-2",
+      "revid": 408369,
+      "sha256": "9d365c91e86947c2c0b5b55a852566a7ef029877e78dc5d10358f753111fc3d9",
+      "licence": "CC-BY-SA-4.0"
+    }
+  ],
+  "judge_sample": [
+    "gita:1.1",
+    "gita:1.7",
+    "gita:1.13",
+    "gita:1.19",
+    "gita:1.25",
+    "gita:1.31",
+    "gita:1.37",
+    "gita:1.43",
+    "gita:2.2",
+    "gita:2.8",
+    "gita:2.14",
+    "gita:2.20",
+    "gita:2.26",
+    "gita:2.32",
+    "gita:2.38",
+    "gita:2.44",
+    "gita:2.50",
+    "gita:2.56"
+  ],
+  "no_key": [],
+  "seconds_total": 563.4,
+  "results": [
+    {
+      "model": "google_ai_studio:gemini-3.5-flash-lite",
+      "family": "google",
+      "batch_size": 10,
+      "requests": 12,
+      "requests_failed": 0,
+      "returned": 117,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": false,
+      "of": 119,
+      "missing": 2,
+      "seconds": 60.5,
+      "seconds_per_segment": 0.52,
+      "usage": {
+        "calls": 15,
+        "retries": 3,
+        "http_429": 0,
+        "prompt_tokens": 7811,
+        "output_tokens": 12708,
+        "seconds": 50.48,
+        "waited_s": 10.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      },
+      "quality_sample": {
+        "sampled": 18,
+        "judge": "groq:qwen/qwen3.8-27b",
+        "judged": 18,
+        "labels": {
+          "CONTRADICTED": 0,
+          "OK": 16,
+          "UNSURE": 0,
+          "MINOR": 2
+        },
+        "ok_rate": 1.0,
+        "judge_usage": {
+          "calls": 3,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 3725,
+          "output_tokens": 418,
+          "seconds": 1.89,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "model": "google_ai_studio:gemini-3.5-flash-lite",
+      "family": "google",
+      "batch_size": 30,
+      "requests": 4,
+      "requests_failed": 0,
+      "returned": 119,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": false,
+      "of": 119,
+      "missing": 0,
+      "seconds": 48.6,
+      "seconds_per_segment": 0.41,
+      "usage": {
+        "calls": 5,
+        "retries": 1,
+        "http_429": 0,
+        "prompt_tokens": 5692,
+        "output_tokens": 11399,
+        "seconds": 38.64,
+        "waited_s": 10.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      },
+      "quality_sample": {
+        "sampled": 18,
+        "judge": "groq:qwen/qwen3.8-27b",
+        "judged": 18,
+        "labels": {
+          "CONTRADICTED": 2,
+          "OK": 16,
+          "UNSURE": 0,
+          "MINOR": 0
+        },
+        "ok_rate": 0.889,
+        "judge_usage": {
+          "calls": 3,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 3688,
+          "output_tokens": 430,
+          "seconds": 1.78,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "model": "google_ai_studio:gemini-3.5-flash-lite",
+      "family": "google",
+      "batch_size": 60,
+      "requests": 2,
+      "requests_failed": 0,
+      "returned": 119,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": false,
+      "of": 119,
+      "missing": 0,
+      "seconds": 65.0,
+      "seconds_per_segment": 0.55,
+      "usage": {
+        "calls": 4,
+        "retries": 2,
+        "http_429": 0,
+        "prompt_tokens": 10896,
+        "output_tokens": 22403,
+        "seconds": 65.01,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      },
+      "quality_sample": {
+        "sampled": 18,
+        "judge": "groq:qwen/qwen3.8-27b",
+        "judged": 18,
+        "labels": {
+          "CONTRADICTED": 0,
+          "OK": 18,
+          "UNSURE": 0,
+          "MINOR": 0
+        },
+        "ok_rate": 1.0,
+        "judge_usage": {
+          "calls": 3,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 3669,
+          "output_tokens": 350,
+          "seconds": 1.51,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "model": "groq:openai/gpt-oss-120b",
+      "family": "openai",
+      "batch_size": 10,
+      "requests": 6,
+      "requests_failed": 2,
+      "returned": 38,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": true,
+      "of": 119,
+      "missing": 81,
+      "seconds": 77.5,
+      "seconds_per_segment": 2.04,
+      "usage": {
+        "calls": 6,
+        "retries": 0,
+        "http_429": 2,
+        "prompt_tokens": 2827,
+        "output_tokens": 10923,
+        "seconds": 24.44,
+        "waited_s": 0.0,
+        "paced_s": 53.1,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199208, Requested 3774. Please try again in 21m28.224s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing",
+          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199182, Requested 1069. Please try again in 1m48.432s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+        ]
+      },
+      "quality_sample": {
+        "sampled": 7,
+        "judge": "google_ai_studio:gemini-3.5-flash-lite",
+        "judged": 7,
+        "labels": {
+          "CONTRADICTED": 3,
+          "OK": 4,
+          "UNSURE": 0,
+          "MINOR": 0
+        },
+        "ok_rate": 0.571,
+        "judge_usage": {
+          "calls": 1,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 1056,
+          "output_tokens": 226,
+          "seconds": 3.01,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "model": "groq:openai/gpt-oss-120b",
+      "family": "openai",
+      "batch_size": 30,
+      "requests": 2,
+      "requests_failed": 2,
+      "returned": 0,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": true,
+      "of": 119,
+      "missing": 119,
+      "seconds": 23.6,
+      "seconds_per_segment": null,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 2,
+        "prompt_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 0.29,
+        "waited_s": 0.0,
+        "paced_s": 23.3,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199119, Requested 2068. Please try again in 8m32.784s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing",
+          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199119, Requested 2128. Please try again in 8m58.704s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+        ]
+      },
+      "quality_sample": {
+        "sampled": 0
+      }
+    },
+    {
+      "model": "groq:openai/gpt-oss-120b",
+      "family": "openai",
+      "batch_size": 60,
+      "requests": 2,
+      "requests_failed": 2,
+      "returned": 0,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": true,
+      "of": 119,
+      "missing": 119,
+      "seconds": 0.3,
+      "seconds_per_segment": null,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 2,
+        "prompt_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 0.29,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199120, Requested 3502. Please try again in 18m52.704s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing",
+          "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199118, Requested 5612. Please try again in 34m3.36s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+        ]
+      },
+      "quality_sample": {
+        "sampled": 0
+      }
+    },
+    {
+      "model": "groq:qwen/qwen3.8-27b",
+      "family": "alibaba-qwen",
+      "batch_size": 10,
+      "requests": 5,
+      "requests_failed": 2,
+      "returned": 30,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": true,
+      "of": 119,
+      "missing": 89,
+      "seconds": 189.5,
+      "seconds_per_segment": 6.32,
+      "usage": {
+        "calls": 6,
+        "retries": 1,
+        "http_429": 3,
+        "prompt_tokens": 2180,
+        "output_tokens": 3455,
+        "seconds": 8.15,
+        "waited_s": 11.0,
+        "paced_s": 170.4,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1201. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor",
+          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1107. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor"
+        ]
+      },
+      "quality_sample": {
+        "sampled": 5,
+        "judge": "google_ai_studio:gemini-3.5-flash-lite",
+        "judged": 5,
+        "labels": {
+          "CONTRADICTED": 0,
+          "OK": 5,
+          "UNSURE": 0,
+          "MINOR": 0
+        },
+        "ok_rate": 1.0,
+        "judge_usage": {
+          "calls": 1,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 859,
+          "output_tokens": 91,
+          "seconds": 2.14,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "model": "groq:qwen/qwen3.8-27b",
+      "family": "alibaba-qwen",
+      "batch_size": 30,
+      "requests": 4,
+      "requests_failed": 3,
+      "returned": 20,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": true,
+      "of": 119,
+      "missing": 99,
+      "seconds": 65.7,
+      "seconds_per_segment": 3.29,
+      "usage": {
+        "calls": 4,
+        "retries": 0,
+        "http_429": 3,
+        "prompt_tokens": 1959,
+        "output_tokens": 2048,
+        "seconds": 5.2,
+        "waited_s": 0.0,
+        "paced_s": 60.5,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1107. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor",
+          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1107. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor",
+          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1107. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor"
+        ]
+      },
+      "quality_sample": {
+        "sampled": 4,
+        "judge": "google_ai_studio:gemini-3.5-flash-lite",
+        "judged": 4,
+        "labels": {
+          "CONTRADICTED": 0,
+          "OK": 4,
+          "UNSURE": 0,
+          "MINOR": 0
+        },
+        "ok_rate": 1.0,
+        "judge_usage": {
+          "calls": 2,
+          "retries": 1,
+          "http_429": 0,
+          "prompt_tokens": 738,
+          "output_tokens": 74,
+          "seconds": 4.3,
+          "waited_s": 10.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "model": "groq:qwen/qwen3.8-27b",
+      "family": "alibaba-qwen",
+      "batch_size": 60,
+      "requests": 2,
+      "requests_failed": 1,
+      "returned": 18,
+      "invalid": 1,
+      "extra_ids": 0,
+      "stopped_early": false,
+      "of": 119,
+      "missing": 101,
+      "seconds": 4.9,
+      "seconds_per_segment": 0.27,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 1,
+        "prompt_tokens": 3503,
+        "output_tokens": 2048,
+        "seconds": 4.92,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1201. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor"
+        ]
+      },
+      "quality_sample": {
+        "sampled": 4,
+        "judge": "google_ai_studio:gemini-3.5-flash-lite",
+        "judged": 4,
+        "labels": {
+          "CONTRADICTED": 1,
+          "OK": 2,
+          "UNSURE": 0,
+          "MINOR": 1
+        },
+        "ok_rate": 0.75,
+        "judge_usage": {
+          "calls": 1,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 761,
+          "output_tokens": 131,
+          "seconds": 0.9,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    }
+  ],
+  "limits": [
+    "हर स्थिति एक ही बार चली: दरें संकेत हैं, औसत नहीं",
+    "गुणवत्ता का label AI-जज का है, और केवल नमूने पर",
+    "स्रोत वाहक-गवाह है (lock नहीं); कोई अनुवाद repo में नहीं गया",
+    "मुफ़्त स्तर की सीमाएँ दिन और घंटे के हिसाब से बदलती हैं"
+  ]
+}

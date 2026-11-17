@@ -128,6 +128,11 @@ class Log:
 
 
 # ------------------------------------------------------------------ स्रोत
+def seg_key(i: str) -> tuple[int, ...]:
+    """'isha:5' → (5,), 'gita:2.47' → (2, 47): ids का स्वाभाविक क्रम।"""
+    return tuple(int(x) for x in re.sub(r"[a-d]$", "", i.split(":")[1]).split("."))
+
+
 def load_source(text_id: str) -> tuple[dict[str, str], dict]:
     import isha_collate  # noqa: PLC0415
     if text_id != "isha":
@@ -307,8 +312,8 @@ def judge(model: Model, segs: dict[str, str], pairs: dict[str, tuple[dict, dict]
         return "Judge these.\n" + json.dumps(payload, ensure_ascii=False)
 
     def mock_items(part: list[str]) -> list[dict]:
-        return [{"id": i, "a_label": "OK", "b_label": "OK", "a_evidence": "", "b_evidence": "", "agree": int(i.split(":")[1]) % 5 != 0,
-                 "pick": "A" if _swapped(i, flip) ^ bool(int(i.split(":")[1]) % 2) else "B", "has_empirical_claim": False} for i in part]
+        return [{"id": i, "a_label": "OK", "b_label": "OK", "a_evidence": "", "b_evidence": "", "agree": seg_key(i)[-1] % 5 != 0,
+                 "pick": "A" if _swapped(i, flip) ^ bool(seg_key(i)[-1] % 2) else "B", "has_empirical_claim": False} for i in part]
 
     def accept(i: str, it: dict) -> dict | None:
         if not (it.get("a_label") in LABELS and it.get("b_label") in LABELS and it.get("pick") in ("A", "B") and isinstance(it.get("agree"), bool)):
@@ -325,7 +330,7 @@ def judge(model: Model, segs: dict[str, str], pairs: dict[str, tuple[dict, dict]
                 r["downgraded_no_evidence"] = True
         return r
 
-    return ask_items(model, JUDGE_SYSTEM, make_user, sorted(pairs, key=lambda s: int(s.split(":")[1])), usage, accept, 300, mock_items)
+    return ask_items(model, JUDGE_SYSTEM, make_user, sorted(pairs, key=seg_key), usage, accept, 300, mock_items)
 
 
 def judge_one(model: Model, segs: dict[str, str], drafts: dict[str, dict], usage: Usage) -> dict[str, dict]:
@@ -339,7 +344,7 @@ def judge_one(model: Model, segs: dict[str, str], drafts: dict[str, dict], usage
     def make_user(part: list[str]) -> str:
         return "Judge these.\n" + json.dumps([{"id": i, "sanskrit": segs[i], "translation": {"en": drafts[i]["en"], "hi": drafts[i]["hi"]}} for i in part], ensure_ascii=False)
 
-    return ask_items(model, JUDGE_ONE_SYSTEM, make_user, sorted(drafts, key=lambda s: int(s.split(":")[1])), usage, accept, 200,
+    return ask_items(model, JUDGE_ONE_SYSTEM, make_user, sorted(drafts, key=seg_key), usage, accept, 200,
                      lambda part: [{"id": i, "label": "OK", "evidence": ""} for i in part])
 
 
@@ -418,7 +423,7 @@ def main() -> int:
     status, problems = "ok", []
 
     segs, src_meta = log.run("source_witness", "गवाह से पाठ लाना", lambda: load_source(a.text))
-    ids = sorted(segs, key=lambda s: int(s.split(":")[1]))
+    ids = sorted(segs, key=seg_key)
 
     def align() -> None:
         if len(ids) != cfg["segment_count"] or ids != [f"{a.text}:{n}" for n in range(1, cfg["segment_count"] + 1)]:

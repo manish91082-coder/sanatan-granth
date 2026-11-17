@@ -306,6 +306,8 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
             _otpm_learn(model, json.dumps(js))
             if re.search(r"daily free allocation|tokens per day|requests per day|\(TPD\)|\(RPD\)|PerDay|free-models-per-day", json.dumps(js), re.I):
                 break  # दिन-भर का मुफ़्त हिस्सा ख़त्म (Workers AI neurons, Groq TPD/RPD, Gemini per-day): मिनटों इंतज़ार बेकार है
+            if re.search(r"Request too large", json.dumps(js), re.I):
+                break  # एक ही अनुरोध मिनट की सीमा से बड़ा है: इंतज़ार से नहीं, छोटे टुकड़े से ही चलेगा
         if st in (429, 500, 502, 503, 504, 0):
             if st != 429:
                 hard_fails += 2 if st == 0 else 1  # समय-सीमा पार (st 0) सबसे महँगी विफलता है: उसे दो बार से ज़्यादा नहीं

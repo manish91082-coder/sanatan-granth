@@ -1,0 +1,780 @@
+{
+  "generated_at": "2026-11-17T06:46:53Z",
+  "text_id": "gita",
+  "tool": "tools/witness/gita_collate.py v0",
+  "key": "tools/witness/key.py",
+  "id_source": "गवाह के ॥ अध्याय-श्लोक ॥ चिह्न",
+  "chapters": [
+    {
+      "chapter": 1,
+      "witness": {
+        "witness_id": "sa-ws-gita-1",
+        "host": "sa.wikisource.org",
+        "title": "भगवद्गीता/अर्जुनविषादयोगः",
+        "revid": 343151,
+        "timestamp": "2022-08-10T14:13:52Z",
+        "sha256": "8101c174c0d07676c2eacc1e166298f4f6567961f8b75892412991811818bbde",
+        "licence": "CC-BY-SA-4.0",
+        "usage": "compare"
+      },
+      "segment_count": 47,
+      "first": 1,
+      "last": 47,
+      "problems": {
+        "unmarked_blocks": 1,
+        "multi_marked_blocks": 0,
+        "other_chapter_marks": [],
+        "duplicates": [],
+        "missing": []
+      },
+      "segments": [
+        {
+          "segment": "gita:1.1",
+          "key_sha256": "78ea102db44b9ad71cf90c7a0c5800f62f812fc22c46c9f1f11762d7c048b04c",
+          "key_len": 83,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:1.2",
+          "key_sha256": "b345ac237ea905ade6fdeb795213b9e0c93caa7b45cfae0167250789ed8e5a8c",
+          "key_len": 77,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:1.3",
+          "key_sha256": "f00a5a9a2ecb024d9ca575dedd13614886f3ffbd8205a6c2be29d82767ac887e",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.4",
+          "key_sha256": "ad3ea524ec6a530af265b1b4ae5d8ba946fbbf906026bb3a56e0b62cd5962561",
+          "key_len": 64,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.5",
+          "key_sha256": "de46584f60c4f47c21be22d6f263a7053a0df1723a8c15b7e1aae8c796adc841",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.6",
+          "key_sha256": "f2952d0e05e5ada2da7ac00db73dc9b3e3b65924ec3ee989f278e051a01cff3b",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.7",
+          "key_sha256": "3b9638764b59a1148004bda9fc3f89bec1a86848f1dd98c8523ff95536797081",
+          "key_len": 74,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.8",
+          "key_sha256": "bad5b990e9d040f76d8ea4c6f75822fadc2fb76b0fe3e96d7e1f79c1b645982e",
+          "key_len": 68,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.9",
+          "key_sha256": "5ede01c6c25350d435206e76b92e7f17b1e737f47dffc57d4d9232c9d0e2bb6c",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.10",
+          "key_sha256": "1952dda01f9e85e55d04f9fd4a648fca76bf92274e1fdf3273546dac87dc285d",
+          "key_len": 74,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.11",
+          "key_sha256": "7116c1b18aad7690f54d8005dca954d4c3cca59b9604d67fc4bef43a806c16d0",
+          "key_len": 60,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.12",
+          "key_sha256": "b831d57f8729aa5b8fe652aa9e4ca9459514efc35894ef1b9030b2c84a8d93f9",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.13",
+          "key_sha256": "5b59ad47b29bc9acc94596cfbc718f2f658927d9d1c818e11087b4dcf930277d",
+          "key_len": 63,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.14",
+          "key_sha256": "b1efc0de8eff6e534a94fa9f811880fbeaed9eb4b258c9c594921496a89b607b",
+          "key_len": 74,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.15",
+          "key_sha256": "66e70f63dd6cf16a3ee5eb27c9718d13c78e67ade5312233ea7f3c9ffb09123a",
+          "key_len": 65,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.16",
+          "key_sha256": "b8a9a287328c051c0d88d387b42b942f9d65b8a87f04259b3794a618bd18cc93",
+          "key_len": 62,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.17",
+          "key_sha256": "fef08d610a82cce7653a4ff5d4289393292c1d6bec9264f84d5a4ee9585b5925",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.18",
+          "key_sha256": "32ae01a8ff9ded12a6b7aa9ae5d0bffc41685dd5bb7479019488f9fca67ec36e",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.19",
+          "key_sha256": "c1d5b925d6c7a162ddce3820afdc8267e4fa6ad409bfb68cfc85728ed8ad627e",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.20",
+          "key_sha256": "2409385fe9505c1ae361ec38249568958b4f81269a097456e43d3d508b650747",
+          "key_len": 81,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.21",
+          "key_sha256": "59313579e9aa8b177a31b6042c3255d84a5e8cac9057ae799b70405b4a33c8f6",
+          "key_len": 71,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:1.22",
+          "key_sha256": "36f02517e903d258db357ddc4a4c5991f22395136a85c2ea9fca299cd6450bd3",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.23",
+          "key_sha256": "b5b6fbe89668ab320a4aa0f21707d3b0e8f6f41fc2f84e3585863fe2f7138974",
+          "key_len": 81,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.24",
+          "key_sha256": "df0ae5f97fadda52f54933adc37122550314ea7759e207b56cd5a98704f5f28e",
+          "key_len": 74,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:1.25",
+          "key_sha256": "eec64e1ef13183c12d5af61b09769196186e3943ecc1851f025fac8196893646",
+          "key_len": 70,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.26",
+          "key_sha256": "7b4d8d5e1811389b4eea684c08732590e3a23be782cb1cc2aa3714b4bebe8977",
+          "key_len": 84,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.27",
+          "key_sha256": "9e63e66d878d48dd1b7e5e5b1bfd732f5a4ea6099812b8a0d35262dea4ae5aa9",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.28",
+          "key_sha256": "3198c7b20f31b4b49a932eb8bb224cbc9ccec29a8c1c1f82a3e0d87eac504f8f",
+          "key_len": 83,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:1.29",
+          "key_sha256": "94066e040d599d9f24e47bb395b3e7d7aadb65fc27452f0ebddc3b2f48047e87",
+          "key_len": 61,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.30",
+          "key_sha256": "7aefc3aaa77296ed8eea6066123431b47456ffa792c16737aa46c47f0380f46a",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.31",
+          "key_sha256": "78c6ae73232be3fe115b92b11f4176352624896078aa1edafd039fe0d1eab7bb",
+          "key_len": 63,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.32",
+          "key_sha256": "9ced1c3753cd3a8733724e457b6691e8c76fbafbb6ce6924b8b80de0a58c5519",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.33",
+          "key_sha256": "cb050eda6d9bb58807ed3d22646933d2c70c0d94f3a79e895e19e7f4eab9c81b",
+          "key_len": 79,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.34",
+          "key_sha256": "a5874ffc87dc2bcfcd524fe2579d8858130d32ff3d38b5a9612e3d2e288123db",
+          "key_len": 75,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.35",
+          "key_sha256": "51959042a139e28e0a791e792e4c80454a00db0eb13547f7174d30a00ca37b42",
+          "key_len": 68,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.36",
+          "key_sha256": "96897e8f9820772479863feb15606ac8cdbfe37d53d4bd96aecacb98082f2ad5",
+          "key_len": 79,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.37",
+          "key_sha256": "79752002c753ac7f985e42c37a195081c0015901a6f5ab74cbb094c27ec0c324",
+          "key_len": 77,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.38",
+          "key_sha256": "a649683d9ba1a29f19138c559fc9b9f3dac147ae8847ba91d1599549a4da1807",
+          "key_len": 63,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.39",
+          "key_sha256": "fac5b48fcfea17aebbb98f53de631de0cce8d5d3b5e04089bf7c1d8cb5f3db81",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.40",
+          "key_sha256": "7f85a927c3d6257f01cb39385f662e7e4a1d74b184d96c0f0961be22a4164c08",
+          "key_len": 70,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.41",
+          "key_sha256": "21338e975b5858a61ea0b38551e538534b9476af5d9a503a03b5615fe098325e",
+          "key_len": 79,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.42",
+          "key_sha256": "37fbf818671c9f11bb54481e5166a5919f11ceb4823c90856cdd811fad935443",
+          "key_len": 65,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.43",
+          "key_sha256": "b0799c88a49727add8f2c5472fd7274439a489bb0feddd1dca56aad10b69f3e7",
+          "key_len": 73,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.44",
+          "key_sha256": "6268eb081880167b4be4435d88e5f3aa34e86b3cb16b16f6aaf3e7bdc3737bae",
+          "key_len": 63,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.45",
+          "key_sha256": "5819e2cf8d43c744464b27daf77f99ed69f94e3fe0cca64288f10af0699637fa",
+          "key_len": 65,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.46",
+          "key_sha256": "75177eeaa39a2954fce296d630fa42fc7e12383736e011fa205fcd07ee7e61fe",
+          "key_len": 73,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:1.47",
+          "key_sha256": "4d5b81ba5ca6f20e3bb98d68e27e3f7b5647b92331b6ceefe0928ad57e5dbb2e",
+          "key_len": 75,
+          "has_speaker_line": true
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "witness": {
+        "witness_id": "sa-ws-gita-2",
+        "host": "sa.wikisource.org",
+        "title": "भगवद्गीता/साङ्ख्ययोगः",
+        "revid": 408369,
+        "timestamp": "2025-04-24T23:57:44Z",
+        "sha256": "9d365c91e86947c2c0b5b55a852566a7ef029877e78dc5d10358f753111fc3d9",
+        "licence": "CC-BY-SA-4.0",
+        "usage": "compare"
+      },
+      "segment_count": 72,
+      "first": 1,
+      "last": 72,
+      "problems": {
+        "unmarked_blocks": 1,
+        "multi_marked_blocks": 0,
+        "other_chapter_marks": [],
+        "duplicates": [],
+        "missing": []
+      },
+      "segments": [
+        {
+          "segment": "gita:2.1",
+          "key_sha256": "2d1ea4c90b749425077f831c54f707356de302063fb2826a9883fd9b88ccf7db",
+          "key_len": 73,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:2.2",
+          "key_sha256": "5ec548c2d5e83ed71554a59d38395d581822810a8f71808d5b998f43e5d912c5",
+          "key_len": 80,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:2.3",
+          "key_sha256": "aef80ee704b2c4a4a0e9e3fb7bf3a9ab9710795d9d3469f9b14ffbb100e6d99f",
+          "key_len": 82,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.4",
+          "key_sha256": "b68bd285af3348a6efa8bc05b7464f9f1166be4938fac8de5924ea57b480451f",
+          "key_len": 77,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:2.5",
+          "key_sha256": "0f518ae58456ef923c23bcff8e9689ed8243fba692dfec3baf1bf15040b038c1",
+          "key_len": 105,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.6",
+          "key_sha256": "b9e3f6cf9cd4d869d6272d68dead215edc7b23bba225b6ae2d28b6cb73f2145f",
+          "key_len": 98,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.7",
+          "key_sha256": "99e9c2bb38c4195a75ec932976d7dc7d629e80b569229f8729b01b9ff17f9cfb",
+          "key_len": 112,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.8",
+          "key_sha256": "e9aa64f1087d9f553b604b0e4982e083e71d678e52ced60d87dd801ba9c44818",
+          "key_len": 97,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.9",
+          "key_sha256": "2de55dac57ae211bb2d336142e6e8227f0a8f79026eeb61e381f41c796774f89",
+          "key_len": 76,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:2.10",
+          "key_sha256": "28ee28ab7cee1d8bc6aa5a20bc22de2a681311e6ae638643316864fc812bd776",
+          "key_len": 58,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.11",
+          "key_sha256": "c7fb11c95b8955a7e9e859453193d0594b332a8c033eaed8397478d60b42c2c4",
+          "key_len": 85,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:2.12",
+          "key_sha256": "89441759d0d6efabd776f66efc9f59bcfd344a04d67d085c2aab93df47fdb48a",
+          "key_len": 62,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.13",
+          "key_sha256": "2b678f339f941dbaf459531826385ceb14afda7d9ca05dee1acb352cf28bc9b0",
+          "key_len": 70,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.14",
+          "key_sha256": "2fa9bdcd051366957ac024682748471242c42f659433d89ea4684071b5f77546",
+          "key_len": 77,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.15",
+          "key_sha256": "f95fcfa4d43745b3ed5994bd170f245e643eb9ce675d85bcd4de4f7ba2c51369",
+          "key_len": 62,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.16",
+          "key_sha256": "322604fbd7b873bbfd5c00216f86087e0d51f9094bbb854394285a0e0722e3c0",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.17",
+          "key_sha256": "cda2668319eafe91dfedd4bfcc7368095d77570bbcd8896267e522a124290815",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.18",
+          "key_sha256": "b0efd67b8d0461817648d4c15caa2d4c253e3b893ad96893c7e005e4d52c2bed",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.19",
+          "key_sha256": "796d4dc298dc5f1de72e1a4a2b44ceb01d251b8677132b9117b2850b40529f70",
+          "key_len": 61,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.20",
+          "key_sha256": "04c1a23b5a4ea501cef9ef1adc49934dac6df89519024f1ce891086f99bda46f",
+          "key_len": 87,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.21",
+          "key_sha256": "55a62cc8716c5d3940d48975a68c6c2b4be1dbaa9a688e78f8e35978c7a407d4",
+          "key_len": 59,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.22",
+          "key_sha256": "cf6daa3b5624a9053303aed5ee7f51a368ddd143e55b4a9479a1487b4beb6a9d",
+          "key_len": 89,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.23",
+          "key_sha256": "ecb87453cfcc3a0f06c8714105ddc1e056ce295f101d111b0aadd10ba7c7089b",
+          "key_len": 64,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.24",
+          "key_sha256": "f85c6bb469c48403238c658e09a33caca7c2602e2ddfd50dd122f4b51579391d",
+          "key_len": 66,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.25",
+          "key_sha256": "374caf004b7aea410948147d7276c364761113c5fcc28951c281d85a9ad5f954",
+          "key_len": 70,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.26",
+          "key_sha256": "ee87f34a76f9fa16a6fcb89394ccfbf7fe9102b53384fb11b08a29133f56eda8",
+          "key_len": 65,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.27",
+          "key_sha256": "38626f8631af1e62cf3fefee257fe906227487c28946f5aa7b25f54f3cd05082",
+          "key_len": 74,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.28",
+          "key_sha256": "5f93e5983bc321850f3f3f2ff8240462b428231e7f4e5ae837f710ae726a706e",
+          "key_len": 66,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.29",
+          "key_sha256": "cb092a577fdba933b3f5cd286ae81011c43da38e7d366dd83850c0c8938a92ca",
+          "key_len": 101,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.30",
+          "key_sha256": "4e51880f4f038be711adf863fb5724c05a360d0e1d3dd4bbad2724ae87225a2a",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.31",
+          "key_sha256": "d7efe0f7a1104dad9ff58d3a275d279b4cfad3c8e184596737e6e080eb30b9c5",
+          "key_len": 83,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.32",
+          "key_sha256": "33cc25afd85e32da9ebada203295f994efe0e66e30fc8093ae08b2ab43afd1ab",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.33",
+          "key_sha256": "b283e1f0607fb113b1e5f0ac6729882db6487cc622b31c746e5a962f46909e1e",
+          "key_len": 75,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.34",
+          "key_sha256": "ea2da54dd48f4e03b50568a115a0e8fa17aee1b135078eb6233ee1faa1b05a37",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.35",
+          "key_sha256": "21bca77dc548e0d84f10c3e03b7febc6e8d7736d4206eafb4bde841b8eadbac3",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.36",
+          "key_sha256": "3710e4b422aa7fc56704fe899ee1c01ac2a007f480c8119aceed720a2eac7527",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.37",
+          "key_sha256": "8b8a7eab385cf9a37718f85d17c4e992e6cb4551dfbf1e0071e1daae1867c423",
+          "key_len": 81,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.38",
+          "key_sha256": "feea9db173b8b553a42f67ea38f6f45656a8351d6555f3480b758c62a6ecea45",
+          "key_len": 66,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.39",
+          "key_sha256": "dc8e3d929dfc51d3047ee30fdb785ba21660617fc755cbb25e408173c8fd9a1a",
+          "key_len": 81,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.40",
+          "key_sha256": "db0f0d00187f6a8fdb11dde7b9b454f76148f5221ae790aa78de6ede856af42d",
+          "key_len": 72,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.41",
+          "key_sha256": "b5c9c0734886ba629c41a4181a5af0b298ca95ba872941a1edca7af5d976fda2",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.42",
+          "key_sha256": "5be429cd82f63775b7e138dbf1993884d67153a0eec30628d35eff7cf243d7ba",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.43",
+          "key_sha256": "df089412dde6765431023919ff3528d451a8211e87aeaf91aad86f11f3786765",
+          "key_len": 70,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.44",
+          "key_sha256": "9432f3642c674c4c93035e977c8cf1b598818822032bc970282d1ee0afbd844c",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.45",
+          "key_sha256": "c5e1d1a2a6b673eef19ef7259f6a18904baf8c65b20663e5c8323914fdc7ae49",
+          "key_len": 87,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.46",
+          "key_sha256": "068a59fead559862bac8c7ca24d672790ba213eebaf8085928a6c5cdbdc6cc50",
+          "key_len": 68,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.47",
+          "key_sha256": "cc6a06c53c2e799585206392facec9ca55a10c581cd5a453a1bba609ada28fda",
+          "key_len": 68,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.48",
+          "key_sha256": "5c10957bbc82eaba3c6810c60305411e6031b6422d1c619ab0694da5981919f8",
+          "key_len": 76,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.49",
+          "key_sha256": "90783f589bbe9b036f9b89fb38023caa69affde3d5b6329d3f0baacab89b52e4",
+          "key_len": 62,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.50",
+          "key_sha256": "1106e7e87bcca21776f75dd0cc5c26cc10d2d58f468dae8e63dbb8215750d961",
+          "key_len": 70,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.51",
+          "key_sha256": "ca29c0c450109625d030e70acec79aa4f54c7e51c42c4db5bc622a12aedb5901",
+          "key_len": 75,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.52",
+          "key_sha256": "a9a907f56ad42301882398f15c18c8d956c0f851b73b4f926e36704174e9a142",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.53",
+          "key_sha256": "587cab8205ccc54f0e2412b71ddd8612ca2fe6d69aa52a75945859ef811bd86d",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.54",
+          "key_sha256": "e8eea5a16720bdcc4d1ae497591dfd3e0054fd641354bb12f14a9ab294fec00f",
+          "key_len": 81,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:2.55",
+          "key_sha256": "d9167771c68c3e26311ba29ca4ea8c0f85e54e218ec6aad7b20756f2d3f68760",
+          "key_len": 90,
+          "has_speaker_line": true
+        },
+        {
+          "segment": "gita:2.56",
+          "key_sha256": "6ffe17f16768437b8e8d60835de2cfdb3c78ca6c0dc87f8ff84dfcc69bdf0b8e",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.57",
+          "key_sha256": "0b7f1b857c94bdee70ada555a9eb6f7d242a7c9224ec7188b83fbc83fd7aea73",
+          "key_len": 81,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.58",
+          "key_sha256": "44b2308b4da32bbca6cd47084fb6aaf78a2672576e2a014b00ddfc6ebdf88a34",
+          "key_len": 79,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.59",
+          "key_sha256": "7d23a828a28b29437fccce69982e4501110802375ce929de2a8bb770539fed14",
+          "key_len": 67,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.60",
+          "key_sha256": "b4dc27c74205e15c545f3ebedc08deedc4722cc98a1979f6d0e17438f8286c5c",
+          "key_len": 65,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.61",
+          "key_sha256": "a62145cf7b2a9e580ff5cea874c45fca6cbbb931b52f8e7ab57e03e6eccb1548",
+          "key_len": 73,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.62",
+          "key_sha256": "34efae31e2f9902b1bf70bd25d2652d5fd5ace0bed7352597b30da6b88e2d75b",
+          "key_len": 69,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.63",
+          "key_sha256": "6629199496985f8f9150a885ab7687b02762a9d86d5c70c57298dd4b0c7aaea6",
+          "key_len": 84,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.64",
+          "key_sha256": "3b1fb129cd9e2b3422b086aa3de2fab6d82740e59e51d005319569e0d67d4e25",
+          "key_len": 75,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.65",
+          "key_sha256": "15ddf6a24a8debccbc0ad93755118008ffa1c59e044b0a2502cf114ae38ad1bb",
+          "key_len": 70,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.66",
+          "key_sha256": "8540a6bacc390972c18c065f9aa36cc32983d8a4189038e3bea0eac3ecccc2f7",
+          "key_len": 68,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.67",
+          "key_sha256": "ead220e4be85041c4cfef9288261b33d1978d6ec690e1f113db0bcfe59535aac",
+          "key_len": 66,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.68",
+          "key_sha256": "91c12a9fd6f1df579834ab824a138fa945a0886cf74739dbc2552421b314f2cb",
+          "key_len": 82,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.69",
+          "key_sha256": "df632433bd5fcb75d0a45399aa2e9ca9f1c4adf3149198a2cccc2411cf70b00e",
+          "key_len": 71,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.70",
+          "key_sha256": "e82c14b96e8bdc3c5144cbe9b8ae0c2a9bb2f8803243afce7b947ea478234ffa",
+          "key_len": 94,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.71",
+          "key_sha256": "3235c46ea4c53438d73347d2eafd8c33c73de6ae8662372136f11d3d5eadbb68",
+          "key_len": 70,
+          "has_speaker_line": false
+        },
+        {
+          "segment": "gita:2.72",
+          "key_sha256": "2e34e18cfda48fd6677e785d45749751c1f9b16f4b23d9ff4b685fc8ef3fc66c",
+          "key_len": 85,
+          "has_speaker_line": false
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "यह text-lock नहीं है",
+    "एक ही गवाह (संस्कृत विकिस्रोत): स्वतंत्र दूसरा गवाह और छपा सार्वजनिक-डोमेन संस्करण बाक़ी",
+    "केवल वे अध्याय जिनके पन्ने जाँचे गए",
+    "'उवाच' की पंक्तियाँ गवाह में जहाँ हैं वहीं ली गई हैं; गवाह में कुछ छूटी भी हो सकती हैं",
+    "रिपोर्ट में पाठ नहीं, केवल गिनतियाँ और hash"
+  ]
+}
