@@ -27,6 +27,7 @@
 | Groq | 429 का व्यवहार (console की सीमाएँ अब भी देखनी बाक़ी) | 18 मंत्रों के एक run में 7 बार HTTP 429 (qwen पर 5, 90 s इंतज़ार); 6 मंत्र/अनुरोध पर भी TPM-सीमा लगती है | 2026-11-16 | pilot run 43875372883 |
 | Groq | API के rate-limit headers (console नहीं): `openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `qwen/qwen3.8-27b` | हर एक पर **1,000 अनुरोध/दिन, 8,000 tokens/मिनट** | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
 | Groq | `openai/gpt-oss-120b` की दिन-भर की सीमा (429 के संदेश से) | **200,000 tokens/दिन**; 16 नवंबर को चार pilot-runs और एक तुलना में ख़त्म हो गई (एक pilot-run ≈ 60,000–95,000 tokens, ज़्यादातर reasoning) | 2026-11-16 | foreman-job run 43926279410 |
+| Groq | `openai/gpt-oss-120b`: 17 नवंबर का ख़र्च | दिन-भर की सीमा फिर ख़त्म (07:05 UTC पर 199,208 / 200,000): तीन pilot-runs (ईश, 18 मंत्र) और batch-तुलना के 38 श्लोक। एक pilot-run में यह मॉडल ड्राफ़्ट और दूसरे दौर के जज, दोनों में लगता है | 2026-11-17 | pilot-e2e run 44035249289 |
 | Groq | `qwen/qwen3.8-27b` की output-सीमा (429 के संदेश से) | **1,000 output-tokens/मिनट** (OTPM) | 2026-11-16 | pilot run 43915053026 |
 | Cloudflare | Workers AI: मौजूदा token से चला? मुफ़्त स्तर के मॉडल | **हाँ।** Llama 3.3 70B, Llama 4 Scout, Mistral Small 3.1, gpt-oss-120b/20b, qwen3.8-27b, Gemma 4 26B आदि चले; DeepSeek और Kimi पर 403 "not available on the Workers Free plan" | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
 | Cloudflare | Workers AI neurons/दिन (त्रुटि-संदेश से) | **10,000/दिन**; 16 नवंबर को तुलना के runs में ख़त्म हो गए (HTTP 429 "used up your daily free allocation") | 2026-11-16 | pilot run 43915053026 |
@@ -37,6 +38,7 @@
 | OpenRouter | मुफ़्त पाठ-मॉडल (सार्वजनिक सूची) | 14, जैसे `nvidia/nemotron-3-ultra-550b-a55b:free`, `nvidia/nemotron-3.5-super-vl:free`, `baidu/ernie-5.5-flash-preview:free`, `inclusionai/ling-3.2-flash:free`, `google/gemma-4-31b-it:free`। Mistral या Meta का कोई मुफ़्त मॉडल नहीं दिखा | 2026-11-17 | `tools/providers/probe.py` (बिना key, laptop से; सूची सार्वजनिक है) |
 | GitHub Models | उपलब्ध? | **नहीं।** 30 जुलाई 2026 को पूरी तरह बंद | 2026-11-17 | docs.github.com/en/github-models |
 | Cerebras | मुफ़्त स्तर | भुगतान-तरीका जोड़ने पर $5 का 30 दिन का credit; अपने-आप लौटने वाला मुफ़्त स्तर नहीं। नियम के कारण नहीं लिया | 2026-11-17 | inference-docs.cerebras.ai (खोज-नतीजे से; पन्ना ख़ुद नहीं खोला) |
+| Google AI Studio | `gemini-3.5-flash-lite` ड्राफ़्टर के रूप में, बड़े batch | 119 श्लोक: आकार 10 पर 61 s (12 अनुरोध), 30 पर 49 s (4), 60 पर 65 s (2); कोई 429 नहीं | 2026-11-17 | pilot-e2e run 44035249289 |
 | GitHub Actions | `schedule` कितनी देर से चलता है (इस repo में) | `daily-audit` (cron 23:30 UTC): 3 घंटे 23 मिनट, 3 घंटे 24 मिनट, 5 घंटे 38 मिनट देर से। एक बार का cron (`20 0 17 11 *`) 5 घंटे 20 मिनट बाद भी नहीं चला था, तब हटाया गया | 2026-11-17 | daily-audit runs 43669817479, 43794947415, 44021997957 |
 | Google AI Studio | 16 नवंबर की उपलब्धता | Gemma 4 31B/26B और Gemini 3.5 Flash-Lite पर घंटों HTTP 503 "high demand"; Gemini 3.8 Flash पर HTTP 429 (quota ख़त्म) | 2026-11-16 | pilot runs 43898284352, 43915053026, 43917316702 |
 | Cloudflare | D1 और DO की Free सीमाएँ console में | (बाक़ी: क़दम 0.11) | | |
