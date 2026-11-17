@@ -20,6 +20,13 @@ CF_BASE = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/v1"
 OR_BASE = "https://openrouter.ai/api/v1"
 OR_MIN_GAP_S = 3.5  # OpenRouter के मुफ़्त मॉडल: 20 अनुरोध/मिनट (उसके दस्तावेज़ से)
 _OR_LAST = [0.0]
+# OpenRouter पर गिनती अनुरोधों की है (50/दिन, पूरे खाते की), tokens की नहीं। इसलिए: सोचने वाले मॉडलों को tokens की खुली जगह,
+# JSON न बने तो एक ही बार दोहराव, और एक run में अनुरोधों की ऊपरी सीमा (17 नवंबर को एक जज-परीक्षा और एक तुलना में
+# पूरे दिन का हिस्सा चला गया था: Nemotron का सारा उत्तर सोचने में कट गया और हर टुकड़ा पाँच बार दोहराया गया)।
+OR_REASONING_HEADROOM = 16000
+OR_MAX_OUT = 60000
+OR_RUN_BUDGET = int(os.environ.get("PILOT_OPENROUTER_MAX_CALLS", "24"))
+_OR_CALLS = [0]
 UA = "sanatan-granth-pilot/0.3 (open library project)"
 MAX_RETRY = 5
 TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150, "openrouter": 180}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
@@ -73,6 +80,8 @@ def family_of(name: str) -> str:
         return "mistral"
     if "deepseek" in n:
         return "deepseek"
+    if "ernie" in n or "baidu" in n:
+        return "baidu"
     if "nemotron" in n or "nvidia" in n:
         return "nvidia"
     if "glm" in n or "zai-org" in n:
@@ -234,7 +243,8 @@ def _openai_style(model: Model, system: str, user: str, max_out: int) -> tuple[i
         body: dict = {"model": model.name, "temperature": 0, "response_format": {"type": "json_object"}}
     elif model.provider == "openrouter":
         url, token = f"{OR_BASE}/chat/completions", os.environ.get("OPENROUTER_API_KEY", "")
-        body = {"model": model.name, "temperature": 0, "max_tokens": max_out, "response_format": {"type": "json_object"}}
+        body = {"model": model.name, "temperature": 0, "max_tokens": min(max_out + OR_REASONING_HEADROOM, OR_MAX_OUT), "response_format": {"type": "json_object"}}
+        _OR_CALLS[0] += 1
         gap = OR_MIN_GAP_S - (time.time() - _OR_LAST[0])
         if gap > 0:
             time.sleep(gap)
@@ -259,6 +269,7 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
     """एक JSON-उत्तर। विफल होने पर RuntimeError (संदेश में key नहीं)।"""
     last = "no attempt"
     hard_fails = 0
+    json_fails = 0
     for attempt in range(MAX_RETRY):
         _pace_before(model, estimate_tokens(system, user, est_out), usage)
         _otpm_before(model, est_out, usage)
@@ -280,6 +291,9 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
             um = js.get("usageMetadata", {}) if st == 200 else {}
             ptok, otok = um.get("promptTokenCount", 0), um.get("candidatesTokenCount", 0) + um.get("thoughtsTokenCount", 0)
         elif model.provider in ("groq", "cloudflare", "openrouter"):
+            if model.provider == "openrouter" and _OR_CALLS[0] >= OR_RUN_BUDGET:
+                usage.errors.append(f"OpenRouter की run-सीमा ({OR_RUN_BUDGET} अनुरोध) पूरी")
+                raise RuntimeError(f"{model.ref}: इस run में OpenRouter के {OR_RUN_BUDGET} अनुरोध हो चुके")
             st, js, hd, text, ptok, otok, neurons = _openai_style(model, system, user, max(est_out * 2, 3000))
             _pace_after(model, hd)
         else:
@@ -296,6 +310,9 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
             except Exception:
                 last = "JSON parse नहीं हुआ"
                 usage.retries += 1
+                json_fails += 1
+                if model.provider == "openrouter" and json_fails >= 2:
+                    break  # हर दोहराव दिन के 50 अनुरोधों में से एक लेता है
                 continue
         err = js.get("error") or js.get("errors") or ""
         if isinstance(err, list):
