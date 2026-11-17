@@ -31,6 +31,8 @@
 | Cloudflare | Workers AI: मौजूदा token से चला? मुफ़्त स्तर के मॉडल | **हाँ।** Llama 3.3 70B, Llama 4 Scout, Mistral Small 3.1, gpt-oss-120b/20b, qwen3.8-27b, Gemma 4 26B आदि चले; DeepSeek और Kimi पर 403 "not available on the Workers Free plan" | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
 | Cloudflare | Workers AI neurons/दिन (त्रुटि-संदेश से) | **10,000/दिन**; 16 नवंबर को तुलना के runs में ख़त्म हो गए (HTTP 429 "used up your daily free allocation") | 2026-11-16 | pilot run 43915053026 |
 | Cloudflare | neurons का ख़र्च (छोटे परीक्षण-अनुरोध) | mistral-small 144 tokens = 5.9; gpt-oss-120b 533 tokens = 31.5; qwen3.8-27b 535 tokens = 121.9; llama-4-scout 102 tokens = 3.6 | 2026-11-16 | `provider-smoke` (probe) run 43897044579 |
+| Cloudflare | Workers AI का quota कब लौटता है | **नहीं पता।** 17 नवंबर को 05:45–06:10 UTC पर भी HTTP 429 "used up your daily free allocation" मिला (16 नवंबर की शाम, UTC, को ख़त्म हुआ था)। "00:00 UTC पर लौटता है" हमारा माप नहीं है | 2026-11-17 | pilot-scheduled run 44026092918; foreman-job run 44028350640 |
+| GitHub Actions | `schedule` कितनी देर से चलता है (इस repo में) | `daily-audit` (cron 23:30 UTC): 3 घंटे 23 मिनट, 3 घंटे 24 मिनट, 5 घंटे 38 मिनट देर से। एक बार का cron (`20 0 17 11 *`) 5 घंटे 20 मिनट बाद भी नहीं चला था, तब हटाया गया | 2026-11-17 | daily-audit runs 43669817479, 43794947415, 44021997957 |
 | Google AI Studio | 16 नवंबर की उपलब्धता | Gemma 4 31B/26B और Gemini 3.5 Flash-Lite पर घंटों HTTP 503 "high demand"; Gemini 3.8 Flash पर HTTP 429 (quota ख़त्म) | 2026-11-16 | pilot runs 43898284352, 43915053026, 43917316702 |
 | Cloudflare | D1 और DO की Free सीमाएँ console में | (बाक़ी: क़दम 0.11) | | |
 | Cloudflare | Agent DO पर CPU-सीमा: 10 ms या 30 s? | (बाक़ी: क़दम 0.11, परीक्षण से) | | |
