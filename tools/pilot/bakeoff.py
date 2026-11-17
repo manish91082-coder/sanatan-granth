@@ -21,7 +21,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "tools" / "witness"))
 
 from tools.pilot.llm import GEMINI_BASE, Model, Usage, _http, available, parse_model  # noqa: E402
-from tools.pilot.run_e2e import LABELS, OK_LABELS, draft, judge_one, load_source, now_iso, write_json  # noqa: E402
+from tools.pilot.run_e2e import LABELS, OK_LABELS, draft, judge_one, load_source, seg_key, now_iso, write_json  # noqa: E402
 
 # Flash-वर्ग (मुफ़्त quota 20/दिन, 16 नवंबर को ख़त्म मिला) और nemotron (अनुरोध अटकता रहा) default सूची में नहीं; --candidates से जोड़े जा सकते हैं।
 CANDIDATES = [
@@ -63,7 +63,7 @@ def main() -> int:
         pass
     out, t0 = Path(a.out), time.time()
     segs, src_meta = load_source(a.text)
-    ids = sorted(segs, key=lambda s: int(s.split(":")[1]))
+    ids = sorted(segs, key=seg_key)
     refs = [r.strip() for r in a.candidates.split(",") if r.strip()] or CANDIDATES
     panel = [m for m in (resolve(r) for r in PANEL) if m]
     rows, drafts_out, skipped, dead = [], {}, [], []

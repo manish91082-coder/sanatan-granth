@@ -25,7 +25,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "tools" / "witness"))
 
 from tools.pilot.llm import Model, Usage, available, parse_model  # noqa: E402
-from tools.pilot.run_e2e import OK_LABELS, accepted, judge, load_source, now_iso, write_json  # noqa: E402
+from tools.pilot.run_e2e import OK_LABELS, accepted, judge, load_source, seg_key, now_iso, write_json  # noqa: E402
 
 JUDGES = [
     "google_ai_studio:gemini-3.5-flash-lite", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b", "google_ai_studio:gemma-4-31b-it",
@@ -104,10 +104,10 @@ def main() -> int:
     segs, src_meta = load_source(a.text)
 
     items: dict[str, dict] = {}
-    for i in sorted(base, key=lambda s: int(s.split(":")[1])):
+    for i in sorted(base, key=seg_key):
         if i not in segs:
             continue
-        c = corrupt(int(i.split(":")[1]), base[i]["en"], base[i]["hi"])
+        c = corrupt(seg_key(i)[-1], base[i]["en"], base[i]["hi"])
         if c:
             items[i] = c
     pairs = {i: (base[i], {"en": c["en"], "hi": c["hi"]}) for i, c in items.items()}

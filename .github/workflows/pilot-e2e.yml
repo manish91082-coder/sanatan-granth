@@ -15,10 +15,10 @@ on:
         description: "नक़ली मॉडल (कोई API-call नहीं)? yes/no"
         default: "no"
       mode:
-        description: "pipeline = पूरी कड़ी; bakeoff = ड्राफ़्टर-मॉडलों की तुलना (कोई PR नहीं); judgetest = जज-परीक्षा"
+        description: "pipeline = पूरी कड़ी; bakeoff = ड्राफ़्टर-मॉडलों की तुलना (कोई PR नहीं); judgetest = जज-परीक्षा; batchab = batch-आकार की तुलना, गीता 1–2 (कोई PR नहीं)"
         default: "pipeline"
         type: choice
-        options: [pipeline, bakeoff, judgetest]
+        options: [pipeline, bakeoff, judgetest, batchab]
       open_pr:
         description: "नतीजे का डेटा-PR खोलें? yes/no (branch पर परीक्षण के लिए no)"
         default: "yes"
@@ -45,7 +45,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
         with:
@@ -95,6 +95,17 @@ jobs:
           set -o pipefail
           python -m tools.pilot.bakeoff --text "$TEXT_ID" --out /tmp/pilot --candidates "$CANDIDATES" | tee /tmp/bakeoff_summary.json
           { echo '```json'; cat /tmp/bakeoff_summary.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: batch-आकार की तुलना (गीता अध्याय 1–2; P2 2.2)
+        if: inputs.mode == 'batchab'
+        env:
+          MODELS: ${{ inputs.draft_a }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          set -o pipefail
+          python -m tools.pilot.batch_ab --out /tmp/pilot --models "$MODELS" | tee /tmp/batch_ab_summary.json
+          { echo '```json'; cat /tmp/batch_ab_summary.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
