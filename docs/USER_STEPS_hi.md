@@ -58,6 +58,15 @@
 1. repo → Actions → `foreman-deploy` → Run workflow (`create_d1` को `no` ही रहने दें)।
 2. हरा होने पर Foreman का `/status` पन्ना खोलें: कुछ मिनट में "हाल की घटनाएँ" में `conduct` दिखेगा।
 
+### SambaNova की key (वैकल्पिक; एक और स्वतंत्र मॉडल-स्रोत)
+
+स्वार्म इसके बिना भी चलता है। यह इसलिए है कि दो स्रोत एक साथ बंद हों तब भी काम न रुके।
+
+1. cloud.sambanova.ai पर खाता बनाएँ। **कार्ड, फ़ोन या पहचान माँगे तो वहीं रुकें** और Claude को बताएँ। भुगतान-तरीका कभी न जोड़ें (जोड़ते ही मुफ़्त स्तर हट जाता है)।
+2. API keys के पन्ने पर एक key बनाएँ (एक ही)।
+3. अपने terminal में: `gh secret set SAMBANOVA_API_KEY --repo manish91082-coder/sanatan-granth` और पूछे जाने पर key चिपकाएँ। key chat में न चिपकाएँ।
+4. Claude को बताएँ; वह `provider-smoke` (sambanova) चलाकर मॉडल नापेगा।
+
 ## 0.12 · सूचना की जाँच (15 मिनट)
 
 phone में GitHub mobile app → इस repo की notifications चालू। Claude एक परीक्षण-issue खोलेगा; सूचना आई या नहीं, बताएँ।

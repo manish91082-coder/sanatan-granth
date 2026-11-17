@@ -8,6 +8,8 @@
     "google_ai_studio": "एक project, एक मुफ़्त key; केवल PD/सार्वजनिक पाठ",
     "groq": "मुफ़्त स्तर",
     "openrouter_free": "50 RPD पर ही",
+    "ovhcloud_ai_endpoints": "बिना खाते और बिना key (anonymous): 2 अनुरोध/मिनट प्रति IP और प्रति मॉडल; key नहीं बनानी (key के लिए भुगतान-तरीका चाहिए)",
+    "sambanova": "केवल मुफ़्त स्तर (खाते में भुगतान-तरीका कभी नहीं जोड़ना): 20 अनुरोध/दिन प्रति मॉडल",
     "google_drive": "अपना OAuth client, केवल drive.file; remote granth:",
     "claude_max": "केवल official surfaces; usage credits बंद",
     "healthchecks_io": "dead-man ping (card न माँगे तभी)",

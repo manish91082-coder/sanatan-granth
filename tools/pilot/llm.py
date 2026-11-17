@@ -1,4 +1,4 @@
-"""Pilot के लिए मुफ़्त मॉडल-providers (Google AI Studio, Groq, OpenRouter)। keys केवल env से; कहीं छपती नहीं।
+"""Pilot के लिए मुफ़्त मॉडल-providers (Google AI Studio, Groq, OpenRouter, SambaNova, OVHcloud)। keys केवल env से; कहीं छपती नहीं।
 
 हर मॉडल का "परिवार" कंपनी से गिना जाता है (मास्टर योजना §3.3): Gemini और Gemma दोनों google; gpt-oss openai।
 429 पर इंतज़ार और सीमित दोहराव; कभी दूसरी key या दूसरा खाता नहीं।
@@ -19,7 +19,18 @@ GROQ_BASE = "https://api.groq.com/openai/v1"
 CF_BASE = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/v1"
 OR_BASE = "https://openrouter.ai/api/v1"
 OR_MIN_GAP_S = 3.5  # OpenRouter के मुफ़्त मॉडल: 20 अनुरोध/मिनट (उसके दस्तावेज़ से)
-_OR_LAST = [0.0]
+# OpenAI-शैली के बाक़ी मुफ़्त स्रोत (17 नवंबर 2026 की खोज; policy/quotas.md):
+#   sambanova: मुफ़्त स्तर = खाते में भुगतान-तरीका न हो; हर मॉडल पर 20 अनुरोध/मिनट, 20 अनुरोध/दिन, 200,000 tokens/दिन (उसके दस्तावेज़)।
+#   ovh: OVHcloud AI Endpoints बिना खाते और बिना key के: 2 अनुरोध/मिनट, प्रति IP और प्रति मॉडल (उसके दस्तावेज़, 10 नवंबर 2026)।
+OPENAI_STYLE = {
+    "groq": {"base": GROQ_BASE, "env": "GROQ_API_KEY"},
+    "openrouter": {"base": OR_BASE, "env": "OPENROUTER_API_KEY"},
+    "sambanova": {"base": "https://api.sambanova.ai/v1", "env": "SAMBANOVA_API_KEY"},
+    "ovh": {"base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1", "env": None},
+}
+# दो अनुरोधों के बीच कम से कम इतना अंतर (सेकंड)। OVH पर सीमा प्रति मॉडल है, इसलिए वहाँ घड़ी भी प्रति मॉडल चलती है।
+MIN_GAP_S = {"openrouter": OR_MIN_GAP_S, "sambanova": 3.5, "ovh": 31.0}
+_LAST_CALL: dict[str, float] = {}
 # OpenRouter पर गिनती अनुरोधों की है (50/दिन, पूरे खाते की), tokens की नहीं। इसलिए: सोचने वाले मॉडलों को tokens की खुली जगह,
 # JSON न बने तो एक ही बार दोहराव, और एक run में अनुरोधों की ऊपरी सीमा (17 नवंबर को एक जज-परीक्षा और एक तुलना में
 # पूरे दिन का हिस्सा चला गया था: Nemotron का सारा उत्तर सोचने में कट गया और हर टुकड़ा पाँच बार दोहराया गया)।
@@ -29,7 +40,7 @@ OR_RUN_BUDGET = int(os.environ.get("PILOT_OPENROUTER_MAX_CALLS", "24"))
 _OR_CALLS = [0]
 UA = "sanatan-granth-pilot/0.3 (open library project)"
 MAX_RETRY = 5
-TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150, "openrouter": 180}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
+TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150, "openrouter": 180, "sambanova": 180, "ovh": 600}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
 MAX_RETRY_5XX = 3  #5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
 PACE_MAX_WAIT_S = 62.0
 
@@ -131,14 +142,14 @@ def family_of(name: str) -> str:
 def parse_model(ref: str) -> Model:
     """'groq:qwen/qwen3.8-27b' → Model। provider के बिना नाम अमान्य है।"""
     provider, _, name = ref.strip().partition(":")
-    if provider not in ("google_ai_studio", "groq", "cloudflare", "openrouter") or not name:
+    if provider not in ("google_ai_studio", "groq", "cloudflare", "openrouter", "sambanova", "ovh") or not name:
         raise ValueError(f"मॉडल-संदर्भ अमान्य: {ref!r}")
     return Model(provider, name, family_of(name))
 
 
 def scrub(s: object) -> str:
     s = str(s)
-    for env in ("CLOUDFLARE_ACCOUNT_ID", "CLOUDFLARE_API_TOKEN", "GROQ_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY"):
+    for env in ("CLOUDFLARE_ACCOUNT_ID", "CLOUDFLARE_API_TOKEN", "GROQ_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "SAMBANOVA_API_KEY"):
         v = os.environ.get(env)
         if v:
             s = s.replace(v, "<hidden>")
@@ -273,30 +284,44 @@ def list_groq_models() -> list[str]:
 
 def available(model: Model) -> bool:
     """इस provider की key env में है या नहीं (key का मान कभी नहीं देखा जाता)।"""
-    need = {"google_ai_studio": ["GEMINI_API_KEY"], "groq": ["GROQ_API_KEY"], "cloudflare": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"], "openrouter": ["OPENROUTER_API_KEY"], "mock": []}
+    need = {"google_ai_studio": ["GEMINI_API_KEY"], "groq": ["GROQ_API_KEY"], "cloudflare": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"], "openrouter": ["OPENROUTER_API_KEY"],
+            "sambanova": ["SAMBANOVA_API_KEY"], "ovh": [], "mock": []}  # ovh: बिना key (anonymous)
     return all(os.environ.get(k) for k in need.get(model.provider, ["__none__"]))
 
 
+def _gap(model: Model) -> None:
+    """provider की मिनट-सीमा के भीतर रहने के लिए अनुरोधों के बीच का अंतर।"""
+    gap = MIN_GAP_S.get(model.provider)
+    if not gap:
+        return
+    key = model.ref if model.provider == "ovh" else model.provider
+    wait = gap - (time.time() - _LAST_CALL.get(key, 0.0))
+    if wait > 0:
+        time.sleep(wait)
+    _LAST_CALL[key] = time.time()
+
+
 def _openai_style(model: Model, system: str, user: str, max_out: int) -> tuple[int, dict, dict, object, int, int, float]:
-    if model.provider == "groq":
-        url, token = f"{GROQ_BASE}/chat/completions", os.environ.get("GROQ_API_KEY", "")
+    spec = OPENAI_STYLE.get(model.provider)
+    if spec:
+        url, token = spec["base"] + "/chat/completions", (os.environ.get(spec["env"], "") if spec["env"] else "")
         body: dict = {"model": model.name, "temperature": 0, "response_format": {"type": "json_object"}}
-    elif model.provider == "openrouter":
-        url, token = f"{OR_BASE}/chat/completions", os.environ.get("OPENROUTER_API_KEY", "")
-        body = {"model": model.name, "temperature": 0, "max_tokens": min(max_out + OR_REASONING_HEADROOM, OR_MAX_OUT), "response_format": {"type": "json_object"}}
-        _OR_CALLS[0] += 1
-        gap = OR_MIN_GAP_S - (time.time() - _OR_LAST[0])
-        if gap > 0:
-            time.sleep(gap)
-        _OR_LAST[0] = time.time()
+        if model.provider == "openrouter":
+            body["max_tokens"] = min(max_out + OR_REASONING_HEADROOM, OR_MAX_OUT)
+            _OR_CALLS[0] += 1
+        elif model.provider in ("sambanova", "ovh"):
+            body["max_tokens"] = min(max_out + 8000, 32000)  # सोचने वाले मॉडलों (gpt-oss, DeepSeek) के लिए खुली जगह
     else:
         url, token = CF_BASE.format(acct=os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")) + "/chat/completions", os.environ.get("CLOUDFLARE_API_TOKEN", "")
         body = {"model": model.name, "temperature": 0, "max_tokens": max_out, "response_format": {"type": "json_object"}}
     body["messages"] = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-    st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body, TIMEOUT_S[model.provider])
+    auth = {"authorization": "Bearer " + token} if token else {}
+    _gap(model)
+    st, js, hd = _http("POST", url, auth, body, TIMEOUT_S[model.provider])
     if st in (400, 404) and "response_format" in body and re.search(r"response_format|json_validate_failed|Failed to (generate|validate) JSON|json|requested parameters|No endpoints", json.dumps(js), re.I):
         body.pop("response_format")  # JSON-mode विफल: सादा उत्तर माँगें, JSON हम ख़ुद निकालेंगे
-        st, js, hd = _http("POST", url, {"authorization": "Bearer " + token}, body, TIMEOUT_S[model.provider])
+        _gap(model)
+        st, js, hd = _http("POST", url, auth, body, TIMEOUT_S[model.provider])
     content: object = ""
     if st == 200:
         msg = (js.get("choices") or [{}])[0].get("message") or {}
@@ -341,7 +366,7 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
             text: object = "".join(p.get("text", "") for p in (js.get("candidates") or [{}])[0].get("content", {}).get("parts", []) if not p.get("thought")) if st == 200 else ""
             um = js.get("usageMetadata", {}) if st == 200 else {}
             ptok, otok = um.get("promptTokenCount", 0), um.get("candidatesTokenCount", 0) + um.get("thoughtsTokenCount", 0)
-        elif model.provider in ("groq", "cloudflare", "openrouter"):
+        elif model.provider in OPENAI_STYLE or model.provider == "cloudflare":
             if model.provider == "openrouter" and _OR_CALLS[0] >= OR_RUN_BUDGET:
                 usage.errors.append(f"OpenRouter की run-सीमा ({OR_RUN_BUDGET} अनुरोध) पूरी")
                 stat["fail"] = {"kind": "run_cap", "message": f"run-सीमा {OR_RUN_BUDGET}", "retry_after_s": None}
@@ -371,8 +396,8 @@ def chat_json(model: Model, system: str, user: str, usage: Usage, est_out: int =
                 last = "JSON parse नहीं हुआ"
                 usage.retries += 1
                 json_fails += 1
-                if model.provider == "openrouter" and json_fails >= 2:
-                    break  # हर दोहराव दिन के 50 अनुरोधों में से एक लेता है
+                if json_fails >= 2:
+                    break  # वही अनुरोध तीसरी बार भेजना बेकार है: OpenRouter पर हर दोहराव दिन के हिस्से से जाता है, OVH पर मिनटों लेता है
                 continue
         err = js.get("error") or js.get("errors") or ""
         if isinstance(err, list):

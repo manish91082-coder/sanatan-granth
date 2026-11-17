@@ -141,3 +141,20 @@
 - **नहीं बदला:** बैज केवल C/D; R2 और R6; `texts/` ख़ाली; कोई ख़र्च नहीं; एक खाता, एक key; Colab को हाथ नहीं; Workers AI नहीं।
 - **जोड़ (उसी दिन, turn 36): Foreman का deploy Claude ने चलाया, मालिक के कहने पर।** Claude ने पूछा कि `foreman-deploy` कौन चलाए; मालिक ने interactive session में उत्तर दिया "तुम चला दो"। यह छूट **इसी एक deploy** की है (foreman-deploy run 44071863187, main `4fa3a83`)। नियम वही रहता है: deploy मालिक का बटन है; Claude तभी चलाएगा जब मालिक उसी deploy के लिए साफ़ कहे, और बिना-निगरानी run कभी नहीं।
 - **जोड़ (turn 36):** `judge-requal` तभी चलता है जब roster के सारे जज (अभी ERNIE और Flash-Lite) उपलब्ध हों; पहले किन्हीं दो उम्मीदवारों के मिलते ही चल जाता, और तब ERNIE बिना नपे सप्ताह निकल जाता।
+
+## 2026-11-17 · quota की रुकावट का हल: OVHcloud (बिना key) जुड़ा; roster v0.2; "एक स्रोत बंद हो तो भी रचना बने"
+
+- **मालिक (17 नवंबर):** "quota वाली समस्या का पक्का हल निकालो ... गहरी खोज करके लगातार 24×7 चलने का तरीक़ा।"
+- **खोज (स्रोत `policy/quotas.md` में):** नियमों के भीतर दो नए स्रोत मिले: OVHcloud AI Endpoints (बिना खाते, बिना key; 2 अनुरोध/मिनट प्रति IP और प्रति मॉडल) और SambaNova (मुफ़्त स्तर, 20 अनुरोध/दिन प्रति मॉडल; खाता चाहिए)। NVIDIA NIM, Mistral (फ़ोन), Cerebras (भुगतान-तरीका) और बाक़ी नहीं लिए।
+- **माप (17 नवंबर; सब एक-एक run):** `provider-smoke` run 44075274465 (OVH बिना key के GitHub से चला); जज-परीक्षा run 44075857651 (OVH के चार मॉडल 16/16); ड्राफ़्टर-तुलना run 44075870884 (DeepSeek 18 OK; Qwen 397B 14 OK + 4 MINOR; gpt-oss 15 CONTRADICTED; Qwen 27B 0/18)।
+- **फ़ैसला (`policy/model_roster.json` v0.2):**
+  - ड्राफ़्टर (दर्जा 1): Flash-Lite, OVH DeepSeek V4.1 Flash, Nemotron 3 Ultra, OVH Qwen 3.5 397B। दर्जा 2: Groq gpt-oss, Groq qwen, Gemma।
+  - जज: ERNIE, OVH Qwen 397B, OVH DeepSeek, OVH gpt-oss, Flash-Lite (इसी क्रम में; सबकी पकड़-दर ≥ 0.85)।
+  - OVH gpt-oss ड्राफ़्टर नहीं; OVH Qwen 27B कुछ नहीं।
+  - नियम: कोई एक provider पूरा बंद हो तो भी योग्य रचना बने (`selftest` की जाँच)।
+  - OVH पर हर मॉडल का हमारा हिस्सा 400 अनुरोध/दिन (उसने दिन की सीमा नहीं लिखी; यह हमारी अपनी मर्यादा है), और key कभी नहीं बनानी (उसके लिए भुगतान-तरीका चाहिए)।
+  - `policy/platforms.json` में `ovhcloud_ai_endpoints` और `sambanova` अनुमत।
+- **`pipeline_version`:** वही `pilot-e2e-0.7` (prompts और नियम नहीं बदले; केवल roster का डेटा)। किस run में कौन-से मॉडल चले, यह हर रिपोर्ट में लिखा रहता है।
+- **मालिक के क़दम (वैकल्पिक):** SambaNova का खाता और `SAMBANOVA_API_KEY` (`docs/USER_STEPS_hi.md`)। फ़ोन या कार्ड माँगे तो रुकना।
+- **खुला:** OVH की बिना-key वाली पहुँच कब तक रहेगी, पता नहीं; सारे माप एक-एक run के; नई रचना पूरी कड़ी में पहली बार इसी PR के बाद चलेगी।
+- **नहीं बदला:** बैज केवल C/D; `texts/` ख़ाली; कोई ख़र्च नहीं; कोई नया खाता Claude ने नहीं बनाया; जज की सीमा 0.85।

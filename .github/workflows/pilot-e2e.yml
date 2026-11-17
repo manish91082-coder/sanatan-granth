@@ -76,6 +76,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
           PR_TOKEN: ${{ secrets.FOREMAN_DISPATCH_TOKEN }}
         run: bash tools/pilot/ci_run.sh "$TEXT_ID" "manual-${GITHUB_RUN_ID}" - "$MOCK" "$OPEN_PR"
       - name: जज-परीक्षा (बिगाड़े गए अनुवाद पकड़ना)
@@ -87,6 +88,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
           PR_TOKEN: ${{ secrets.FOREMAN_DISPATCH_TOKEN }}
         run: bash tools/pilot/ci_judge_test.sh "$TEXT_ID" "$OPEN_PR"
       - name: ड्राफ़्टर-मॉडलों की तुलना (bake-off)
@@ -97,6 +99,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
         run: |
           [[ "$TEXT_ID" =~ ^[a-z][a-z0-9_]{0,40}$ ]] || { echo "::error::text_id अमान्य"; exit 2; }
           set -o pipefail
@@ -109,6 +112,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
         run: |
           set -o pipefail
           python -m tools.pilot.batch_ab --out /tmp/pilot --models "$MODELS" | tee /tmp/batch_ab_summary.json
