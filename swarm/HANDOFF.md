@@ -449,4 +449,10 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
   - **संचालक का पहला चक्कर (swarm-conduct run 44069969354):** branch `swarm-state` बनी; OpenRouter ने खाते की आज की गिनती 52 बताई (`GET /api/v1/key` का उत्तर समझ आया); `isha-e2e` "रुका, अगला समय 18 नवंबर 05:35 IST"; `judge-requal` "Foreman इस step को अभी नहीं जानता"।
   - **Foreman से पूरा चक्कर (enqueue run 44070106943 → foreman-job run 44070132439):** नया `foreman-job.yml` पुराने (deploy हुए) Foreman के साथ चला: हालत आई → run ने बिना किसी मॉडल-अनुरोध के "रुका" कहा → `runs/e2e-44070106943.json` दर्ज → संचालक 4 s बाद अपने-आप जागा (swarm-conduct run 44070161763) → Foreman को callback `done`।
   - **अभी नहीं देखा गया:** quota लौटने पर अपने-आप दोबारा चलना (18 नवंबर 00:05 UTC के बाद पहला मौक़ा); पूरी कड़ी v0.7 (canary-जाँच, जज, cascade) असली मॉडलों पर; Foreman की 20 मिनट की घड़ी (deploy बाक़ी)। तब तक संचालक GitHub के `schedule` (घंटों देर से) या हाथ के `swarm-conduct` से जागता है।
+### session 1, turn 36 (2026-11-17, claude-fable-5-2) — Foreman deploy हुआ; स्वार्म की घड़ी चालू
 
+- **मालिक:** "तुम चला दो" (foreman-deploy)। Claude ने चलाया: run 44071863187, हरा (typecheck, 20 tests, D1 migrations, deploy, secrets, smoke test)। छूट इसी एक deploy की; `swarm/DECISIONS.md`।
+- **घड़ी चालू [हमारा माप]:** deploy के बाद Foreman के अगले tick (11:13:33 UTC) ने अपने-आप `conduct swarm/slot-1495761` भेजा → foreman-job run 44072082802 (11 s में हरा) → callback `done`। यानी अब संचालक हर 20 मिनट पर Foreman से चलता है; GitHub का `schedule` केवल पीछे की रस्सी है।
+- **हालत (17 नवंबर 16:45 IST):** `isha-e2e` रुका, अगला समय 18 नवंबर 00:05 UTC (OpenRouter का दिन पूरा: खाते की गिनती 52/50)। `judge-requal` उसी समय तक टला (ERNIE को नापना है)। Foreman की बही: done 8, needs_expert 1 (पुराना, 16 नवंबर का)।
+- **अभी नहीं देखा गया:** quota लौटने पर `isha-e2e` का अपने-आप चलना, और v0.7 की पूरी कड़ी असली मॉडलों पर। पहला मौक़ा 18 नवंबर 00:05 UTC के बाद का पहला संचालक-चक्कर (20 मिनट के भीतर)।
+- **अगला session पहले यह देखे:** `git fetch origin swarm-state && git show origin/swarm-state:STATUS.md`; `runs/isha-e2e.*.json`; artifact `pilot-report-isha`।
