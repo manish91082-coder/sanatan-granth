@@ -10,7 +10,7 @@ on:
         description: "कौन-सा provider"
         default: "gemini"
         type: choice
-        options: [gemini, probe]
+        options: [gemini, probe, ovh, sambanova]
 
 permissions:
   contents: read
@@ -38,11 +38,14 @@ jobs:
           CODE=${PIPESTATUS[0]}
           { echo '```json'; cat /tmp/smoke.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           exit $CODE
-      - name: Groq और OpenRouter की जाँच
-        if: inputs.provider == 'probe'
+      - name: Groq और OpenRouter (probe), OVHcloud (बिना key), SambaNova की जाँच
+        if: inputs.provider != 'gemini'
         env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          # probe = Groq + OpenRouter (OpenRouter के हर परीक्षण पर दिन का एक अनुरोध जाता है); ovh और sambanova अलग से
+          PROBE_ONLY: ${{ inputs.provider == 'probe' && 'groq,openrouter' || inputs.provider }}
+          OPENROUTER_API_KEY: ${{ inputs.provider == 'probe' && secrets.OPENROUTER_API_KEY || '' }}
+          GROQ_API_KEY: ${{ inputs.provider == 'probe' && secrets.GROQ_API_KEY || '' }}
+          SAMBANOVA_API_KEY: ${{ inputs.provider == 'sambanova' && secrets.SAMBANOVA_API_KEY || '' }}
         run: |
           set +e
           python tools/providers/probe.py | tee /tmp/smoke.json

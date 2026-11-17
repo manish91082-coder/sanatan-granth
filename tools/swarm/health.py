@@ -193,7 +193,9 @@ def clear_quality(h: dict, ref: str) -> None:
 
 
 def has_key(ref: str) -> bool:
-    need = {"google_ai_studio": "GEMINI_API_KEY", "groq": "GROQ_API_KEY", "openrouter": "OPENROUTER_API_KEY"}.get(provider_of(ref))
+    if provider_of(ref) == "ovh":  # OVHcloud AI Endpoints: बिना खाते, बिना key
+        return True
+    need = {"google_ai_studio": "GEMINI_API_KEY", "groq": "GROQ_API_KEY", "openrouter": "OPENROUTER_API_KEY", "sambanova": "SAMBANOVA_API_KEY"}.get(provider_of(ref))
     return bool(need and os.environ.get(need))
 
 

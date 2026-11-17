@@ -21,6 +21,11 @@ ACCT = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")
 CF_TOKEN = os.environ.get("CLOUDFLARE_API_TOKEN", "")
 GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
 OR_KEY = os.environ.get("OPENROUTER_API_KEY", "")
+SN_KEY = os.environ.get("SAMBANOVA_API_KEY", "")
+SN_BASE = "https://api.sambanova.ai/v1"
+OVH_BASE = "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1"
+# OVH पर बिना key के 2 अनुरोध/मिनट प्रति मॉडल हैं: गिने-चुने मॉडल, हर एक पर एक अनुरोध
+OVH_PICKS = ["gpt-oss-120b", "Qwen3.5-397B-A17B", "Qwen3.8-27B", "Meta-Llama-3_3-70B-Instruct"]
 # OpenRouter पर हर परीक्षण दिन के 50 मुफ़्त अनुरोधों में से एक लेता है, इसलिए गिने-चुने मॉडल ही
 OR_PICKS = [r"nvidia/nemotron-3-ultra", r"nvidia/nemotron-3\.5-super", r"baidu/ernie", r"inclusionai/ling", r"thinkingmachines/inkling", r"google/gemma-4-31b"]
 UA = "sanatan-granth-probe/0.1 (open library project)"
@@ -32,7 +37,7 @@ CF_FAMILIES = [("meta", r"llama-4|llama-3\.3-70b|llama.*70b|llama"), ("mistral",
 
 def scrub(s: object) -> str:
     s = str(s)
-    for secret in (ACCT, CF_TOKEN, GROQ_KEY, OR_KEY):
+    for secret in (ACCT, CF_TOKEN, GROQ_KEY, OR_KEY, SN_KEY):
         if secret:
             s = s.replace(secret, "<hidden>")
     s = re.sub(r"gsk_[0-9A-Za-z]{10,}", "<key>", s)
@@ -74,7 +79,7 @@ def chat(url: str, token: str, model: str, json_mode: bool, max_tokens: int = 40
             "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": USER}]}
     if json_mode:
         body["response_format"] = {"type": "json_object"}
-    st, js, hd, dt = http("POST", url, {"authorization": "Bearer " + token}, body)
+    st, js, hd, dt = http("POST", url, {"authorization": "Bearer " + token} if token else {}, body, 180)
     msg = ((js.get("choices") or [{}])[0].get("message") or {}) if st == 200 else {}
     out = {"model": model, "json_mode": json_mode, "http": st, "seconds": round(dt, 2), "ids_ok": parse_ok(msg.get("content") or "") if st == 200 else False,
            "usage": js.get("usage") if st == 200 else None,
@@ -167,12 +172,61 @@ def openrouter() -> dict:
     return rep
 
 
+def _chat_fallback(url: str, token: str, model: str, max_tokens: int, gap: float) -> dict:
+    r = chat(url, token, model, True, max_tokens)
+    if r["http"] in (400, 404, 422):
+        time.sleep(gap)
+        r2 = chat(url, token, model, False, max_tokens)
+        r2["json_mode_error"] = r.get("error")
+        r = r2
+    return r
+
+
+def ovh() -> dict:
+    """OVHcloud AI Endpoints, बिना खाते और बिना key के (anonymous: 2 अनुरोध/मिनट, प्रति IP और प्रति मॉडल)।"""
+    rep: dict = {"anonymous": True, "base": OVH_BASE}
+    st, js, _, _ = http("GET", OVH_BASE + "/models", {})
+    ids = sorted(m.get("id", "") for m in (js.get("data", []) if st == 200 and isinstance(js, dict) else []))
+    rep["models_http"], rep["models"] = st, ids
+    tests = []
+    for mid in OVH_PICKS:
+        if ids and mid not in ids:
+            tests.append({"model": mid, "skipped": "सूची में नहीं"})
+            continue
+        tests.append(_chat_fallback(OVH_BASE + "/chat/completions", "", mid, 3000, 31))
+    # सीमा का व्यवहार: उसी मॉडल पर तुरंत दो और अनुरोध (2/मिनट के बाद 429 अपेक्षित)
+    first = next((t["model"] for t in tests if t.get("http") == 200), None)
+    if first:
+        rep["limit_check"] = [{k: r.get(k) for k in ("http", "seconds", "ratelimit", "error")}
+                              for r in (chat(OVH_BASE + "/chat/completions", "", first, True, 3000) for _ in range(2))]
+    rep["tests"] = tests
+    return rep
+
+
+def sambanova() -> dict:
+    """SambaNova Cloud का मुफ़्त स्तर (भुगतान-तरीका न जुड़ा हो): हर मॉडल पर 20 अनुरोध/दिन; हर मॉडल पर एक अनुरोध।"""
+    rep: dict = {"key_present": bool(SN_KEY)}
+    if not SN_KEY:
+        return rep
+    st, js, _, _ = http("GET", SN_BASE + "/models", {"authorization": "Bearer " + SN_KEY})
+    ids = sorted(m.get("id", "") for m in (js.get("data", []) if st == 200 and isinstance(js, dict) else []))
+    rep["models_http"], rep["models"] = st, ids
+    picks = [i for i in ids if re.search(r"deepseek|llama-3[.]3-70b|gpt-oss-120b|gemma-4-31b", i, re.I)] or ["DeepSeek-V3.1", "Meta-Llama-3.3-70B-Instruct", "gpt-oss-120b"]
+    rep["tests"] = []
+    for mid in picks[:6]:
+        rep["tests"].append(_chat_fallback(SN_BASE + "/chat/completions", SN_KEY, mid, 3000, 4))
+        time.sleep(4)
+    return rep
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")
     except Exception:
         pass
-    rep = {"generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "cloudflare_workers_ai": cloudflare(), "groq": groq(), "openrouter": openrouter()}
+    parts = {"cloudflare_workers_ai": cloudflare, "groq": groq, "openrouter": openrouter, "ovh": ovh, "sambanova": sambanova}
+    only = [x.strip() for x in os.environ.get("PROBE_ONLY", "").split(",") if x.strip()]
+    rep = {"generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), **{k: fn() for k, fn in parts.items() if not only or k in only}}
     print(json.dumps(rep, ensure_ascii=False, indent=2))
     return 0
 
