@@ -314,7 +314,7 @@ def cmd_tick(a) -> int:
             busy = True
             notes.append(f"{tid}: कतार में → {batch}")
         elif code == 400:
-            st.update(status="blocked", blocked_until=health.iso(now + dt.timedelta(hours=6)), reason="Foreman इस step को अभी नहीं जानता (नया deploy बाक़ी)")
+            st.update(status="blocked", blocked_until=health.iso(now + dt.timedelta(hours=1)), reason="Foreman इस step को अभी नहीं जानता (नया deploy बाक़ी)")
         else:
             notes.append(f"{tid}: Foreman तक बात नहीं पहुँची (HTTP {code})")
             meta["foreman_unreachable"] = int(meta.get("foreman_unreachable", 0)) + 1
@@ -400,7 +400,12 @@ def render_status(now, backlog, tasks, H, roster, notes, alerts, plan_now, stopp
     for ref, cfg in roster.get("models", {}).items():
         m = H["models"].get(ref) or {}
         until = health.parse_iso(m.get("cooldown_until"))
-        state = f"रुका: {m.get('reason')} → {ist(m.get('cooldown_until'))}" if until and until > now else "चल सकता है"
+        if until and until > now:
+            state = f"रुका: {m.get('reason')} → {ist(m.get('cooldown_until'))}"
+        elif health.remaining(H, roster, ref, now) <= 0:  # मॉडल ठीक है, पर दिन का हिस्सा (अपना या provider का साझा) पूरा
+            state = f"दिन का हिस्सा पूरा → {ist(health.iso(health.next_reset(health.reset_rule(roster, ref), now)))}"
+        else:
+            state = "चल सकता है"
         role = " + ".join(x for x, k in (("ड्राफ़्ट", "draft"), ("जज", "judge")) if (cfg.get(k) or {}).get("qualified")) or "कोई नहीं"
         rule = health.reset_rule(roster, ref)
         used = m.get("requests", 0) if m.get("window") == health.window_id(rule, now) else 0
