@@ -456,3 +456,13 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **हालत (17 नवंबर 16:45 IST):** `isha-e2e` रुका, अगला समय 18 नवंबर 00:05 UTC (OpenRouter का दिन पूरा: खाते की गिनती 52/50)। `judge-requal` उसी समय तक टला (ERNIE को नापना है)। Foreman की बही: done 8, needs_expert 1 (पुराना, 16 नवंबर का)।
 - **अभी नहीं देखा गया:** quota लौटने पर `isha-e2e` का अपने-आप चलना, और v0.7 की पूरी कड़ी असली मॉडलों पर। पहला मौक़ा 18 नवंबर 00:05 UTC के बाद का पहला संचालक-चक्कर (20 मिनट के भीतर)।
 - **अगला session पहले यह देखे:** `git fetch origin swarm-state && git show origin/swarm-state:STATUS.md`; `runs/isha-e2e.*.json`; artifact `pilot-report-isha`।
+
+### session 1, turn 37 (2026-11-17, claude-fable-5-2) — quota की रुकावट: नए मुफ़्त स्रोत (OVHcloud बिना key, SambaNova) [काम बीच में]
+
+- **मालिक (17 नवंबर):** "quota वाली समस्या का पक्का हल निकालो: timeout या quota ख़त्म होने पर अपने-आप दूसरे मॉडल; गहरी खोज करके लगातार 24×7 चलने का तरीक़ा।"
+- **खोज का नतीजा (स्रोतों के साथ `policy/quotas.md` में):** नियमों के भीतर (कार्ड नहीं, फ़ोन नहीं) दो नए स्रोत: **OVHcloud AI Endpoints** (बिना खाते, बिना key: 2 अनुरोध/मिनट प्रति IP और प्रति मॉडल; दिन की कोई सीमा नहीं लिखी) और **SambaNova** (20 अनुरोध/दिन प्रति मॉडल; खाता मालिक को बनाना होगा)। NVIDIA NIM और Mistral फ़ोन-सत्यापन माँगते हैं, Cerebras भुगतान-तरीका: नहीं लिए।
+- **branch `quota-providers` (PR अभी नहीं):** `tools/pilot/llm.py` में providers `ovh` (बिना key) और `sambanova`; `tools/providers/probe.py` और `provider-smoke.yml` में दोनों की जाँच; workflows में `SAMBANOVA_API_KEY`; `policy/platforms.json` में दोनों अनुमत।
+- **OVH का probe [हमारा माप; `provider-smoke` run 44075274465]:** GitHub Actions से बिना key के चला: `gpt-oss-120b` 5.4 s, `Qwen3.5-397B-A17B` 43 s, `Qwen3.8-27B` 7.2 s (तीनों का JSON ठीक); `Meta-Llama-3_3-70B-Instruct` 123 s और JSON ठीक नहीं।
+- **चल रहा है (नतीजा पढ़ना बाक़ी):** OVH के मॉडलों की जज-परीक्षा (pilot-e2e run 44075857651, artifact `pilot-report-isha`) और ड्राफ़्टर-तुलना (run 44075870884, उसी concurrency-समूह में, पहली के बाद चलेगी)। मॉडल: `ovh:gpt-oss-120b`, `ovh:Qwen3.5-397B-A17B`, `ovh:DeepSeek-V4.1-Flash-1017`, `ovh:Qwen3.8-27B`।
+- **इसके बाद:** नतीजों के हिसाब से `policy/model_roster.json` में OVH के मॉडल (जो जज 0.85 पार करे वही `judges` में; ड्राफ़्टरों का दर्जा तुलना से), ताकि OpenRouter के बिना भी योग्य रचना बने; selftest; PR; `swarm/SWARM_24x7.md` और `DECISIONS.md`। SambaNova: मालिक खाता और key (`SAMBANOVA_API_KEY`) दें तो `provider-smoke` (sambanova)।
+

@@ -67,6 +67,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
           PR_TOKEN: ${{ secrets.FOREMAN_DISPATCH_TOKEN }}
           FOREMAN_URL: ${{ vars.FOREMAN_URL }}
           FOREMAN_SHARED_SECRET: ${{ secrets.FOREMAN_SHARED_SECRET }}
