@@ -541,7 +541,8 @@ def main() -> int:
     rules = roster.get("rules", {})
     H = health.load(sd)
     task = os.environ.get("SWARM_TASK") or a.batch_id.split(".")[0]
-    ck = Ckpt((sd / "work" / f"{task}.json") if sd else None,
+    keep_work = bool(sd) and (bool(os.environ.get("SWARM_TASK")) or "." in a.batch_id)  # हाथ के runs ("manual-…") का अधूरा काम नहीं बचता
+    ck = Ckpt((sd / "work" / f"{task}.json") if keep_work else None,
               {"text": a.text, "pipeline_version": PIPELINE_VERSION, "source_sha256": src_meta["sha256"], "mock": a.mock})
     plan_rec: dict | None = None
     t_now = health.now_utc()

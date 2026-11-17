@@ -96,7 +96,7 @@ test("pilot_e2e का job_key Python वाले से वही; अनु�
   // python -c "from checks.common import job_key; print(job_key('isha','b1','pilot_e2e','pilot-e2e-0.1','cascade'))"
   const spec = ENQUEUEABLE["pilot_e2e"]!;
   assert.equal(await jobKey("isha", "b1", "pilot_e2e", spec.promptHash, spec.model), "1aeb3c35d459f367747b7bc95810f28576337f5a30665e8473cb68b544edd0d0");
-  assert.deepEqual(Object.keys(ENQUEUEABLE).sort(), ["noop", "pilot_e2e"]);
+  assert.deepEqual(Object.keys(ENQUEUEABLE).sort(), ["conduct", "judge_test", "noop", "pilot_e2e"]);
   assert.notEqual(ENQUEUEABLE["noop"]!.lane, spec.lane);
 });
 
@@ -116,8 +116,8 @@ test("स्वार्म की घड़ी: एक ही समय-खा�
 });
 
 test("संचालक और जज-परीक्षा कतार में डाले जा सकते हैं; मॉडल-काम एक ही lane में", () => {
-  assert.equal(ENQUEUEABLE.conduct.lane, "conduct");
-  assert.equal(ENQUEUEABLE.judge_test.lane, ENQUEUEABLE.pilot_e2e.lane);
+  assert.equal(ENQUEUEABLE["conduct"]!.lane, "conduct");
+  assert.equal(ENQUEUEABLE["judge_test"]!.lane, ENQUEUEABLE["pilot_e2e"]!.lane);
   const a = planTick([
     job({ job_key: "p", step: "pilot_e2e", lane: "pilot", status: "running", started_at: T }),
     job({ job_key: "j", step: "judge_test", lane: "pilot" }),

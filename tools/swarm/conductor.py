@@ -331,6 +331,11 @@ def cmd_tick(a) -> int:
             alerts.append(f"मॉडल `{ref}` पर `{m['reason']}`: key या मॉडल की उपलब्धता देखनी होगी")
     if stopped:
         notes.append("swarm/STOP मौजूद: कोई नया काम नहीं")
+    if sd and not a.dry_run and (sd / "work").is_dir():
+        known = {t["id"] for t in backlog.get("tasks", [])}
+        for f in (sd / "work").glob("*.json"):
+            if f.stem not in known:  # कतार में ऐसा कोई काम नहीं: बचा हुआ अधूरा काम किसी के काम का नहीं
+                f.unlink()
 
     status_md = render_status(now, backlog, tasks, H, roster, notes, alerts, plan_now, stopped)
     if sd and not a.dry_run:
