@@ -89,7 +89,11 @@ JUDGE_ONE_SYSTEM = (
 DEFAULT_MODELS = {
     "draft_a": ["groq:qwen/qwen3.8-27b", "cloudflare:@cf/meta/llama-4-scout-17b-16e-instruct"],
     "draft_b": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/openai/gpt-oss-120b"],
-    "draft_c": ["cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct", "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast"],
+    # Draft C में Google वाले मॉडल इसलिए भी हैं कि कड़ी एक ही provider (Workers AI) पर न टिकी रहे: 17 नवंबर को उसका दिन का
+    # quota 05:45 UTC पर भी ख़त्म मिला और 13/18 मंत्रों की जूरी अधूरी रही (foreman-job run 44027360667)। Draft C को दूसरे दौर में
+    # वही जज जाँचता है जो C के परिवार का नहीं है, इसलिए Google का ड्राफ़्ट Google का जज कभी नहीं जाँचता।
+    "draft_c": ["cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct", "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                "google_ai_studio:gemma-4-31b-it", "google_ai_studio:gemini-3.5-flash-lite"],
     "judges": ["google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
                "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"],
 }
