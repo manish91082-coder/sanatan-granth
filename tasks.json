@@ -1,8 +1,9 @@
 {
  "_meta": {
-  "digest": "4397a3dbad3f1fa5",
+  "digest": "4287d5c49457c9cf",
   "foreman_unreachable": 0,
-  "updated_at": "2026-11-17T11:13:43Z"
+  "roster_version": "0.2",
+  "updated_at": "2026-11-17T12:54:25Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -12,16 +13,16 @@
   "step": "pilot_e2e"
  },
  "isha-e2e": {
-  "blocked_until": "2026-11-18T00:05:00Z",
+  "batch_id": "isha-e2e.20261117.1",
   "enabled": true,
   "fails": 0,
-  "reason": "कोई योग्य रचना अभी नहीं बनती (अलग परिवार + योग्य जज + पहले दर्जे का ड्राफ़्टर)",
-  "seq": 0,
-  "status": "blocked",
+  "job_key": "31c295e1686c9b2457a8f4840d31b30268bec39f64518b91ea27d70af7019739",
+  "queued_at": "2026-11-17T12:54:25Z",
+  "seq": 1,
+  "status": "queued",
   "step": "pilot_e2e"
  },
  "judge-requal": {
-  "blocked_until": "2026-11-17T17:00:21Z",
   "enabled": true,
   "fails": 0,
   "reason": "Foreman इस step को अभी नहीं जानता (नया deploy बाक़ी)",
