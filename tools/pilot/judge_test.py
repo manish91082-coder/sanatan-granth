@@ -28,7 +28,8 @@ from tools.pilot.llm import Model, Usage, available, parse_model  # noqa: E402
 from tools.pilot.run_e2e import OK_LABELS, accepted, judge, load_source, seg_key, now_iso, write_json  # noqa: E402
 
 JUDGES = [
-    "google_ai_studio:gemini-3.5-flash-lite", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b", "google_ai_studio:gemma-4-31b-it",
+    "openrouter:baidu/ernie-5.5-flash-preview:free", "google_ai_studio:gemini-3.5-flash-lite", "groq:qwen/qwen3.8-27b", "groq:openai/gpt-oss-120b",
+    "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
 ]
 HI = "[ऀ-ॿ]"
 # (नाम, अंग्रेज़ी pattern, बदलाव, [(हिंदी pattern, बदलाव), ...])। हर मंत्र पर पहला लागू नियम, केवल पहली जगह।

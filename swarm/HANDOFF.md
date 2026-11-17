@@ -395,3 +395,33 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **छोटा सुधार:** `llm.py` अब "Request too large" वाली 429 पर तुरंत रुकता है (इंतज़ार से वह अनुरोध कभी नहीं चलता)।
 - **मालिक के क़दम (एक-एक करके):** (1) openrouter.ai पर खाता (कार्ड या फ़ोन माँगे तो रुकना); (2) API key बनाना; (3) key को GitHub Secret `OPENROUTER_API_KEY` में रखना। key Claude को न दिखाई जाए, न chat में चिपकाई जाए। उसके बाद Claude: `provider-smoke` (provider=probe) → `policy/quotas.md` → bake-off और जज-परीक्षा में OpenRouter के मॉडल।
 - **न करें:** Workers AI को किसी सूची में वापस न लाएँ; OpenRouter पर credit न ख़रीदें (नियम: कोई ख़र्च नहीं); एक दिन में 50 से ज़्यादा OpenRouter-अनुरोध वाले run न बनाएँ।
+
+### session 1, turn 34 (2026-11-17, claude-fable-5-2) — OpenRouter की key, उसके मॉडलों का माप, कड़ी v0.6
+
+- **मालिक:** OpenRouter का खाता बनाया/खोला और कहा "आगे के step ख़ुद कर लो"। Claude ने browser में key का फ़ॉर्म भरा (नाम `sanatan-granth`, समाप्ति नहीं, ख़र्च-सीमा $1) और terminal में `gh secret set` शुरू किया; **Create दबाना और key चिपकाना मालिक ने किया** (Claude key का मान नहीं देखता)। Secret `OPENROUTER_API_KEY` 17 नवंबर, 08:15 UTC पर बना।
+- **खाते की बात:** यह OpenRouter खाता पुराना है; उसमें दो और keys हैं (मालिक के दूसरे औज़ारों की)। मुफ़्त मॉडलों के 50 अनुरोध/दिन पूरे खाते के साझा हैं। probe के समय खाता `is_free_tier: true` था और दिन की गिनती 0/50।
+- **probe [हमारा माप; provider-smoke run 44045320321]:** छोटा JSON-परीक्षण पास: `nvidia/nemotron-3-ultra-550b-a55b:free` (4.7 s), `nvidia/nemotron-3.5-super-vl:free` (10.2 s), `baidu/ernie-5.5-flash-preview:free` (4.4 s)। नहीं चले: `inclusionai/ling-3.2-flash:free` (94 s, सारा उत्तर सोचने में कट गया), `thinkingmachines/inkling-2-small:free` (HTTP 403: केवल agentic harness पर), `google/gemma-4-31b-it:free` (HTTP 429: upstream पर सीमित)।
+- **जज-परीक्षा [हमारा माप; pilot-e2e run 44045781954; डेटा-PR #59; आधार अब v0.5 run का मसौदा, 16 मंत्रों पर ग़लती डाली गई]:**
+
+| जज | बिगड़ी नक़ल पकड़ी | आधार चुना | आधार पर आपत्ति | समय | अनुरोध |
+|---|---|---|---|---|---|
+| ERNIE 5.5 Flash (OpenRouter) | 16/16 | 16/16 | 0 | 70 s | 4 |
+| Gemini 3.5 Flash-Lite | 15/16 (चूक: ईश 18) | 16/16 | 1 | 19 s | 2 |
+| Nemotron 3.5 Super (OpenRouter) | 7 ही जाँचे (7/7); बाक़ी पर JSON नहीं बना | — | — | 522 s | 18 |
+| Nemotron 3 Ultra (OpenRouter) | 0 जाँचे: हर उत्तर tokens की सीमा पर सोचने में ही कट गया | — | — | 597 s | 10 |
+
+- **ड्राफ़्टरों की तुलना [हमारा माप; pilot-e2e run 44045798916, bake-off; 18 मंत्र; अकेले-ड्राफ़्ट वाली जाँच]:**
+
+| ड्राफ़्टर | लौटे | समय | जज | label |
+|---|---|---|---|---|
+| Gemini 3.5 Flash-Lite | 18/18 | 18 s | qwen | OK 17, CONTRADICTED 1 (ईश 16) |
+| Nemotron 3 Ultra (OpenRouter) | 18/18 (2 अनुरोध) | 54 s | Flash-Lite | OK 11, MINOR 6, CONTRADICTED 1 (ईश 13) |
+| ERNIE 5.5 Flash (OpenRouter) | 9/18 (15 अनुरोध, JSON बार-बार नहीं बना; फिर दिन की सीमा) | 353 s | Flash-Lite | 9 में OK 9 |
+| Nemotron 3.5 Super | 0 (दिन की सीमा ख़त्म) | — | — | — |
+
+  - जज अलग-अलग हैं (qwen नरम जज है), इसलिए Flash-Lite और Nemotron की पंक्तियाँ सीधे तुलनीय नहीं हैं। तुलना के लिए: इसी दिन की कड़ी में Flash-Lite-जज ने qwen के ड्राफ़्ट में 18 में से 6 और gpt-oss के में 3 CONTRADICTED पाए थे।
+- **OpenRouter का दिन का हिस्सा ख़त्म (लगभग 08:45 UTC):** probe 6 + जज-परीक्षा 32 + तुलना 19 अनुरोध। इनमें से ज़्यादातर बर्बाद हुए: सोचने वाले मॉडलों का उत्तर `max_tokens` पर कट गया और `llm.py` ने हर टुकड़ा पाँच बार तक दोहराया। **सुधार (इसी PR में):** OpenRouter के लिए tokens की 16,000 की खुली जगह; JSON न बने तो एक ही दोहराव; एक run में अधिकतम 24 अनुरोध (`PILOT_OPENROUTER_MAX_CALLS`)।
+- **कड़ी v0.6 (`DEFAULT_MODELS`):** Draft A = Flash-Lite (फिर Gemma); Draft B = Nemotron 3 Ultra (फिर gpt-oss, qwen); Draft C = gpt-oss (फिर qwen, Nemotron); जज = ERNIE (फिर qwen, gpt-oss, Nemotron, Flash-Lite, Gemma)। जज अपने परिवार का काम अब भी नहीं जाँचता। **mock में हरा; असली मॉडलों पर पूरी कड़ी में अभी नहीं चला।**
+- **जोखिम:** (1) ERNIE की 16/16 और दोनों ड्राफ़्टरों के label एक-एक run के हैं। (2) ERNIE का मॉडल `preview` है और OpenRouter की मुफ़्त सूची बदलती रहती है; हट जाए तो जज qwen पर गिरेगा, जो नरम है। (3) कड़ी अब रोज़ के 50 OpenRouter-अनुरोधों पर टिकी है: 18 मंत्रों के run में लगभग 10–14 लगेंगे (अनुमान, नापा नहीं)।
+- **अगला क़दम कब:** OpenRouter 00:00 UTC (05:30 IST, 18 नवंबर) पर लौटता है; Groq gpt-oss की खिड़की 24 घंटे की चलती हुई है। तब `foreman-enqueue` एक बार।
+- **न करें:** OpenRouter पर credit न ख़रीदें; `PILOT_OPENROUTER_MAX_CALLS` बिना कारण न बढ़ाएँ; एक ही दिन में जज-परीक्षा, bake-off और कड़ी तीनों OpenRouter के मॉडलों के साथ न चलाएँ।

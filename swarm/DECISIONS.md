@@ -113,3 +113,11 @@
 - **सीमा:** OpenRouter पर मुफ़्त मॉडलों के 50 अनुरोध/दिन हैं (बिना कोई credit ख़रीदे)। वह Draft C और दूसरे परिवार के जज के लिए है, बड़े पैमाने के लिए नहीं। मुफ़्त मॉडलों की सूची बदलती रहती है।
 - **नहीं बदला:** Foreman Cloudflare Worker पर ही है (वह Workers AI नहीं चलाता; कोई नया deploy नहीं)। बैज केवल C/D; `texts/` ख़ाली; "जज अपने परिवार का काम नहीं जाँचता"।
 - **जोड़ (उसी दिन, turn 33):** v0.5 Workers AI के बिना Foreman से हरा चला (run 44033394368)। P2 2.2 का पहला माप: Flash-Lite पर batch-आकार 30–60 चलता है; Groq के ड्राफ़्टरों पर 10 भी नहीं। batch-आकार और ड्राफ़्टरों का फ़ैसला Gemma के माप और OpenRouter की key के बाद।
+
+## 2026-11-17 · pilot v0.6: Draft A/B = Flash-Lite / Nemotron 3 Ultra; जज = ERNIE 5.5 Flash; OpenRouter पर run-सीमा
+
+- **मालिक:** OpenRouter की key दी (GitHub Secret) और आगे के क़दम Claude को सौंपे।
+- **आधार (सब एक-एक run; HANDOFF turn 34):** ERNIE ने जज-परीक्षा में 16/16 पकड़ीं (Flash-Lite 15/16); Flash-Lite और Nemotron 3 Ultra ने 18/18 मंत्र 18 s और 54 s में ड्राफ़्ट किए; qwen और gpt-oss के ड्राफ़्ट में Flash-Lite-जज ने 6 और 3 CONTRADICTED पाए थे और वे rate-limit के कारण धीमे हैं।
+- **फ़ैसला (अस्थायी):** `DEFAULT_MODELS` जैसा `tools/pilot/run_e2e.py` में दर्ज है। qwen और gpt-oss केवल Draft C और जज के विकल्प। OpenRouter पर एक run में अधिकतम 24 अनुरोध।
+- **खुला:** यह रचना असली मॉडलों पर पूरी कड़ी में नहीं चली; पहले दौर की सहमति इससे सुधरती है या नहीं, यह पहला असली run बताएगा। ERNIE `preview` मॉडल है।
+- **नहीं बदला:** बैज केवल C/D; R2 और R6; "जज अपने परिवार का काम नहीं जाँचता"; `texts/` ख़ाली; कोई ख़र्च नहीं (key पर $1 की सीमा केवल सुरक्षा है, खाते में credit नहीं ख़रीदा गया)।

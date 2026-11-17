@@ -33,7 +33,7 @@ from checks.common import canonical_segments_hash  # noqa: E402
 from checks.run_all import report as checks_report, run as checks_run  # noqa: E402
 from tools.pilot.llm import Model, Usage, available, chat_json, parse_model  # noqa: E402
 
-PIPELINE_VERSION = "pilot-e2e-0.5"
+PIPELINE_VERSION = "pilot-e2e-0.6"
 OK_LABELS = {"OK", "MINOR"}
 LABELS = {"OK", "MINOR", "CONTRADICTED", "UNSURE"}
 EXPECTED_RED = {"R2": "पाठ lock नहीं है (स्रोत का फ़ैसला बाक़ी)", "R6": "मूल-पाठ का वाहक गवाह CC BY-SA है; प्रदर्शन-योग्य स्रोत तय नहीं"}
@@ -91,11 +91,18 @@ JUDGE_ONE_SYSTEM = (
 #   workflows अब उसकी key देते ही नहीं। चौथे परिवार के लिए OpenRouter के मुफ़्त मॉडल आएँगे (key और माप के बाद; 50 अनुरोध/दिन)।
 #   तब तक तीन परिवार हैं: alibaba-qwen (A), openai (B), google (C और जज 1)। दूसरे दौर में C को वही जज जाँचता है जो C के
 #   परिवार का नहीं है, इसलिए Google का ड्राफ़्ट Google का जज कभी नहीं जाँचता।
+# 17 नवंबर 2026 (v0.6): रचना बदली, आज के मापों से (सब एक-एक run के; HANDOFF turn 34):
+#   ड्राफ़्ट: Flash-Lite ने 18 मंत्र 18 s में दिए (qwen-जज: 17 OK); Nemotron 3 Ultra ने 54 s में (Flash-Lite-जज: 11 OK, 6 MINOR,
+#   1 CONTRADICTED)। qwen और gpt-oss कमज़ोर और धीमे निकले (Flash-Lite-जज: qwen 6/18 CONTRADICTED), इसलिए वे अब केवल Draft C हैं।
+#   जज: ERNIE 5.5 Flash ने जज-परीक्षा में 16/16 डाली गई ग़लतियाँ पकड़ीं (Flash-Lite 15/16)। वह न चले तो qwen, फिर gpt-oss।
+#   OpenRouter (Nemotron, ERNIE) पर दिन के 50 अनुरोध हैं: एक run में llm.py उसे PILOT_OPENROUTER_MAX_CALLS (24) पर रोक देता है।
+#   यह रचना असली मॉडलों पर पूरी कड़ी में अभी नहीं चली (17 नवंबर को OpenRouter का दिन का हिस्सा परीक्षणों में चला गया)।
 DEFAULT_MODELS = {
-    "draft_a": ["groq:qwen/qwen3.8-27b"],
-    "draft_b": ["groq:openai/gpt-oss-120b"],
-    "draft_c": ["google_ai_studio:gemma-4-31b-it", "google_ai_studio:gemini-3.5-flash-lite"],
-    "judges": ["google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"],
+    "draft_a": ["google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it"],
+    "draft_b": ["openrouter:nvidia/nemotron-3-ultra-550b-a55b:free", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"],
+    "draft_c": ["groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b", "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free"],
+    "judges": ["openrouter:baidu/ernie-5.5-flash-preview:free", "groq:qwen/qwen3.8-27b", "groq:openai/gpt-oss-120b",
+               "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free", "google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it"],
 }
 
 
