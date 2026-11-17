@@ -24,12 +24,14 @@ REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "tools" / "witness"))
 
+from tools.pilot import llm  # noqa: E402
 from tools.pilot.llm import Model, Usage, available, chat_json, parse_model  # noqa: E402
 from tools.pilot.run_e2e import DRAFT_SYSTEM, LABELS, OK_LABELS, _valid_draft, judge_one, now_iso, seg_key, write_json  # noqa: E402
 
 # क्रम: तेज़ मॉडल पहले; Gemma सबसे धीमा है, इसलिए अंत में (job की समय-सीमा पर वही कटे)।
 MODELS = ["google_ai_studio:gemini-3.5-flash-lite", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b", "google_ai_studio:gemma-4-31b-it"]
-JUDGES = ["google_ai_studio:gemini-3.5-flash-lite", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"]
+# जज: Flash-Lite (Google से बाहर के ड्राफ़्टरों के लिए); Google के ड्राफ़्टरों के लिए qwen (gpt-oss की दिन-भर की सीमा बचाने को)
+JUDGES = ["google_ai_studio:gemini-3.5-flash-lite", "groq:qwen/qwen3.8-27b", "groq:openai/gpt-oss-120b"]
 
 
 def run_condition(model: Model, size: int, segs: dict[str, str], ids: list[str], mock: bool) -> tuple[dict, dict[str, dict]]:
@@ -90,6 +92,7 @@ def main() -> int:
         pass
     import gita_collate  # noqa: PLC0415
 
+    llm.TIMEOUT_S["google_ai_studio"] = 600  # 60 श्लोकों का एक अनुरोध Gemma पर कई मिनट लेता है; यहाँ वही नापना है
     chapters = [int(x) for x in a.chapters.split(",") if x.strip()]
     sizes = [int(x) for x in a.sizes.split(",") if x.strip()]
     out, t0 = Path(a.out), time.time()
