@@ -265,6 +265,23 @@ def conductor_decisions():
 
 
 @test
+def judge_requal_waits_for_roster_judges():
+    task = {"id": "judge-requal", "step": "judge_test", "text_id": "isha", "repeat": "weekly"}
+    old = {k: os.environ.pop(k, None) for k in ("GEMINI_API_KEY", "GROQ_API_KEY", "OPENROUTER_API_KEY")}
+    try:
+        assert conductor.feasibility(task, fresh(), ROSTER, None, NOW)["ok"]
+        # OpenRouter का दिन पूरा: ERNIE (कड़ी का जज) नहीं नप सकता → परीक्षा टलती है, बाक़ी उम्मीदवार उपलब्ध हों तब भी
+        h = fresh()
+        health.note_openrouter_usage(h, ROSTER, 50, NOW)
+        f = conductor.feasibility(task, h, ROSTER, None, NOW)
+        assert not f["ok"] and f["next_try"] == "2026-11-18T00:05:00Z", f
+    finally:
+        for k, v in old.items():
+            if v is not None:
+                os.environ[k] = v
+
+
+@test
 def conductor_tick_dry_run():
     with tempfile.TemporaryDirectory() as d:
         sd = Path(d)

@@ -134,21 +134,27 @@ def feasibility(task: dict, H: dict, roster: dict, sd: Path | None, now: dt.date
                 pl = health.plan(H, roster, now, n_segments=int(task.get("segments", 18)), check_key=check_key)
         return {"ok": pl["feasible"], "next_try": pl.get("next_try"), "reason": pl.get("reason", ""), "plan": pl.get("chosen"), "why": pl.get("why") or pl.get("why_not")}
     if task["step"] == "judge_test":
+        # यह परीक्षा उन जजों को दोबारा नापने के लिए है जिन पर कड़ी टिकी है (roster के `judges`): वे सब उपलब्ध हों तभी चले।
+        # बाक़ी उम्मीदवार जो उपलब्ध हों, साथ में नप जाते हैं।
+        must = list(roster.get("roles", {}).get("judges", []))
         waits, ready = [], []
         for ref in roster.get("roles", {}).get("judge_candidates", []):
             m = H["models"].get(ref) or {}
             until = health.parse_iso(m.get("cooldown_until"))
+            wait = None
             if check_key and not health.has_key(ref):
-                continue
-            if until and until > now and m.get("reason") != "quality":
-                waits.append(until)
+                wait = now + dt.timedelta(hours=24)
+            elif until and until > now and m.get("reason") != "quality":
+                wait = until
             elif health.remaining(H, roster, ref, now) < 6:
-                waits.append(health.next_reset(health.reset_rule(roster, ref), now))
-            else:
+                wait = health.next_reset(health.reset_rule(roster, ref), now)
+            if wait is None:
                 ready.append(ref)
-        if len(ready) >= 2:  # एक ही जज नापना बेकार है: तुलना के लिए कम से कम दो
+            elif ref in must:
+                waits.append(wait)
+        if not waits and len(ready) >= 2:
             return {"ok": True, "judges": ready}
-        return {"ok": False, "next_try": health.iso(min(waits)) if waits else None, "reason": "जज-परीक्षा के लिए दो जज अभी उपलब्ध नहीं"}
+        return {"ok": False, "next_try": health.iso(max(waits)) if waits else None, "reason": "जज-परीक्षा: कड़ी के जज (roster) अभी सब उपलब्ध नहीं"}
     return {"ok": False, "next_try": None, "reason": f"step '{task['step']}' संचालक को नहीं आता"}
 
 
