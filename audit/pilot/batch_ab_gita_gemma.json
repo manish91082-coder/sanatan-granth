@@ -1,0 +1,219 @@
+{
+  "generated_at": "2026-11-17T07:54:28Z",
+  "text_id": "gita",
+  "chapters": [
+    1,
+    2
+  ],
+  "segments": 119,
+  "sizes": [
+    10,
+    30,
+    60
+  ],
+  "run": "44035253282",
+  "mock": false,
+  "witnesses": [
+    {
+      "witness_id": "sa-ws-gita-1",
+      "revid": 343151,
+      "sha256": "8101c174c0d07676c2eacc1e166298f4f6567961f8b75892412991811818bbde",
+      "licence": "CC-BY-SA-4.0"
+    },
+    {
+      "witness_id": "sa-ws-gita-2",
+      "revid": 408369,
+      "sha256": "9d365c91e86947c2c0b5b55a852566a7ef029877e78dc5d10358f753111fc3d9",
+      "licence": "CC-BY-SA-4.0"
+    }
+  ],
+  "judge_sample": [
+    "gita:1.1",
+    "gita:1.7",
+    "gita:1.13",
+    "gita:1.19",
+    "gita:1.25",
+    "gita:1.31",
+    "gita:1.37",
+    "gita:1.43",
+    "gita:2.2",
+    "gita:2.8",
+    "gita:2.14",
+    "gita:2.20",
+    "gita:2.26",
+    "gita:2.32",
+    "gita:2.38",
+    "gita:2.44",
+    "gita:2.50",
+    "gita:2.56"
+  ],
+  "no_key": [],
+  "seconds_total": 3292.6,
+  "results": [
+    {
+      "model": "google_ai_studio:gemma-4-31b-it",
+      "family": "google",
+      "batch_size": 10,
+      "requests": 9,
+      "requests_failed": 3,
+      "returned": 60,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": true,
+      "of": 119,
+      "missing": 59,
+      "seconds": 1191.9,
+      "seconds_per_segment": 19.87,
+      "usage": {
+        "calls": 19,
+        "retries": 10,
+        "http_429": 0,
+        "prompt_tokens": 3356,
+        "output_tokens": 15878,
+        "seconds": 1051.87,
+        "waited_s": 140.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+        ]
+      },
+      "quality_sample": {
+        "sampled": 11,
+        "judge": "groq:qwen/qwen3.8-27b",
+        "judged": 11,
+        "labels": {
+          "CONTRADICTED": 1,
+          "UNSURE": 0,
+          "MINOR": 0,
+          "OK": 10
+        },
+        "ok_rate": 0.909,
+        "judge_usage": {
+          "calls": 2,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 2268,
+          "output_tokens": 269,
+          "seconds": 1.07,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "model": "google_ai_studio:gemma-4-31b-it",
+      "family": "google",
+      "batch_size": 30,
+      "requests": 4,
+      "requests_failed": 0,
+      "returned": 119,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": false,
+      "of": 119,
+      "missing": 0,
+      "seconds": 983.0,
+      "seconds_per_segment": 8.26,
+      "usage": {
+        "calls": 8,
+        "retries": 4,
+        "http_429": 0,
+        "prompt_tokens": 5696,
+        "output_tokens": 27094,
+        "seconds": 922.96,
+        "waited_s": 60.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      },
+      "quality_sample": {
+        "sampled": 18,
+        "judge": "groq:qwen/qwen3.8-27b",
+        "judged": 18,
+        "labels": {
+          "CONTRADICTED": 2,
+          "UNSURE": 0,
+          "MINOR": 0,
+          "OK": 16
+        },
+        "ok_rate": 0.889,
+        "judge_usage": {
+          "calls": 3,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 3640,
+          "output_tokens": 439,
+          "seconds": 2.01,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "model": "google_ai_studio:gemma-4-31b-it",
+      "family": "google",
+      "batch_size": 60,
+      "requests": 2,
+      "requests_failed": 1,
+      "returned": 59,
+      "invalid": 0,
+      "extra_ids": 0,
+      "stopped_early": false,
+      "of": 119,
+      "missing": 60,
+      "seconds": 1112.5,
+      "seconds_per_segment": 18.86,
+      "usage": {
+        "calls": 4,
+        "retries": 2,
+        "http_429": 0,
+        "prompt_tokens": 2648,
+        "output_tokens": 9662,
+        "seconds": 1092.51,
+        "waited_s": 20.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 0: RemoteDisconnected"
+        ]
+      },
+      "quality_sample": {
+        "sampled": 8,
+        "judge": "groq:qwen/qwen3.8-27b",
+        "judged": 8,
+        "labels": {
+          "CONTRADICTED": 1,
+          "UNSURE": 0,
+          "MINOR": 0,
+          "OK": 7
+        },
+        "ok_rate": 0.875,
+        "judge_usage": {
+          "calls": 2,
+          "retries": 0,
+          "http_429": 0,
+          "prompt_tokens": 1755,
+          "output_tokens": 191,
+          "seconds": 0.87,
+          "waited_s": 0.0,
+          "paced_s": 0.0,
+          "neurons": 0.0,
+          "errors": []
+        }
+      }
+    }
+  ],
+  "limits": [
+    "हर स्थिति एक ही बार चली: दरें संकेत हैं, औसत नहीं",
+    "गुणवत्ता का label AI-जज का है, और केवल नमूने पर",
+    "स्रोत वाहक-गवाह है (lock नहीं); कोई अनुवाद repo में नहीं गया",
+    "मुफ़्त स्तर की सीमाएँ दिन और घंटे के हिसाब से बदलती हैं"
+  ]
+}
