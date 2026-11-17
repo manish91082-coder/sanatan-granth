@@ -2,13 +2,13 @@
   "_meta": {
     "label": "AI-मसौदा · मानव-समीक्षा नहीं",
     "ai_generated": true,
-    "pipeline_version": "pilot-e2e-0.4",
-    "generated_at": "2026-11-17T06:11:55Z",
+    "pipeline_version": "pilot-e2e-0.5",
+    "generated_at": "2026-11-17T06:57:46Z",
     "licence": "LicenseRef-sanatan-granth-draft",
     "note": "पूरा संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash (जज के प्रमाण में एक-दो शब्द आ सकते हैं)। अनुवाद परीक्षण के हैं।",
     "mock": false,
-    "run": "44028350640",
-    "job_key": "d4c581699483e80a1141c8f1cbe6e391adbf652c904348ba2eb9d8a5b1d2217a"
+    "run": "44033394368",
+    "job_key": "a6433d13ec5e02eae96f301380c492da3c62c72a98716b28cd5c763823ece347"
   },
   "segments": [
     {
@@ -21,7 +21,7 @@
         "a_label": "OK",
         "b_label": "MINOR",
         "a_evidence": "",
-        "b_evidence": "is to be covered / आवृत किया जाना चाहिए instead of is pervaded / व्याप्त है",
+        "b_evidence": "Vasyam translated as covered instead of pervaded",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
@@ -29,8 +29,8 @@
       "judge2": {
         "a_label": "MINOR",
         "b_label": "MINOR",
-        "a_evidence": "यत्किञ्च जगत्यां जगत् rendered as “whatever moves”",
-        "b_evidence": "यत्किञ्च जगत्यां जगत् rendered as “moving world”",
+        "a_evidence": "जगत् rendered as “moving world” (adds motion)",
+        "b_evidence": "जगत् rendered as “moving world” (adds motion)",
         "agree": true,
         "pick": "A",
         "has_empirical_claim": false
@@ -39,7 +39,7 @@
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
       "en": "Om. All this, whatever moves in this moving world, is pervaded by the Lord. Enjoy by renouncing it; do not covet anyone's wealth.",
-      "hi": "ॐ। इस चलती हुई जगत में जो कुछ भी चलता है, वह सब ईश्वर द्वारा व्याप्त है। उसे त्यागकर भोगो; किसी के धन की लालसा मत करो।"
+      "hi": "ॐ। इस चलती हुई जगत में जो कुछ भी चलता है, वह सब ईश्वर द्वारा व्याप्त है। उसे त्यागकर भोगो; किसी का धन लोभ मत करो।"
     },
     {
       "id": "isha:2",
@@ -52,8 +52,8 @@
       "judge1": {
         "a_label": "CONTRADICTED",
         "b_label": "MINOR",
-        "a_evidence": "शतँ समाः translated as sixty years / छह सौ वर्षों",
-        "b_evidence": "शतँ समाः (hundred autumns/years) completely dropped",
+        "a_evidence": "Shatam samah translated as sixty years instead of a hundred years",
+        "b_evidence": "Jijivishet rendered loosely as wish to live",
         "agree": false,
         "pick": "B",
         "has_empirical_claim": false
@@ -61,7 +61,7 @@
       "judge2": {
         "a_label": "MINOR",
         "b_label": "OK",
-        "a_evidence": "Drops 'śataṃ' (hundred) in 'jijiviṣec chataṃ samāḥ'.",
+        "a_evidence": "jijivishe (wish to live) rendered as 'wish to live' but 'shatam samah' (100 years) is dropped.",
         "b_evidence": "",
         "agree": false,
         "pick": "B",
@@ -70,8 +70,8 @@
       "print_coverage": 0.9155,
       "final_model": "gemma-4-31b-it",
       "final_family": "google",
-      "en": "Performing works here indeed, one should desire to live for a hundred years. Thus for you there is no other way; thus work does not cling to a man.",
-      "hi": "यहाँ कर्म करते हुए ही सौ वर्षों तक जीने की इच्छा करनी चाहिए। तुम्हारे लिए इसके अलावा और कोई मार्ग नहीं है, जिससे मनुष्य कर्मों से लिप्त न हो।"
+      "en": "Performing works here, one should desire to live for a hundred years. Thus, for you there is no other way; the work does not cling to the man.",
+      "hi": "यहाँ कर्म करते हुए ही सौ वर्षों तक जीने की इच्छा करनी चाहिए। तुम्हारे लिए इसके अलावा और कोई मार्ग नहीं है, मनुष्य कर्म से लिप्त नहीं होता।"
     },
     {
       "id": "isha:3",
@@ -82,7 +82,7 @@
       "judge1": {
         "a_label": "MINOR",
         "b_label": "OK",
-        "a_evidence": "Asurya translated as sunless / सूर्यरहित",
+        "a_evidence": "Asurya translated as sunless",
         "b_evidence": "",
         "agree": false,
         "pick": "B",
@@ -112,28 +112,28 @@
       ],
       "path": "cascade के बाद भी असहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
+        "a_label": "OK",
         "b_label": "CONTRADICTED",
-        "a_evidence": "पूर्वमर्षत् translated as Archer strung his bow / अर्ष (बाण चालक) ने धनुष ताना",
-        "b_evidence": "अनेजदेकं translated as not born of the mind / मन से न जन्मा",
+        "a_evidence": "",
+        "b_evidence": "Anejad ekam javeeyah completely mistranslated as born of the mind the brave",
         "agree": false,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": {
         "a_label": "CONTRADICTED",
-        "b_label": "MINOR",
-        "a_evidence": "Garbled translation of 'na enad deva āpnuvan' and 'matarishvan dadhati'.",
-        "b_evidence": "Misreads 'na enad deva āpnuvan' as 'gods do not reach this' instead of 'gods do not reach it (the sun)'.",
-        "agree": false,
-        "pick": "B",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "अनेजदेकं rendered as “unmoving”; नैनद्देवा आप्नुवन्पूर्वम् rendered as “did not reach it first”",
+        "b_evidence": "अनेजदेकं rendered as “unmoving”; नैनद्देवा आप्नुवन्पूर्वम् rendered as “it leaped first”",
+        "agree": true,
+        "pick": "A",
         "has_empirical_claim": false
       },
       "print_coverage": 0.6774,
-      "final_model": "gemma-4-31b-it",
-      "final_family": "google",
-      "en": "One unmoving, swifter than the mind, the gods do not reach this; it leaped first. Running, it surpasses others; staying, in that Matarishvan places the waters.",
-      "hi": "एक अचल, मन से भी तीव्र, जिसे देवता प्राप्त नहीं कर पाते, वह पहले ही उछल गया। दौड़ते हुए वह दूसरों को पार कर जाता है; स्थिर रहकर उसमें मातरिश्वान जल को स्थापित करता है।"
+      "final_model": "qwen/qwen3.8-27b",
+      "final_family": "alibaba-qwen",
+      "en": "The one, unmoving, is swifter than the mind; the gods did not reach it first. There, standing, it supports the moving one; in that, the mother of the waters, Matarishva, is established.",
+      "hi": "वह एक, अचल, मन से तेज है; देवताओं ने पहले उसे प्राप्त नहीं किया। वहाँ, खड़े होकर, वह चलने वाले को धारण करता है; उसमें, जल की माता, मतरिश्वा, स्थापित है।"
     },
     {
       "id": "isha:5",
@@ -143,9 +143,9 @@
       "path": "cascade के बाद सहमति",
       "judge1": {
         "a_label": "OK",
-        "b_label": "MINOR",
+        "b_label": "CONTRADICTED",
         "a_evidence": "",
-        "b_evidence": "तैजति (moves) translated as is born / जन्म लेता है",
+        "b_evidence": "Ejati translated as conquered",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
@@ -162,8 +162,8 @@
       "print_coverage": 0.8154,
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
-      "en": "That moves, that does not move; that is far, that is near. That is within all, that is outside all this.",
-      "hi": "वह चलता है, वह नहीं चलता; वह दूर है, वह पास है। वह सबके भीतर है, वह इस सबके बाहर है।"
+      "en": "That moves, that does not move; that is far, that is near; that is within all, that is outside all this.",
+      "hi": "वह चलता है, वह नहीं चलता; वह दूर है, वह पास है; वह सबके भीतर है, वह इस सबके बाहर है।"
     },
     {
       "id": "isha:6",
@@ -176,8 +176,8 @@
       "judge1": {
         "a_label": "OK",
         "b_label": "MINOR",
-        "a_evidence": "विजुगुप्सते translated as hide himself / स्वयं को नहीं छुपाता",
-        "b_evidence": "",
+        "a_evidence": "",
+        "b_evidence": "Vijugupsate translated as hide himself",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
@@ -185,9 +185,9 @@
       "judge2": {
         "a_label": "CONTRADICTED",
         "b_label": "CONTRADICTED",
-        "a_evidence": "विजुगुप्सते rendered as does not see himself with aversion",
-        "b_evidence": "विजुगुप्सते rendered as does not hate",
-        "agree": false,
+        "a_evidence": "विजुगुप्सते rendered as 'does not see with aversion'",
+        "b_evidence": "विजुगुप्सते rendered as 'does not hate'",
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
@@ -195,7 +195,7 @@
       "final_model": "gemma-4-31b-it",
       "final_family": "google",
       "en": "He who sees all beings in the self alone, and the self in all beings, he then does not hate.",
-      "hi": "जो मनुष्य सभी भूतों को अपनी आत्मा में ही देखता है और सभी भूतों में अपनी आत्मा को, वह फिर किसी से घृणा नहीं करता।"
+      "hi": "जो मनुष्य सभी भूतों को अपनी आत्मा में ही देखता है और सभी भूतों में अपनी आत्मा को, वह फिर घृणा नहीं करता।"
     },
     {
       "id": "isha:7",
@@ -206,8 +206,8 @@
       "judge1": {
         "a_label": "MINOR",
         "b_label": "OK",
-        "a_evidence": "",
-        "b_evidence": "विजानतः rendered awkwardly as knower of the Veda knows",
+        "a_evidence": "Vijanatoh rendered loosely",
+        "b_evidence": "",
         "agree": false,
         "pick": "B",
         "has_empirical_claim": false
@@ -218,37 +218,37 @@
         "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "print_coverage": 0.8676,
-      "final_model": "gemma-4-31b-it",
-      "final_family": "google",
-      "en": "In whom all beings have become the self alone for the knower, what delusion is there, what grief for him who sees oneness?",
-      "hi": "जिस ज्ञानी के लिए सभी भूत आत्मा ही हो गए, उस एकत्व को देखने वाले के लिए वहाँ क्या मोह है, क्या शोक है?"
+      "final_model": "openai/gpt-oss-120b",
+      "final_family": "openai",
+      "en": "In that where all beings are indeed the Self alone, known, there what delusion, what sorrow, when one beholds oneness?",
+      "hi": "जिसमें सभी प्राणियों को केवल आत्मा ही माना गया है, ज्ञात है, वहाँ कौन‑सा मोह, कौन‑सा शोक, जब एकत्व को देखा जाता है?"
     },
     {
       "id": "isha:8",
       "sa_sha256": "28602737db191ac027798f15de9297c319afc6ea16eba40e88a9728eabcc9292",
       "badge": "D",
       "flags": [
-        "CONTRADICTED"
+        "JURY_DISAGREE"
       ],
       "path": "cascade के बाद भी असहमति",
       "judge1": {
-        "a_label": "MINOR",
-        "b_label": "CONTRADICTED",
+        "a_label": "OK",
+        "b_label": "MINOR",
         "a_evidence": "",
-        "b_evidence": "स पर्यगात् (has encompassed/pervaded) translated as having crossed beyond",
+        "b_evidence": "Apsnaviram rendered incorrectly as wound and impurity",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": {
-        "a_label": "CONTRADICTED",
-        "b_label": "OK",
-        "a_evidence": "शुक्रम् अकायम् अव्रण‑मस्नाविरँ omitted; added ‘knower of the truth’ not in source",
-        "b_evidence": "",
+        "a_label": "MINOR",
+        "b_label": "MINOR",
+        "a_evidence": "adds 'Supreme', omits 'tendonless'",
+        "b_evidence": "'reached' vs 'beyond', 'eternal years' vs 'eternal worlds'",
         "agree": false,
         "pick": "B",
         "has_empirical_claim": false
@@ -256,8 +256,8 @@
       "print_coverage": 0.8246,
       "final_model": "gemma-4-31b-it",
       "final_family": "google",
-      "en": "He reached the luminous, bodiless, woundless, tendonless, pure, untouched by sin. The seer, the thinker, the all-pervading, the self-born, he established the meanings as they truly are for eternal years.",
-      "hi": "उसने उस प्रकाशमय, शरीररहित, घाव-रहित, स्नायु-रहित, शुद्ध और पाप-रहित को प्राप्त किया। वह कवि, मनीषी, सर्वव्यापी, स्वयंभू, जिसने शाश्वत वर्षों के लिए अर्थों को वैसा ही स्थापित किया जैसा वे वास्तव में हैं।"
+      "en": "He reached the luminous, bodiless, woundless, tendonless, pure, untouched by sin. The seer, the thinker, the all-pervading, the self-born, he established the meanings as they are for eternal years.",
+      "hi": "उसने प्रकाशमय, शरीररहित, घाव-रहित, स्नायु-रहित, शुद्ध, पाप से अछूते को प्राप्त किया। कवि, मनीषी, सर्वव्यापी, स्वयंभू ने शाश्वत वर्षों के लिए अर्थों को वैसा ही स्थापित किया जैसा वे हैं।"
     },
     {
       "id": "isha:9",
@@ -269,7 +269,7 @@
         "a_label": "OK",
         "b_label": "MINOR",
         "a_evidence": "",
-        "b_evidence": "Blind people added unnecessarily",
+        "b_evidence": "Awkward grammar in English and Hindi",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
@@ -287,28 +287,30 @@
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
       "en": "Those who worship ignorance enter into blind darkness. And those who are devoted to knowledge enter into darkness still greater.",
-      "hi": "जो अविद्या की उपासना करते हैं, वे अंधेरे अंधकार में प्रवेश करते हैं। और जो विद्या में रत हैं, वे उससे भी बड़े अंधकार में प्रवेश करते हैं।"
+      "hi": "जो अविद्या की उपासना करते हैं, वे अंधेरे अंधकार में प्रवेश करते हैं। और जो विद्या में रत हैं, वे उससे भी अधिक अंधकार में प्रवेश करते हैं।"
     },
     {
       "id": "isha:10",
       "sa_sha256": "f3d68ac9b1e2df49c0d747c10e00c516d245fca6927b237434062480848f31a9",
-      "badge": "C",
-      "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "badge": "D",
+      "flags": [
+        "CONTRADICTED"
+      ],
+      "path": "cascade के बाद भी असहमति",
       "judge1": {
         "a_label": "CONTRADICTED",
-        "b_label": "MINOR",
-        "a_evidence": "देवा (gods) instead of wise ones/teachers; wrong meaning",
-        "b_evidence": "धीराणां (of the wise) translated as शुश्रुति धीरों में से",
+        "b_label": "OK",
+        "a_evidence": "Devah, vidyaya, avidyaya mistranslated as other gods say by knowledge",
+        "b_evidence": "",
         "agree": false,
         "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": {
-        "a_label": "MINOR",
-        "b_label": "MINOR",
-        "a_evidence": "Ambiguous rendering of 'iti śuśrum dhīrāṇāṃ ye na tat vicacchire'.",
-        "b_evidence": "Interprets 'ye na tat vicacchire' as 'who told us this', missing the negation 'na'.",
+        "a_label": "CONTRADICTED",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "ye na tat vicacchire (who did not discern it) rendered as 'who have not discerned it' but context implies 'who did not see it [as",
+        "b_evidence": "ye na tat vicacchire (who did not discern it) rendered as 'who told us this', changing the agent and action.",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
@@ -316,8 +318,8 @@
       "print_coverage": 0.971,
       "final_model": "openai/gpt-oss-120b",
       "final_family": "openai",
-      "en": "Some call it knowledge, others call it ignorance; thus, the wise have heard, those who have not discerned it.",
-      "hi": "अन्य लोग इसे विद्या कहते हैं, अन्य इसे अविद्या कहते हैं। इस प्रकार शुश्रुति धीरों में से वे जिन्होंने इसे नहीं पहचाना।"
+      "en": "Other gods are called by knowledge, other (things) are called by ignorance. Thus have been heard, the wise, those who have not discerned it.",
+      "hi": "अन्य देवों को विद्या द्वारा कहा जाता है, अन्य को अविद्या द्वारा कहा जाता है। इस प्रकार शुश्रुति है, वे धीर जो इसे नहीं विचक्षण किए।"
     },
     {
       "id": "isha:11",
@@ -351,7 +353,7 @@
         "a_label": "OK",
         "b_label": "MINOR",
         "a_evidence": "",
-        "b_evidence": "The blind added",
+        "b_evidence": "Asambhutim translated awkwardly as not manifested",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
@@ -381,35 +383,44 @@
       "path": "cascade के बाद भी असहमति",
       "judge1": {
         "a_label": "CONTRADICTED",
-        "b_label": "MINOR",
-        "a_evidence": "सम्भवात्/असम्भवात् mistranslated as born/not born from another",
-        "b_evidence": "leaves Sanskrit phrase untranslated in English",
+        "b_label": "OK",
+        "a_evidence": "Sambhavat asambhavat mistranslated completely as born from another",
+        "b_evidence": "",
         "agree": false,
         "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": {
         "a_label": "CONTRADICTED",
-        "b_label": "MINOR",
-        "a_evidence": "Leaves Sanskrit text untranslated in English and Hindi.",
-        "b_evidence": "Interprets 'ye na tat vicacchire' as 'who told us this', missing the negation 'na'.",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "ye na tat vicacchire (who did not discern it) rendered as 'who have not discerned that', but context implies 'who did not see it [as",
+        "b_evidence": "ye na tat vicacchire (who did not discern it) rendered as 'who told us this', changing the agent and action.",
         "agree": false,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "print_coverage": 1.0,
-      "final_model": "gemma-4-31b-it",
-      "final_family": "google",
-      "en": "Some say from manifestation, others say from non-manifestation. Thus we have heard from the wise, who told us this.",
-      "hi": "कुछ कहते हैं सम्भव से, कुछ कहते हैं असम्भव से। ऐसा हमने धीरों से सुना है, जिन्होंने हमें यह बताया।"
+      "final_model": "openai/gpt-oss-120b",
+      "final_family": "openai",
+      "en": "Others say, 'From existence they say something else, from non‑existence.' Thus, having heard, the wise who have not discerned that.",
+      "hi": "अन्य लोग कहते हैं, ‘संबव से वे कुछ और कहते हैं, असंबव से।’ इस प्रकार सुनने के बाद, वे धीर जो उस बात को नहीं देख पाए।"
     },
     {
       "id": "isha:14",
       "sa_sha256": "ffd7a4341364272777b0a04b70060ffdf32a24c43702cae05c446db2747ad28c",
       "badge": "C",
       "flags": [],
-      "path": "पहले दौर में सहमति",
+      "path": "cascade के बाद सहमति",
       "judge1": {
+        "a_label": "OK",
+        "b_label": "MINOR",
+        "a_evidence": "",
+        "b_evidence": "Sambhutim translated as existence",
+        "agree": false,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
+      "judge2": {
         "a_label": "OK",
         "b_label": "OK",
         "a_evidence": "",
@@ -418,12 +429,11 @@
         "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": null,
       "print_coverage": 0.8429,
-      "final_model": "openai/gpt-oss-120b",
-      "final_family": "openai",
-      "en": "He who knows both the arising and the destruction together, by crossing death through destruction, attains the immortal state of existence.",
-      "hi": "जो उत्पत्ति और विनाश दोनों को साथ में जानता है, विनाश द्वारा मृत्यु को पार कर, वह अस्तित्व की अमर अवस्था प्राप्त करता है।"
+      "final_model": "gemma-4-31b-it",
+      "final_family": "google",
+      "en": "He who knows both manifestation and destruction together; having crossed death by destruction, he attains immortality by manifestation.",
+      "hi": "जो सम्भूति और विनाश दोनों को एक साथ जानता है, वह विनाश द्वारा मृत्यु को पार करके सम्भूति से अमृत को प्राप्त करता है।"
     },
     {
       "id": "isha:15",
@@ -432,9 +442,9 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "OK",
+        "a_label": "MINOR",
         "b_label": "OK",
-        "a_evidence": "",
+        "a_evidence": "Satyadharmaya translated as truth and dharma",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
@@ -444,8 +454,8 @@
       "print_coverage": 0.9412,
       "final_model": "openai/gpt-oss-120b",
       "final_family": "openai",
-      "en": "With a golden vessel, the face hidden of truth. O Pūṣan, uncover the essence for the sight of true dharma.",
-      "hi": "हिरण्मय पात्र में सत्य का छिपा हुआ मुख। हे पूषन्, सत्यधर्म के दृष्टि के लिये तत्त्व को उजागर करो।"
+      "en": "With a golden vessel, the face of truth is concealed. O Pūṣan, uncover the truth for the sake of true dharma, that it may be seen.",
+      "hi": "हिरण्मय पात्र में सत्य का मुख छिपा है। हे पूष, सत्य को उजागर करो, सत्यधर्म के लिये, ताकि वह देखा जा सके।"
     },
     {
       "id": "isha:16",
@@ -457,9 +467,9 @@
       "path": "cascade के बाद भी असहमति",
       "judge1": {
         "a_label": "CONTRADICTED",
-        "b_label": "MINOR",
-        "a_evidence": "व्यूह रश्मीन् (array rays) translated as do not draw away",
-        "b_evidence": "",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "Do not draw away the sun mistranslated",
+        "b_evidence": "Vyuha rashmin samuh tejas mistranslated",
         "agree": false,
         "pick": "B",
         "has_empirical_claim": false
@@ -467,7 +477,7 @@
       "judge2": {
         "a_label": "CONTRADICTED",
         "b_label": "OK",
-        "a_evidence": "Misreads 'ekarṣe' as 'single attraction' and 'yam' as 'Yama' instead of 'you who scatter'.",
+        "a_evidence": "ekarke (sole attraction/one draw) rendered as 'sole attraction' but 'Yama' is treated as a separate entity rather than part of the address or list.",
         "b_evidence": "",
         "agree": false,
         "pick": "B",
@@ -476,22 +486,20 @@
       "print_coverage": 0.9091,
       "final_model": "gemma-4-31b-it",
       "final_family": "google",
-      "en": "O Pushan, O Surya, O Prajapatya, you who scatter the rays, the mass of brilliance. That form of yours which is most auspicious, that I see of yours; that person who is he, I am he.",
-      "hi": "हे पूषन, हे सूर्य, हे प्राजापत्य, जो किरणों के समूह और तेज के विस्तार को फैलाते हैं। आपका जो रूप अत्यंत कल्याणकारी है, उसे मैं देखता हूँ; वह जो पुरुष है, वह मैं हूँ।"
+      "en": "O Pushan, O Surya, O Prajapatya, you who scatter the rays, the collection of brilliance. Your form which is most auspicious, that I see of yours; that person who is he, I am he.",
+      "hi": "हे पूषन, हे सूर्य, हे प्राजापत्य, आप किरणों को फैलाते हैं, तेज का समूह हैं। आपका जो रूप अत्यंत कल्याणकारी है, उसे मैं देखता हूँ; वह जो पुरुष है, वह मैं हूँ।"
     },
     {
       "id": "isha:17",
       "sa_sha256": "4211f517531ed72b96cead9bd3febc354b393d8c3aab925ebcb97847f0104eb5",
-      "badge": "D",
-      "flags": [
-        "JURY_DISAGREE"
-      ],
-      "path": "cascade के बाद भी असहमति",
+      "badge": "C",
+      "flags": [],
+      "path": "cascade के बाद सहमति",
       "judge1": {
-        "a_label": "MINOR",
-        "b_label": "MINOR",
-        "a_evidence": "",
-        "b_evidence": "अनिल translated as water instead of wind/breath",
+        "a_label": "CONTRADICTED",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "Vayur anilam amritam mistranslated",
+        "b_evidence": "Anilam translated as water",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
@@ -499,17 +507,17 @@
       "judge2": {
         "a_label": "MINOR",
         "b_label": "OK",
-        "a_evidence": "कृतं rendered as 'created'",
+        "a_evidence": "क्रतो स्मर कृतं स्मर rendered as separate words and wrong order 'Kratu, remember, created, remember'",
         "b_evidence": "",
-        "agree": false,
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
       "print_coverage": 0.7576,
       "final_model": "gemma-4-31b-it",
       "final_family": "google",
-      "en": "Air is wind, immortal, and then this body ends in ashes. Om, O Kratu, remember! Remember what was done! O Kratu, remember! Remember what was done!",
-      "hi": "वायु अनिल है, अमर है, और यह शरीर भस्म में समाप्त होने वाला है। ॐ हे क्रतु, स्मरण करो! जो किया उसे स्मरण करो! हे क्रतु, स्मरण करो! जो किया उसे स्मरण करो!"
+      "en": "Air is wind, immortal, and then this body which ends in ashes. Om, Krato remember, remember what was done; Krato remember, remember what was done.",
+      "hi": "वायु अनिल है, अमर है, और यह शरीर भस्म में समाप्त होने वाला है। ॐ क्रतो स्मरण करो, किए हुए का स्मरण करो; क्रतो स्मरण करो, किए हुए का स्मरण करो।"
     },
     {
       "id": "isha:18",
@@ -522,17 +530,17 @@
       "judge1": {
         "a_label": "CONTRADICTED",
         "b_label": "CONTRADICTED",
-        "a_evidence": "युयोधि...एनो (destroy the sin) translated as fight for the sake of the sacrifice",
-        "b_evidence": "जुहुराणम् (crooked/wicked) translated as eager for battle",
+        "a_evidence": "Yuyodhy asmac juhuranam enah mistranslated as fight for the sake of sacrifice",
+        "b_evidence": "Vayunani vidvan mistranslated",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": {
-        "a_label": "OK",
+        "a_label": "MINOR",
         "b_label": "CONTRADICTED",
-        "a_evidence": "",
-        "b_evidence": "राये rendered as 'to prosperity', युयोध्यस्मज्जुहुराणमेनो rendered as removal of sin",
+        "a_evidence": "राये rendered as 'by the ray' not matching likely meaning 'king' or 'splendor'",
+        "b_evidence": "adds 'to prosperity' and 'remove sin of cruelty' not present in Sanskrit",
         "agree": false,
         "pick": "A",
         "has_empirical_claim": false
@@ -540,8 +548,8 @@
       "print_coverage": 0.3333,
       "final_model": "qwen/qwen3.8-27b",
       "final_family": "alibaba-qwen",
-      "en": "O Agni, lead us by the good path, by the good ray, O all-knowing one, through all the winds. May we fight for the sake of the sacrifice, may we perform the most excellent praise to you.",
-      "hi": "हे अग्नि, हमें सुपथ से, सुप्रकाश से, हे सर्वज्ञ, सभी वायुओं के माध्यम से ले चलो। हम यज्ञ के लिए युद्ध करें, हम तुम्हें सबसे उत्तम स्तुति करें।"
+      "en": "O Agni, lead us by the good path, by the ray, O all-knowing one, through all the winds. May we fight for the sake of the sacrifice, may we perform the most excellent praise to you.",
+      "hi": "हे अग्नि, हमें अच्छे मार्ग से, किरण से, हे सर्वज्ञ, सभी वायुओं के माध्यम से ले चलो। हम यज्ञ के लिए युद्ध करें, हम तुम्हें सबसे उत्तम स्तुति करें।"
     }
   ]
 }
