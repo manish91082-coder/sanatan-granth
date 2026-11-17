@@ -444,3 +444,9 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **मालिक का क़दम (एक):** Actions → `foreman-deploy` → Run workflow। उसके बाद Foreman हर 20 मिनट पर संचालक चलाएगा।
 - **अगला session पहले यह देखे:** `git fetch origin swarm-state && git show origin/swarm-state:STATUS.md`; फिर `runs/` की नई फ़ाइलें। कोई काम `needs_owner` हो तो issue (label `swarm-alert`) पढ़ें।
 - **न करें:** roster में बिना माप के मॉडल को योग्य न लिखें; `judge_min_catch_rate` न घटाएँ; `PILOT_*` env से चले हाथ के run को स्वार्म का नतीजा न मानें (रिपोर्ट में `model_source: env-override` लिखा होता है); state branch की फ़ाइलें हाथ से न बदलें (संचालक और jobs के अपने-अपने लेखक हैं)।
+- **merge के बाद असली परीक्षण (17 नवंबर, PR #61 → main `12e49eb`) [हमारा माप]:**
+  - **branch पर हाथ का run (pilot-e2e run 44069534641):** `plan()` ने Flash-Lite + Nemotron + ERNIE चुना; Flash-Lite ने 18/18 मंत्र 17 s में दिए; Nemotron पर HTTP 429 "free-models-per-day" आया; run 3.5 s में **रुका** (exit 75, job हरा), बही में Nemotron और पूरा OpenRouter 18 नवंबर 00:05 UTC तक रुके दर्ज हुए। कोई और मॉडल नहीं बुलाया गया।
+  - **संचालक का पहला चक्कर (swarm-conduct run 44069969354):** branch `swarm-state` बनी; OpenRouter ने खाते की आज की गिनती 52 बताई (`GET /api/v1/key` का उत्तर समझ आया); `isha-e2e` "रुका, अगला समय 18 नवंबर 05:35 IST"; `judge-requal` "Foreman इस step को अभी नहीं जानता"।
+  - **Foreman से पूरा चक्कर (enqueue run 44070106943 → foreman-job run 44070132439):** नया `foreman-job.yml` पुराने (deploy हुए) Foreman के साथ चला: हालत आई → run ने बिना किसी मॉडल-अनुरोध के "रुका" कहा → `runs/e2e-44070106943.json` दर्ज → संचालक 4 s बाद अपने-आप जागा (swarm-conduct run 44070161763) → Foreman को callback `done`।
+  - **अभी नहीं देखा गया:** quota लौटने पर अपने-आप दोबारा चलना (18 नवंबर 00:05 UTC के बाद पहला मौक़ा); पूरी कड़ी v0.7 (canary-जाँच, जज, cascade) असली मॉडलों पर; Foreman की 20 मिनट की घड़ी (deploy बाक़ी)। तब तक संचालक GitHub के `schedule` (घंटों देर से) या हाथ के `swarm-conduct` से जागता है।
+
