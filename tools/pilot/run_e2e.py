@@ -33,7 +33,7 @@ from checks.common import canonical_segments_hash  # noqa: E402
 from checks.run_all import report as checks_report, run as checks_run  # noqa: E402
 from tools.pilot.llm import Model, Usage, available, chat_json, parse_model  # noqa: E402
 
-PIPELINE_VERSION = "pilot-e2e-0.4"
+PIPELINE_VERSION = "pilot-e2e-0.5"
 OK_LABELS = {"OK", "MINOR"}
 LABELS = {"OK", "MINOR", "CONTRADICTED", "UNSURE"}
 EXPECTED_RED = {"R2": "पाठ lock नहीं है (स्रोत का फ़ैसला बाक़ी)", "R6": "मूल-पाठ का वाहक गवाह CC BY-SA है; प्रदर्शन-योग्य स्रोत तय नहीं"}
@@ -86,16 +86,16 @@ JUDGE_ONE_SYSTEM = (
 #   से बाहर के (जज अपने परिवार का काम नहीं जाँचता)। क़ीमत: Gemma 4 31B, जो तुलना में सबसे अच्छा ड्राफ़्टर दिखा, ड्राफ़्टर नहीं रहता।
 #   यह चुनाव अस्थायी है: बाक़ी जजों (Gemma, Mistral, Llama, gpt-oss) की परीक्षा होने पर दोबारा देखा जाएगा।
 #   हर भूमिका की सूची क्रम से आज़माई जाती है: पहला मॉडल उत्तर न दे (503, quota) तो अगला। कभी दूसरी key या दूसरा खाता नहीं।
+# 17 नवंबर 2026 (v0.5): Cloudflare Workers AI सूचियों से हटा। वही Cloudflare खाता मालिक के दूसरे काम में लगा है और दिन के
+#   10,000 neurons साझा हैं; pilot के runs ने 16 नवंबर को वह हिस्सा ख़त्म कर दिया था। provider का code llm.py में है, पर
+#   workflows अब उसकी key देते ही नहीं। चौथे परिवार के लिए OpenRouter के मुफ़्त मॉडल आएँगे (key और माप के बाद; 50 अनुरोध/दिन)।
+#   तब तक तीन परिवार हैं: alibaba-qwen (A), openai (B), google (C और जज 1)। दूसरे दौर में C को वही जज जाँचता है जो C के
+#   परिवार का नहीं है, इसलिए Google का ड्राफ़्ट Google का जज कभी नहीं जाँचता।
 DEFAULT_MODELS = {
-    "draft_a": ["groq:qwen/qwen3.8-27b", "cloudflare:@cf/meta/llama-4-scout-17b-16e-instruct"],
-    "draft_b": ["groq:openai/gpt-oss-120b", "cloudflare:@cf/openai/gpt-oss-120b"],
-    # Draft C में Google वाले मॉडल इसलिए भी हैं कि कड़ी एक ही provider (Workers AI) पर न टिकी रहे: 17 नवंबर को उसका दिन का
-    # quota 05:45 UTC पर भी ख़त्म मिला और 13/18 मंत्रों की जूरी अधूरी रही (foreman-job run 44027360667)। Draft C को दूसरे दौर में
-    # वही जज जाँचता है जो C के परिवार का नहीं है, इसलिए Google का ड्राफ़्ट Google का जज कभी नहीं जाँचता।
-    "draft_c": ["cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct", "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                "google_ai_studio:gemma-4-31b-it", "google_ai_studio:gemini-3.5-flash-lite"],
-    "judges": ["google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it", "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
-               "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"],
+    "draft_a": ["groq:qwen/qwen3.8-27b"],
+    "draft_b": ["groq:openai/gpt-oss-120b"],
+    "draft_c": ["google_ai_studio:gemma-4-31b-it", "google_ai_studio:gemini-3.5-flash-lite"],
+    "judges": ["google_ai_studio:gemini-3.5-flash-lite", "google_ai_studio:gemma-4-31b-it", "groq:openai/gpt-oss-120b", "groq:qwen/qwen3.8-27b"],
 }
 
 
@@ -220,7 +220,7 @@ def choose_judge(judges: list[Model], exclude: set[str]) -> Model:
 
 
 def chunk_size(model: Model) -> int:
-    return {"google_ai_studio": 18, "groq": 6, "cloudflare": 6}.get(model.provider, 18)
+    return {"google_ai_studio": 18, "groq": 6, "cloudflare": 6, "openrouter": 9}.get(model.provider, 18)
 
 
 def ask_items(model: Model, system: str, make_user, ids: list[str], usage: Usage, accept, est_out_per_id: int, mock_items=None) -> dict[str, dict]:
