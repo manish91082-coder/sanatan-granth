@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "1330f49532f63283",
+  "digest": "37d4d3464fb0616d",
   "foreman_unreachable": 0,
   "roster_version": "0.2",
-  "updated_at": "2026-11-17T13:04:04Z"
+  "updated_at": "2026-11-17T13:13:44Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -17,15 +17,46 @@
   "enabled": true,
   "fails": 0,
   "job_key": "31c295e1686c9b2457a8f4840d31b30268bec39f64518b91ea27d70af7019739",
+  "last": {
+   "at": "2026-11-17T13:13:12Z",
+   "batch_id": "isha-e2e.20261117.1",
+   "rc": 0,
+   "reason": null,
+   "ref": "pr:65",
+   "run": "44087537183",
+   "status": "done",
+   "summary": {
+    "agreement_rate": 0.889,
+    "api_calls": 12,
+    "badges": {
+     "C": 16,
+     "D": 2
+    },
+    "first_pass": 16,
+    "models": {
+     "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+     "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
+     "draft_c": "groq:openai/gpt-oss-120b",
+     "judge1": "ovh:Qwen3.5-397B-A17B"
+    },
+    "pipeline_version": "pilot-e2e-0.7",
+    "resumed": [],
+    "seconds": 1109.2,
+    "segments": 18
+   }
+  },
+  "last_done": "2026-11-17T13:13:12Z",
   "queued_at": "2026-11-17T12:54:25Z",
+  "replans": 0,
   "seq": 1,
-  "status": "queued",
+  "status": "done",
   "step": "pilot_e2e"
  },
  "judge-requal": {
+  "blocked_until": "2026-11-18T00:05:00Z",
   "enabled": true,
   "fails": 0,
-  "reason": "Foreman इस step को अभी नहीं जानता (नया deploy बाक़ी)",
+  "reason": "जज-परीक्षा: कड़ी के जज (roster) अभी सब उपलब्ध नहीं",
   "seq": 0,
   "status": "blocked",
   "step": "judge_test"
