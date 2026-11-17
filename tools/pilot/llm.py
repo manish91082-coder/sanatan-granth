@@ -40,7 +40,7 @@ OR_RUN_BUDGET = int(os.environ.get("PILOT_OPENROUTER_MAX_CALLS", "24"))
 _OR_CALLS = [0]
 UA = "sanatan-granth-pilot/0.3 (open library project)"
 MAX_RETRY = 5
-TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150, "openrouter": 180, "sambanova": 180, "ovh": 240}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
+TIMEOUT_S = {"google_ai_studio": 200, "groq": 120, "cloudflare": 150, "openrouter": 180, "sambanova": 180, "ovh": 600}  # एक अनुरोध की सीमा; अटका मॉडल पूरे run को न रोके
 MAX_RETRY_5XX = 3  #5xx या नेटवर्क-त्रुटि पर कम दोहराव: provider बंद हो तो मिनटों इंतज़ार बेकार है
 PACE_MAX_WAIT_S = 62.0
 
