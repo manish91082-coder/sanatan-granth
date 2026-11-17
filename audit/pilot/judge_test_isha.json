@@ -1,0 +1,516 @@
+{
+  "generated_at": "2026-11-17T05:54:14Z",
+  "text_id": "isha",
+  "run": "44026092918",
+  "mock": false,
+  "base_file": "audit/pilot/isha_e2e.json",
+  "base_sha256": "dae40f0c0c08f142095ac71a8d02fc9da581e7afa59178e2ad551d2386905598",
+  "carrier_sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
+  "items": 18,
+  "rules_used": [
+    "नाम: Agni→Indra",
+    "नाम: Pushan→Varuna",
+    "निषेध हटाना",
+    "विलोम: all beings→no beings",
+    "विलोम: darkness→light",
+    "विलोम: immortality→death",
+    "विलोम: knowledge→ignorance",
+    "विलोम: pervaded→abandoned",
+    "विलोम: swifter→slower"
+  ],
+  "no_key": [],
+  "seconds_total": 631.3,
+  "results": [
+    {
+      "judge": "google_ai_studio:gemini-3.5-flash-lite",
+      "family": "google",
+      "judged": 18,
+      "of": 18,
+      "caught": 15,
+      "catch_rate": 0.833,
+      "picked_base": 18,
+      "pick_rate": 1.0,
+      "passed_corrupt_as_ok": 3,
+      "passed_ids": [
+        "isha:3",
+        "isha:10",
+        "isha:13"
+      ],
+      "said_same_meaning": 3,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 1,
+      "missed_ids": [
+        "isha:3",
+        "isha:10",
+        "isha:13"
+      ],
+      "seconds": 28.6,
+      "usage": {
+        "calls": 2,
+        "retries": 1,
+        "http_429": 0,
+        "prompt_tokens": 4278,
+        "output_tokens": 1710,
+        "seconds": 18.64,
+        "waited_s": 10.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "judge": "groq:qwen/qwen3.8-27b",
+      "family": "alibaba-qwen",
+      "judged": 18,
+      "of": 18,
+      "caught": 15,
+      "catch_rate": 0.833,
+      "picked_base": 17,
+      "pick_rate": 0.944,
+      "passed_corrupt_as_ok": 3,
+      "passed_ids": [
+        "isha:3",
+        "isha:15",
+        "isha:16"
+      ],
+      "said_same_meaning": 0,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 0,
+      "missed_ids": [
+        "isha:3",
+        "isha:15",
+        "isha:16"
+      ],
+      "seconds": 387.6,
+      "usage": {
+        "calls": 13,
+        "retries": 10,
+        "http_429": 9,
+        "prompt_tokens": 6190,
+        "output_tokens": 1889,
+        "seconds": 6.08,
+        "waited_s": 200.0,
+        "paced_s": 181.5,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: Request too large for model `qwen/qwen3.8-27b` in organization `<org>` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1110. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need mor"
+        ]
+      }
+    },
+    {
+      "judge": "google_ai_studio:gemma-4-31b-it",
+      "family": "google",
+      "judged": 0,
+      "seconds": 211.5,
+      "usage": {
+        "calls": 2,
+        "retries": 1,
+        "http_429": 0,
+        "prompt_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 201.5,
+        "waited_s": 10.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 0: TimeoutError"
+        ]
+      }
+    },
+    {
+      "judge": "cloudflare:@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "family": "mistral",
+      "judged": 0,
+      "seconds": 1.0,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 2,
+        "prompt_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 0.96,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. ",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. "
+        ]
+      }
+    },
+    {
+      "judge": "cloudflare:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "family": "meta",
+      "judged": 0,
+      "seconds": 0.6,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 2,
+        "prompt_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 0.57,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. ",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. "
+        ]
+      }
+    },
+    {
+      "judge": "cloudflare:@cf/openai/gpt-oss-120b",
+      "family": "openai",
+      "judged": 0,
+      "seconds": 0.2,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 2,
+        "prompt_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 0.21,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. ",
+          "HTTP 429: AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. "
+        ]
+      }
+    }
+  ],
+  "per_item": {
+    "isha:1": {
+      "rule": "निषेध हटाना",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:2": {
+      "rule": "निषेध हटाना",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:3": {
+      "rule": "विलोम: darkness→light",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "MINOR",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "MINOR",
+          "corrupt": "OK",
+          "pick_base": false,
+          "agree": false
+        }
+      }
+    },
+    "isha:4": {
+      "rule": "विलोम: swifter→slower",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:5": {
+      "rule": "निषेध हटाना",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:6": {
+      "rule": "विलोम: all beings→no beings",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:7": {
+      "rule": "विलोम: all beings→no beings",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:8": {
+      "rule": "विलोम: pervaded→abandoned",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:9": {
+      "rule": "विलोम: knowledge→ignorance",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:10": {
+      "rule": "निषेध हटाना",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "OK",
+          "pick_base": true,
+          "agree": true
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:11": {
+      "rule": "विलोम: immortality→death",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:12": {
+      "rule": "विलोम: darkness→light",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:13": {
+      "rule": "निषेध हटाना",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "OK",
+          "pick_base": true,
+          "agree": true
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:14": {
+      "rule": "विलोम: immortality→death",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:15": {
+      "rule": "नाम: Pushan→Varuna",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "MINOR",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:16": {
+      "rule": "नाम: Pushan→Varuna",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "MINOR",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:17": {
+      "rule": "विलोम: immortality→death",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:18": {
+      "rule": "नाम: Agni→Indra",
+      "hi_changed": true,
+      "verdicts": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "CONTRADICTED",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": true
+        },
+        "groq:qwen/qwen3.8-27b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    }
+  },
+  "limits": [
+    "ग़लतियाँ मोटी और नियम से डाली गई हैं: यह बारीक अर्थ की समझ नहीं नापता",
+    "आधार AI-मसौदा है; वह ख़ुद ग़लत हो सकता है",
+    "एक छोटा ग्रंथ: दरें केवल संकेत हैं",
+    "यह मानव-समीक्षा नहीं है"
+  ]
+}
