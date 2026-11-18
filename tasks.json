@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "6e087f20d97927f3",
+  "digest": "44209ef27c741b5f",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-18T18:21:05Z"
+  "updated_at": "2026-11-18T18:33:49Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -115,12 +115,24 @@
  },
  "gita-2-e2e-v08": {
   "batch_id": "gita-2-e2e-v08.20261118.1",
+  "blocked_until": "2026-11-18T19:03:49Z",
   "enabled": true,
-  "fails": 0,
+  "fails": 1,
   "job_key": "a849b30c09041bda95240a38eadc0a7b4eea6cf512608ff7e493f321f9f769f6",
+  "last": {
+   "at": "2026-11-18T18:33:21Z",
+   "batch_id": "gita-2-e2e-v08.20261118.1",
+   "rc": 1,
+   "reason": null,
+   "ref": "run:unknown",
+   "run": "44358067050",
+   "status": "failed",
+   "summary": null
+  },
   "queued_at": "2026-11-18T17:22:58Z",
+  "reason": "विफल; थोड़ी देर बाद दोबारा",
   "seq": 1,
-  "status": "queued",
+  "status": "failed",
   "step": "pilot_e2e"
  },
  "isha-e2e": {
