@@ -4,10 +4,10 @@
    "fails": 0,
    "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
    "last_error_at": "2026-11-18T00:02:03Z",
-   "last_ok": "2026-11-18T00:30:36Z",
-   "output_tokens": 5305,
-   "requests": 9,
-   "window": "2026-11-17"
+   "last_ok": "2026-11-18T09:11:53Z",
+   "output_tokens": 5798,
+   "requests": 11,
+   "window": "2026-11-18"
   },
   "google_ai_studio:gemma-4-31b-it": {
    "fails": 0,
@@ -25,32 +25,36 @@
   },
   "openrouter:baidu/ernie-5.5-flash-preview:free": {
    "fails": 0,
-   "last_ok": "2026-11-18T00:30:36Z",
-   "output_tokens": 2958,
-   "requests": 2,
+   "last_ok": "2026-11-18T09:11:53Z",
+   "output_tokens": 139080,
+   "requests": 18,
    "window": "2026-11-18"
   },
   "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
    "fails": 0,
    "last_error": "HTTP 429: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day: https://openrouter.ai/settings/credits?utm_source=api&utm_campaign=free_daily_limit",
    "last_error_at": "2026-11-17T10:57:40Z",
-   "last_ok": "2026-11-18T00:30:36Z",
-   "output_tokens": 12808,
-   "requests": 2,
+   "last_ok": "2026-11-18T09:11:53Z",
+   "output_tokens": 15182,
+   "requests": 3,
    "window": "2026-11-18"
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
    "fails": 0,
-   "last_ok": "2026-11-18T00:30:36Z",
-   "output_tokens": 15280,
-   "requests": 2,
+   "last_ok": "2026-11-18T09:11:53Z",
+   "output_tokens": 43950,
+   "requests": 8,
    "window": "2026-11-18"
   },
   "ovh:Qwen3.5-397B-A17B": {
-   "fails": 0,
+   "cooldown_until": "2026-11-18T09:26:53Z",
+   "fails": 1,
+   "last_error": "HTTP 500: ",
+   "last_error_at": "2026-11-18T09:11:53Z",
    "last_ok": "2026-11-18T00:30:36Z",
-   "output_tokens": 23456,
-   "requests": 2,
+   "output_tokens": 27939,
+   "reason": "overloaded",
+   "requests": 6,
    "window": "2026-11-18"
   },
   "ovh:Qwen3.8-27B": {
@@ -62,17 +66,17 @@
   },
   "ovh:gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-18T00:30:36Z",
-   "output_tokens": 22990,
-   "requests": 6,
+   "last_ok": "2026-11-18T09:11:53Z",
+   "output_tokens": 32557,
+   "requests": 8,
    "window": "2026-11-18"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 6919,
-   "requests": 10,
-   "window": "2026-11-17"
+   "output_tokens": 5798,
+   "requests": 11,
+   "window": "2026-11-18"
   },
   "groq": {
    "output_tokens": 9717,
@@ -81,19 +85,19 @@
   },
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
-   "output_tokens": 15766,
-   "reported_at": "2026-11-18T00:00:58Z",
-   "reported_used": 0,
+   "output_tokens": 154262,
+   "reported_at": "2026-11-18T00:30:57Z",
+   "reported_used": 4,
    "reported_window": "2026-11-18",
-   "requests": 4,
+   "requests": 21,
    "window": "2026-11-18"
   },
   "ovh": {
-   "output_tokens": 61726,
-   "requests": 10,
+   "output_tokens": 104446,
+   "requests": 22,
    "window": "2026-11-18"
   }
  },
- "updated_at": "2026-11-18T00:30:44Z",
+ "updated_at": "2026-11-18T09:11:53Z",
  "version": 1
 }
