@@ -264,7 +264,9 @@
         "waited_s": 50.0,
         "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": []
+        "errors": [
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+        ]
       },
       "draft_b": {
         "calls": 9,
