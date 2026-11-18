@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "8ffafa2a61c09435",
+  "digest": "e63d03ef1930705b",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-18T17:20:57Z"
+  "updated_at": "2026-11-18T17:22:58Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -54,23 +54,25 @@
  },
  "gita-1-e2e-v08": {
   "batch_id": "gita-1-e2e-v08.20261118.4",
+  "blocked_until": "2026-11-18T17:52:58Z",
   "enabled": true,
-  "fails": 0,
+  "fails": 1,
   "job_key": "609b153b0c771a8508007ba3ddf9442d501ec7aee88fc00c45bdffc511be9b11",
   "last": {
-   "at": "2026-11-18T16:49:14Z",
-   "batch_id": "gita-1-e2e-v08.20261118.3",
+   "at": "2026-11-18T17:22:45Z",
+   "batch_id": "gita-1-e2e-v08.20261118.4",
    "rc": 75,
-   "reason": "ड्राफ़्ट B नहीं बना (आधे से कम खंड)",
-   "ref": "blocked:run44351324055",
-   "run": "44351324055",
-   "status": "blocked",
+   "reason": "चार बार रचना बदली, काम पूरा नहीं हुआ",
+   "ref": "blocked:run44357684660",
+   "run": "44357684660",
+   "status": "failed",
    "summary": null
   },
   "queued_at": "2026-11-18T17:20:57Z",
-  "replans": 3,
+  "reason": "विफल; थोड़ी देर बाद दोबारा",
+  "replans": 0,
   "seq": 4,
-  "status": "queued",
+  "status": "failed",
   "step": "pilot_e2e"
  },
  "gita-2-e2e": {
@@ -114,12 +116,13 @@
   "step": "pilot_e2e"
  },
  "gita-2-e2e-v08": {
-  "blocked_until": "2026-11-18T17:17:14Z",
+  "batch_id": "gita-2-e2e-v08.20261118.1",
   "enabled": true,
   "fails": 0,
-  "reason": "बेहतर रचना 6 घंटे के भीतर संभव: इंतज़ार",
-  "seq": 0,
-  "status": "blocked",
+  "job_key": "a849b30c09041bda95240a38eadc0a7b4eea6cf512608ff7e493f321f9f769f6",
+  "queued_at": "2026-11-18T17:22:58Z",
+  "seq": 1,
+  "status": "queued",
   "step": "pilot_e2e"
  },
  "isha-e2e": {
