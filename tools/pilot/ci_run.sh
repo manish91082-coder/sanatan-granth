@@ -29,6 +29,9 @@ REF="run:${GITHUB_RUN_ID:-local}"
 if [ "$RC" -eq 0 ] && [ "$MOCK" != "yes" ] && [ "$OPEN_PR" = "yes" ] && [ -n "${PR_TOKEN:-}" ]; then
   KEY16="${JOBKEY:0:16}"; [ "$JOBKEY" = "-" ] && KEY16="run${GITHUB_RUN_ID:-0}"
   BRANCH="data/pilot-${TEXT}-${KEY16}"
+  # डेटा-branch ताज़ा main से कटे: job लंबा चलता है और इस बीच पिछले job का डेटा-PR merge हो चुका होता है;
+  # पुराने checkout से कटी branch साझा फ़ाइल पर टकराती है और auto-merge अटक जाता है (18 नवंबर, PR #71)।
+  if git fetch -q origin main 2>/dev/null; then git checkout -q --detach FETCH_HEAD 2>/dev/null || echo "::warning::ताज़ा main पर नहीं जा सका; पुराने checkout से branch"; fi
   mkdir -p audit/pilot state
   cp "$OUT"/report/*_e2e.json audit/pilot/   # इकाई = ग्रंथ (isha_e2e.json) या उसका अध्याय (gita_1_e2e.json)
   cp "$OUT/report/pilot_metrics.json" state/pilot_metrics.json
