@@ -340,6 +340,21 @@ def conductor_tick_dry_run():
 
 
 @test
+def chapters_and_ids():
+    from tools.pilot import run_e2e as R  # noqa: PLC0415
+    g, i = R.TEXTS["gita"], R.TEXTS["isha"]
+    ids = R.expected_ids("isha", i, ["1"])
+    assert ids[0] == "isha:1" and len(ids) == 18, "एक अध्याय वाले ग्रंथ के ID में अध्याय नहीं लिखा जाता"
+    ids = R.expected_ids("gita", g, ["2"])
+    assert ids[0] == "gita:2.1" and ids[-1] == "gita:2.72" and len(ids) == 72
+    assert R.chapter_of("gita:2.47", g) == "2" and R.chapter_of("isha:5", i) == "1"
+    assert R.pick_chapters("", "gita-2-e2e", g) == ["2"], "अध्याय कतार से आने चाहिए"
+    assert R.pick_chapters("", "isha-e2e", i) == ["1"]
+    assert R.pick_chapters("2,1", "कोई-काम", g) == ["1", "2"]
+    assert sorted(ids, key=R.seg_key) == ids
+
+
+@test
 def backlog_is_valid():
     b = json.loads((REPO / "swarm" / "BACKLOG.json").read_text(encoding="utf-8"))
     ids = [t["id"] for t in b["tasks"]]
@@ -347,6 +362,12 @@ def backlog_is_valid():
     for t in b["tasks"]:
         assert t["step"] in ("pilot_e2e", "judge_test") and t["repeat"] in ("once", "daily", "weekly")
         assert "." not in t["id"] and len(t["id"]) <= 40, "काम का id batch-id का पहला भाग बनता है"
+        if t["step"] == "pilot_e2e":
+            from tools.pilot import run_e2e as R  # noqa: PLC0415
+            cfg = R.TEXTS[t["text_id"]]
+            chs = [str(c) for c in t.get("chapters", [])] or list(cfg["chapters"])
+            assert all(c in cfg["chapters"] for c in chs), f"{t['id']}: अध्याय घोषित नहीं"
+            assert t.get("segments") == sum(cfg["chapters"][c] for c in chs), f"{t['id']}: segments घोषणा से अलग"
 
 
 def main() -> int:

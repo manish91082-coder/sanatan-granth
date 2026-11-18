@@ -30,7 +30,7 @@ if [ "$RC" -eq 0 ] && [ "$MOCK" != "yes" ] && [ "$OPEN_PR" = "yes" ] && [ -n "${
   KEY16="${JOBKEY:0:16}"; [ "$JOBKEY" = "-" ] && KEY16="run${GITHUB_RUN_ID:-0}"
   BRANCH="data/pilot-${TEXT}-${KEY16}"
   mkdir -p audit/pilot state
-  cp "$OUT/report/${TEXT}_e2e.json" "audit/pilot/${TEXT}_e2e.json"
+  cp "$OUT"/report/*_e2e.json audit/pilot/   # इकाई = ग्रंथ (isha_e2e.json) या उसका अध्याय (gita_1_e2e.json)
   cp "$OUT/report/pilot_metrics.json" state/pilot_metrics.json
   if git ls-remote --exit-code --heads "https://x-access-token:${PR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BRANCH" >/dev/null 2>&1; then
     echo "branch $BRANCH पहले से है (वही job दोबारा): नया PR नहीं"
@@ -38,10 +38,10 @@ if [ "$RC" -eq 0 ] && [ "$MOCK" != "yes" ] && [ "$OPEN_PR" = "yes" ] && [ -n "${
     git config user.name "sanatan-granth-swarm"
     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
     git checkout -q -b "$BRANCH"
-    git add "audit/pilot/${TEXT}_e2e.json" state/pilot_metrics.json
+    git add audit/pilot/*_e2e.json state/pilot_metrics.json
     git commit -q -m "pilot: ${TEXT} की पूरी कड़ी का नतीजा (batch ${BATCH})" -m "AI-मसौदा; बैज केवल C/D; संस्कृत पाठ इस PR में नहीं। run ${GITHUB_RUN_ID:-local}"
     if git push -q "https://x-access-token:${PR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BRANCH" 2>/tmp/push_err; then
-      BODY="स्वार्म का मशीन-बना डेटा-PR (pilot)। \`audit/pilot/${TEXT}_e2e.json\` और \`state/pilot_metrics.json\`। AI-मसौदा; बैज केवल C/D; संस्कृत पाठ इसमें नहीं। run: ${GITHUB_SERVER_URL:-https://github.com}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID:-0}"
+      BODY="स्वार्म का मशीन-बना डेटा-PR (pilot)। \`audit/pilot/\` में ${TEXT} की रिपोर्ट और \`state/pilot_metrics.json\`। AI-मसौदा; बैज केवल C/D; संस्कृत पाठ इसमें नहीं। run: ${GITHUB_SERVER_URL:-https://github.com}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID:-0}"
       if PR_URL=$(GH_TOKEN="$PR_TOKEN" gh pr create --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --base main \
                     --title "pilot: ${TEXT} की पूरी कड़ी का नतीजा (batch ${BATCH})" --body "$BODY" 2>/tmp/pr_err); then
         echo "PR: $PR_URL"

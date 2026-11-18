@@ -48,7 +48,17 @@ TEXTS = {
         "base_edition": "ia-nsp-108-1925",  # अस्थायी: भारतीय संपादक वाला छपा संस्करण (मालिक का फ़ैसला बाक़ी)
         "carrier_witness": "sa-ws-isha",    # मशीन-पठनीय पाठ का वाहक (केवल तुलना-लाइसेंस; repo में नहीं जाता)
         "witnesses": ["ia-nsp-108-1925", "sa-ws-isha", "sa-ws-vsm40", "ia-roer-1850"],
-        "citation_scheme": ["mantra"], "chapter": "1", "segment_count": 18, "genre": "upanishad",
+        "citation_scheme": ["mantra"], "chapters": {"1": 18}, "genre": "upanishad",
+    },
+    # गीता: केवल वे अध्याय जिनके वाहक-पन्ने जाँचे गए हैं (tools/witness/gita_collate.py)। हर अध्याय अपना run है (मास्टर योजना: प्रति अध्याय एक job)।
+    # आधार-संस्करण तय नहीं है (मालिक का G1-फ़ैसला बाक़ी): अभी वाहक-गवाह ही दर्ज है। गिनती गवाह के अपने क्रमांकों से।
+    "gita": {
+        "work_id": "mahabharata.bhagavadgita",
+        "title": {"title_devanagari": "श्रीमद्भगवद्गीता", "title_iast": "Śrīmadbhagavadgītā", "title_hi": "श्रीमद्भगवद्गीता", "title_en": "Bhagavad Gita"},
+        "base_edition": "sa-ws-gita",       # अस्थायी: छपा सार्वजनिक-डोमेन संस्करण चुना नहीं गया
+        "carrier_witness": "sa-ws-gita",
+        "witnesses": ["sa-ws-gita"],
+        "citation_scheme": ["adhyaya", "shloka"], "chapters": {"1": 47, "2": 72}, "genre": "gita",
     },
 }
 
@@ -145,22 +155,61 @@ def seg_key(i: str) -> tuple[int, ...]:
     return tuple(int(x) for x in re.sub(r"[a-d]$", "", i.split(":")[1]).split("."))
 
 
-def load_source(text_id: str) -> tuple[dict[str, str], dict]:
-    import isha_collate  # noqa: PLC0415
-    if text_id != "isha":
-        raise SystemExit(f"text '{text_id}' का स्रोत-loader अभी नहीं है")
+def _fetch_retry(fetch, cached) -> None:
     for attempt in range(3):
         try:
-            isha_collate.fetch()
-            break
+            fetch()
+            return
         except Exception:  # noqa: BLE001  नेटवर्क की अस्थायी विफलता: दोबारा, फिर cache
-            if attempt == 2 and not (isha_collate.CACHE / "sa_ws_isha.json").exists():
+            if attempt == 2 and not cached():
                 raise
             time.sleep(5 * (attempt + 1))
-    meta, text = isha_collate.load("sa_ws_isha")
-    parsed = isha_collate.parse_a(text)
-    segs = {f"isha:{n}": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", parsed[n])).strip() for n in sorted(parsed)}
-    return segs, meta
+
+
+def load_source(text_id: str, chapters: list[str] | None = None) -> tuple[dict[str, str], dict]:
+    """(खंड, गवाह का विवरण)। विवरण: licence, sha256 (कई अध्याय हों तो उनके hash का hash), और by_chapter (हर अध्याय का अपना गवाह)।"""
+    if text_id == "isha":
+        import isha_collate  # noqa: PLC0415
+        _fetch_retry(isha_collate.fetch, lambda: (isha_collate.CACHE / "sa_ws_isha.json").exists())
+        meta, text = isha_collate.load("sa_ws_isha")
+        parsed = isha_collate.parse_a(text)
+        segs = {f"isha:{n}": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", parsed[n])).strip() for n in sorted(parsed)}
+        return segs, {**meta, "by_chapter": {"1": {"witness_id": "sa-ws-isha", "sha256": meta["sha256"], "licence": meta["licence"]}}}
+    if text_id == "gita":
+        import gita_collate  # noqa: PLC0415
+        chs = [int(c) for c in (chapters or TEXTS["gita"]["chapters"])]
+        _fetch_retry(lambda: gita_collate.fetch(chs), lambda: all((gita_collate.CACHE / f"sa_ws_gita_{c}.json").exists() for c in chs))
+        segs, metas = gita_collate.segments(chs)
+        by = {str(c): {"witness_id": m["witness_id"], "sha256": m["sha256"], "licence": m["licence"]} for c, m in zip(chs, metas)}
+        return segs, {"licence": metas[0]["licence"], "sha256": hashlib.sha256("".join(m["sha256"] for m in metas).encode()).hexdigest(), "by_chapter": by}
+    raise SystemExit(f"text '{text_id}' का स्रोत-loader अभी नहीं है")
+
+
+def chapter_of(seg_id: str, cfg: dict) -> str:
+    """'gita:2.47' → '2'; 'isha:5' → ग्रंथ का अकेला अध्याय।"""
+    body = seg_id.split(":")[1]
+    return body.split(".")[0] if "." in body else next(iter(cfg["chapters"]))
+
+
+def expected_ids(text_id: str, cfg: dict, chapters: list[str]) -> list[str]:
+    flat = len(cfg["chapters"]) == 1  # एक ही अध्याय वाले ग्रंथ के ID में अध्याय नहीं लिखा जाता
+    return [f"{text_id}:{n}" if flat else f"{text_id}:{c}.{n}" for c in chapters for n in range(1, cfg["chapters"][c] + 1)]
+
+
+def pick_chapters(arg: str, task: str, cfg: dict) -> list[str]:
+    """इस run के अध्याय: --chapters, वरना कतार (swarm/BACKLOG.json) में इस काम के `chapters`, वरना ग्रंथ के सारे घोषित अध्याय।"""
+    want = [c.strip() for c in (arg or "").split(",") if c.strip()]
+    if not want:
+        try:
+            tasks = json.loads((REPO / "swarm" / "BACKLOG.json").read_text(encoding="utf-8")).get("tasks", [])
+            want = [str(c) for c in (next((t for t in tasks if t.get("id") == task), None) or {}).get("chapters", [])]
+        except Exception:  # noqa: BLE001
+            want = []
+    want = want or list(cfg["chapters"])
+    bad = [c for c in want if c not in cfg["chapters"]]
+    if bad:
+        raise SystemExit(f"इन अध्यायों की घोषणा नहीं है: {bad}")
+    return sorted(set(want), key=int)
 
 
 def print_evidence(text_id: str) -> dict:
@@ -478,32 +527,37 @@ def write_json(p: Path, obj: object) -> None:
     p.write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
-def assemble(root: Path, text_id: str, cfg: dict, segs: dict, src_meta: dict, final: dict, badges: dict, flags: dict, models_used: list[str], job_key: str | None) -> None:
+def assemble(root: Path, text_id: str, cfg: dict, chapters: list[str], segs: dict, src_meta: dict, final: dict, badges: dict, flags: dict,
+             models_used: list[str], job_key: str | None) -> None:
     d = root / "texts" / text_id
     write_json(d / "_text.json", {
         "text_id": text_id, "work_id": cfg["work_id"], "title": cfg["title"], "base_edition": cfg["base_edition"], "witnesses": cfg["witnesses"],
-        "citation_scheme": cfg["citation_scheme"], "chapters": [{"chapter": cfg["chapter"], "segment_count": cfg["segment_count"]}],
+        "citation_scheme": cfg["citation_scheme"], "chapters": [{"chapter": c, "segment_count": cfg["chapters"][c]} for c in chapters],
         "state": "WITNESS_DIFFED", "pipeline_version": PIPELINE_VERSION, "genre": cfg["genre"],
         "notes": "PILOT परीक्षण: आधार-संस्करण अस्थायी है (मालिक का G1-फ़ैसला बाक़ी); पाठ lock नहीं।"})
     created = now_iso()
-    write_json(d / "root" / "sa-Deva" / f"{cfg['chapter']}.json", {
-        "_meta": {"layer": "root", "text_id": text_id, "chapter": cfg["chapter"], "lang": "sa-Deva", "licence": src_meta["licence"], "redistribute": False,
-                  "version": "0", "ai_generated": False,
-                  "provenance": {"created_at": created, "by": "source_witness", "tool": "tools/pilot/run_e2e.py",
-                                 "sources": [{"witness_id": cfg["carrier_witness"], "licence": src_meta["licence"], "usage": "compare", "sha256": src_meta["sha256"]}]}},
-        "segments": segs, "witness_status": {i: "W1" for i in segs}})
     prov = {"created_at": created, "by": "jury_pick", "model": "+".join(models_used)[:200], "model_family": "mixed",
             "prompt_hash": hashlib.sha256((DRAFT_SYSTEM + JUDGE_SYSTEM).encode()).hexdigest()[:32], "tool": "tools/pilot/run_e2e.py"}
     if job_key:
         prov["job_key"] = job_key
-    for lang in ("hi", "en"):
-        layer = {"_meta": {"layer": "translation", "text_id": text_id, "chapter": cfg["chapter"], "lang": lang, "translation_id": "pilot-v0",
-                           "licence": "LicenseRef-sanatan-granth-draft", "version": "0.1", "pipeline_version": PIPELINE_VERSION, "ai_generated": True,
-                           "follows_commentary": "none-declared", "provenance": prov},
-                 "segments": {i: final[i][lang] for i in segs}, "badges": badges}
-        if flags:
-            layer["flags"] = flags
-        write_json(d / "translation" / lang / "pilot-v0" / f"{cfg['chapter']}.json", layer)
+    for c in chapters:
+        ids_c = sorted((i for i in segs if chapter_of(i, cfg) == c), key=seg_key)
+        wm = src_meta["by_chapter"][c]
+        write_json(d / "root" / "sa-Deva" / f"{c}.json", {
+            "_meta": {"layer": "root", "text_id": text_id, "chapter": c, "lang": "sa-Deva", "licence": wm["licence"], "redistribute": False,
+                      "version": "0", "ai_generated": False,
+                      "provenance": {"created_at": created, "by": "source_witness", "tool": "tools/pilot/run_e2e.py",
+                                     "sources": [{"witness_id": wm["witness_id"], "licence": wm["licence"], "usage": "compare", "sha256": wm["sha256"]}]}},
+            "segments": {i: segs[i] for i in ids_c}, "witness_status": {i: "W1" for i in ids_c}})
+        flags_c = {i: flags[i] for i in ids_c if i in flags}
+        for lang in ("hi", "en"):
+            layer = {"_meta": {"layer": "translation", "text_id": text_id, "chapter": c, "lang": lang, "translation_id": "pilot-v0",
+                               "licence": "LicenseRef-sanatan-granth-draft", "version": "0.1", "pipeline_version": PIPELINE_VERSION, "ai_generated": True,
+                               "follows_commentary": "none-declared", "provenance": prov},
+                     "segments": {i: final[i][lang] for i in ids_c}, "badges": {i: badges[i] for i in ids_c if i in badges}}
+            if flags_c:
+                layer["flags"] = flags_c
+            write_json(d / "translation" / lang / "pilot-v0" / f"{c}.json", layer)
 
 
 # ------------------------------------------------------------------ मुख्य
@@ -514,6 +568,7 @@ def main() -> int:
     ap.add_argument("--mock", action="store_true", help="कोई API-call नहीं; केवल कड़ी की जाँच")
     ap.add_argument("--job-key", default=None)
     ap.add_argument("--batch-id", default="manual")
+    ap.add_argument("--chapters", default="", help="अध्याय, अल्पविराम से (ख़ाली = कतार में इस काम के अध्याय, वरना सारे)")
     ap.add_argument("--no-probe", action="store_true", help="जज की स्थिरता का माप न चलाएँ (कम API-calls)")
     a = ap.parse_args()
     try:
@@ -526,12 +581,17 @@ def main() -> int:
     log, t_start = Log(), time.time()
     status, problems = "ok", []
 
-    segs, src_meta = log.run("source_witness", "गवाह से पाठ लाना", lambda: load_source(a.text))
+    task = os.environ.get("SWARM_TASK") or a.batch_id.split(".")[0]
+    chapters = pick_chapters(a.chapters, task, cfg)
+    # रिपोर्ट की इकाई: पूरा ग्रंथ, या उसके चुने हुए अध्याय (जैसे gita_1)
+    unit = a.text if chapters == list(cfg["chapters"]) else f"{a.text}_{'_'.join(chapters)}"
+    segs, src_meta = log.run("source_witness", "गवाह से पाठ लाना", lambda: load_source(a.text, chapters))
     ids = sorted(segs, key=seg_key)
 
     def align() -> None:
-        if len(ids) != cfg["segment_count"] or ids != [f"{a.text}:{n}" for n in range(1, cfg["segment_count"] + 1)]:
-            raise RuntimeError(f"ID-गिनती {len(ids)} ≠ घोषित {cfg['segment_count']} या क्रम टूटा")
+        want = expected_ids(a.text, cfg, chapters)
+        if ids != want:
+            raise RuntimeError(f"ID-गिनती {len(ids)} ≠ घोषित {len(want)} या क्रम टूटा")
     log.run("aligner", "ID और गिनती (गवाह के चिह्नों से)", align)
     evidence = print_evidence(a.text)
 
@@ -543,7 +603,7 @@ def main() -> int:
     task = os.environ.get("SWARM_TASK") or a.batch_id.split(".")[0]
     keep_work = bool(sd) and (bool(os.environ.get("SWARM_TASK")) or "." in a.batch_id)  # हाथ के runs ("manual-…") का अधूरा काम नहीं बचता
     ck = Ckpt((sd / "work" / f"{task}.json") if keep_work else None,
-              {"text": a.text, "pipeline_version": PIPELINE_VERSION, "source_sha256": src_meta["sha256"], "mock": a.mock})
+              {"text": a.text, "chapters": chapters, "pipeline_version": PIPELINE_VERSION, "source_sha256": src_meta["sha256"], "mock": a.mock})
     plan_rec: dict | None = None
     t_now = health.now_utc()
 
@@ -631,14 +691,17 @@ def main() -> int:
 
     # जज की स्थिरता का माप: वही जोड़े (1) उसी जज को उलटे क्रम में, (2) एक और परिवार के जज को। फ़ैसला इससे नहीं बदलता।
     probe: dict = {}
+    order1 = sorted(pairs1, key=seg_key)
+    probe_pairs = pairs1 if len(pairs1) <= 30 else {i: pairs1[i] for i in order1[::max(1, len(order1) // 18)][:18]}
     if J1m and j1 and not a.no_probe:
+        probe["pairs"] = len(probe_pairs)
         try:
-            j1_flip = log.run("judge_probe", "स्थिरता: वही जज, उलटा क्रम", lambda: judge(J1m, segs, pairs1, uP, flip=True), uP, J1m)
+            j1_flip = log.run("judge_probe", "स्थिरता: वही जज, उलटा क्रम", lambda: judge(J1m, segs, probe_pairs, uP, flip=True), uP, J1m)
             probe["same_judge_flipped"] = {"model": J1m.ref, **stability(j1, j1_flip)}
         except Exception as e:  # noqa: BLE001
             probe["same_judge_flipped"] = {"error": type(e).__name__}
         try:
-            Jalt, j1_alt, tried["judge_probe"] = judge_fb(log, "स्थिरता: दूसरे परिवार का जज", models["judges"], {A.family, B.family, J1m.family}, dead, segs, pairs1, uP, judge_gate)
+            Jalt, j1_alt, tried["judge_probe"] = judge_fb(log, "स्थिरता: दूसरे परिवार का जज", models["judges"], {A.family, B.family, J1m.family}, dead, segs, probe_pairs, uP, judge_gate)
             probe["other_family_judge"] = {"model": Jalt.ref, "family": Jalt.family, **stability(j1, j1_alt)} if Jalt else {"error": "दूसरे परिवार का कोई जज उत्तर नहीं दे रहा"}
         except Exception as e:  # noqa: BLE001
             probe["other_family_judge"] = {"error": f"{type(e).__name__}: {str(e)[:120]}"}
@@ -745,7 +808,7 @@ def main() -> int:
     if status == "ok":
         def build_and_check() -> None:
             models_used = sorted({final[i]["model"] for i in final})
-            assemble(out / "tree", a.text, cfg, segs, src_meta, final, badges, flags, models_used, a.job_key)
+            assemble(out / "tree", a.text, cfg, chapters, segs, src_meta, final, badges, flags, models_used, a.job_key)
             rep = checks_report(checks_run(out / "tree"))
             for name, c in rep["by_check"].items():
                 gates[name] = "red" if c["fail"] else "green"
@@ -784,7 +847,7 @@ def main() -> int:
                  "judge_probe": uP.as_dict(), "judge_canary": uCan.as_dict()}
     judged1 = [i for i in ids if j1.get(i)]
     metrics = {
-        "generated_at": now_iso(), "text_id": a.text, "pipeline_version": PIPELINE_VERSION, "mock": a.mock, "status": status,
+        "generated_at": now_iso(), "text_id": a.text, "unit": unit, "chapters": chapters, "pipeline_version": PIPELINE_VERSION, "mock": a.mock, "status": status,
         "batch_id": a.batch_id, "job_key": a.job_key, "run": os.environ.get("GITHUB_RUN_ID"),
         "segments": n, "segments_done": len(final), "batch_size": n,
         "silent_omissions": 0 if not missing else len(missing),
@@ -816,7 +879,7 @@ def main() -> int:
                    "carrier_sha256": src_meta["sha256"], "witness_status": "W1 (lock नहीं)",
                    "print_coverage_min_mean": [min(evidence.values()), round(sum(evidence.values()) / len(evidence), 4)] if evidence else None},
         "limits": ["परीक्षण-run: स्रोत अस्थायी, पाठ lock नहीं; बना पेड़ repo में नहीं गया", "बैज C/D मशीन-जाँच के हैं; किसी इंसान ने अनुवाद नहीं देखा",
-                   "D1, D4, D5, D9, D10, D12 नहीं चलीं", "एक छोटा ग्रंथ (18 मंत्र): दरें pilot-संकेत हैं, निष्कर्ष नहीं"],
+                   "D1, D4, D5, D9, D10, D12 नहीं चलीं", f"{n} खंडों का एक run: दरें pilot-संकेत हैं, निष्कर्ष नहीं"],
     }
     segments_out = [{
         "id": i, "sa_sha256": hashlib.sha256(segs[i].encode("utf-8")).hexdigest(), "badge": badges.get(i), "flags": flags.get(i, []),
@@ -824,7 +887,7 @@ def main() -> int:
         "print_coverage": evidence.get(i), "final_model": (final.get(i) or {}).get("model"), "final_family": (final.get(i) or {}).get("family"),
         "en": (final.get(i) or {}).get("en"), "hi": (final.get(i) or {}).get("hi")} for i in ids]
     write_json(out / "report" / "pilot_metrics.json", metrics)
-    write_json(out / "report" / f"{a.text}_e2e.json", {
+    write_json(out / "report" / f"{unit}_e2e.json", {
         "_meta": {"label": "AI-मसौदा · मानव-समीक्षा नहीं", "ai_generated": True, "pipeline_version": PIPELINE_VERSION, "generated_at": metrics["generated_at"],
                   "licence": "LicenseRef-sanatan-granth-draft", "note": "पूरा संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash (जज के प्रमाण में एक-दो शब्द आ सकते हैं)। अनुवाद परीक्षण के हैं।",
                   "mock": a.mock, "run": metrics["run"], "job_key": a.job_key},

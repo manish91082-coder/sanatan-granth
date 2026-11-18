@@ -1,6 +1,6 @@
 {
   "_comment": "स्वार्म किस मॉडल को किस भूमिका में ले सकता है। यह सूची main पर है और केवल PR + मालिक की स्वीकृति से बदलती है। मशीन (सेहत-बही, state branch) किसी मॉडल को केवल हटा सकती है (quota, रुकावट, canary-विफलता), जोड़ कभी नहीं सकती। सारे माप हमारे अपने हैं, एक-एक run के; मानव-समीक्षा नहीं।",
-  "version": "0.2",
+  "version": "0.3",
   "rules": {
     "judge_min_catch_rate": 0.85,
     "judge_min_items": 12,
@@ -59,7 +59,7 @@
         "catch_rate": 0.938,
         "items": 16,
         "measured": "2026-11-17",
-        "evidence": "जज-परीक्षा run 44045781954: 15/16 (पहले 17/18 और 15/18)"
+        "evidence": "जज-परीक्षा run 44045781954: 15/16 (पहले 17/18 और 15/18) · जज-परीक्षा run 44207107596 (18 नवंबर, 17 मंत्र): 17/17, 3 s (पकड़-दर यहाँ पुराने, कम वाले माप पर ही रखी गई है)"
       }
     },
     "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
@@ -71,8 +71,11 @@
         "evidence": "bake-off run 44045798916: 18/18 बने, 54 s, 2 अनुरोध; Flash-Lite-जज: 11 OK, 6 MINOR, 1 CONTRADICTED"
       },
       "judge": {
-        "qualified": false,
-        "evidence": "जज-परीक्षा run 44045781954: 0 पर फ़ैसला (उत्तर tokens की सीमा पर कटे); नई सीमा के साथ नापा नहीं गया"
+        "qualified": true,
+        "catch_rate": 1.0,
+        "items": 17,
+        "measured": "2026-11-18",
+        "evidence": "जज-परीक्षा run 44207107596 (18 नवंबर, 17 मंत्र): 17/17, 172 s, 2 अनुरोध (17 नवंबर को उत्तर tokens की सीमा पर कटे थे; अब नहीं)। एक ही run"
       }
     },
     "openrouter:baidu/ernie-5.5-flash-preview:free": {
@@ -85,9 +88,9 @@
       "judge": {
         "qualified": true,
         "catch_rate": 1.0,
-        "items": 16,
-        "measured": "2026-11-17",
-        "evidence": "जज-परीक्षा run 44045781954: 16/16, 70 s, 4 अनुरोध। एक ही run; preview-मॉडल"
+        "items": 17,
+        "measured": "2026-11-18",
+        "evidence": "जज-परीक्षा run 44045781954: 16/16, 70 s, 4 अनुरोध। एक ही run; preview-मॉडल · जज-परीक्षा run 44207107596 (18 नवंबर, 17 मंत्र): 17/17, 13 s"
       }
     },
     "groq:openai/gpt-oss-120b": {
@@ -101,8 +104,11 @@
         "evidence": "v0.4 run 44028350640: Flash-Lite-जज ने 18 में से 3 मंत्र CONTRADICTED कहे"
       },
       "judge": {
-        "qualified": false,
-        "evidence": "canary-परीक्षा में नापा नहीं गया"
+        "qualified": true,
+        "catch_rate": 1.0,
+        "items": 17,
+        "measured": "2026-11-18",
+        "evidence": "जज-परीक्षा run 44207107596 (18 नवंबर, 17 मंत्र): 17/17, 63 s, 5 अनुरोध; आधार के 1 मंत्र पर भी आपत्ति। एक ही run"
       }
     },
     "groq:qwen/qwen3.8-27b": {
@@ -147,9 +153,9 @@
       "judge": {
         "qualified": true,
         "catch_rate": 1.0,
-        "items": 16,
-        "measured": "2026-11-17",
-        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 92 s, 1 अनुरोध। एक ही run"
+        "items": 17,
+        "measured": "2026-11-18",
+        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 92 s, 1 अनुरोध। एक ही run · जज-परीक्षा run 44207107596 (18 नवंबर, 17 मंत्र): 17/17, 63 s"
       }
     },
     "ovh:DeepSeek-V4.1-Flash-1017": {
@@ -164,9 +170,9 @@
       "judge": {
         "qualified": true,
         "catch_rate": 1.0,
-        "items": 16,
-        "measured": "2026-11-17",
-        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 207 s, 3 अनुरोध; आधार के 2 मंत्रों पर भी आपत्ति। एक ही run"
+        "items": 17,
+        "measured": "2026-11-18",
+        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 207 s, 3 अनुरोध; आधार के 2 मंत्रों पर भी आपत्ति। एक ही run · जज-परीक्षा run 44207107596 (18 नवंबर, 17 मंत्र): 17/17, 28 s"
       }
     },
     "ovh:Qwen3.5-397B-A17B": {
@@ -181,9 +187,9 @@
       "judge": {
         "qualified": true,
         "catch_rate": 1.0,
-        "items": 16,
-        "measured": "2026-11-17",
-        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 415 s, 1 अनुरोध (धीमा)। एक ही run"
+        "items": 17,
+        "measured": "2026-11-18",
+        "evidence": "जज-परीक्षा run 44075857651 (17 नवंबर, 16 मंत्र): 16/16, 415 s, 1 अनुरोध (धीमा)। एक ही run · जज-परीक्षा run 44207107596 (18 नवंबर, 17 मंत्र): 17/17, 214 s"
       }
     },
     "ovh:Qwen3.8-27B": {
@@ -244,15 +250,17 @@
       "ovh:Qwen3.5-397B-A17B",
       "ovh:DeepSeek-V4.1-Flash-1017",
       "ovh:gpt-oss-120b",
-      "google_ai_studio:gemini-3.5-flash-lite"
+      "groq:openai/gpt-oss-120b",
+      "google_ai_studio:gemini-3.5-flash-lite",
+      "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free"
     ],
     "judge_candidates": [
       "openrouter:baidu/ernie-5.5-flash-preview:free",
       "ovh:Qwen3.5-397B-A17B",
       "ovh:DeepSeek-V4.1-Flash-1017",
       "ovh:gpt-oss-120b",
-      "google_ai_studio:gemini-3.5-flash-lite",
       "groq:openai/gpt-oss-120b",
+      "google_ai_studio:gemini-3.5-flash-lite",
       "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
       "sambanova:DeepSeek-V3.1",
       "sambanova:Meta-Llama-3.3-70B-Instruct"
