@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "0f59ac09e7fee597",
+  "digest": "d87b6a302095250c",
   "foreman_unreachable": 0,
   "roster_version": "0.2",
-  "updated_at": "2026-11-18T00:21:04Z"
+  "updated_at": "2026-11-18T00:30:57Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -57,9 +57,67 @@
   "enabled": true,
   "fails": 0,
   "job_key": "01698b69a50e81205019ba64cd08ed065da00be57bfb1d0e86b5488fc38a00bc",
+  "last": {
+   "at": "2026-11-18T00:30:44Z",
+   "batch_id": "judge-requal.20261118.1",
+   "rc": 0,
+   "reason": null,
+   "ref": "run:44207107596",
+   "run": "44207107596",
+   "status": "done",
+   "summary": {
+    "items": 17,
+    "judges": [
+     {
+      "catch_rate": 1.0,
+      "judge": "openrouter:baidu/ernie-5.5-flash-preview:free",
+      "judged": 17,
+      "verdict": "सीमा के ऊपर"
+     },
+     {
+      "catch_rate": 1.0,
+      "judge": "ovh:Qwen3.5-397B-A17B",
+      "judged": 17,
+      "verdict": "सीमा के ऊपर"
+     },
+     {
+      "catch_rate": 1.0,
+      "judge": "ovh:DeepSeek-V4.1-Flash-1017",
+      "judged": 17,
+      "verdict": "सीमा के ऊपर"
+     },
+     {
+      "catch_rate": 1.0,
+      "judge": "ovh:gpt-oss-120b",
+      "judged": 17,
+      "verdict": "सीमा के ऊपर"
+     },
+     {
+      "catch_rate": 1.0,
+      "judge": "google_ai_studio:gemini-3.5-flash-lite",
+      "judged": 17,
+      "verdict": "सीमा के ऊपर"
+     },
+     {
+      "catch_rate": 1.0,
+      "judge": "groq:openai/gpt-oss-120b",
+      "judged": 17,
+      "verdict": "सीमा के ऊपर"
+     },
+     {
+      "catch_rate": 1.0,
+      "judge": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+      "judged": 17,
+      "verdict": "सीमा के ऊपर"
+     }
+    ]
+   }
+  },
+  "last_done": "2026-11-18T00:30:44Z",
   "queued_at": "2026-11-18T00:21:04Z",
+  "replans": 0,
   "seq": 1,
-  "status": "queued",
+  "status": "done",
   "step": "judge_test"
  }
 }
