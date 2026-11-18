@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "062c35730e49334e",
+  "digest": "8ffafa2a61c09435",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-18T17:01:04Z"
+  "updated_at": "2026-11-18T17:20:57Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -53,11 +53,10 @@
   "step": "pilot_e2e"
  },
  "gita-1-e2e-v08": {
-  "batch_id": "gita-1-e2e-v08.20261118.3",
-  "blocked_until": "2026-11-18T17:17:14Z",
+  "batch_id": "gita-1-e2e-v08.20261118.4",
   "enabled": true,
   "fails": 0,
-  "job_key": "eff7c9ea6dbdcb8de7561151cdafcc9908a88eb57fa2f04eb86b75a67349ba51",
+  "job_key": "609b153b0c771a8508007ba3ddf9442d501ec7aee88fc00c45bdffc511be9b11",
   "last": {
    "at": "2026-11-18T16:49:14Z",
    "batch_id": "gita-1-e2e-v08.20261118.3",
@@ -68,11 +67,10 @@
    "status": "blocked",
    "summary": null
   },
-  "queued_at": "2026-11-18T16:47:34Z",
-  "reason": "बेहतर रचना 6 घंटे के भीतर संभव: इंतज़ार",
+  "queued_at": "2026-11-18T17:20:57Z",
   "replans": 3,
-  "seq": 3,
-  "status": "blocked",
+  "seq": 4,
+  "status": "queued",
   "step": "pilot_e2e"
  },
  "gita-2-e2e": {
