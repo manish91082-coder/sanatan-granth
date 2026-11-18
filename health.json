@@ -1,12 +1,14 @@
 {
  "models": {
   "google_ai_studio:gemini-3.5-flash-lite": {
-   "fails": 0,
+   "cooldown_until": "2026-11-18T16:17:47Z",
+   "fails": 1,
    "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
-   "last_error_at": "2026-11-18T00:02:03Z",
+   "last_error_at": "2026-11-18T16:02:47Z",
    "last_ok": "2026-11-18T09:40:37Z",
-   "output_tokens": 15798,
-   "requests": 22,
+   "output_tokens": 17209,
+   "reason": "overloaded",
+   "requests": 29,
    "window": "2026-11-18"
   },
   "google_ai_studio:gemma-4-31b-it": {
@@ -80,8 +82,8 @@
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 15798,
-   "requests": 22,
+   "output_tokens": 17209,
+   "requests": 29,
    "window": "2026-11-18"
   },
   "groq": {
@@ -92,8 +94,8 @@
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
    "output_tokens": 371033,
-   "reported_at": "2026-11-18T09:12:20Z",
-   "reported_used": 20,
+   "reported_at": "2026-11-18T09:41:01Z",
+   "reported_used": 37,
    "reported_window": "2026-11-18",
    "requests": 40,
    "window": "2026-11-18"
@@ -104,6 +106,6 @@
    "window": "2026-11-18"
   }
  },
- "updated_at": "2026-11-18T09:40:37Z",
+ "updated_at": "2026-11-18T16:02:47Z",
  "version": 1
 }
