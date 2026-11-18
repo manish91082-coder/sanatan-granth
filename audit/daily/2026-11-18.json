@@ -1,0 +1,97 @@
+{
+  "generated_at": "2026-11-18T04:36:30Z",
+  "data_root": ".",
+  "summary": {
+    "fail": 0,
+    "warn": 1
+  },
+  "by_check": {
+    "R1": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R2": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R3": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R4": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R5": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R6": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R7": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R8": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R9": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R10": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R11": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R12": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R13": {
+      "fail": 0,
+      "warn": 0
+    },
+    "R14": {
+      "fail": 0,
+      "warn": 1
+    },
+    "A3/D11": {
+      "fail": 0,
+      "warn": 0
+    }
+  },
+  "kpi": {
+    "catalog_cards": 0,
+    "texts_by_state": {},
+    "per_text": {},
+    "segments_C": 0,
+    "segments_D": 0,
+    "open_flags_total": 0,
+    "note": "प्रक्रिया-आँकड़े; यह कोई त्रुटि-दर नहीं है"
+  },
+  "findings": [
+    {
+      "check": "R14",
+      "level": "WARN",
+      "path": "state/heartbeat.json",
+      "msg": "Foreman का heartbeat अभी नहीं (क़दम 0.11 से पहले यह अपेक्षित है)"
+    }
+  ],
+  "canaries": {
+    "repo_canaries": {
+      "caught": 3,
+      "total": 3
+    },
+    "d_self_test": {
+      "ok": 8,
+      "total": 8
+    }
+  }
+}
