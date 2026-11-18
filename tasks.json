@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "b7e6d59ca75cbe4f",
+  "digest": "4d947b437a0b225b",
   "foreman_unreachable": 0,
   "roster_version": "0.2",
-  "updated_at": "2026-11-18T00:00:58Z"
+  "updated_at": "2026-11-18T00:02:16Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -13,42 +13,24 @@
   "step": "pilot_e2e"
  },
  "isha-e2e": {
-  "batch_id": "isha-e2e.20261118.2",
+  "batch_id": "isha-e2e.20261118.3",
   "enabled": true,
   "fails": 0,
-  "job_key": "5d937e79ec65e605a0804f647595fdf8aea5c5a895d944c2929e1c0b5f3a314d",
+  "job_key": "2b7fa022a304143d6d7b404187db54f266fe2b2e96ce25f805e164c8c9ce62ed",
   "last": {
-   "at": "2026-11-17T13:13:12Z",
-   "batch_id": "isha-e2e.20261117.1",
-   "rc": 0,
-   "reason": null,
-   "ref": "pr:65",
-   "run": "44087537183",
-   "status": "done",
-   "summary": {
-    "agreement_rate": 0.889,
-    "api_calls": 12,
-    "badges": {
-     "C": 16,
-     "D": 2
-    },
-    "first_pass": 16,
-    "models": {
-     "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
-     "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
-     "draft_c": "groq:openai/gpt-oss-120b",
-     "judge1": "ovh:Qwen3.5-397B-A17B"
-    },
-    "pipeline_version": "pilot-e2e-0.7",
-    "resumed": [],
-    "seconds": 1109.2,
-    "segments": 18
-   }
+   "at": "2026-11-18T00:02:03Z",
+   "batch_id": "isha-e2e.20261118.2",
+   "rc": 75,
+   "reason": "ड्राफ़्ट A नहीं बना (आधे से कम खंड)",
+   "ref": "blocked:run44204287359",
+   "run": "44204287359",
+   "status": "blocked",
+   "summary": null
   },
   "last_done": "2026-11-17T13:13:12Z",
-  "queued_at": "2026-11-18T00:00:58Z",
-  "replans": 0,
-  "seq": 2,
+  "queued_at": "2026-11-18T00:02:16Z",
+  "replans": 1,
+  "seq": 3,
   "status": "queued",
   "step": "pilot_e2e"
  },
