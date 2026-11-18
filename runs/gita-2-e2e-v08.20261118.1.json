@@ -1,11 +1,32 @@
 {
- "at": "2026-11-18T18:33:21Z",
+ "at": "2026-11-18T19:20:23Z",
  "batch_id": "gita-2-e2e-v08.20261118.1",
- "rc": 1,
- "ref": "run:unknown",
- "run": "44358067050",
- "status": "failed",
+ "rc": 0,
+ "ref": "pr:75",
+ "run": "44377058233",
+ "status": "done",
  "step": "pilot_e2e",
+ "summary": {
+  "agreement_rate": 0.931,
+  "api_calls": 29,
+  "badges": {
+   "C": 71,
+   "D": 1
+  },
+  "first_pass": 67,
+  "models": {
+   "draft_a": "ovh:DeepSeek-V4.1-Flash-1017",
+   "draft_b": "google_ai_studio:gemini-3.5-flash-lite",
+   "draft_c": "groq:openai/gpt-oss-120b",
+   "judge1": "ovh:gpt-oss-120b"
+  },
+  "pipeline_version": "pilot-e2e-0.8",
+  "resumed": [
+   "draft_a"
+  ],
+  "seconds": 782.3,
+  "segments": 72
+ },
  "task": "gita-2-e2e-v08",
  "text_id": "gita"
 }
