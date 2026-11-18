@@ -1,0 +1,307 @@
+{
+  "key": {
+    "text": "gita",
+    "chapters": [
+      "2"
+    ],
+    "pipeline_version": "pilot-e2e-0.8",
+    "source_sha256": "3c9497d741d16b5cbdda456018b16aa9b9dc3e7d62c7bab7ac57c3070f8477be",
+    "mock": false
+  },
+  "stages": {
+    "draft_a": {
+      "model": "ovh:DeepSeek-V4.1-Flash-1017",
+      "items": {
+        "gita:2.19": {
+          "en": "He who knows this one as the killer, and he who thinks this one is killed—both do not know: this one does not kill, nor is killed.",
+          "hi": "जो इसको मारनेवाला जानता है और जो इसको मारा गया मानता है, वे दोनों नहीं जानते; यह न मारता है और न मारा जाता है।"
+        },
+        "gita:2.20": {
+          "en": "This is not born, nor does it die at any time; nor, having been, will it again cease to be. It is unborn, eternal, everlasting, ancient; it is not slain when the body is slain.",
+          "hi": "यह न कभी जन्मता है और न मरता है; न यह उत्पन्न होकर फिर नष्ट होता है। यह अजन्मा, नित्य, शाश्वत और पुराण है; शरीर के मारे जाने पर यह नहीं मारा जाता।"
+        },
+        "gita:2.21": {
+          "en": "He who knows this one as unborn, eternal, imperishable, and undecaying—how can that person, O Partha, cause anyone to be killed, or kill anyone?",
+          "hi": "जो इसको अजन्मा, नित्य, अविनाशी और अव्यय जानता है, वह पुरुष, हे पार्थ, कैसे किसी को मरवाता है या किसी को मारता है?"
+        },
+        "gita:2.22": {
+          "en": "As a man, having discarded worn-out garments, takes other new ones, so the embodied one, having discarded worn-out bodies, goes to other new ones.",
+          "hi": "जैसे मनुष्य पुराने वस्त्रों को त्यागकर अन्य नए वस्त्र ग्रहण करता है, वैसे ही देही पुराने शरीरों को त्यागकर अन्य नए शरीरों को प्राप्त होता है।"
+        },
+        "gita:2.23": {
+          "en": "Weapons do not cut this one; fire does not burn this one; waters do not moisten this one; wind does not dry it.",
+          "hi": "इसको शस्त्र नहीं काटते, इसको अग्नि नहीं जलाती, इसको जल नहीं गीला करते और वायु इसे नहीं सुखाती।"
+        },
+        "gita:2.24": {
+          "en": "This is uncuttable, this is unburnable, this is unmoistenable and undryable indeed; it is eternal, all-pervading, standing firm, immovable, ancient.",
+          "hi": "यह अच्छेद्य है, यह अदाह्य है, यह अक्लेद्य और अशोष्य ही है; यह नित्य, सर्वगत, स्थिर, अचल और सनातन है।"
+        },
+        "gita:2.25": {
+          "en": "This is said to be unmanifest, this unthinkable, this unchangeable; therefore, knowing this thus, you should not grieve.",
+          "hi": "यह अव्यक्त कहा जाता है, यह अचिन्त्य है, यह अविकार्य है; इसलिए इसको ऐसा जानकर तुम्हें शोक नहीं करना चाहिए।"
+        },
+        "gita:2.26": {
+          "en": "But if you think this one as constantly born or constantly dead, even then, O mighty-armed, you should not grieve thus.",
+          "hi": "अथवा यदि तुम इसको नित्य जन्म लेनेवाला या नित्य मरा हुआ मानते हो, तो भी, हे महाबाहो, तुम्हें इस प्रकार शोक नहीं करना चाहिए।"
+        },
+        "gita:2.27": {
+          "en": "For of the born, death is certain; and of the dead, birth is certain. Therefore, in an unavoidable matter, you should not grieve.",
+          "hi": "क्योंकि जन्म लेनेवाले का मृत्यु निश्चित है और मरे हुए का जन्म निश्चित है; इसलिए अनिवार्य विषय में तुम्हें शोक नहीं करना चाहिए।"
+        },
+        "gita:2.28": {
+          "en": "Beings are unmanifest in the beginning, manifest in the middle, O Bharata, and unmanifest in the end indeed. There, what lamentation?",
+          "hi": "हे भारत, प्राणी अव्यक्त आदि हैं, व्यक्त मध्य हैं और अव्यक्त अंत वाले ही हैं; वहाँ क्या परिदेवना?"
+        },
+        "gita:2.29": {
+          "en": "Someone sees this one as wonderful; another speaks of this one as wonderful; another hears this one as wonderful; and even after hearing, someone does not know this one.",
+          "hi": "कोई इसको आश्चर्यवत् देखता है, कोई इसका आश्चर्यवत् वर्णन करता है, और कोई अन्य इसको आश्चर्यवत् सुनता है; सुनकर भी कोई इसको नहीं जानता।"
+        },
+        "gita:2.30": {
+          "en": "The embodied one in the body of all is eternally unkillable, O Bharata; therefore, you should not grieve for all beings.",
+          "hi": "हे भारत, सबके शरीर में यह देही नित्य अवध्य है; इसलिए तुम्हें सब भूतों के लिए शोक नहीं करना चाहिए।"
+        },
+        "gita:2.31": {
+          "en": "Even considering your own dharma, you should not waver; for, for a kshatriya, there is no other better thing than a righteous war.",
+          "hi": "अपने स्वधर्म को देखकर भी तुम्हें कंपित नहीं होना चाहिए; क्योंकि क्षत्रिय के लिए धर्म्य युद्ध से श्रेयस्कर अन्य कुछ नहीं है।"
+        },
+        "gita:2.32": {
+          "en": "And this war, come by chance, is an open door to heaven; happy kshatriyas, O Partha, obtain such a war.",
+          "hi": "और यह युद्ध यदृच्छा से प्राप्त हुआ, स्वर्ग का खुला द्वार है; हे पार्थ, सुखी क्षत्रिय ऐसा युद्ध पाते हैं।"
+        },
+        "gita:2.33": {
+          "en": "But if you will not perform this righteous battle, then, having abandoned your own dharma and fame, you will obtain sin.",
+          "hi": "अथ यदि तुम यह धर्म्य संग्राम नहीं करोगे, तो स्वधर्म और कीर्ति को त्यागकर पाप प्राप्त करोगे।"
+        },
+        "gita:2.34": {
+          "en": "And beings will speak of your endless infamy; and for a respected person, infamy is greater than death.",
+          "hi": "और भूत तुम्हारी अव्यय अपकीर्ति कहेंगे; और सम्मानित पुरुष के लिए अपकीर्ति मृत्यु से अधिक है।"
+        },
+        "gita:2.35": {
+          "en": "The great chariot-warriors will think you have withdrawn from battle out of fear; and having been highly esteemed by them, you will go to contempt.",
+          "hi": "महारथी तुम्हें भय से युद्ध से हटा हुआ मानेंगे; और जिनके बहुत मान्य होकर तुम लाघव को प्राप्त होगे।"
+        },
+        "gita:2.36": {
+          "en": "And your enemies will speak many unutterable words, blaming your ability; what then is more painful than that?",
+          "hi": "और तुम्हारे शत्रु तुम्हारी सामर्थ्य की निंदा करते हुए बहुत-सी अवाच्य बातें कहेंगे; उससे अधिक दुःखद और क्या है?"
+        },
+        "gita:2.37": {
+          "en": "Either slain, you will attain heaven, or having conquered, you will enjoy the earth. Therefore arise, O Kaunteya, resolved for battle.",
+          "hi": "या तो मारा जाकर तू स्वर्ग प्राप्त करेगा, या जीतकर पृथ्वी का भोग करेगा। इसलिए, हे कौन्तेय, युद्ध के लिए निश्चय करके उठ।"
+        },
+        "gita:2.38": {
+          "en": "Having made pleasure and pain, gain and loss, victory and defeat equal, then engage in battle; thus you will not incur sin.",
+          "hi": "सुख-दुःख, लाभ-अलाभ और जय-पराजय को समान करके, तब युद्ध के लिए युक्त हो; इस प्रकार तू पाप नहीं प्राप्त करेगा।"
+        },
+        "gita:2.39": {
+          "en": "This understanding has been declared to you in Sankhya; now hear this in Yoga, endowed with which understanding, O Partha, you will abandon the bondage of action.",
+          "hi": "यह बुद्धि तुझे सांख्य में कही गई; अब योग में इसे सुन, जिस बुद्धि से युक्त होकर, हे पार्थ, तू कर्मबन्धन को त्याग देगा।"
+        },
+        "gita:2.40": {
+          "en": "Here there is no destruction of commencement; there is no adverse consequence. Even a little of this dharma protects from great fear.",
+          "hi": "यहाँ आरम्भ का नाश नहीं है, प्रत्यवाय भी नहीं है। इस धर्म का थोड़ा-सा भी महान भय से रक्षा करता है।"
+        },
+        "gita:2.41": {
+          "en": "Here the resolute understanding is one, O Kurunandana; the understandings of the irresolute are many-branched and endless.",
+          "hi": "हे कुरुनन्दन, यहाँ निश्चयात्मिका बुद्धि एक ही है; अव्यवसायी लोगों की बुद्धियाँ बहुशाखा और अनन्त हैं।"
+        },
+        "gita:2.42": {
+          "en": "The unwise, delighting in Vedic speech, O Partha, speak this flowery word, saying 'there is nothing else.'",
+          "hi": "हे पार्थ, अविपश्चित् लोग, वेदवाद में रत, यह पुष्पित वाणी बोलते हैं कि 'इसके अतिरिक्त कुछ नहीं है।'"
+        },
+        "gita:2.43": {
+          "en": "Desire-souled, heaven-oriented, yielding the fruit of birth and action, abounding in many special rites, directed toward the attainment of enjoyment and lordship.",
+          "hi": "कामात्मा, स्वर्गपरायण, जन्म और कर्म का फल देने वाली, क्रियाविशेषों से बहुल, भोग और ऐश्वर्य की गति की ओर।"
+        },
+        "gita:2.44": {
+          "en": "For those attached to enjoyment and lordship, whose mind is carried away by that, the resolute understanding is not established in samadhi.",
+          "hi": "भोग और ऐश्वर्य में आसक्त, उससे अपहृतचित्त लोगों की निश्चयात्मिका बुद्धि समाधि में स्थापित नहीं होती।"
+        },
+        "gita:2.45": {
+          "en": "The Vedas have the three gunas as their object; be free from the three gunas, O Arjuna; free from pairs, established always in sattva, free from acquisition and preservation, self-possessed.",
+          "hi": "वेद त्रैगुण्य-विषयक हैं; हे अर्जुन, तू निस्त्रैगुण्य हो; निर्द्वन्द्व, नित्य सत्त्व में स्थित, योगक्षेम से रहित और आत्मवान् हो।"
+        },
+        "gita:2.46": {
+          "en": "As much use as there is in a well when water is flooded everywhere, so much use is there in all the Vedas for the Brahmana who knows.",
+          "hi": "जितना उपयोग सर्वतः भरे हुए जल में एक कुएँ का है, उतना ही उपयोग विज्ञानवान ब्राह्मण के लिए सभी वेदों में है।"
+        },
+        "gita:2.47": {
+          "en": "Your authority is in action alone, never in fruits. Do not be the cause of the fruit of action; let there be no attachment of yours to inaction.",
+          "hi": "तेरा अधिकार केवल कर्म में है, फलों में कभी नहीं। तू कर्मफल का हेतु मत बन; तेरी अकर्म में आसक्ति न हो।"
+        },
+        "gita:2.48": {
+          "en": "Established in yoga, perform actions, having abandoned attachment, O Dhananjaya; having become equal in success and failure, equanimity is called yoga.",
+          "hi": "हे धनंजय, योग में स्थित होकर, आसक्ति त्यागकर कर्म कर; सिद्धि और असिद्धि में समान होकर, समत्व को योग कहा जाता है।"
+        },
+        "gita:2.49": {
+          "en": "Action is far inferior to the yoga of understanding, O Dhananjaya; seek refuge in understanding. Miserable are those who are causes of fruit.",
+          "hi": "हे धनंजय, कर्म बुद्धियोग से दूर से हीन है; बुद्धि में शरण खोज; फल के हेतु बनने वाले कृपण हैं।"
+        },
+        "gita:2.50": {
+          "en": "One endowed with understanding abandons here both good and evil deeds; therefore engage in yoga; yoga is skill in actions.",
+          "hi": "बुद्धियुक्त पुरुष यहाँ सुकृत और दुष्कृत दोनों को त्याग देता है; इसलिए योग के लिए युक्त हो; योग कर्मों में कौशल है।"
+        },
+        "gita:2.51": {
+          "en": "Endowed with understanding, the wise, having abandoned the fruit born of action, freed from the bondage of birth, go to the disease-free state.",
+          "hi": "बुद्धियुक्त मनीषी कर्म से उत्पन्न फल को त्यागकर, जन्मबन्ध से विमुक्त होकर, अनामय पद को प्राप्त होते हैं।"
+        },
+        "gita:2.52": {
+          "en": "When your understanding crosses the mire of delusion, then you will attain indifference to what is to be heard and what has been heard.",
+          "hi": "जब तेरी बुद्धि मोह के कलिल को पार कर जाएगी, तब तू सुनने योग्य और सुने हुए के विषय में निर्वेद को प्राप्त होगा।"
+        },
+        "gita:2.53": {
+          "en": "When your understanding, confused by heard texts, stands unshaken, fixed in samadhi, then you will attain yoga.",
+          "hi": "जब श्रुति से विप्रतिपन्न तेरी बुद्धि निश्चल होकर समाधि में अचल स्थित होगी, तब तू योग को प्राप्त करेगा।"
+        },
+        "gita:2.54": {
+          "en": "Arjuna said: What is the description of the one of steady wisdom, established in samadhi, O Keshava? How does the steady-minded one speak, how sit, how walk?",
+          "hi": "अर्जुन ने कहा: हे केशव, समाधि में स्थित स्थितप्रज्ञ की क्या भाषा है? स्थितधी कैसे बोलता है, कैसे बैठता है, कैसे चलता है?"
+        },
+        "gita:2.55": {
+          "en": "The Blessed Lord said: O Partha, when one abandons all desires that have entered the mind, and is satisfied in the Self by the Self alone, then one is called one of steady wisdom.",
+          "hi": "श्रीभगवान ने कहा: हे पार्थ, जब मन में आई सभी कामनाओं को त्याग देता है और आत्मा में ही आत्मा से संतुष्ट होता है, तब वह स्थिर बुद्धि वाला कहलाता है।"
+        },
+        "gita:2.56": {
+          "en": "One whose mind is not agitated in sorrows, who is without craving in pleasures, who is free from passion, fear and anger, is called a sage of steady intellect.",
+          "hi": "जिसका मन दुःखों में उद्विग्न नहीं होता, जो सुखों में स्पृहा रहित है, जो राग, भय और क्रोध से रहित है, वह स्थिर बुद्धि वाला मुनि कहलाता है।"
+        },
+        "gita:2.57": {
+          "en": "One who has no attachment anywhere, who, having obtained good or evil, neither rejoices nor hates—his wisdom is established.",
+          "hi": "जो सर्वत्र अनासक्त है, वह शुभ या अशुभ को प्राप्त करके न प्रसन्न होता है न द्वेष करता है; उसकी प्रज्ञा प्रतिष्ठित है।"
+        },
+        "gita:2.58": {
+          "en": "When this one withdraws the senses from the sense objects on all sides, like a tortoise withdraws its limbs, his wisdom is established.",
+          "hi": "जब यह कछुए के अंगों के समान इन्द्रियों को सब ओर से विषयों से समेट लेता है, तब उसकी प्रज्ञा प्रतिष्ठित होती है।"
+        },
+        "gita:2.59": {
+          "en": "The sense objects turn back for the embodied one who does not take food, except for taste; even his taste turns back when he has seen the Supreme.",
+          "hi": "निराहार देहधारी के लिए विषय निवृत्त हो जाते हैं, रस को छोड़कर; परम को देखकर उसका रस भी निवृत्त हो जाता है।"
+        },
+        "gita:2.60": {
+          "en": "O son of Kunti, even for a wise man who strives, the turbulent senses forcibly carry away his mind.",
+          "hi": "हे कुन्तीपुत्र, प्रयत्न करते हुए विवेकी पुरुष का भी प्रमथन करने वाली इन्द्रियाँ उसके मन को बलपूर्वक हर लेती हैं।"
+        },
+        "gita:2.61": {
+          "en": "Having restrained all these, one should sit disciplined, with Me as supreme; for one whose senses are under control, his wisdom is established.",
+          "hi": "उन सबको संयमित करके साधक मुझे परम मानकर स्थित हो; क्योंकि जिसकी इन्द्रियाँ वश में हैं, उसकी प्रज्ञा प्रतिष्ठित है।"
+        },
+        "gita:2.62": {
+          "en": "For a man thinking on sense objects, attachment to them arises; from attachment desire is born; from desire anger is born.",
+          "hi": "विषयों का चिन्तन करते हुए पुरुष के उनमें आसक्ति उत्पन्न होती है; आसक्ति से काम उत्पन्न होता है; काम से क्रोध उत्पन्न होता है।"
+        },
+        "gita:2.63": {
+          "en": "From anger comes delusion; from delusion confusion of memory; from loss of memory destruction of intellect; from destruction of intellect one perishes.",
+          "hi": "क्रोध से संमोह होता है, संमोह से स्मृति का विभ्रम, स्मृति के नष्ट होने से बुद्धि का नाश, और बुद्धि के नाश से वह नष्ट हो जाता है।"
+        },
+        "gita:2.64": {
+          "en": "But one whose self is controlled, moving among sense objects with senses free from attraction and aversion and controlled by the self, attains serenity.",
+          "hi": "परन्तु जिसका आत्मा वश में है, वह राग और द्वेष से रहित तथा आत्मा के वश में स्थित इन्द्रियों से विषयों में चलता हुआ प्रसाद को प्राप्त होता है।"
+        },
+        "gita:2.65": {
+          "en": "In serenity, the destruction of all sorrows arises for him; for one of serene mind, the intellect soon becomes firmly established.",
+          "hi": "प्रसाद में उसके सभी दुःखों का नाश उत्पन्न होता है; प्रसन्न चित्त वाले की बुद्धि शीघ्र ही स्थिर हो जाती है।"
+        },
+        "gita:2.66": {
+          "en": "There is no intellect for the undisciplined, nor meditation for the undisciplined; for one without meditation there is no peace; for one without peace, whence happiness?",
+          "hi": "अयुक्त के लिए बुद्धि नहीं है, और अयुक्त के लिए भावना नहीं है; भावना रहित के लिए शान्ति नहीं है; अशान्त के लिए सुख कहाँ?"
+        },
+        "gita:2.67": {
+          "en": "For the mind that follows the wandering senses, that carries away his wisdom, as the wind carries away a boat on water.",
+          "hi": "क्योंकि चलती हुई इन्द्रियों के पीछे जो मन लगाया जाता है, वह उसकी प्रज्ञा को हर लेता है, जैसे जल में वायु नाव को हर लेती है।"
+        },
+        "gita:2.68": {
+          "en": "Therefore, O mighty-armed one, for one whose senses are completely restrained from sense objects, his wisdom is established.",
+          "hi": "इसलिए हे महाबाहो, जिसकी इन्द्रियाँ सब प्रकार से विषयों से निगृहीत हैं, उसकी प्रज्ञा प्रतिष्ठित है।"
+        },
+        "gita:2.69": {
+          "en": "That which is night for all beings, the self-controlled one is awake in that; that in which beings are awake, is night for the sage who sees.",
+          "hi": "जो सब भूतों के लिए रात है, उसमें संयमी जागता है; जिसमें भूत जागते हैं, वह देखने वाले मुनि के लिए रात है।"
+        },
+        "gita:2.70": {
+          "en": "Just as waters enter the ocean, which is being filled but remains unmoved in its foundation, so all desires enter him; he attains peace, not the one who desires desires.",
+          "hi": "जैसे भरे जाते हुए भी अचल प्रतिष्ठा वाले समुद्र में जल प्रवेश करते हैं, वैसे ही सभी कामनाएँ उसमें प्रवेश करती हैं; वह शान्ति प्राप्त करता है, कामनाओं का कामी नहीं।"
+        },
+        "gita:2.71": {
+          "en": "The man who, abandoning all desires, moves without craving, without mine-ness, without ego, attains peace.",
+          "hi": "जो पुरुष सभी कामनाओं को त्यागकर निःस्पृह होकर चलता है, ममता रहित और अहंकार रहित, वह शान्ति को प्राप्त होता है।"
+        },
+        "gita:2.72": {
+          "en": "O Partha, this is the Brahmic state; having attained it, one is not deluded; established in it even at the time of death, one attains Brahman-nirvana.",
+          "hi": "हे पार्थ, यह ब्रह्म की स्थिति है; इसे प्राप्त करके मोहित नहीं होता; अंतकाल में भी इसमें स्थित होकर ब्रह्म-निर्वाण को प्राप्त होता है।"
+        },
+        "gita:2.1": {
+          "en": "Sanjaya said: Madhusudana spoke this word to him who was thus filled with compassion, whose eyes were full of tears and troubled, and who was despondent.",
+          "hi": "संजय ने कहा: उस प्रकार करुणा से आविष्ट, अश्रुओं से पूर्ण और व्याकुल नेत्रों वाले तथा विषाद करते हुए उससे मधुसूदन ने यह वाक्य कहा।"
+        },
+        "gita:2.2": {
+          "en": "Sri Bhagavan said: Whence has this cowardice come upon you at this difficult juncture, O Arjuna—cowardice that is practiced by non-Aryans, does not lead to heaven, and brings ill repute?",
+          "hi": "श्रीभगवान ने कहा: हे अर्जुन, इस विषम अवसर पर तुझे यह कायरता कहाँ से प्राप्त हुई, जो अनार्यों द्वारा सेवित है, स्वर्ग नहीं देने वाली और अपकीर्ति करने वाली है?"
+        },
+        "gita:2.3": {
+          "en": "Do not yield to unmanliness, O Partha; this does not befit you. Cast off this mean weakness of heart and arise, O Parantapa.",
+          "hi": "हे पार्थ, क्लैब्य को मत प्राप्त हो; यह तुझमें उपयुक्त नहीं है। हे परंतप, इस क्षुद्र हृदय-दौर्बल्य को त्यागकर खड़ा हो।"
+        },
+        "gita:2.4": {
+          "en": "Arjuna said: O Madhusudana, how shall I fight against Bhishma and Drona in battle with arrows, O Arisudana, when they are worthy of worship?",
+          "hi": "अर्जुन ने कहा: हे मधुसूदन, मैं संग्राम में भीष्म और द्रोण के विरुद्ध बाणों से कैसे युद्ध करूँगा, हे अरिसूदन, जब वे पूजा के योग्य हैं?"
+        },
+        "gita:2.5": {
+          "en": "It is better to eat alms even in this world without killing these great-souled gurus. But having killed the gurus, I would enjoy here itself enjoyments of wealth and desire smeared with blood.",
+          "hi": "इन महानुभाव गुरुओं को न मारकर इस लोक में भिक्षा भी खाना श्रेयस्कर है। परंतु गुरुओं को मारकर मैं यहीं रुधिर से लिप्त अर्थ और काम के भोगों को भोगूँगा।"
+        },
+        "gita:2.6": {
+          "en": "And we do not know which is better for us—whether we should conquer them or they should conquer us. Those very sons of Dhritarashtra, having killed whom we do not wish to live, stand before us.",
+          "hi": "और हम यह नहीं जानते कि हमारे लिए कौन अधिक श्रेयस्कर है—क्या हम उन्हें जीतें या वे हमें जीतें। जिन्हें मारकर हम जीना नहीं चाहते, वे ही धृतराष्ट्र के पुत्र हमारे सामने खड़े हैं।"
+        },
+        "gita:2.7": {
+          "en": "My nature is afflicted by the fault of cowardice; with my mind confused about dharma, I ask you. Tell me decisively what is good for me. I am your disciple; instruct me who have taken refuge in you.",
+          "hi": "कार्पण्य-दोष से अभिभूत स्वभाव वाला और धर्म के विषय में मोहित चित्त होकर मैं तुझसे पूछता हूँ। जो निश्चित रूप से मेरे लिए श्रेयस्कर हो, वह मुझे बता। मैं तेरा शिष्य हूँ; तुझमें शरण पाए मुझे शिक्षा दे।"
+        },
+        "gita:2.8": {
+          "en": "For I do not see that which would remove my grief, which dries up the senses, even after obtaining a prosperous kingdom on earth without rivals and also sovereignty over the gods.",
+          "hi": "क्योंकि मैं वह नहीं देखता जो मेरे उस शोक को दूर कर सके जो इंद्रियों को सुखा देता है, चाहे पृथ्वी पर निर्विरोध समृद्ध राज्य और देवताओं पर भी अधिपत्य प्राप्त कर लूँ।"
+        },
+        "gita:2.9": {
+          "en": "Sanjaya said: Having spoken thus to Hrishikesha, O Parantapa, Gudakesha said to Govinda, 'I will not fight,' and became silent.",
+          "hi": "संजय ने कहा: हे परंतप, हृषीकेश से इस प्रकार कहकर गुडाकेश ने गोविंद से 'मैं युद्ध नहीं करूँगा' कहा और चुप हो गया।"
+        },
+        "gita:2.10": {
+          "en": "Hrishikesha, as if smiling, O Bharata, spoke this word to him who was despondent in the middle of the two armies.",
+          "hi": "हे भारत, दोनों सेनाओं के मध्य में विषाद करते हुए उससे हृषीकेश ने मानो हँसते हुए यह वचन कहा।"
+        },
+        "gita:2.11": {
+          "en": "The Blessed Lord said: You grieve for those who should not be grieved for, and you speak words of wisdom. The wise do not grieve for those whose breaths have gone or for those whose breaths have not gone.",
+          "hi": "श्रीभगवान ने कहा: तुमने उनके लिए शोक किया जिनके लिए शोक नहीं करना चाहिए, और तुम प्रज्ञा के वचन भी बोलते हो। पंडित लोग न गतप्राणों के लिए और न अगतप्राणों के लिए शोक करते हैं।"
+        },
+        "gita:2.12": {
+          "en": "Never was there a time when I was not, nor you, nor these kings; nor will there ever be a time when we all are not, hereafter.",
+          "hi": "परंतु निश्चय ही कभी ऐसा नहीं था कि मैं नहीं था, न तुम नहीं थे, न ये राजा नहीं थे; और इसके बाद ऐसा भी नहीं होगा कि हम सब न हों।"
+        },
+        "gita:2.13": {
+          "en": "Just as in this body the embodied one has childhood, youth, and old age, so too is the obtaining of another body; the steadfast one is not deluded there.",
+          "hi": "जैसे इस देह में देही को कौमार्य, यौवन और जरा होती है, वैसे ही देहांतर की प्राप्ति होती है; धीर पुरुष उस विषय में मोहित नहीं होता।"
+        },
+        "gita:2.14": {
+          "en": "But the contacts of the senses with objects, O son of Kunti, give cold and heat, pleasure and pain; they come and go and are impermanent. Endure them, O Bharata.",
+          "hi": "हे कुन्तीपुत्र, इंद्रिय-विषयों के स्पर्श तो शीत और उष्ण, सुख और दुःख देने वाले हैं; वे आने-जाने वाले और अनित्य हैं। हे भारत, उन्हें सहन कर।"
+        },
+        "gita:2.15": {
+          "en": "O best of men, the person whom these do not afflict, who is equal in pain and pleasure, the steadfast one, he is fit for immortality.",
+          "hi": "हे पुरुषश्रेष्ठ, जिस पुरुष को ये व्यथित नहीं करते, जो दुःख और सुख में समान और धीर है, वह अमृतत्व के लिए योग्य होता है।"
+        },
+        "gita:2.16": {
+          "en": "The unreal has no being; the real has no non-being. The end of both these has been seen by the seers of truth.",
+          "hi": "अवास्तविक का भाव नहीं है, वास्तविक का अभाव नहीं है; इन दोनों का अंत तत्त्वदर्शियों ने देखा है।"
+        },
+        "gita:2.17": {
+          "en": "But know that to be indestructible by which all this is pervaded; no one is able to bring about the destruction of this imperishable.",
+          "hi": "परंतु उसे अविनाशी जान, जिससे यह सब व्याप्त है; इस अव्यय का विनाश कोई करने के योग्य नहीं है।"
+        },
+        "gita:2.18": {
+          "en": "These bodies of the eternal, indestructible, immeasurable embodied one are said to have an end; therefore fight, O Bharata.",
+          "hi": "ये देह नित्य, अविनाशी और अप्रमेय देही के अंतवाले कहे गए हैं; इसलिए हे भारत, युद्ध कर।"
+        }
+      },
+      "saved_at": "2026-11-18T17:33:52Z"
+    }
+  }
+}
