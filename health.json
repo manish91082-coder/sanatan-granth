@@ -1,14 +1,12 @@
 {
  "models": {
   "google_ai_studio:gemini-3.5-flash-lite": {
-   "cooldown_until": "2026-11-18T18:22:45Z",
-   "fails": 3,
+   "fails": 0,
    "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
    "last_error_at": "2026-11-18T17:22:45Z",
-   "last_ok": "2026-11-18T09:40:37Z",
-   "output_tokens": 17209,
-   "reason": "overloaded",
-   "requests": 41,
+   "last_ok": "2026-11-18T19:06:36Z",
+   "output_tokens": 22081,
+   "requests": 52,
    "window": "2026-11-18"
   },
   "google_ai_studio:gemma-4-31b-it": {
@@ -20,9 +18,9 @@
   },
   "groq:openai/gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-18T09:40:37Z",
-   "output_tokens": 14264,
-   "requests": 8,
+   "last_ok": "2026-11-18T19:06:36Z",
+   "output_tokens": 15915,
+   "requests": 9,
    "window": "2026-11-18"
   },
   "openrouter:baidu/ernie-5.5-flash-preview:free": {
@@ -49,20 +47,20 @@
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
    "fails": 0,
-   "last_ok": "2026-11-18T16:47:14Z",
-   "output_tokens": 155982,
-   "requests": 22,
+   "last_ok": "2026-11-18T19:06:36Z",
+   "output_tokens": 166863,
+   "requests": 24,
    "window": "2026-11-18"
   },
   "ovh:Qwen3.5-397B-A17B": {
-   "cooldown_until": "2026-11-18T17:17:14Z",
-   "fails": 2,
-   "last_error": "HTTP 0: RemoteDisconnected",
-   "last_error_at": "2026-11-18T16:47:14Z",
+   "cooldown_until": "2026-11-18T20:06:36Z",
+   "fails": 3,
+   "last_error": "HTTP 0: TimeoutError",
+   "last_error_at": "2026-11-18T19:06:36Z",
    "last_ok": "2026-11-18T00:30:36Z",
    "output_tokens": 27939,
    "reason": "timeout",
-   "requests": 10,
+   "requests": 12,
    "window": "2026-11-18"
   },
   "ovh:Qwen3.8-27B": {
@@ -74,21 +72,21 @@
   },
   "ovh:gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-18T09:40:37Z",
-   "output_tokens": 41180,
-   "requests": 10,
+   "last_ok": "2026-11-18T19:06:36Z",
+   "output_tokens": 67826,
+   "requests": 15,
    "window": "2026-11-18"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 17209,
-   "requests": 41,
+   "output_tokens": 22081,
+   "requests": 52,
    "window": "2026-11-18"
   },
   "groq": {
-   "output_tokens": 14264,
-   "requests": 8,
+   "output_tokens": 15915,
+   "requests": 9,
    "window": "2026-11-18"
   },
   "openrouter": {
@@ -101,11 +99,11 @@
    "window": "2026-11-18"
   },
   "ovh": {
-   "output_tokens": 225101,
-   "requests": 42,
+   "output_tokens": 262628,
+   "requests": 51,
    "window": "2026-11-18"
   }
  },
- "updated_at": "2026-11-18T17:22:45Z",
+ "updated_at": "2026-11-18T19:06:36Z",
  "version": 1
 }
