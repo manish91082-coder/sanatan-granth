@@ -408,11 +408,14 @@ def render_status(now, backlog, tasks, H, roster, notes, alerts, plan_now, stopp
         state = "बंद (कतार में enabled नहीं)" if not t.get("enabled", True) else word.get(st.get("status", "pending"), st.get("status", ""))
         L.append(f"| `{t['id']}` | {t['step']} · {t.get('repeat', 'once')} | {state} | {ist(st.get('blocked_until')) if st.get('status') in ('blocked', 'failed') else '—'} | "
                  f"{ist(st.get('last_done'))} | {str(st.get('reason') or '')[:120]} |")
-    L += ["", "## मॉडल", "", "| मॉडल | परिवार | भूमिका (roster) | अभी | आज के अनुरोध / हमारा हिस्सा |", "|---|---|---|---|---|"]
+    any_key = any(os.environ.get(k) for k in ("GEMINI_API_KEY", "GROQ_API_KEY", "OPENROUTER_API_KEY"))  # CI में keys हैं; लैपटॉप पर नहीं
+    L += ["", "## मॉडल", "", "| मॉडल | स्रोत | परिवार | भूमिका (roster) | अभी | आज के अनुरोध / हमारा हिस्सा |", "|---|---|---|---|---|---|"]
     for ref, cfg in roster.get("models", {}).items():
         m = H["models"].get(ref) or {}
         until = health.parse_iso(m.get("cooldown_until"))
-        if until and until > now:
+        if any_key and not health.has_key(ref):
+            state = "key नहीं (यह स्रोत अभी जुड़ा नहीं)"
+        elif until and until > now:
             state = f"रुका: {m.get('reason')} → {ist(m.get('cooldown_until'))}"
         elif health.remaining(H, roster, ref, now) <= 0:  # मॉडल ठीक है, पर दिन का हिस्सा (अपना या provider का साझा) पूरा
             state = f"दिन का हिस्सा पूरा → {ist(health.iso(health.next_reset(health.reset_rule(roster, ref), now)))}"
@@ -422,7 +425,7 @@ def render_status(now, backlog, tasks, H, roster, notes, alerts, plan_now, stopp
         rule = health.reset_rule(roster, ref)
         used = m.get("requests", 0) if m.get("window") == health.window_id(rule, now) else 0
         cap = cfg.get("daily_requests") or (roster.get("providers", {}).get(health.provider_of(ref)) or {}).get("daily_requests") or "—"
-        L.append(f"| `{ref.split(':', 1)[1]}` | {cfg['family']} | {role} | {state} | {used} / {cap} |")
+        L.append(f"| `{ref.split(':', 1)[1]}` | {health.provider_of(ref)} | {cfg['family']} | {role} | {state} | {used} / {cap} |")
     orr = H["providers"].get("openrouter") or {}
     if orr.get("reported_window") == health.window_id("utc_midnight", now):
         L += ["", f"OpenRouter ने बताया: खाते के आज के मुफ़्त अनुरोध {orr.get('reported_used')} (मालिक की दूसरी keys समेत)।"]
