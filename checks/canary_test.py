@@ -38,6 +38,13 @@ D_SELF = [
     ("वक्ता बदला", "अर्जुन उवाच", "en", "Arjuna said:", "Sanjaya said:", "D7"),
     ("वक्ता बदला (हि)", "श्रीभगवानुवाच", "hi", "श्रीभगवान ने कहा:", "अर्जुन ने कहा:", "D7"),
     ("वर्जित शब्द", "पुराणं पञ्चलक्षणम्", "en", "A Purana has five marks.", "A Purana, a five-part myth.", "D8"),
+    # सादी वर्तनी पर झूठी घंटी नहीं (गीता 1.28, 1.31, 1.41, 2.10, 2.54 का सबक़), पर ग़लत व्यक्ति अब भी पकड़ा जाए
+    ("सादी वर्तनी: Krishna", "दृष्ट्वेमं स्वजनं कृष्ण युयुत्सुं समुपस्थितम्", "en", "O Krishna, seeing these kinsmen eager to fight.", "O Arjuna, seeing these kinsmen eager to fight.", "D6"),
+    ("सादी वर्तनी: Keshava", "निमित्तानि च पश्यामि विपरीतानि केशव", "en", "And I see adverse omens, O Keshava.", "And I see adverse omens, O Partha.", "D6"),
+    ("सादी वर्तनी: Hrishikesha", "तमुवाच हृषीकेशः प्रहसन्निव भारत", "en", "To him Hrishikesha, as if smiling, spoke, O Bharata.", "To him Arjuna, as if smiling, spoke, O Bharata.", "D6"),
+    ("सादी वर्तनी: Varshneya", "स्त्रीषु दुष्टासु वार्ष्णेय जायते वर्णसङ्करः", "en", "When women are corrupted, O Varshneya, intermixture arises.", "When women are corrupted, O Dhananjaya, intermixture arises.", "D6"),
+    # 'नो' = नः (हमें): निषेध नहीं (गीता 1.33)
+    ("'नो' = हमें, निषेध उलटा अब भी पकड़ा", "येषामर्थे काङ्क्षितं नो राज्यं भोगाः सुखानि च । न जायते", "en", "For whose sake kingdom is desired by us; it is not born.", "For whose sake kingdom is desired by us; it is born.", "D2"),
 ]
 
 

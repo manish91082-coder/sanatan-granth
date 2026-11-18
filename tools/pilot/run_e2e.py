@@ -36,7 +36,7 @@ from tools.pilot.canary import pick as canary_pick  # noqa: E402
 from tools.pilot.llm import Model, Usage, available, chat_json, parse_model  # noqa: E402
 from tools.swarm import health  # noqa: E402
 
-PIPELINE_VERSION = "pilot-e2e-0.7"
+PIPELINE_VERSION = "pilot-e2e-0.8"
 OK_LABELS = {"OK", "MINOR"}
 LABELS = {"OK", "MINOR", "CONTRADICTED", "UNSURE"}
 EXPECTED_RED = {"R2": "पाठ lock नहीं है (स्रोत का फ़ैसला बाक़ी)", "R6": "मूल-पाठ का वाहक गवाह CC BY-SA है; प्रदर्शन-योग्य स्रोत तय नहीं"}
@@ -738,8 +738,15 @@ def main() -> int:
             if i in incumbent and i in dC:
                 groups.setdefault(incumbent[i][1].family, []).append(i)
         for fam, gids in groups.items():
-            J2m, res, t2 = judge_fb(log, f"जज, दूसरा दौर ({fam} बनाम {C.family})", models["judges"], {fam, C.family}, dead, segs,
-                                    {i: (incumbent[i][0], dC[i]) for i in gids}, uJ2, judge_gate)
+            pairs2 = {i: (incumbent[i][0], dC[i]) for i in gids}
+            # दूसरा दौर स्वतंत्र राय है: पहले पहले-दौर के जज का परिवार भी बाहर रखा जाता है (गीता 1 में ERNIE ने दोनों दौर जाँचे थे)।
+            # ऐसा कोई जज न मिले तो ही वही परिवार; तब confirmed_twice की छूट नहीं मिलती (नीचे देखें)।
+            ex2 = {fam, C.family} | ({J1m.family} if J1m else set())
+            J2m, res, t2 = judge_fb(log, f"जज, दूसरा दौर ({fam} बनाम {C.family})", models["judges"], ex2, dead, segs, pairs2, uJ2, judge_gate)
+            if not J2m and ex2 != {fam, C.family}:
+                J2m, res, t2b = judge_fb(log, f"जज, दूसरा दौर ({fam} बनाम {C.family}; पहले-दौर का परिवार भी)", models["judges"], {fam, C.family},
+                                         dead, segs, pairs2, uJ2, judge_gate)
+                t2 = t2 + t2b
             tried.setdefault("judge2", []).extend(t2)
             if J2m:
                 judge2_used.append(J2m.ref)

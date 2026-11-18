@@ -34,7 +34,10 @@ def _has(rx: str, s: str) -> bool:
 
 # ------------------------------------------------------------------ D2 निषेध
 # स्वतंत्र निषेध-निपात। अ-/अन्- उपसर्ग और संधि में घुला 'न' (नास्ति, नैनं) v0 में केवल पदच्छेद से पकड़े जाते हैं।
-SA_NEG_STANDALONE = {"न", "मा", "नो", "नहि", "नैव", "नापि", "नच", "नतु", "नवा", "ना"}
+SA_NEG_STANDALONE = {"न", "मा", "नहि", "नैव", "नापि", "नच", "नतु", "नवा"}
+# दो-अर्थी रूप: 'नो' प्रायः 'नः' (हमें/हमारा) का संधि-रूप है (गीता 1.33 काङ्क्षितं नो, 2.6 कतरन्नो), और 'ना' = नर।
+# इन पर केवल संकेत (veto नहीं); पक्का फ़ैसला पदच्छेद-परत से।
+SA_NEG_AMBIG = {"नो", "ना"}
 SA_NEG_SANDHI_PREFIX = re.compile(r"^(नैन|नैत|नैव|नास्|नाह|नाय|नानु|नाभि|नाप|नात्|नेह|नेद|नोप|नोत्|मास्म)")
 HI_NEG = r"(?<![\wऀ-ॿ])(नहीं|नही|न|ना|मत|बिना|कभी\s+नहीं|न\s+तो|नहिं)(?![\wऀ-ॿ])|रहित|अ(?:विनाशी|जन्मा|मर|चल|व्यक्त|नित्य|सत्)"
 EN_NEG = r"\b(not|no|never|neither|nor|none|nothing|nobody|cannot|without|nowhere)\b|n't\b|\b(un|non)[a-z]{4,}|\b(im|in)(perishable|mortal|destructible|visible|capable|possible|mutable|action|active|finite|comprehensible|exhaustible|conceivable|auspicious|different|movable)\w*|\w{3,}less\b"
@@ -44,12 +47,14 @@ def d2_negation(sa: str, tr: str, lang: str, padaccheda: str | None = None) -> l
     toks = _tok_deva(padaccheda or sa)
     explicit = [t for t in toks if t in SA_NEG_STANDALONE]
     sandhi = [] if padaccheda else [t for t in toks if SA_NEG_SANDHI_PREFIX.match(t)]
+    ambig = [t for t in toks if t in SA_NEG_AMBIG]
     tr_has = _has(HI_NEG if lang == "hi" else EN_NEG, tr)
     out = []
     if explicit and not tr_has:
         out.append(Flag("D2", True, f"संस्कृत में निषेध ({' '.join(explicit[:3])}) पर अनुवाद में कोई निषेध-शब्द नहीं"))
-    elif sandhi and not explicit and not tr_has:
-        out.append(Flag("D2", False, f"संधि में संभावित निषेध ({sandhi[0]}…) पर अनुवाद में निषेध नहीं (संकेत; पदच्छेद से पक्का होगा)"))
+    elif (sandhi or ambig) and not explicit and not tr_has:
+        t0 = (sandhi or ambig)[0]
+        out.append(Flag("D2", False, f"संभावित निषेध ({t0}…) पर अनुवाद में निषेध नहीं (संकेत; दो-अर्थी या संधि-रूप, पदच्छेद से पक्का होगा)"))
     return out
 
 
@@ -84,6 +89,18 @@ def d3_numbers(sa: str, tr: str, lang: str, padaccheda: str | None = None) -> li
     return out
 
 
+# ------------------------------------------------------------------ अंग्रेज़ी में नामों की वर्तनी
+# अंग्रेज़ी अनुवाद IAST (Kṛṣṇa, Keśava) भी लिखते हैं और सादी वर्तनी (Krishna, Keshava, Hrishikesha, Varshneya) भी।
+# पैटर्न IAST-वर्गों में लिखे हैं; _rom उन्हें सादी वर्तनी के रूप भी मानने वाला बनाता है।
+_ROM = {"[sś]": "(?:sh|s|ś)", "[sṣ]": "(?:sh|s|ṣ)", "[rṛ]": "(?:ri|ru|r|ṛ)", "c[iī]": "ch?[iī]", "Acyuta": "Ach?yuta"}
+
+
+def _rom(rx: str) -> str:
+    for k, v in _ROM.items():
+        rx = rx.replace(k, v)
+    return rx
+
+
 # ------------------------------------------------------------------ D6 नाम और विशेषण
 # विशेषण → (हिंदी में स्वीकार्य रूप, अंग्रेज़ी में स्वीकार्य रूप)। अनुवाद में इनमें से कोई एक होना चाहिए।
 EPITHETS = {
@@ -101,6 +118,7 @@ EPITHET_FORMS = [
     (r"^(जनार्दन|जनार्दनः)$", "krishna"), (r"^(माधव|माधवः)$", "krishna"), (r"^(अच्युत|अच्युतः)$", "krishna"),
     (r"^(वार्ष्णेय|वासुदेव|वासुदेवः|कृष्ण|कृष्णः|कृष्णम्)$", "krishna"),
 ]
+EPITHETS = {k: (hi, _rom(en)) for k, (hi, en) in EPITHETS.items()}
 # ग़लत व्यक्ति: विशेषण X का है, पर अनुवाद में केवल Y का नाम है
 WRONG_PERSON = {"arjuna": ("krishna",), "krishna": ("arjuna",)}
 
@@ -125,6 +143,7 @@ SPEAKERS = [
     (r"(सञ्जय\s+उवाच|संजय\s+उवाच)", r"सञ्जय|संजय", r"Sa[nñṃ]jaya"),
     (r"(धृतराष्ट्र\s+उवाच)", r"धृतराष्ट्र", r"Dh[rṛ]tar[aā][sṣ][tṭ]ra|Dhritarashtra"),
 ]
+SPEAKERS = [(rx, hi, _rom(en)) for rx, hi, en in SPEAKERS]
 HI_SAID = r"कहा|बोले|बोला|कहते|उवाच|ने\s+पूछा|पूछा"
 EN_SAID = r"\b(said|spoke|says|replied|asked|uv[aā]ca)\b"
 
