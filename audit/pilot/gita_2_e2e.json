@@ -2,13 +2,13 @@
   "_meta": {
     "label": "AI-मसौदा · मानव-समीक्षा नहीं",
     "ai_generated": true,
-    "pipeline_version": "pilot-e2e-0.7",
-    "generated_at": "2026-11-18T09:40:37Z",
+    "pipeline_version": "pilot-e2e-0.8",
+    "generated_at": "2026-11-18T19:20:16Z",
     "licence": "LicenseRef-sanatan-granth-draft",
     "note": "पूरा संस्कृत पाठ इस फ़ाइल में नहीं है; केवल उसका hash (जज के प्रमाण में एक-दो शब्द आ सकते हैं)। अनुवाद परीक्षण के हैं।",
     "mock": false,
-    "run": "44273746222",
-    "job_key": "7358bcc700a0adab21fe30b298d3fe98b763c2758a44e3f0415039388bf9b567"
+    "run": "44377058233",
+    "job_key": "a849b30c09041bda95240a38eadc0a7b4eea6cf512608ff7e493f321f9f769f6"
   },
   "segments": [
     {
@@ -28,40 +28,57 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Sanjaya said: To him who was thus overcome by pity, with eyes full of tears and distressed, Madhusudana spoke these words:",
-      "hi": "संजय ने कहा: उस प्रकार कृपा से आविष्ट, आँसुओं से भरे और व्याकुल नेत्रों वाले, शोक करते हुए उस अर्जुन से मधुसूदन ने यह वाक्य कहा।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Sanjaya said: Madhusudana spoke this word to him who was thus filled with compassion, whose eyes were full of tears and troubled, and who was despondent.",
+      "hi": "संजय ने कहा: उस प्रकार करुणा से आविष्ट, अश्रुओं से पूर्ण और व्याकुल नेत्रों वाले तथा विषाद करते हुए उससे मधुसूदन ने यह वाक्य कहा।"
     },
     {
       "id": "gita:2.2",
       "sa_sha256": "f6fe7288b26d6f1a47903a757222408400d12ed5a055b4d3eb2458436ac6ede8",
       "badge": "C",
       "flags": [],
-      "path": "पहले दौर में सहमति",
+      "path": "दो जजों ने वही ड्राफ़्ट चुना",
       "judge1": {
-        "a_label": "OK",
+        "a_label": "CONTRADICTED",
         "b_label": "OK",
-        "a_evidence": "",
+        "a_evidence": "kashmalam rendered as cowardice",
         "b_evidence": "",
-        "agree": true,
+        "agree": false,
+        "pick": "B",
+        "has_empirical_claim": false
+      },
+      "judge2": {
+        "a_label": "OK",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "",
+        "b_evidence": "anāryajuṣṭam/asvargyam/akīrtikaram rendered as 'not for unlearned/unworthy/seeking heaven/fame'—meaning changed.",
+        "agree": false,
         "pick": "A",
         "has_empirical_claim": false
       },
-      "judge2": null,
       "print_coverage": null,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "The blessed Lord said: Whence has this delusion come upon you, O Arjuna, at this difficult time? It is not practiced by noble persons, does not lead to heaven, and brings disgrace.",
-      "hi": "श्री भगवान ने कहा: हे अर्जुन! इस विषम समय में तुम्हारे पास यह मलिनता (मोह) कहाँ से आ पहुँची? यह श्रेष्ठ पुरुषों द्वारा आचरित नहीं है, स्वर्ग देने वाली नहीं है और कीर्ति को नष्ट करने वाली है।"
+      "en": "The blessed Lord said: Whence has this dejection come upon you in this crisis, O Arjuna, which is un-Aryan, not leading to heaven, and productive of disgrace?",
+      "hi": "श्रीभगवान ने कहा: हे अर्जुन, इस संकट के समय में तुम्हें यह मोह कहाँ से प्राप्त हुआ है, जो आर्यों द्वारा आचरित नहीं है, स्वर्ग देने वाला नहीं है और कीर्ति को नष्ट करने वाला है?"
     },
     {
       "id": "gita:2.3",
       "sa_sha256": "8aa3e2d8962c2347ca48cb29a27473199852fcd725b8753d5a1b7436d9e39170",
       "badge": "C",
       "flags": [],
-      "path": "पहले दौर में सहमति",
+      "path": "cascade के बाद सहमति",
       "judge1": {
+        "a_label": "OK",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "",
+        "b_evidence": "klaiByam rendered as impotence",
+        "agree": false,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
+      "judge2": {
         "a_label": "OK",
         "b_label": "OK",
         "a_evidence": "",
@@ -70,12 +87,11 @@
         "pick": "A",
         "has_empirical_claim": false
       },
-      "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Do not yield to impotence, O Partha, it does not befit you. Shake off this petty weakness of heart and arise, O scorcher of foes.",
-      "hi": "हे पार्थ! नपुंसकता को मत प्राप्त होओ, तुम्हारे में यह शोभा नहीं देती। हृदय की तुच्छ दुर्बलता को छोड़कर उठो, हे परन्तप।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Do not yield to unmanliness, O Partha; this does not befit you. Cast off this mean weakness of heart and arise, O Parantapa.",
+      "hi": "हे पार्थ, क्लैब्य को मत प्राप्त हो; यह तुझमें उपयुक्त नहीं है। हे परंतप, इस क्षुद्र हृदय-दौर्बल्य को त्यागकर खड़ा हो।"
     },
     {
       "id": "gita:2.4",
@@ -94,36 +110,14 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Arjuna said: O Madhusudana, how shall I fight against Bhishma and Drona in battle with arrows, O Arisudana, when they are worthy of worship?",
-      "hi": "अर्जुन ने कहा: हे मधुसूदन, मैं संग्राम में भीष्म और द्रोण के विरुद्ध बाणों से कैसे युद्ध करूँगा, हे अरिसूदन, जो पूजा के योग्य हैं?"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Arjuna said: How shall I, O Madhusudana, strike Bhishma and Drona in battle with arrows, they being worthy of worship, O slayer of foes?",
+      "hi": "अर्जुन ने कहा: हे मधुसूदन, मैं युद्ध में बाणों से भीष्म और द्रोण के विरुद्ध कैसे लड़ूँगा, वे दोनों ही पूजा के योग्य हैं, हे अरिसूदन?"
     },
     {
       "id": "gita:2.5",
       "sa_sha256": "267232e951717722eff7193cf713fc3af642143e3f47e17b76a64a35005ce5d4",
-      "badge": "C",
-      "flags": [],
-      "path": "पहले दौर में सहमति",
-      "judge1": {
-        "a_label": "OK",
-        "b_label": "OK",
-        "a_evidence": "",
-        "b_evidence": "",
-        "agree": true,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": null,
-      "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Without killing the great-souled teachers, it is better to eat alms even in this world; but having killed the teachers who are desirous of wealth, I would enjoy enjoyments smeared with blood here itself.",
-      "hi": "महानुभाव गुरुओं को न मारकर इस लोक में भिक्षा खाना भी श्रेयस्कर है; परंतु धन-कामना वाले गुरुओं को मारकर मैं यहीं रुधिर से लिप्त भोगों को भोगूँगा।"
-    },
-    {
-      "id": "gita:2.6",
-      "sa_sha256": "7ae3d6c871c6aea0e68340e3e2f0794a0c95429a042068241c42216e66b5f1c1",
       "badge": "C",
       "flags": [],
       "path": "पहले दौर में सहमति",
@@ -138,32 +132,70 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Nor do we know which is better for us—whether we should conquer them or they should conquer us. Standing before us are those very sons of Dhritarashtra, by killing whom we would not even want to live.",
-      "hi": "हम यह भी नहीं जानते कि हमारे लिए कौन सा श्रेष्ठ है—हम उन्हें जीतें या वे हमें जीतें। जिन्हें मारकर हम जीना भी नहीं चाहते, वे ही धृतराष्ट्र के पुत्र हमारे सामने स्थित हैं।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "It is better to eat alms even in this world without killing these great-souled gurus. But having killed the gurus, I would enjoy here itself enjoyments of wealth and desire smeared with blood.",
+      "hi": "इन महानुभाव गुरुओं को न मारकर इस लोक में भिक्षा भी खाना श्रेयस्कर है। परंतु गुरुओं को मारकर मैं यहीं रुधिर से लिप्त अर्थ और काम के भोगों को भोगूँगा।"
+    },
+    {
+      "id": "gita:2.6",
+      "sa_sha256": "7ae3d6c871c6aea0e68340e3e2f0794a0c95429a042068241c42216e66b5f1c1",
+      "badge": "C",
+      "flags": [],
+      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "judge1": {
+        "a_label": "OK",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "",
+        "b_evidence": "धार्तराष्ट्राः rendered as Dhritarashtras (fathers) instead of sons",
+        "agree": false,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
+      "judge2": {
+        "a_label": "OK",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "",
+        "b_evidence": "B mistranslated 'यानेव हत्वा' as 'standing after having killed', missing the object of killing and mangling the syntax.",
+        "agree": false,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
+      "print_coverage": null,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "And we do not know which is better for us—whether we should conquer them or they should conquer us. Those very sons of Dhritarashtra, having killed whom we do not wish to live, stand before us.",
+      "hi": "और हम यह नहीं जानते कि हमारे लिए कौन अधिक श्रेयस्कर है—क्या हम उन्हें जीतें या वे हमें जीतें। जिन्हें मारकर हम जीना नहीं चाहते, वे ही धृतराष्ट्र के पुत्र हमारे सामने खड़े हैं।"
     },
     {
       "id": "gita:2.7",
       "sa_sha256": "81f2318a6c9564cb4065596ad285faab250baa6d2a2d4fbbd4da02e69669a50a",
       "badge": "C",
       "flags": [],
-      "path": "पहले दौर में सहमति",
+      "path": "दो जजों ने वही ड्राफ़्ट चुना",
       "judge1": {
         "a_label": "OK",
-        "b_label": "OK",
+        "b_label": "CONTRADICTED",
         "a_evidence": "",
-        "b_evidence": "",
-        "agree": true,
-        "pick": "B",
+        "b_evidence": "कार्पण्य rendered as miserliness",
+        "agree": false,
+        "pick": "A",
         "has_empirical_claim": false
       },
-      "judge2": null,
+      "judge2": {
+        "a_label": "OK",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "",
+        "b_evidence": "A mistranslated 'शिष्यस्तेऽहं' (I am your disciple) as 'You are my disciple' and 'शाधि मां' as 'O ShadhI'.",
+        "agree": false,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "My nature is afflicted by the fault of miserliness, and my mind is bewildered about dharma. I ask you: tell me decisively what is better for me. I am your disciple; instruct me who have taken refuge in you.",
-      "hi": "कृपणता के दोष से आहत स्वभाव वाला और धर्म के विषय में मोहित चित्त होकर मैं तुमसे पूछता हूँ; जो निश्चित रूप से श्रेयस्कर हो, वह मुझे बताओ। मैं तुम्हारा शिष्य हूँ; तुम्हारी शरण में आए मुझे शिक्षा दो।"
+      "en": "My nature is afflicted by the fault of cowardice; with my mind confused about dharma, I ask you. Tell me decisively what is good for me. I am your disciple; instruct me who have taken refuge in you.",
+      "hi": "कार्पण्य-दोष से अभिभूत स्वभाव वाला और धर्म के विषय में मोहित चित्त होकर मैं तुझसे पूछता हूँ। जो निश्चित रूप से मेरे लिए श्रेयस्कर हो, वह मुझे बता। मैं तेरा शिष्य हूँ; तुझमें शरण पाए मुझे शिक्षा दे।"
     },
     {
       "id": "gita:2.8",
@@ -182,10 +214,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "For I do not see what could remove my sorrow, which dries up the senses, even after obtaining an unrivalled and prosperous kingdom on earth and sovereignty over the gods as well.",
-      "hi": "क्योंकि मैं ऐसा कुछ नहीं देखता जो मेरे उस शोक को दूर कर सके, जो इंद्रियों को सुखा देने वाला है, चाहे पृथ्वी पर निर्विरोध समृद्ध राज्य और देवताओं पर भी अधिपत्य प्राप्त कर लूँ।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "For I do not see what would remove this grief of mine which dries up the senses, even if I were to obtain an unrivalled and prosperous kingdom on earth and lordship over the gods.",
+      "hi": "क्योंकि मैं ऐसा उपाय नहीं देखता जो मेरी इंद्रियों को सुखाने वाले इस शोक को दूर कर सके, भले ही मुझे पृथ्वी पर निष्कंटक, समृद्ध राज्य और देवताओं का स्वामित्व ही क्यों न प्राप्त हो जाए।"
     },
     {
       "id": "gita:2.9",
@@ -204,18 +236,16 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Sanjaya said: Having thus spoken to Hrishikesha, O Parantapa, Gudakesha, having said to Govinda, 'I will not fight,' became silent.",
-      "hi": "संजय ने कहा: हे परंतप, इस प्रकार हृषीकेश से कहकर गुडाकेश ने गोविंद से 'मैं युद्ध नहीं करूँगा' कहा और चुप हो गया।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Sanjaya said: Having spoken thus to Hrishikesha, Gudakesha, the scorcher of foes, said to Govinda, 'I will not fight,' and remained silent.",
+      "hi": "संजय ने कहा: हृषीकेश से ऐसा कहकर, परन्तप गुडाकेश ने गोविन्द से 'मैं युद्ध नहीं करूँगा' ऐसा कहकर चुप हो गए।"
     },
     {
       "id": "gita:2.10",
       "sa_sha256": "287ee242b1f0f8568208c18f0ba14229d9a19f9cbfa2b033292dbf7db763e3e4",
-      "badge": "D",
-      "flags": [
-        "D6:en"
-      ],
+      "badge": "C",
+      "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
         "a_label": "OK",
@@ -228,10 +258,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "To him, O Bharata, Hrishikesha, as if smiling, spoke these words in the midst of both armies, to him who was grieving.",
-      "hi": "हे भारत! दोनों सेनाओं के मध्य में शोक करते हुए उस अर्जुन से हृषीकेश ने मानो हँसते हुए यह वचन कहा।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Hrishikesha, as if smiling, O Bharata, spoke this word to him who was despondent in the middle of the two armies.",
+      "hi": "हे भारत, दोनों सेनाओं के मध्य में विषाद करते हुए उससे हृषीकेश ने मानो हँसते हुए यह वचन कहा।"
     },
     {
       "id": "gita:2.11",
@@ -250,10 +280,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "The Blessed Lord said: You grieve for those who are not to be grieved for, and you speak words of wisdom. The wise do not grieve for the dead or for the living.",
-      "hi": "श्रीभगवान ने कहा: तू उनके लिए शोक करता है जिनके लिए शोक नहीं करना चाहिए, और प्रज्ञा के वचन बोलता है। पंडित लोग न गतप्राणों के लिए और न अगतप्राणों के लिए शोक करते हैं।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "The Supreme Lord said: You have grieved for those who should not be grieved for, and you speak words of wisdom. The wise do not grieve for the dead or for the living.",
+      "hi": "श्रीभगवान् ने कहा: तुम शोक न करने योग्य लोगों के लिए शोक करते हो और प्रज्ञा के वाद बोलते हैं। पंडित लोग मरे हुए और न मरे हुए लोगों के लिए शोक नहीं करते हैं।"
     },
     {
       "id": "gita:2.12",
@@ -272,10 +302,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Verily, at no time was I not, nor were you, nor these rulers of men; nor indeed shall we all cease to be hereafter.",
-      "hi": "न तो ऐसा ही है कि मैं किसी काल में नहीं था, और न तुम या ये राजा लोग ही थे। और न ऐसा ही है कि हम सब इसके बाद नहीं रहेंगे।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Never was there a time when I was not, nor you, nor these kings; nor will there ever be a time when we all are not, hereafter.",
+      "hi": "परंतु निश्चय ही कभी ऐसा नहीं था कि मैं नहीं था, न तुम नहीं थे, न ये राजा नहीं थे; और इसके बाद ऐसा भी नहीं होगा कि हम सब न हों।"
     },
     {
       "id": "gita:2.13",
@@ -294,10 +324,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Just as in this body there are childhood, youth, and old age for the embodied one, so too is the obtaining of another body; the steadfast one is not deluded there.",
-      "hi": "जैसे इस देह में देही के बाल्यावस्था, यौवन और वृद्धावस्था होती है, वैसे ही देहांतर की प्राप्ति होती है; धीर पुरुष उस विषय में मोहित नहीं होता।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Just as the embodied soul passes in this body through boyhood, youth, and old age, so does it obtain another body. The steadfast person is not deluded about that.",
+      "hi": "जैसे देही का इस शरीर में कुमारकाल, यौवन और जरा होती है, वैसे ही अन्य शरीर की प्राप्ति होती है। धीर पुरुष उसमें मोहित नहीं होता है।"
     },
     {
       "id": "gita:2.14",
@@ -306,9 +336,9 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "मात्रास्पर्शास्तु rendered 'contacts of matter'; mātrā means sense, not matter. Also drops तु ('but').",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
@@ -316,10 +346,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "But the contacts of the senses with objects, O Kaunteya, give cold and heat, pleasure and pain; they come and go and are impermanent; endure them, O Bharata.",
-      "hi": "हे कौन्तेय, इंद्रिय-विषयों के स्पर्श तो शीत और उष्ण, सुख और दुःख देने वाले हैं; वे आने-जाने वाले और अनित्य हैं; हे भारत, उन्हें सहन कर।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "The contacts of the senses with their objects, O son of Kunti, give rise to cold and heat, pleasure and pain. They come and go, and are impermanent; endure them, O Bharata.",
+      "hi": "किन्तु हे कौन्तेय, मात्राओं के स्पर्श शीत और उष्ण, सुख और दुःख देने वाले हैं। वे आने-जाने वाले और अनित्य हैं, उनको सहन करो हे भारत।"
     },
     {
       "id": "gita:2.15",
@@ -338,10 +368,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Indeed, the man whom these do not afflict, O chief among men, who is steady in pain and pleasure, and wise—he is fit for immortality.",
-      "hi": "हे पुरुषर्षभ! जिस धीर पुरुष को ये (सुख-दुःख) व्यथित नहीं करते, जो सुख-दुःख में समान रहता है, वह अमरता के योग्य होता है।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "O best of men, the person whom these do not afflict, who is equal in pain and pleasure, the steadfast one, he is fit for immortality.",
+      "hi": "हे पुरुषश्रेष्ठ, जिस पुरुष को ये व्यथित नहीं करते, जो दुःख और सुख में समान और धीर है, वह अमृतत्व के लिए योग्य होता है।"
     },
     {
       "id": "gita:2.16",
@@ -360,10 +390,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "There is no existence for the non-existent, and no non-existence for the existent. The final truth of both of these has been seen by the seers of truth.",
-      "hi": "असत् (अभाव) की सत्ता नहीं होती और सत् (भाव) का अभाव नहीं होता। इन दोनों का ही अंत (तत्त्व) तत्त्वदर्शियों द्वारा देखा गया है।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "The unreal has no being; the real has no non-being. The end of both these has been seen by the seers of truth.",
+      "hi": "अवास्तविक का भाव नहीं है, वास्तविक का अभाव नहीं है; इन दोनों का अंत तत्त्वदर्शियों ने देखा है।"
     },
     {
       "id": "gita:2.17",
@@ -377,15 +407,15 @@
         "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "But know that to be indestructible by which all this is pervaded. No one is able to bring about the destruction of this imperishable.",
-      "hi": "परंतु उसे अविनाशी जान, जिससे यह सब व्याप्त है। इस अव्यय का विनाश कोई भी करने के योग्य नहीं है।"
+      "en": "But know that to be indestructible by which all this is pervaded; no one is able to bring about the destruction of this imperishable.",
+      "hi": "परंतु उसे अविनाशी जान, जिससे यह सब व्याप्त है; इस अव्यय का विनाश कोई करने के योग्य नहीं है।"
     },
     {
       "id": "gita:2.18",
@@ -404,10 +434,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "These bodies of the eternal embodied one are said to have an end; he is indestructible and immeasurable. Therefore fight, O Bharata.",
-      "hi": "नित्य देही के ये देह अंतवाले कहे गए हैं; वह अविनाशी और अप्रमेय है। इसलिए हे भारत, युद्ध कर।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "These bodies of the embodied soul, which is eternal, indestructible, and immeasurable, are said to have an end. Therefore, fight, O Bharata.",
+      "hi": "नित्य, अविनाशी और अप्रमेय शरीरधारी के ये शरीर अंतवान कहे गए हैं। इसलिए हे भारत, युद्ध करो।"
     },
     {
       "id": "gita:2.19",
@@ -426,36 +456,14 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "He who knows this one as the killer, and he who thinks this one as killed—both of them do not know: this one does not kill, nor is he killed.",
-      "hi": "जो इसको मारने वाला जानता है और जो इसको मारा गया मानता है, वे दोनों नहीं जानते: यह न मारता है और न मारा जाता है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "He who knows him as the slayer and he who thinks of him as the slain, both of them know not. This one kills not, nor is he killed.",
+      "hi": "जो इस (आत्मा) को मारने वाला समझता है और जो इसको मरा हुआ मानता है, वे दोनों ही नहीं जानते। यह न मारता है और न मारा जाता है।"
     },
     {
       "id": "gita:2.20",
       "sa_sha256": "28df213357975c3c10517538cb548a788b568fe43e66297c013d9b24f210ad2c",
-      "badge": "C",
-      "flags": [],
-      "path": "पहले दौर में सहमति",
-      "judge1": {
-        "a_label": "MINOR",
-        "b_label": "OK",
-        "a_evidence": "Hindi gloss on 'na bhūyaḥ' — 'भविष्य में नहीं होने वाला ऐसा नहीं है' — is a garbled double negative obscuring the negation.",
-        "b_evidence": "",
-        "agree": true,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": null,
-      "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "This is not born, nor does it die at any time; nor, having been, will it be again. It is unborn, eternal, everlasting, ancient; it is not killed when the body is killed.",
-      "hi": "यह न कभी जन्मता है और न मरता है; यह हुआ भी नहीं और फिर नहीं होगा। यह अज, नित्य, शाश्वत और पुराण है; शरीर के मारे जाने पर भी यह नहीं मारा जाता।"
-    },
-    {
-      "id": "gita:2.21",
-      "sa_sha256": "64604d7b494076fbcdf05dd93dc5229ed57d2fdd76eb3309d93f1d74bbe630f5",
       "badge": "C",
       "flags": [],
       "path": "पहले दौर में सहमति",
@@ -470,10 +478,32 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "O Partha, how can that man who knows him to be indestructible, eternal, unborn, and inexhaustible, cause whom to be slain? Whom does he slay?",
-      "hi": "हे पार्थ! जो पुरुष इस (आत्मा) को अविनाशी, नित्य, अजन्मा और अव्यय जानता है, वह पुरुष किसको मरवाता है और किसको मारता है?"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "This is not born, nor does it die at any time; nor, having been, will it again cease to be. It is unborn, eternal, everlasting, ancient; it is not slain when the body is slain.",
+      "hi": "यह न कभी जन्मता है और न मरता है; न यह उत्पन्न होकर फिर नष्ट होता है। यह अजन्मा, नित्य, शाश्वत और पुराण है; शरीर के मारे जाने पर यह नहीं मारा जाता।"
+    },
+    {
+      "id": "gita:2.21",
+      "sa_sha256": "64604d7b494076fbcdf05dd93dc5229ed57d2fdd76eb3309d93f1d74bbe630f5",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
+        "a_label": "OK",
+        "b_label": "MINOR",
+        "a_evidence": "",
+        "b_evidence": "कं घातयति हन्ति कम् rendered as “cause to kill, whom does he kill?”",
+        "agree": true,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
+      "judge2": null,
+      "print_coverage": null,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "He who knows this one as unborn, eternal, imperishable, and undecaying—how can that person, O Partha, cause anyone to be killed, or kill anyone?",
+      "hi": "जो इसको अजन्मा, नित्य, अविनाशी और अव्यय जानता है, वह पुरुष, हे पार्थ, कैसे किसी को मरवाता है या किसी को मारता है?"
     },
     {
       "id": "gita:2.22",
@@ -492,36 +522,14 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "As a man, having cast off worn-out clothes, takes other new ones, so the embodied one, having cast off worn-out bodies, goes to other new ones.",
-      "hi": "जैसे मनुष्य पुराने वस्त्रों को त्यागकर दूसरे नए वस्त्र ग्रहण करता है, वैसे ही देही पुराने शरीरों को त्यागकर दूसरे नए शरीरों को प्राप्त होता है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Just as a man, casting off worn-out garments, takes other new ones, so the embodied one, casting off worn-out bodies, enters into other new ones.",
+      "hi": "जैसे मनुष्य पुराने वस्त्रों को त्यागकर दूसरे नए वस्त्रों को ग्रहण करता है, वैसे ही देही (आत्मा) पुराने शरीरों को त्यागकर दूसरे नए शरीरों को प्राप्त होता है।"
     },
     {
       "id": "gita:2.23",
       "sa_sha256": "fe38ad07064b90ec13b9755a8059934c2c47bd24fb3749f1b44544ae41c193f7",
-      "badge": "C",
-      "flags": [],
-      "path": "पहले दौर में सहमति",
-      "judge1": {
-        "a_label": "MINOR",
-        "b_label": "OK",
-        "a_evidence": "Hindi 'नहीं सकते' ('cannot') adds a modal of capability absent from simple negatives 'na chindanti', 'na dahati', 'na śoṣayati'.",
-        "b_evidence": "",
-        "agree": true,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": null,
-      "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Weapons do not cut this one; fire does not burn this one; waters do not moisten this one; wind does not dry it.",
-      "hi": "इसको शस्त्र नहीं काटते, इसको अग्नि नहीं जलाती, इसको जल नहीं गीला करते और वायु इसे नहीं सुखाती।"
-    },
-    {
-      "id": "gita:2.24",
-      "sa_sha256": "9506a5db8ba9bb77e6b4867bbd44c102c7c716e1401fe86a2780662dacc68ede",
       "badge": "C",
       "flags": [],
       "path": "पहले दौर में सहमति",
@@ -531,15 +539,37 @@
         "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "A",
+        "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "He is uncleavable, he is unburnable, he can neither be wetted nor dried. Eternal, all-pervading, stable, immovable, and primeval is he.",
-      "hi": "यह (आत्मा) अच्छेद्य है, यह अदाह्य है, यह अक्लेद्य और अशोष्य ही है। यह नित्य, सर्वगत, स्थाणु, अचल और सनातन है।"
+      "en": "Weapons do not cut him, fire does not burn him, and water does not wet him, wind does not dry him.",
+      "hi": "शस्त्र इस (आत्मा) को काट नहीं सकते, अग्नि इसे जला नहीं सकती, जल इसे गीला नहीं कर सकता और वायु इसे सुखा नहीं सकती।"
+    },
+    {
+      "id": "gita:2.24",
+      "sa_sha256": "9506a5db8ba9bb77e6b4867bbd44c102c7c716e1401fe86a2780662dacc68ede",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
+        "a_label": "OK",
+        "b_label": "MINOR",
+        "a_evidence": "",
+        "b_evidence": "अशोष्य rendered as “untithable‑surely‑dryable”",
+        "agree": true,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
+      "judge2": null,
+      "print_coverage": null,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "This is uncuttable, this is unburnable, this is unmoistenable and undryable indeed; it is eternal, all-pervading, standing firm, immovable, ancient.",
+      "hi": "यह अच्छेद्य है, यह अदाह्य है, यह अक्लेद्य और अशोष्य ही है; यह नित्य, सर्वगत, स्थिर, अचल और सनातन है।"
     },
     {
       "id": "gita:2.25",
@@ -558,10 +588,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "This one is said to be unmanifest, unthinkable, unchangeable. Therefore, having known this one thus, you should not grieve.",
-      "hi": "यह अव्यक्त, अचिन्त्य और अविकार्य कहा जाता है। इसलिए इसको ऐसा जानकर तुम्हें शोक नहीं करना चाहिए।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "He is said to be unmanifest, he is unthinkable, he is said to be unchangeable. Therefore, knowing him thus, you ought not to grieve.",
+      "hi": "यह (आत्मा) अव्यक्त कहा गया है, यह अचिन्त्य कहा गया है और यह विकाररहित कहा गया है। इसलिए इसे ऐसा जानकर तुम शोक करने के योग्य नहीं हो।"
     },
     {
       "id": "gita:2.26",
@@ -575,15 +605,15 @@
         "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "And if you think this one as constantly born or constantly dead, even then, O mighty-armed, you should not grieve thus.",
-      "hi": "और यदि तुम इसको नित्य जन्म लेने वाला या नित्य मरा हुआ मानते हो, तो भी हे महाबाहो, तुम्हें इस प्रकार शोक नहीं करना चाहिए।"
+      "en": "But if you think this one as constantly born or constantly dead, even then, O mighty-armed, you should not grieve thus.",
+      "hi": "अथवा यदि तुम इसको नित्य जन्म लेनेवाला या नित्य मरा हुआ मानते हो, तो भी, हे महाबाहो, तुम्हें इस प्रकार शोक नहीं करना चाहिए।"
     },
     {
       "id": "gita:2.27",
@@ -602,10 +632,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "For of the born, death is certain; and of the dead, birth is certain. Therefore, in an unavoidable matter, you should not grieve.",
-      "hi": "क्योंकि जन्मे हुए का मृत्यु निश्चित है और मरे हुए का जन्म निश्चित है। इसलिए अनिवार्य विषय में तुम्हें शोक नहीं करना चाहिए।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "For of one who is born, death is certain, and birth is certain for one who has died. Therefore, concerning an unavoidable matter, you ought not to grieve.",
+      "hi": "क्योंकि जन्मे हुए की मृत्यु निश्चित है और मरे हुए का जन्म निश्चित है। इसलिए, इस अपरिहार्य विषय में तुम शोक करने के योग्य नहीं हो।"
     },
     {
       "id": "gita:2.28",
@@ -624,70 +654,54 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Beings are unmanifest in the beginning, manifest in the middle, O Bharata, and unmanifest in their destruction again. What is there to lament about?",
-      "hi": "हे भारत! सब प्राणी आरंभ में अव्यक्त हैं, मध्य अवस्था में व्यक्त हैं और विनाश होने पर फिर अव्यक्त ही हो जाते हैं। फिर इसमें क्या शोक करना?"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Beings are unmanifest in the beginning, manifest in the middle, O Bharata, and unmanifest in the end indeed. There, what lamentation?",
+      "hi": "हे भारत, प्राणी अव्यक्त आदि हैं, व्यक्त मध्य हैं और अव्यक्त अंत वाले ही हैं; वहाँ क्या परिदेवना?"
     },
     {
       "id": "gita:2.29",
       "sa_sha256": "2d9c96af76bb28c24e9c26350f77951e5a0cf465edbf45624d8fcb4205e444dc",
       "badge": "C",
       "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "path": "पहले दौर में सहमति",
       "judge1": {
         "a_label": "OK",
-        "b_label": "CONTRADICTED",
+        "b_label": "OK",
         "a_evidence": "",
-        "b_evidence": "वेद न चैव कश्चित् rendered someone does not know instead of no one knows.",
-        "agree": false,
-        "pick": "A",
+        "b_evidence": "",
+        "agree": true,
+        "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "",
-        "b_evidence": "anyaḥ/enaṃ vadati: 'another speaks of him' is untranslated; 'enaM says' makes the object the speaker; Hindi 'na...na jānāti' double negation.",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
+      "judge2": null,
       "print_coverage": null,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "Someone sees him as a marvel, another speaks of him likewise as a marvel, and another hears of him as a marvel, but even after hearing, no one knows him.",
-      "hi": "कोई एक इसे आश्चर्य की तरह देखता है और दूसरा वैसे ही इसे आश्चर्य की तरह कहता है तथा दूसरा इसे आश्चर्य की तरह सुनता है, परंतु सुनकर भी कोई इसे नहीं जानता।"
+      "en": "Someone sees him as a marvel, and likewise another speaks of him as a marvel, and another hears of him as a marvel, but even after hearing, no one whatsoever knows him.",
+      "hi": "कोई विरला इसे आश्चर्य की तरह देखता है और वैसे ही दूसरा कोई इसे आश्चर्य की तरह कहता है तथा दूसरा कोई इसे आश्चर्य की तरह सुनता है; परंतु सुनकर भी कोई इसे नहीं जानता।"
     },
     {
       "id": "gita:2.30",
       "sa_sha256": "e7a792d5721a5d9e2e1896ba01b9a687b93d3e8f79af3f0029648f38f1b24a28",
       "badge": "C",
       "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "देहे सर्वस्य rendered इस शरीर में (this body) instead of body of everyone.",
+        "a_evidence": "",
         "b_evidence": "",
-        "agree": false,
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "",
-        "b_evidence": "A leaves 'dehI', 'avadhyo'yam' untranslated/mangled and alters meaning.",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
+      "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "The embodied one in the body of all is eternally unkillable, O Bharata. Therefore, you should not grieve for all beings.",
-      "hi": "हे भारत, सबके शरीर में स्थित देही नित्य अवध्य है। इसलिए तुम्हें सब भूतों के लिए शोक नहीं करना चाहिए।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "The embodied one is eternally unslayable in the body of everyone, O Bharata. Therefore, you ought not to grieve for all beings.",
+      "hi": "हे भारत! यह देही (आत्मा) सबके शरीर में सदा ही वध करने के अयोग्य (अवाध्य) है। इसलिए तुम संपूर्ण प्राणियों के लिए शोक करने के योग्य नहीं हो।"
     },
     {
       "id": "gita:2.31",
@@ -706,32 +720,40 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Further, looking at your own duty as well, you should not waver. For there is nothing better for a Kshatriya than a righteous battle.",
-      "hi": "और अपने स्वधर्म को देखकर भी तुम कांपने (विचलित होने) योग्य नहीं हो। क्योंकि क्षत्रिय के लिए धर्मयुक्त युद्ध से बढ़कर दूसरा कोई कल्याणकारी कर्तव्य नहीं है।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Even considering your own dharma, you should not waver; for, for a kshatriya, there is no other better thing than a righteous war.",
+      "hi": "अपने स्वधर्म को देखकर भी तुम्हें कंपित नहीं होना चाहिए; क्योंकि क्षत्रिय के लिए धर्म्य युद्ध से श्रेयस्कर अन्य कुछ नहीं है।"
     },
     {
       "id": "gita:2.32",
       "sa_sha256": "cb33640731c2ac8a8b56cec8593764fd714f916166d9ca707024c9b6bda60abb",
       "badge": "C",
       "flags": [],
-      "path": "पहले दौर में सहमति",
+      "path": "दो जजों ने वही ड्राफ़्ट चुना",
       "judge1": {
-        "a_label": "OK",
+        "a_label": "MINOR",
         "b_label": "OK",
-        "a_evidence": "",
+        "a_evidence": "स्वर्गद्वारम् rendered as “war is the gate”",
         "b_evidence": "",
-        "agree": true,
+        "agree": false,
         "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": null,
+      "judge2": {
+        "a_label": "MINOR",
+        "b_label": "CONTRADICTED",
+        "a_evidence": "yuddham ('such a war') omitted in en; only 'open door of heaven' is obtained.",
+        "b_evidence": "apāvṛtam means 'open', but A says 'closed/बंद'; also invents a 'when' clause.",
+        "agree": false,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "And this war has come of itself, an open door to heaven; happy kshatriyas, O Partha, obtain such a war.",
-      "hi": "और यह युद्ध अपने आप प्राप्त हुआ है, जो स्वर्ग का खुला द्वार है; हे पार्थ, सुखी क्षत्रिय ऐसा युद्ध पाते हैं।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "And happy are the kshatriyas, O Partha, who obtain such an open door of heaven, which has come by chance.",
+      "hi": "हे पार्थ! अपने-आप प्राप्त हुए और खुले हुए स्वर्ग के द्वार रूप इस प्रकार के युद्ध को भाग्यशाली क्षत्रिय ही पाते हैं।"
     },
     {
       "id": "gita:2.33",
@@ -750,10 +772,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Now, if you will not perform this righteous warfare, then, abandoning your own duty and glory, you will incur sin.",
-      "hi": "किंतु यदि तुम इस धर्मयुक्त संग्राम को नहीं करोगे, तो अपने स्वधर्म और कीर्ति को छोड़कर पाप को प्राप्त होगे।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "But if you will not perform this righteous battle, then, having abandoned your own dharma and fame, you will obtain sin.",
+      "hi": "अथ यदि तुम यह धर्म्य संग्राम नहीं करोगे, तो स्वधर्म और कीर्ति को त्यागकर पाप प्राप्त करोगे।"
     },
     {
       "id": "gita:2.34",
@@ -772,10 +794,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "And beings will speak of your endless infamy; and for a respected person, infamy is greater than death.",
-      "hi": "और भूत तुम्हारी अव्यय अपकीर्ति कहेंगे; और सम्मानित पुरुष के लिए अपकीर्ति मृत्यु से अधिक होती है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "And also, beings will speak of your endless infamy. For one who has been honoured, infamy is worse than death.",
+      "hi": "और सब प्राणी तुम्हारी बहुत समय तक रहने वाली अपकीर्ति को कहेंगे। सम्मानित व्यक्ति के लिए अपकीर्ति मरण से भी बढ़कर होती है।"
     },
     {
       "id": "gita:2.35",
@@ -794,10 +816,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "The great chariot-warriors will think you have withdrawn from battle out of fear; and having been highly esteemed by them, you will go to slightness.",
-      "hi": "महारथी लोग तुम्हें भय से युद्ध से हटा हुआ मानेंगे; और जिनके बीच तुम बहुत सम्मानित होकर हल्केपन को प्राप्त होगे।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Great charioteers will think you have retreated from the battle out of fear. And of those of whom you were held in high esteem, having been, you will go to lightness (disrespect).",
+      "hi": "महान रथी लोग भय के कारण तुम्हें युद्ध से हटा हुआ मानेंगे। और जिन लोगों में तुम बहुत सम्मानित थे, उनके द्वारा लघुता को प्राप्त हो जाओगे।"
     },
     {
       "id": "gita:2.36",
@@ -816,40 +838,32 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "And your enemies will speak many unspeakable words, reviling your ability; what then is more painful than that?",
-      "hi": "और तुम्हारे शत्रु तुम्हारी सामर्थ्य की निंदा करते हुए बहुत से अकथनीय वचन कहेंगे; उससे अधिक दुःखद और क्या है?"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "And your enemies will speak many unspeakable words, deriding your capability. What is more painful than that?",
+      "hi": "तुम्हारे शत्रु तुम्हारी सामर्थ्य की निंदा करते हुए बहुत से न कहने योग्य वचन कहेंगे। उससे अधिक दुःखदायक और क्या होगा?"
     },
     {
       "id": "gita:2.37",
       "sa_sha256": "d6adc1c7eeb3d7af1009e40f47c69ca4a94ea4996037f6e1517e56a665c1d172",
       "badge": "C",
       "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "हतो वा ('being slain') rendered 'मारकर' (having killed), reversing the agent; also third-person 'प्राप्त करेगा' for second-person.",
+        "a_evidence": "",
         "b_evidence": "",
-        "agree": false,
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "MINOR",
-        "a_evidence": "",
-        "b_evidence": "A leaves 'hato va', 'jitva va', 'uttishtha' untranslated as English words.",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
+      "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Either being slain you will attain heaven, or having conquered you will enjoy the earth. Therefore arise, O son of Kunti, resolved for battle.",
-      "hi": "या तो मारे जाने पर तुम स्वर्ग प्राप्त करोगे, या जीतकर पृथ्वी का भोग करोगे। इसलिए हे कुन्तीपुत्र, युद्ध के लिए निश्चय करके उठो।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Either killed you will obtain heaven, or victorious you will enjoy the earth. Therefore, get up, O son of Kunti, determined to fight.",
+      "hi": "या मारा जाकर स्वर्ग को प्राप्त होगे, या जीतकर पृथ्वी का भोग करोगे। इसलिए हे कौन्तेय, युद्ध के लिएनिश्चय करके उठो।"
     },
     {
       "id": "gita:2.38",
@@ -868,40 +882,32 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Making pleasure and pain, gain and loss, victory and defeat the same, then engage in battle; thus you will not incur sin.",
-      "hi": "सुख-दुःख को, लाभ-हानि को और जय-पराजय को समान करके, तब युद्ध के लिए जुट्ट जा; इस प्रकार तू पाप को नहीं प्राप्त होगा।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Having made pleasure and pain, gain and loss, victory and defeat equal, then engage in battle; thus you will not incur sin.",
+      "hi": "सुख-दुःख, लाभ-अलाभ और जय-पराजय को समान करके, तब युद्ध के लिए युक्त हो; इस प्रकार तू पाप नहीं प्राप्त करेगा।"
     },
     {
       "id": "gita:2.39",
       "sa_sha256": "b5b0cdd142b36122bf8aea108ecf4e4ccd10e52b3b149fda87b7ef8067f0eab6",
       "badge": "C",
       "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "तेऽभिहिता ('declared to you') rendered 'तुमसे ... कही गई' (told by you), reversing the agent.",
+        "a_evidence": "",
         "b_evidence": "",
-        "agree": false,
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "MINOR",
-        "a_evidence": "",
-        "b_evidence": "A has awkward phrasing in English and literal translation of sankhye.",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
+      "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "This understanding has been stated to you in Sankhya; now hear this in Yoga, endowed with which understanding, O Partha, you will abandon the bondage of action.",
-      "hi": "यह बुद्धि तुम्हें सांख्य में कही गई है; अब योग में इसे सुनो, जिस बुद्धि से युक्त होकर हे पार्थ, तुम कर्मबन्ध को त्याग दोगे।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "This intelligence has been declared to you regarding Samkhya; now hear this regarding Yoga, equipped with which intelligence, O Partha, you will abandon the bondage of action.",
+      "hi": "यह बुद्धि तुम्हारे लिए सांख्य में कही गई है, अब योग में इस (बुद्धि) को सुनो; जिस बुद्धि से युक्त होकर, हे पार्थ, तुम कर्म के बंधन को त्यागोगे।"
     },
     {
       "id": "gita:2.40",
@@ -911,6 +917,30 @@
       "path": "पहले दौर में सहमति",
       "judge1": {
         "a_label": "OK",
+        "b_label": "MINOR",
+        "a_evidence": "",
+        "b_evidence": "प्रत्यवायो rendered as 'obstacle' instead of 'repercussion/return'",
+        "agree": true,
+        "pick": "A",
+        "has_empirical_claim": false
+      },
+      "judge2": null,
+      "print_coverage": null,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Here there is no destruction of commencement; there is no adverse consequence. Even a little of this dharma protects from great fear.",
+      "hi": "यहाँ आरम्भ का नाश नहीं है, प्रत्यवाय भी नहीं है। इस धर्म का थोड़ा-सा भी महान भय से रक्षा करता है।"
+    },
+    {
+      "id": "gita:2.41",
+      "sa_sha256": "26298fb53a4fd99b058c1ac83a96d7da4d135b319ba2c8d344b94924991c5127",
+      "badge": "D",
+      "flags": [
+        "D6:en"
+      ],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
+        "a_label": "OK",
         "b_label": "OK",
         "a_evidence": "",
         "b_evidence": "",
@@ -920,32 +950,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Here there is no loss of undertaking, nor is there any adverse result. Even a little of this dharma protects from great fear.",
-      "hi": "यहाँ आरम्भ का नाश नहीं है, न प्रत्यवाय है। इस धर्म का थोड़ा भी महान भय से रक्षा करता है।"
-    },
-    {
-      "id": "gita:2.41",
-      "sa_sha256": "26298fb53a4fd99b058c1ac83a96d7da4d135b319ba2c8d344b94924991c5127",
-      "badge": "C",
-      "flags": [],
-      "path": "पहले दौर में सहमति",
-      "judge1": {
-        "a_label": "MINOR",
-        "b_label": "OK",
-        "a_evidence": "अव्यवसायिनाम् ('of the irresolute persons') rendered 'अनिश्चयों की' (of indecisions), an abstract rather than personal genitive.",
-        "b_evidence": "",
-        "agree": true,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": null,
-      "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Here the intellect is resolute and one, O joy of the Kurus; the intellects of the irresolute are many-branched and endless.",
-      "hi": "हे कुरुनन्दन, यहाँ बुद्धि निश्चयात्मिका और एक है; अव्यवसायी लोगों की बुद्धियाँ बहुशाखा और अनन्त हैं।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "A resolute intelligence is single-pointed here, O descendant of Kuru; but the intelligences of the irresolute are many-branched and endless.",
+      "hi": "निश्चयात्मिका बुद्धि यहाँ एक ही होती है, हे कुरुनन्दन! किंतु अनिश्चियों की बुद्धियाँ बहुत शाखाओं वाली और अनंत होती हैं।"
     },
     {
       "id": "gita:2.42",
@@ -954,20 +962,20 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "वेदवादरताः ('devoted to Vedic talk') rendered 'rejoice in the letter of the Veda', adding 'letter'.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "The unwise, devoted to Vedic discourse, O Partha, speak this flowery speech, declaring that there is nothing else.",
-      "hi": "हे पार्थ, अविवेकी लोग वेदवाद में रत होकर यह पुष्पित वाणी बोलते हैं कि इसके अतिरिक्त कुछ नहीं है।"
+      "en": "The unwise, delighting in Vedic speech, O Partha, speak this flowery word, saying 'there is nothing else.'",
+      "hi": "हे पार्थ, अविपश्चित् लोग, वेदवाद में रत, यह पुष्पित वाणी बोलते हैं कि 'इसके अतिरिक्त कुछ नहीं है।'"
     },
     {
       "id": "gita:2.43",
@@ -976,9 +984,9 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "भोगैश्वर्यगतिं प्रति rendered 'aiming at the attainment of enjoyment and lordship', duplicating 'प्रति' as both aim and attainment.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
@@ -986,10 +994,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Desire-souled, heaven as their goal, they speak of that which yields the fruit of birth and action, abounds in special rites, and leads to enjoyment and lordship.",
-      "hi": "कामात्मा और स्वर्गपरायण लोग उस वाणी को बोलते हैं जो जन्म और कर्म का फल देने वाली, विशेष क्रियाओं से बहुल और भोग तथा ऐश्वर्य की प्राप्ति की ओर ले जाने वाली है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "full of desires, intent on heaven, yielding the result of birth and action, abounding in specific rites, aimed at the attainment of enjoyment and lordship.",
+      "hi": "कामनाओं वाले, स्वर्ग को परम मानने वाले, जन्म और कर्म का फल देने वाली, अनेक क्रिया-विशेषों से युक्त, भोग और ऐश्वर्य की गति के प्रति (बोलते हैं)।"
     },
     {
       "id": "gita:2.44",
@@ -998,20 +1006,20 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "समाधौ ('in samadhi') rendered 'उन पुरुषों की समाधि में' (in their samadhi), adding a possessive.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "For those attached to enjoyment and lordship, whose mind is carried away by that, the resolute intellect is not established in samadhi.",
-      "hi": "भोग और ऐश्वर्य में आसक्त तथा उससे जिनका चित्त हर लिया गया है, उनकी निश्चयात्मिका बुद्धि समाधि में नहीं स्थापित होती।"
+      "en": "For those attached to enjoyment and lordship, whose mind is carried away by that, the resolute understanding is not established in samadhi.",
+      "hi": "भोग और ऐश्वर्य में आसक्त, उससे अपहृतचित्त लोगों की निश्चयात्मिका बुद्धि समाधि में स्थापित नहीं होती।"
     },
     {
       "id": "gita:2.45",
@@ -1020,50 +1028,42 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
-        "b_label": "MINOR",
-        "a_evidence": "नित्यसत्त्वस्थ rendered 'नित्य सत्य में स्थित' (established in truth); parenthetical 'शुद्ध सत्त्व' only partly repairs it.",
-        "b_evidence": "त्रैगुण्यविषया वेदा rendered 'वेद त्रिगुण के विषय हैं', awkwardly making the Vedas the subject matter of the gunas.",
+        "a_label": "OK",
+        "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "The Vedas have the three gunas as their domain; become free from the three gunas, O Arjuna, free from the pairs, ever established in sattva, free from acquisition and preservation, self-possessed.",
-      "hi": "वेद त्रिगुण के विषय हैं; हे अर्जुन, तुम त्रिगुणातीत हो जाओ, द्वन्द्वरहित, नित्य सत्त्व में स्थित, योगक्षेम से रहित और आत्मवान् बनो।"
+      "en": "The Vedas have the three gunas as their object; be free from the three gunas, O Arjuna; free from pairs, established always in sattva, free from acquisition and preservation, self-possessed.",
+      "hi": "वेद त्रैगुण्य-विषयक हैं; हे अर्जुन, तू निस्त्रैगुण्य हो; निर्द्वन्द्व, नित्य सत्त्व में स्थित, योगक्षेम से रहित और आत्मवान् हो।"
     },
     {
       "id": "gita:2.46",
       "sa_sha256": "3523b91d8094037fe988226a8d98bbb3c7b9cca76707304a4a7a8fd7f8c1dc3c",
       "badge": "C",
       "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "ब्राह्मणस्य विजानतः = 'Brahmana who knows'; B renders 'knower of Brahman'/'ब्रह्म को जानने वाले ब्राह्मण', inventing Brahman as object.",
+        "a_evidence": "",
         "b_evidence": "",
-        "agree": false,
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "",
-        "b_evidence": "A completely mistranslates 'udapane' and 'samplutodake' into vessel filling imagery.",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
+      "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "As much use as there is in a well when water is overflowing everywhere, so much use is there in all the Vedas for the Brahmana who knows.",
-      "hi": "जितना उपयोग सर्वत्र जल से भरे हुए स्थान के होने पर कुएँ में है, उतना ही उपयोग जानने वाले ब्राह्मण के लिए सभी वेदों में है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "As much use as there is in a well when water is flooded from all sides, so much is that in all the Vedas for a knower of Brahman.",
+      "hi": "कुएँ का उतना ही उपयोग होता है जितना सब ओर से परिप्लुत जल वाले (जलाशय) का होता है; समस्त वेदों में उतने ही ब्राह्मण (ब्रह्मवेत्ता) के लिए (उपयोग) होते हैं जो जानता है।"
     },
     {
       "id": "gita:2.47",
@@ -1082,10 +1082,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Your right is in action alone, never in its fruits at any time. Do not let the fruit of action be your motive, nor let your attachment be to inaction.",
-      "hi": "तुम्हारा अधिकार केवल कर्म में ही हो, फलों में कभी नहीं। कर्म के फल के हेतु तुम मत होओ, और तुम्हारी आसक्ति अकर्म में भी न हो।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Your authority is in action alone, never in fruits. Do not be the cause of the fruit of action; let there be no attachment of yours to inaction.",
+      "hi": "तेरा अधिकार केवल कर्म में है, फलों में कभी नहीं। तू कर्मफल का हेतु मत बन; तेरी अकर्म में आसक्ति न हो।"
     },
     {
       "id": "gita:2.48",
@@ -1104,10 +1104,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Established in yoga, perform actions, having abandoned attachment, O Dhananjaya; having become equal in success and failure, equanimity is called yoga.",
-      "hi": "हे धनंजय, योग में स्थित होकर आसक्ति त्यागकर कर्म करो; सिद्धि और असिद्धि में समान होकर, समत्व को योग कहा जाता है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Established in yoga, perform actions, abandoning attachment, O Dhananjaya, being equal-minded in success and failure; equality is called yoga.",
+      "hi": "योग में स्थित होकर, आसक्ति को त्यागकर, हे धनंजय, कर्म करो, सिद्धि और असिद्धि में समान होकर; समता ही योग कहा जाता है।"
     },
     {
       "id": "gita:2.49",
@@ -1126,10 +1126,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Action is far inferior to the yoga of intellect, O Dhananjaya; seek refuge in the intellect. Those who are causes of fruits are pitiable.",
-      "hi": "हे धनंजय, कर्म बुद्धियोग से बहुत दूर नीचे है; बुद्धि में शरण खोजो; फल के हेतु बनने वाले कृपण हैं।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Action is far inferior to the yoga of wisdom, O Dhananjaya. Seek refuge in wisdom; wretched are they whose motive is fruit.",
+      "hi": "बुद्धियोग की अपेक्षा कर्म अत्यंत निम्न है, हे धनंजय। बुद्धि में शरण खोजो, वे लोग कृपण हैं जिनका हेतु फल है।"
     },
     {
       "id": "gita:2.50",
@@ -1148,10 +1148,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Endowed with intellect, one abandons here both good and evil deeds; therefore strive for yoga, yoga is skill in actions.",
-      "hi": "बुद्धियुक्त पुरुष यहाँ अच्छे और बुरे दोनों कर्मों को छोड़ देता है; इसलिए योग के लिए प्रयत्न कर, योग कर्मों में कुशलता है।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "One endowed with understanding abandons here both good and evil deeds; therefore engage in yoga; yoga is skill in actions.",
+      "hi": "बुद्धियुक्त पुरुष यहाँ सुकृत और दुष्कृत दोनों को त्याग देता है; इसलिए योग के लिए युक्त हो; योग कर्मों में कौशल है।"
     },
     {
       "id": "gita:2.51",
@@ -1170,10 +1170,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "Indeed, wise men, endowed with intellect, having abandoned the fruit born from action, freed from the bondage of birth, reach the state free from ill.",
-      "hi": "निश्चय ही बुद्धि से युक्त ज्ञानी जन कर्म से उत्पन्न फल को त्यागकर, जन्म के बंधन से पूरी तरह मुक्त होकर, विकाररहित पद को प्राप्त होते हैं।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "Endowed with understanding, the wise, having abandoned the fruit born of action, freed from the bondage of birth, go to the disease-free state.",
+      "hi": "बुद्धियुक्त मनीषी कर्म से उत्पन्न फल को त्यागकर, जन्मबन्ध से विमुक्त होकर, अनामय पद को प्राप्त होते हैं।"
     },
     {
       "id": "gita:2.52",
@@ -1192,10 +1192,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "When your intellect will cross the mire of delusion, then you will attain disgust towards what is to be heard and what has been heard.",
-      "hi": "जब तेरी बुद्धि मोह के दलदल को पार कर जाएगी, तब तू सुनने योग्य के प्रति और सुने हुए के प्रति वैराग्य को प्राप्त होगा।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "When your understanding crosses the mire of delusion, then you will attain indifference to what is to be heard and what has been heard.",
+      "hi": "जब तेरी बुद्धि मोह के कलिल को पार कर जाएगी, तब तू सुनने योग्य और सुने हुए के विषय में निर्वेद को प्राप्त होगा।"
     },
     {
       "id": "gita:2.53",
@@ -1214,23 +1214,21 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "When your intellect, perplexed by what is heard, shall stand immovable and unshakeable in samādhi, then you will attain yoga.",
-      "hi": "श्रुतियों से विचलित तेरी बुद्धि जब समाधि में अचल और स्थिर खड़ी रहेगी, तब तू योग को प्राप्त होगा।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "When your understanding, confused by heard texts, stands unshaken, fixed in samadhi, then you will attain yoga.",
+      "hi": "जब श्रुति से विप्रतिपन्न तेरी बुद्धि निश्चल होकर समाधि में अचल स्थित होगी, तब तू योग को प्राप्त करेगा।"
     },
     {
       "id": "gita:2.54",
       "sa_sha256": "5871040280819d6b93020200f409ebbdcc75487d95c0bce825d55c133786c16a",
-      "badge": "D",
-      "flags": [
-        "D6:en"
-      ],
+      "badge": "C",
+      "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "स्थितप्रज्ञस्य rendered 'स्थिरप्रज्ञा' — wrong gender/case; meaning clear but grammatically incorrect.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
@@ -1238,10 +1236,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Arjuna said: What is the description of the one of steady wisdom, established in samadhi, O Keshava? How does the steady-minded one speak, how does he sit, how does he walk?",
-      "hi": "अर्जुन ने कहा: हे केशव, समाधि में स्थित स्थितप्रज्ञ का क्या वर्णन है? स्थितधी कैसे बोलता है, कैसे बैठता है, कैसे चलता है?"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Arjuna said: What is the description of the man of steady wisdom, who is fixed in samadhi, O Keshava? How does the man of steady intellect speak, how does he sit, how does he walk?",
+      "hi": "अर्जुन बोले: समाधि में स्थित स्थिरप्रज्ञ की क्या भाषा (लक्षण) है, हे केशव? स्थिरबुद्धिवाला पुरुष कैसे बोलता है, कैसे बैठता है और कैसे चलता है?"
     },
     {
       "id": "gita:2.55",
@@ -1250,9 +1248,9 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "प्रजहाति rendered with added भलीभाँति, not in Sanskrit.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
@@ -1260,10 +1258,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "The Blessed Lord said: O Partha, when one abandons all desires that dwell in the mind, and is satisfied in the Self by the Self, then one is called one of steady wisdom.",
-      "hi": "श्रीभगवान ने कहा: हे पार्थ, जब मन में स्थित सभी कामनाओं को त्याग देता है और आत्मा में ही आत्मा से संतुष्ट होता है, तब वह स्थिर बुद्धि वाला कहा जाता है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "The blessed Lord said: When a man abandons, O Partha, all desires of the mind, satisfied in the self alone by the self, then he is called of steady wisdom.",
+      "hi": "श्रीभगवान् बोले: हे पार्थ! जब मनुष्य मन में स्थित सम्पूर्ण कामनाओं को भलीभाँति त्याग देता है और आत्मा से आत्मा में ही संतुष्ट रहता है, तब वह स्थिरबुद्धि कहा जाता है।"
     },
     {
       "id": "gita:2.56",
@@ -1272,20 +1270,20 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "विगतस्पृहः rendered with added सर्वथा in Hindi.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "One whose mind is not agitated in sorrows, who has no craving in pleasures, who is free from attachment, fear and anger, is called a sage of steady intellect.",
-      "hi": "जिसका मन दुःखों में उद्विग्न नहीं होता, जो सुखों में स्पृहा से रहित है, जो राग, भय और क्रोध से मुक्त है, वह स्थिर बुद्धि वाला मुनि कहा जाता है।"
+      "en": "One whose mind is not agitated in sorrows, who is without craving in pleasures, who is free from passion, fear and anger, is called a sage of steady intellect.",
+      "hi": "जिसका मन दुःखों में उद्विग्न नहीं होता, जो सुखों में स्पृहा रहित है, जो राग, भय और क्रोध से रहित है, वह स्थिर बुद्धि वाला मुनि कहलाता है।"
     },
     {
       "id": "gita:2.57",
@@ -1295,19 +1293,19 @@
       "path": "पहले दौर में सहमति",
       "judge1": {
         "a_label": "OK",
-        "b_label": "MINOR",
+        "b_label": "OK",
         "a_evidence": "",
-        "b_evidence": "तत्तत् omitted; only शुभाशुभम् rendered.",
+        "b_evidence": "",
         "agree": true,
-        "pick": "A",
+        "pick": "B",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "He who is without affection anywhere, who, on attaining this or that good or evil, neither rejoices nor hates, his intelligence is firmly established.",
-      "hi": "जो पुरुष सर्वत्र स्नेहहीन है और उस उस शुभ या अशुभ को प्राप्त होकर न प्रसन्न होता है और न द्वेष करता है, उसकी बुद्धि स्थिर है।"
+      "en": "He who is unattached everywhere, upon obtaining this or that good or evil, neither rejoices nor hates, his wisdom is firmly established.",
+      "hi": "जो पुरुष सर्वत्र स्नेहशून्य है तथा जो उस-उस शुभ या अशुभ को प्राप्त होकर न प्रसन्न होता है और न द्वेष करता है, उसकी बुद्धि स्थिर है।"
     },
     {
       "id": "gita:2.58",
@@ -1326,36 +1324,14 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "And when he draws in completely the senses from the objects of the senses, as a tortoise draws in its limbs on all sides, his intelligence is firmly established.",
-      "hi": "और कछुआ जैसे अपने अंगों को सब ओर से समेट लेता है, वैसे ही जब यह पुरुष इंद्रियों کے विषयों से इंद्रियों को सब प्रकार से समेट लेता है, तब उसकी बुद्धि स्थिर होती है।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "When this one withdraws the senses from the sense objects on all sides, like a tortoise withdraws its limbs, his wisdom is established.",
+      "hi": "जब यह कछुए के अंगों के समान इन्द्रियों को सब ओर से विषयों से समेट लेता है, तब उसकी प्रज्ञा प्रतिष्ठित होती है।"
     },
     {
       "id": "gita:2.59",
       "sa_sha256": "f99a98ce4cd0179834acef11eb57d9d4ed3c62308dbbfccad95e0b08a2683aaf",
-      "badge": "C",
-      "flags": [],
-      "path": "पहले दौर में सहमति",
-      "judge1": {
-        "a_label": "MINOR",
-        "b_label": "OK",
-        "a_evidence": "निराहारस्य rendered 'abstinent' — drops 'food'; 'leaving the relish' for रसवर्जं is awkward but correct.",
-        "b_evidence": "",
-        "agree": true,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": null,
-      "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "The sense-objects turn away from the embodied one who abstains from food, but not the taste; even the taste turns away when he has seen the Supreme.",
-      "hi": "भोजन से विरत देहधारी से विषय तो हट जाते हैं, पर रस नहीं; परम को देख लेने पर उसका रस भी हट जाता है।"
-    },
-    {
-      "id": "gita:2.60",
-      "sa_sha256": "b5ba58935b69031b72018cc36e571b1bd41465e8e016fb248f05333fe4d8b9fb",
       "badge": "C",
       "flags": [],
       "path": "पहले दौर में सहमति",
@@ -1370,10 +1346,32 @@
       },
       "judge2": null,
       "print_coverage": null,
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "The sense objects turn back for the embodied one who does not take food, except for taste; even his taste turns back when he has seen the Supreme.",
+      "hi": "निराहार देहधारी के लिए विषय निवृत्त हो जाते हैं, रस को छोड़कर; परम को देखकर उसका रस भी निवृत्त हो जाता है।"
+    },
+    {
+      "id": "gita:2.60",
+      "sa_sha256": "b5ba58935b69031b72018cc36e571b1bd41465e8e016fb248f05333fe4d8b9fb",
+      "badge": "C",
+      "flags": [],
+      "path": "पहले दौर में सहमति",
+      "judge1": {
+        "a_label": "OK",
+        "b_label": "OK",
+        "a_evidence": "",
+        "b_evidence": "",
+        "agree": true,
+        "pick": "B",
+        "has_empirical_claim": false
+      },
+      "judge2": null,
+      "print_coverage": null,
       "final_model": "gemini-3.5-flash-lite",
       "final_family": "google",
-      "en": "For, O son of Kunti, the turbulent senses forcibly carry away the mind of even a wise man who is striving.",
-      "hi": "क्योंकि हे कौन्तेय! प्रयत्न करते हुए ज्ञानी पुरुष के भी प्रमथनशील इंद्रियाँ मन को बलपूर्वक हर लेती हैं।"
+      "en": "For the striving wise man, O Kaunteya, the turbulent senses forcibly snatch away the mind.",
+      "hi": "क्योंकि हे कौन्तेय! प्रयत्न करते हुए ज्ञानी पुरुष के भी मन को ये प्रमथनी (उद्वेलित करने वाली) इंद्रियाँ बलपूर्वक हर लेती हैं।"
     },
     {
       "id": "gita:2.61",
@@ -1382,9 +1380,9 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "आसीत rendered 'बैठे' (sat) — past tense loses the injunctive 'should sit'; 'firmly' added to प्रतिष्ठिता.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
@@ -1392,10 +1390,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Having restrained all these, one should sit steadfast, with Me as supreme. For one whose senses are under control, his wisdom is established.",
-      "hi": "इन सबको संयमित करके मुझे परम मानकर स्थिर बैठना चाहिए। जिसकी इंद्रियाँ वश में हैं, उसकी प्रज्ञा प्रतिष्ठित है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "Having restrained all these, he should sit, yoked, intent on Me. For whose senses are under control, his wisdom is firmly established.",
+      "hi": "उन सम्पूर्ण इंद्रियों को संयम में करके, मुझमें मत्त (युक्त) होकर बैठना चाहिए। जिसकी इंद्रियाँ वश में हैं, उसकी बुद्धि स्थिर है।"
     },
     {
       "id": "gita:2.62",
@@ -1414,40 +1412,32 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "For a man thinking on sense-objects, attachment to them arises; from attachment desire is born; from desire anger is born.",
-      "hi": "विषयों का चिंतन करते पुरुष के उनमें आसक्ति उत्पन्न होती है; आसक्ति से काम उत्पन्न होता है; काम से क्रोध उत्पन्न होता है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "For a man meditating on the objects, attachment arises regarding them. From attachment arises desire, from desire anger is born.",
+      "hi": "विषयों का चिन्तन करने वाले पुरुष की उन विषयों में आसक्ति उत्पन्न हो जाती है, आसक्ति से कामना (काम) उत्पन्न होता है और कामना से क्रोध उत्पन्न होता है।"
     },
     {
       "id": "gita:2.63",
       "sa_sha256": "8787441d358b0705b501074f091d3ee911f6f57507764fb71ab023a2e718525e",
       "badge": "C",
       "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
-        "b_label": "OK",
-        "a_evidence": "स्मृतिभ्रंशात् rendered 'confusion of memory' (भ्रम), not the loss/destruction sense of bhramsha.",
-        "b_evidence": "",
-        "agree": false,
-        "pick": "B",
-        "has_empirical_claim": false
-      },
-      "judge2": {
         "a_label": "OK",
-        "b_label": "MINOR",
+        "b_label": "OK",
         "a_evidence": "",
-        "b_evidence": "B translates 'pranashyati' as death/prana samapt hota hai instead of perishes.",
-        "agree": false,
+        "b_evidence": "",
+        "agree": true,
         "pick": "A",
         "has_empirical_claim": false
       },
+      "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "From anger comes delusion; from delusion confusion of memory; from loss of memory destruction of intellect; from destruction of intellect he perishes.",
-      "hi": "क्रोध से संमोह उत्पन्न होता है; संमोह से स्मृति का विभ्रम; स्मृति के नष्ट होने से बुद्धि का नाश; बुद्धि के नाश से वह नष्ट हो जाता है।"
+      "en": "From anger comes delusion; from delusion confusion of memory; from loss of memory destruction of intellect; from destruction of intellect one perishes.",
+      "hi": "क्रोध से संमोह होता है, संमोह से स्मृति का विभ्रम, स्मृति के नष्ट होने से बुद्धि का नाश, और बुद्धि के नाश से वह नष्ट हो जाता है।"
     },
     {
       "id": "gita:2.64",
@@ -1466,10 +1456,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "gemini-3.5-flash-lite",
-      "final_family": "google",
-      "en": "But he who moves among objects with the senses under control, free from attraction and aversion, and self-governed, attains tranquility.",
-      "hi": "परंतु अपने वश में की हुई इंद्रियों द्वारा राग और द्वेष से रहित होकर विषयों में विचरता हुआ स्वाधीन अंतःकरण वाला पुरुष प्रसाद (शांति) को प्राप्त होता है।"
+      "final_model": "DeepSeek-V4.1-Flash-1017",
+      "final_family": "deepseek",
+      "en": "But one whose self is controlled, moving among sense objects with senses free from attraction and aversion and controlled by the self, attains serenity.",
+      "hi": "परन्तु जिसका आत्मा वश में है, वह राग और द्वेष से रहित तथा आत्मा के वश में स्थित इन्द्रियों से विषयों में चलता हुआ प्रसाद को प्राप्त होता है।"
     },
     {
       "id": "gita:2.65",
@@ -1478,19 +1468,19 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "प्रसन्नचेतसो rendered as शांत चित्त वाले ज्ञानी; adds ज्ञानी.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "In serenity, the destruction of all sorrows arises for him; for one whose mind is serene, intellect soon becomes firmly established.",
+      "en": "In serenity, the destruction of all sorrows arises for him; for one of serene mind, the intellect soon becomes firmly established.",
       "hi": "प्रसाद में उसके सभी दुःखों का नाश उत्पन्न होता है; प्रसन्न चित्त वाले की बुद्धि शीघ्र ही स्थिर हो जाती है।"
     },
     {
@@ -1498,30 +1488,22 @@
       "sa_sha256": "65241b78cd0a2afa9da35328d24e42fd11ab38b0a0bd96f1a4455bfaa112dc33",
       "badge": "C",
       "flags": [],
-      "path": "दो जजों ने वही ड्राफ़्ट चुना",
+      "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "CONTRADICTED",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "भावना glossed as शांति; en says meditation, hi says peace.",
+        "a_evidence": "",
         "b_evidence": "",
-        "agree": false,
+        "agree": true,
         "pick": "B",
         "has_empirical_claim": false
       },
-      "judge2": {
-        "a_label": "OK",
-        "b_label": "CONTRADICTED",
-        "a_evidence": "",
-        "b_evidence": "A translates 'ayuktasya' as attached and misrenders 'abhavayatah'.",
-        "agree": false,
-        "pick": "A",
-        "has_empirical_claim": false
-      },
+      "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "There is no intellect for the unsteady; nor is there contemplation for him; for one without contemplation there is no peace; for the unpeaceful, whence happiness?",
-      "hi": "अयुक्त के लिए बुद्धि नहीं है, और न उसके लिए भावना है; भावना से रहित के लिए शांति नहीं है; अशांत के लिए सुख कहाँ?"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "There is no wisdom for the un-yoked, nor is there meditation for the un-yoked, and for the un-meditating there is no peace. For the unpeaceful, whence is happiness?",
+      "hi": "युक्त (असंयमी) पुरुष की बुद्धि नहीं होती और असंयमी की भावना (ध्यान) नहीं होती, तथा भावनाहीन को शांति नहीं मिलती और शांत-रहित को सुख कहाँ से मिलेगा?"
     },
     {
       "id": "gita:2.67",
@@ -1530,12 +1512,12 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "यन्मनोऽनु विधीयते awkwardly rendered as इंद्रियों में से जिस मन के साथ इंद्रिय वर्तती है.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
@@ -1543,7 +1525,7 @@
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
       "en": "For the mind that follows the wandering senses, that carries away his wisdom, as the wind carries away a boat on water.",
-      "hi": "चलती हुई इंद्रियों के पीछे जो मन लग जाता है, वह उसकी प्रज्ञा को हर लेता है, जैसे जल में वायु नाव को हर लेती है।"
+      "hi": "क्योंकि चलती हुई इन्द्रियों के पीछे जो मन लगाया जाता है, वह उसकी प्रज्ञा को हर लेता है, जैसे जल में वायु नाव को हर लेती है।"
     },
     {
       "id": "gita:2.68",
@@ -1557,15 +1539,15 @@
         "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "Therefore, O Mahabaho, for one whose senses are completely restrained from sense-objects, his wisdom is established.",
-      "hi": "इसलिए हे महाबाहो, जिसकी इंद्रियाँ इंद्रिय-विषयों से सब प्रकार निगृहीत हैं, उसकी प्रज्ञा प्रतिष्ठित है।"
+      "en": "Therefore, O mighty-armed one, for one whose senses are completely restrained from sense objects, his wisdom is established.",
+      "hi": "इसलिए हे महाबाहो, जिसकी इन्द्रियाँ सब प्रकार से विषयों से निगृहीत हैं, उसकी प्रज्ञा प्रतिष्ठित है।"
     },
     {
       "id": "gita:2.69",
@@ -1584,10 +1566,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "That which is night for all beings, the self-controlled one is awake in it; that in which beings are awake, is night for the sage who sees.",
-      "hi": "जो सब भूतों के लिए रात है, उसमें संयमी जागता है; जिसमें भूत जागते हैं, वह देखने वाले मुनि के लिए रात है।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "What is night for all beings, in that the self-controlled one wakes. That in which beings wake is night for the seeing sage.",
+      "hi": "जो सब भूतों के लिए रात्रि (अदृश्य या अज्ञानमय) है, उसमें संयमी पुरुष जागता है और जिसमें सब भूत जागते हैं, वह देखने वाले मुनि के लिए रात्रि है।"
     },
     {
       "id": "gita:2.70",
@@ -1596,9 +1578,9 @@
       "flags": [],
       "path": "पहले दौर में सहमति",
       "judge1": {
-        "a_label": "MINOR",
+        "a_label": "OK",
         "b_label": "OK",
-        "a_evidence": "आपूर्यमाणम rendered as सब ओर से परिपूर्ण; adds 'from all sides'.",
+        "a_evidence": "",
         "b_evidence": "",
         "agree": true,
         "pick": "B",
@@ -1606,10 +1588,10 @@
       },
       "judge2": null,
       "print_coverage": null,
-      "final_model": "DeepSeek-V4.1-Flash-1017",
-      "final_family": "deepseek",
-      "en": "Just as waters enter the ocean, which is being filled but remains unmoved in its foundation, so all desires enter him; he attains peace, not the one who desires desires.",
-      "hi": "जैसे भरे जाते हुए भी अचल प्रतिष्ठा वाले समुद्र में जल प्रवेश करते हैं, वैसे ही सभी कामनाएँ उसमें प्रवेश करती हैं; वह शांति प्राप्त करता है, कामनाओं का कामी नहीं।"
+      "final_model": "gemini-3.5-flash-lite",
+      "final_family": "google",
+      "en": "As waters enter the ocean, which is being filled, yet remains established unmovably, so all desires enter him. He attains peace, not the desirer of desires.",
+      "hi": "जैसे परिपूर्ण (सब ओर से भरे हुए) अचल प्रतिष्ठा वाले समुद्र में जल प्रवेश करता है, वैसे ही सब कामनाएँ जिस पुरुष में प्रवेश करती हैं, वह शांति को प्राप्त होता है, कामनाओं को चाहने वाला नहीं।"
     },
     {
       "id": "gita:2.71",
@@ -1623,15 +1605,15 @@
         "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "The man who, abandoning all desires, moves without craving, without mine-ness, without ego, he attains peace.",
-      "hi": "जो पुरुष सभी कामनाओं को त्यागकर निःस्पृह होकर चलता है, ममता से रहित और अहंकार से रहित, वह शांति प्राप्त करता है।"
+      "en": "The man who, abandoning all desires, moves without craving, without mine-ness, without ego, attains peace.",
+      "hi": "जो पुरुष सभी कामनाओं को त्यागकर निःस्पृह होकर चलता है, ममता रहित और अहंकार रहित, वह शान्ति को प्राप्त होता है।"
     },
     {
       "id": "gita:2.72",
@@ -1645,15 +1627,15 @@
         "a_evidence": "",
         "b_evidence": "",
         "agree": true,
-        "pick": "B",
+        "pick": "A",
         "has_empirical_claim": false
       },
       "judge2": null,
       "print_coverage": null,
       "final_model": "DeepSeek-V4.1-Flash-1017",
       "final_family": "deepseek",
-      "en": "This is the Brahmic state, O Partha; having attained it, one is not deluded; being established in it even at the time of death, one attains Brahman-nirvana.",
-      "hi": "हे पार्थ, यह ब्रह्म की स्थिति है; इसे प्राप्त करके मोहित नहीं होता; अंतकाल में भी इसमें स्थित होकर ब्रह्म में निर्वाण प्राप्त करता है।"
+      "en": "O Partha, this is the Brahmic state; having attained it, one is not deluded; established in it even at the time of death, one attains Brahman-nirvana.",
+      "hi": "हे पार्थ, यह ब्रह्म की स्थिति है; इसे प्राप्त करके मोहित नहीं होता; अंतकाल में भी इसमें स्थित होकर ब्रह्म-निर्वाण को प्राप्त होता है।"
     }
   ]
 }
