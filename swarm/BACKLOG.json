@@ -43,6 +43,30 @@
       "enabled": true,
       "segments": 72,
       "why": "P2 2.2: गीता अध्याय 2 (72 श्लोक) पर पूरी कड़ी"
+    },
+    {
+      "id": "gita-1-e2e-v08",
+      "step": "pilot_e2e",
+      "text_id": "gita",
+      "chapters": [
+        "1"
+      ],
+      "repeat": "once",
+      "enabled": true,
+      "segments": 47,
+      "why": "P2 2.2: गीता अध्याय 1 दोबारा, pilot-e2e-0.8 पर (D2/D6 की झूठी घंटियाँ हटीं; दूसरे दौर का जज पहले-दौर के परिवार से बाहर) — दूसरे दिन का माप"
+    },
+    {
+      "id": "gita-2-e2e-v08",
+      "step": "pilot_e2e",
+      "text_id": "gita",
+      "chapters": [
+        "2"
+      ],
+      "repeat": "once",
+      "enabled": true,
+      "segments": 72,
+      "why": "P2 2.2: गीता अध्याय 2 दोबारा, pilot-e2e-0.8 पर — दूसरे दिन का माप"
     }
   ]
 }

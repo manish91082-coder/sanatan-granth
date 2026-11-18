@@ -529,3 +529,10 @@ ode.exe` का नाम `node1.exe` है (किसी और ने बद�
 - **सीमा:** हर इकाई एक ही run; जज AI है; D2/D6 की चूकें गिनती में मिली हैं; जज का `pick` अस्थिर है (0.33–0.72), और अंतिम पाठ का चुनाव उसी पर टिका है (गीता 2 में अंतिम पाठ 48 बार DeepSeek का, 24 बार Flash-Lite का)।
 - **एक चूक मिली और ठीक की:** गीता 2 का डेटा-PR #71 अपने-आप merge नहीं हुआ: उसकी branch job के शुरू वाले `main` से कटी थी, और तब तक गीता 1 का PR #70 `state/pilot_metrics.json` बदल चुका था (टकराव)। #71 में `main` मिलाकर (बाद के run का मान रखकर) ठीक किया। आगे के लिए `ci_run.sh` और `ci_judge_test.sh` डेटा-branch को PR बनाते समय के ताज़ा `main` से काटते हैं।
 
+### meta-auditor session (2026-11-18, claude-opus-5-5) — pilot-e2e-0.8: झूठी घंटियाँ और दूसरे दौर का जज
+
+- **मालिक:** "correct the problems or audit and continue as u r leading so u decide u plan u research and proceed"।
+- **हुआ:** ऊपर turn 38 में दर्ज D2/D6 की चूकें ठीक; साथ में नई पकड़: गीता 1 में दूसरे दौर का जज पहले वाला ERNIE ही था। पूरा ब्योरा `swarm/DECISIONS.md` (2026-11-18 · pilot-e2e-0.8)।
+- **माप [इस मशीन पर, बिना API]:** रखे हुए गीता-अनुवादों पर पक्की-जाँच वाले D 6 → 0; D-आत्म-परीक्षा 13/13; canaries 3/3; selftest 20/20; नक़ली कड़ी तीनों इकाइयों पर हरी, दूसरे दौर का जज पहले से अलग।
+- **कतार:** `gita-1-e2e-v08`, `gita-2-e2e-v08` (merge के बाद संचालक अपने-आप भेजेगा; OpenRouter का दिन 05:30 IST पर लौटता है)।
+- **अगला session पहले यह देखे:** `swarm-state` की `runs/gita-*-e2e-v08.*.json` और `audit/pilot/gita_{1,2}_e2e.json` (अब v0.8 वाले)। फिर go/no-go की रिपोर्ट का मसौदा: ईश (कई दिन), गीता 1–2 (दो versions), `batch_retry_max_share` की परिभाषा वाला खुला सवाल।
