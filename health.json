@@ -11,6 +11,13 @@
    "requests": 8,
    "window": "2026-11-17"
   },
+  "google_ai_studio:gemma-4-31b-it": {
+   "fails": 0,
+   "last_ok": "2026-11-18T00:11:46Z",
+   "output_tokens": 1614,
+   "requests": 1,
+   "window": "2026-11-17"
+  },
   "groq:openai/gpt-oss-120b": {
    "fails": 0,
    "last_ok": "2026-11-17T13:13:07Z",
@@ -30,17 +37,17 @@
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
    "fails": 0,
-   "last_ok": "2026-11-17T13:13:07Z",
-   "output_tokens": 53644,
-   "requests": 4,
-   "window": "2026-11-17"
+   "last_ok": "2026-11-18T00:11:46Z",
+   "output_tokens": 9126,
+   "requests": 1,
+   "window": "2026-11-18"
   },
   "ovh:Qwen3.5-397B-A17B": {
    "fails": 0,
-   "last_ok": "2026-11-17T13:13:07Z",
-   "output_tokens": 45680,
-   "requests": 6,
-   "window": "2026-11-17"
+   "last_ok": "2026-11-18T00:11:46Z",
+   "output_tokens": 13885,
+   "requests": 1,
+   "window": "2026-11-18"
   },
   "ovh:Qwen3.8-27B": {
    "fails": 0,
@@ -51,16 +58,16 @@
   },
   "ovh:gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-17T13:13:07Z",
-   "output_tokens": 15883,
-   "requests": 3,
-   "window": "2026-11-17"
+   "last_ok": "2026-11-18T00:11:46Z",
+   "output_tokens": 17451,
+   "requests": 5,
+   "window": "2026-11-18"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 3677,
-   "requests": 8,
+   "output_tokens": 5291,
+   "requests": 9,
    "window": "2026-11-17"
   },
   "groq": {
@@ -78,11 +85,11 @@
    "window": "2026-11-17"
   },
   "ovh": {
-   "output_tokens": 127450,
-   "requests": 14,
-   "window": "2026-11-17"
+   "output_tokens": 40462,
+   "requests": 7,
+   "window": "2026-11-18"
   }
  },
- "updated_at": "2026-11-18T00:02:03Z",
+ "updated_at": "2026-11-18T00:11:46Z",
  "version": 1
 }

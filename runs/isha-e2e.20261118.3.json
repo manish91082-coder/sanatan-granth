@@ -1,0 +1,30 @@
+{
+ "at": "2026-11-18T00:11:52Z",
+ "batch_id": "isha-e2e.20261118.3",
+ "rc": 0,
+ "ref": "pr:67",
+ "run": "44204467664",
+ "status": "done",
+ "step": "pilot_e2e",
+ "summary": {
+  "agreement_rate": 0.889,
+  "api_calls": 8,
+  "badges": {
+   "C": 16,
+   "D": 2
+  },
+  "first_pass": 16,
+  "models": {
+   "draft_a": "ovh:DeepSeek-V4.1-Flash-1017",
+   "draft_b": "ovh:Qwen3.5-397B-A17B",
+   "draft_c": "google_ai_studio:gemma-4-31b-it",
+   "judge1": "ovh:gpt-oss-120b"
+  },
+  "pipeline_version": "pilot-e2e-0.7",
+  "resumed": [],
+  "seconds": 556.5,
+  "segments": 18
+ },
+ "task": "isha-e2e",
+ "text_id": "isha"
+}
