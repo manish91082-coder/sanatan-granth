@@ -1,35 +1,38 @@
 {
-  "generated_at": "2026-11-17T08:40:00Z",
+  "generated_at": "2026-11-18T00:30:36Z",
   "text_id": "isha",
-  "run": "44045781954",
+  "run": "44207107596",
   "mock": false,
   "base_file": "audit/pilot/isha_e2e.json",
-  "base_sha256": "baad5e8a332edb4dcea7de592788cc7e38a8883f51013b5b2521dea75014bdb2",
+  "base_sha256": "57f9a5d1825d0b01e45cb0d3405e4bd270e046c61d10369ac8d1f14f8357fc82",
   "carrier_sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
-  "items": 16,
+  "items": 17,
   "rules_used": [
     "नाम: Agni→Indra",
     "नाम: Pushan→Varuna",
     "निषेध हटाना",
     "विलोम: all beings→no beings",
     "विलोम: darkness→light",
-    "विलोम: golden→iron",
     "विलोम: immortality→death",
     "विलोम: knowledge→ignorance",
+    "विलोम: pervaded→abandoned",
     "विलोम: remember→forget",
     "विलोम: swifter→slower"
   ],
-  "no_key": [],
-  "seconds_total": 1208.1,
+  "no_key": [
+    "sambanova:DeepSeek-V3.1",
+    "sambanova:Meta-Llama-3.3-70B-Instruct"
+  ],
+  "seconds_total": 557.6,
   "results": [
     {
       "judge": "openrouter:baidu/ernie-5.5-flash-preview:free",
-      "family": "other-baidu",
-      "judged": 16,
-      "of": 16,
-      "caught": 16,
+      "family": "baidu",
+      "judged": 17,
+      "of": 17,
+      "caught": 17,
       "catch_rate": 1.0,
-      "picked_base": 16,
+      "picked_base": 17,
       "pick_rate": 1.0,
       "passed_corrupt_as_ok": 0,
       "passed_ids": [],
@@ -37,14 +40,14 @@
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 0,
       "missed_ids": [],
-      "seconds": 70.0,
+      "seconds": 13.4,
       "usage": {
-        "calls": 4,
-        "retries": 2,
+        "calls": 2,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 9982,
-        "output_tokens": 14131,
-        "seconds": 70.05,
+        "prompt_tokens": 5048,
+        "output_tokens": 2958,
+        "seconds": 13.38,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -52,13 +55,13 @@
       }
     },
     {
-      "judge": "openrouter:nvidia/nemotron-3.5-super-vl:free",
-      "family": "nvidia",
-      "judged": 7,
-      "of": 16,
-      "caught": 7,
+      "judge": "ovh:Qwen3.5-397B-A17B",
+      "family": "alibaba-qwen",
+      "judged": 17,
+      "of": 17,
+      "caught": 17,
       "catch_rate": 1.0,
-      "picked_base": 7,
+      "picked_base": 17,
       "pick_rate": 1.0,
       "passed_corrupt_as_ok": 0,
       "passed_ids": [],
@@ -66,51 +69,132 @@
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 0,
       "missed_ids": [],
-      "seconds": 521.7,
+      "seconds": 214.2,
       "usage": {
-        "calls": 18,
-        "retries": 18,
+        "calls": 1,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 30722,
-        "output_tokens": 69235,
-        "seconds": 521.72,
+        "prompt_tokens": 4609,
+        "output_tokens": 9571,
+        "seconds": 214.22,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": [
-          "JSON parse नहीं हुआ",
-          "JSON parse नहीं हुआ",
-          "JSON parse नहीं हुआ"
-        ]
+        "errors": []
+      }
+    },
+    {
+      "judge": "ovh:DeepSeek-V4.1-Flash-1017",
+      "family": "deepseek",
+      "judged": 17,
+      "of": 17,
+      "caught": 17,
+      "catch_rate": 1.0,
+      "picked_base": 17,
+      "pick_rate": 1.0,
+      "passed_corrupt_as_ok": 0,
+      "passed_ids": [],
+      "said_same_meaning": 0,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 0,
+      "missed_ids": [],
+      "seconds": 28.3,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 5201,
+        "output_tokens": 6154,
+        "seconds": 28.29,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "judge": "ovh:gpt-oss-120b",
+      "family": "openai",
+      "judged": 17,
+      "of": 17,
+      "caught": 17,
+      "catch_rate": 1.0,
+      "picked_base": 17,
+      "pick_rate": 1.0,
+      "passed_corrupt_as_ok": 0,
+      "passed_ids": [],
+      "said_same_meaning": 0,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 0,
+      "missed_ids": [],
+      "seconds": 62.5,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 4251,
+        "output_tokens": 5539,
+        "seconds": 62.48,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
       }
     },
     {
       "judge": "google_ai_studio:gemini-3.5-flash-lite",
       "family": "google",
-      "judged": 16,
-      "of": 16,
-      "caught": 15,
-      "catch_rate": 0.938,
-      "picked_base": 16,
+      "judged": 17,
+      "of": 17,
+      "caught": 17,
+      "catch_rate": 1.0,
+      "picked_base": 17,
+      "pick_rate": 1.0,
+      "passed_corrupt_as_ok": 0,
+      "passed_ids": [],
+      "said_same_meaning": 0,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 0,
+      "missed_ids": [],
+      "seconds": 3.4,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 3835,
+        "output_tokens": 1628,
+        "seconds": 3.4,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "judge": "groq:openai/gpt-oss-120b",
+      "family": "openai",
+      "judged": 17,
+      "of": 17,
+      "caught": 17,
+      "catch_rate": 1.0,
+      "picked_base": 17,
       "pick_rate": 1.0,
       "passed_corrupt_as_ok": 0,
       "passed_ids": [],
       "said_same_meaning": 0,
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 1,
-      "missed_ids": [
-        "isha:18"
-      ],
-      "seconds": 18.7,
+      "missed_ids": [],
+      "seconds": 63.0,
       "usage": {
-        "calls": 2,
-        "retries": 1,
-        "http_429": 0,
-        "prompt_tokens": 3641,
-        "output_tokens": 1127,
-        "seconds": 8.72,
-        "waited_s": 10.0,
-        "paced_s": 0.0,
+        "calls": 5,
+        "retries": 2,
+        "http_429": 1,
+        "prompt_tokens": 5920,
+        "output_tokens": 9717,
+        "seconds": 21.71,
+        "waited_s": 13.0,
+        "paced_s": 28.3,
         "neurons": 0.0,
         "errors": []
       }
@@ -118,22 +202,30 @@
     {
       "judge": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
       "family": "nvidia",
-      "judged": 0,
-      "seconds": 597.2,
+      "judged": 17,
+      "of": 17,
+      "caught": 17,
+      "catch_rate": 1.0,
+      "picked_base": 17,
+      "pick_rate": 1.0,
+      "passed_corrupt_as_ok": 0,
+      "passed_ids": [],
+      "said_same_meaning": 0,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 0,
+      "missed_ids": [],
+      "seconds": 172.5,
       "usage": {
-        "calls": 10,
-        "retries": 10,
+        "calls": 2,
+        "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 22385,
-        "output_tokens": 48000,
-        "seconds": 597.21,
+        "prompt_tokens": 4713,
+        "output_tokens": 12808,
+        "seconds": 172.51,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": [
-          "JSON parse नहीं हुआ",
-          "JSON parse नहीं हुआ"
-        ]
+        "errors": []
       }
     }
   ],
@@ -148,7 +240,37 @@
           "pick_base": true,
           "agree": false
         },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -166,7 +288,37 @@
           "pick_base": true,
           "agree": false
         },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -176,7 +328,7 @@
     },
     "isha:3": {
       "rule": "विलोम: darkness→light",
-      "hi_changed": true,
+      "hi_changed": false,
       "verdicts": {
         "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
@@ -184,7 +336,37 @@
           "pick_base": true,
           "agree": false
         },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -202,7 +384,37 @@
           "pick_base": true,
           "agree": false
         },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -220,7 +432,37 @@
           "pick_base": true,
           "agree": false
         },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -238,7 +480,37 @@
           "pick_base": true,
           "agree": false
         },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "CONTRADICTED",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -248,6 +520,54 @@
     },
     "isha:7": {
       "rule": "विलोम: all beings→no beings",
+      "hi_changed": false,
+      "verdicts": {
+        "openrouter:baidu/ernie-5.5-flash-preview:free": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "MINOR",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        }
+      }
+    },
+    "isha:8": {
+      "rule": "विलोम: pervaded→abandoned",
       "hi_changed": true,
       "verdicts": {
         "openrouter:baidu/ernie-5.5-flash-preview:free": {
@@ -256,7 +576,37 @@
           "pick_base": true,
           "agree": false
         },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "MINOR",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -274,7 +624,37 @@
           "pick_base": true,
           "agree": false
         },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -287,12 +667,42 @@
       "hi_changed": true,
       "verdicts": {
         "openrouter:baidu/ernie-5.5-flash-preview:free": {
-          "base": "MINOR",
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "MINOR",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -310,13 +720,37 @@
           "pick_base": true,
           "agree": false
         },
-        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -326,7 +760,7 @@
     },
     "isha:12": {
       "rule": "विलोम: darkness→light",
-      "hi_changed": true,
+      "hi_changed": false,
       "verdicts": {
         "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
@@ -334,13 +768,37 @@
           "pick_base": true,
           "agree": false
         },
-        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -358,13 +816,37 @@
           "pick_base": true,
           "agree": false
         },
-        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -373,8 +855,8 @@
       }
     },
     "isha:15": {
-      "rule": "विलोम: golden→iron",
-      "hi_changed": false,
+      "rule": "नाम: Pushan→Varuna",
+      "hi_changed": true,
       "verdicts": {
         "openrouter:baidu/ernie-5.5-flash-preview:free": {
           "base": "OK",
@@ -382,13 +864,37 @@
           "pick_base": true,
           "agree": false
         },
-        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -406,13 +912,37 @@
           "pick_base": true,
           "agree": false
         },
-        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -430,13 +960,37 @@
           "pick_base": true,
           "agree": false
         },
-        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+        "ovh:Qwen3.5-397B-A17B": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -454,15 +1008,39 @@
           "pick_base": true,
           "agree": false
         },
-        "openrouter:nvidia/nemotron-3.5-super-vl:free": {
+        "ovh:Qwen3.5-397B-A17B": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
+        "ovh:DeepSeek-V4.1-Flash-1017": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "ovh:gpt-oss-120b": {
+          "base": "MINOR",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
         "google_ai_studio:gemini-3.5-flash-lite": {
-          "base": "CONTRADICTED",
-          "corrupt": "UNSURE",
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
+          "base": "OK",
+          "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         }
