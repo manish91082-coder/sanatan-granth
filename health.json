@@ -1,10 +1,14 @@
 {
  "models": {
   "google_ai_studio:gemini-3.5-flash-lite": {
-   "fails": 0,
+   "cooldown_until": "2026-11-18T00:17:03Z",
+   "fails": 1,
+   "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "last_error_at": "2026-11-18T00:02:03Z",
    "last_ok": "2026-11-17T13:13:07Z",
    "output_tokens": 3677,
-   "requests": 5,
+   "reason": "overloaded",
+   "requests": 8,
    "window": "2026-11-17"
   },
   "groq:openai/gpt-oss-120b": {
@@ -56,7 +60,7 @@
  "providers": {
   "google_ai_studio": {
    "output_tokens": 3677,
-   "requests": 5,
+   "requests": 8,
    "window": "2026-11-17"
   },
   "groq": {
@@ -67,9 +71,9 @@
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
    "output_tokens": 0,
-   "reported_at": "2026-11-17T11:00:21Z",
-   "reported_used": 52,
-   "reported_window": "2026-11-17",
+   "reported_at": "2026-11-18T00:00:58Z",
+   "reported_used": 0,
+   "reported_window": "2026-11-18",
    "requests": 2,
    "window": "2026-11-17"
   },
@@ -79,6 +83,6 @@
    "window": "2026-11-17"
   }
  },
- "updated_at": "2026-11-17T13:13:07Z",
+ "updated_at": "2026-11-18T00:02:03Z",
  "version": 1
 }

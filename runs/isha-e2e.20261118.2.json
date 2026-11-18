@@ -1,0 +1,13 @@
+{
+ "at": "2026-11-18T00:02:03Z",
+ "batch_id": "isha-e2e.20261118.2",
+ "blocked_until": "2026-11-18T00:02:03Z",
+ "rc": 75,
+ "reason": "ड्राफ़्ट A नहीं बना (आधे से कम खंड)",
+ "ref": "blocked:run44204287359",
+ "run": "44204287359",
+ "status": "blocked",
+ "step": "pilot_e2e",
+ "task": "isha-e2e",
+ "text_id": "isha"
+}
