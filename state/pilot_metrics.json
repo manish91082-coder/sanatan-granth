@@ -1,22 +1,26 @@
 {
-  "generated_at": "2026-11-18T00:11:46Z",
-  "text_id": "isha",
+  "generated_at": "2026-11-18T09:11:53Z",
+  "text_id": "gita",
+  "unit": "gita_1",
+  "chapters": [
+    "1"
+  ],
   "pipeline_version": "pilot-e2e-0.7",
   "mock": false,
   "status": "ok",
-  "batch_id": "isha-e2e.20261118.3",
-  "job_key": "2b7fa022a304143d6d7b404187db54f266fe2b2e96ce25f805e164c8c9ce62ed",
-  "run": "44204467664",
-  "segments": 18,
-  "segments_done": 18,
-  "batch_size": 18,
+  "batch_id": "gita-1-e2e.20261118.1",
+  "job_key": "fe2ac21105a634a7c598f3d9d1087255febe6017f1681b1b4c16669bc33abb3f",
+  "run": "44269317426",
+  "segments": 47,
+  "segments_done": 47,
+  "batch_size": 47,
   "silent_omissions": 0,
   "cascade": {
-    "first_pass_agreed": 16,
-    "sent_to_cascade": 2,
-    "agreement_rate": 0.889,
-    "judged_in_round1": 18,
-    "agreement_rate_of_judged": 0.889,
+    "first_pass_agreed": 40,
+    "sent_to_cascade": 7,
+    "agreement_rate": 0.851,
+    "judged_in_round1": 47,
+    "agreement_rate_of_judged": 0.851,
     "draft_missing": {
       "a": [],
       "b": []
@@ -25,27 +29,45 @@
     "go_threshold": 0.6,
     "by_path": {
       "cascade के बाद भी असहमति": 2,
-      "पहले दौर में सहमति": 16
+      "cascade के बाद सहमति": 5,
+      "पहले दौर में सहमति": 40
     }
   },
   "badges": {
-    "C": 16,
-    "D": 2
+    "C": 41,
+    "D": 6
   },
   "flags_by_code": {
-    "CONTRADICTED": 2
+    "CONTRADICTED": 2,
+    "D2": 2,
+    "D6": 3
   },
   "judge_stability": {
+    "pairs": 18,
     "same_judge_flipped": {
-      "model": "ovh:gpt-oss-120b",
+      "model": "openrouter:baidu/ernie-5.5-flash-preview:free",
       "n": 18,
-      "label_match": 0.972,
-      "accept_match": 1.0,
+      "label_match": 0.917,
+      "accept_match": 0.833,
       "pick_match": 0.5,
-      "accept_differs": []
+      "accept_differs": [
+        "gita:1.17",
+        "gita:1.21",
+        "gita:1.23"
+      ]
     },
     "other_family_judge": {
-      "error": "दूसरे परिवार का कोई जज उत्तर नहीं दे रहा"
+      "model": "ovh:gpt-oss-120b",
+      "family": "openai",
+      "n": 18,
+      "label_match": 0.917,
+      "accept_match": 0.833,
+      "pick_match": 0.722,
+      "accept_differs": [
+        "gita:1.33",
+        "gita:1.19",
+        "gita:1.23"
+      ]
     }
   },
   "d_checks": {
@@ -64,94 +86,127 @@
       "D10",
       "D12"
     ],
-    "veto_counts": {}
+    "veto_counts": {
+      "D6": 3,
+      "D2": 2
+    }
   },
   "empirical_claims_flagged_by_judge": 0,
   "models": {
-    "draft_a": "ovh:DeepSeek-V4.1-Flash-1017",
-    "draft_b": "ovh:Qwen3.5-397B-A17B",
-    "draft_c": "google_ai_studio:gemma-4-31b-it",
-    "judge1": "ovh:gpt-oss-120b",
+    "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+    "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
+    "draft_c": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+    "judge1": "openrouter:baidu/ernie-5.5-flash-preview:free",
     "judge2": [
-      "ovh:gpt-oss-120b"
+      "openrouter:baidu/ernie-5.5-flash-preview:free"
     ],
     "judge_pool": [
-      "ovh:gpt-oss-120b",
+      "openrouter:baidu/ernie-5.5-flash-preview:free",
       "ovh:Qwen3.5-397B-A17B",
-      "ovh:DeepSeek-V4.1-Flash-1017"
+      "ovh:DeepSeek-V4.1-Flash-1017",
+      "ovh:gpt-oss-120b",
+      "groq:openai/gpt-oss-120b",
+      "google_ai_studio:gemini-3.5-flash-lite",
+      "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free"
     ],
     "tried": {
       "draft_a": [
         {
-          "model": "ovh:DeepSeek-V4.1-Flash-1017",
-          "drafted": 18
+          "model": "google_ai_studio:gemini-3.5-flash-lite",
+          "drafted": 47
         }
       ],
       "draft_b": [
         {
-          "model": "ovh:Qwen3.5-397B-A17B",
-          "drafted": 18
+          "model": "ovh:DeepSeek-V4.1-Flash-1017",
+          "drafted": 47
         }
       ],
       "judge1": [
+        {
+          "model": "openrouter:baidu/ernie-5.5-flash-preview:free",
+          "judged": 47
+        }
+      ],
+      "judge_probe": [
+        {
+          "model": "ovh:Qwen3.5-397B-A17B",
+          "judged": 0
+        },
         {
           "model": "ovh:gpt-oss-120b",
           "judged": 18
         }
       ],
-      "judge_probe": [],
       "draft_c": [
         {
-          "model": "google_ai_studio:gemma-4-31b-it",
-          "drafted": 2
+          "model": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+          "drafted": 7
         }
       ],
       "judge2": [
         {
-          "model": "ovh:gpt-oss-120b",
-          "judged": 1
+          "model": "openrouter:baidu/ernie-5.5-flash-preview:free",
+          "judged": 6
         },
         {
-          "model": "ovh:gpt-oss-120b",
+          "model": "openrouter:baidu/ernie-5.5-flash-preview:free",
           "judged": 1
         }
       ]
     },
-    "not_responding": [],
+    "not_responding": [
+      "ovh:Qwen3.5-397B-A17B"
+    ],
     "no_key": []
   },
   "families": {
-    "draft_a": "deepseek",
-    "draft_b": "alibaba-qwen",
-    "draft_c": "google",
-    "judge1": "openai"
+    "draft_a": "google",
+    "draft_b": "deepseek",
+    "draft_c": "nvidia",
+    "judge1": "baidu"
   },
   "swarm": {
-    "task": "isha-e2e",
+    "task": "gita-1-e2e",
     "model_source": "roster",
-    "roster_version": "0.2",
+    "roster_version": "0.3",
     "plan": {
       "chosen": {
-        "draft_a": "ovh:DeepSeek-V4.1-Flash-1017",
-        "draft_b": "ovh:Qwen3.5-397B-A17B",
-        "judge": "ovh:gpt-oss-120b",
-        "draft_c": "google_ai_studio:gemma-4-31b-it"
+        "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+        "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
+        "judge": "openrouter:baidu/ernie-5.5-flash-preview:free",
+        "draft_c": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free"
       },
       "families": {
-        "draft_a": "deepseek",
-        "draft_b": "alibaba-qwen",
-        "judge": "openai",
-        "draft_c": "google"
+        "draft_a": "google",
+        "draft_b": "deepseek",
+        "judge": "baidu",
+        "draft_c": "nvidia"
       },
       "tier_sum": 2,
-      "why_not": {
-        "google_ai_studio:gemini-3.5-flash-lite (draft)": "रुका: overloaded → 2026-11-18T00:17:03Z",
-        "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free (draft)": "रुका: daily_quota → 2026-11-18T00:05:00Z",
-        "openrouter:baidu/ernie-5.5-flash-preview:free (judge)": "दिन का हिस्सा पूरा → 2026-11-19T00:05:00Z",
-        "google_ai_studio:gemini-3.5-flash-lite (judge)": "रुका: overloaded → 2026-11-18T00:17:03Z"
-      }
+      "why_not": {}
     },
     "judge_canary": {
+      "openrouter:baidu/ernie-5.5-flash-preview:free": {
+        "passed": true,
+        "items": 4,
+        "answered": 4,
+        "caught": 4,
+        "need": 3,
+        "rules": [
+          "निषेध हटाना"
+        ]
+      },
+      "ovh:Qwen3.5-397B-A17B": {
+        "passed": true,
+        "items": 4,
+        "answered": 4,
+        "caught": 4,
+        "need": 3,
+        "rules": [
+          "निषेध हटाना"
+        ]
+      },
       "ovh:gpt-oss-120b": {
         "passed": true,
         "items": 4,
@@ -159,47 +214,53 @@
         "caught": 4,
         "need": 3,
         "rules": [
-          "निषेध हटाना",
-          "विलोम: immortality→death",
-          "विलोम: knowledge→ignorance"
+          "निषेध हटाना"
         ]
       }
     },
     "resumed_stages": [],
-    "held": [],
+    "held": [
+      {
+        "model": "ovh:Qwen3.5-397B-A17B",
+        "reason": "overloaded",
+        "until": "2026-11-18T09:26:53Z"
+      }
+    ],
     "blocked_until": null,
     "state_dir": true
   },
   "api": {
-    "calls": 8,
-    "retries": 0,
-    "http_429": 0,
-    "prompt_tokens": 14031,
-    "output_tokens": 42076,
+    "calls": 40,
+    "retries": 16,
+    "http_429": 1,
+    "prompt_tokens": 42955,
+    "output_tokens": 187014,
     "paced_s": 0.0,
-    "waited_s": 0.0,
+    "waited_s": 140.0,
     "neurons": 0.0,
     "by_role": {
       "draft_a": {
-        "calls": 1,
-        "retries": 0,
+        "calls": 11,
+        "retries": 7,
         "http_429": 0,
-        "prompt_tokens": 1205,
-        "output_tokens": 9126,
-        "seconds": 37.93,
-        "waited_s": 0.0,
+        "prompt_tokens": 3443,
+        "output_tokens": 5798,
+        "seconds": 28.7,
+        "waited_s": 60.0,
         "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": []
+        "errors": [
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+        ]
       },
       "draft_b": {
-        "calls": 1,
-        "retries": 0,
+        "calls": 6,
+        "retries": 3,
         "http_429": 0,
-        "prompt_tokens": 1151,
-        "output_tokens": 13885,
-        "seconds": 210.07,
-        "waited_s": 0.0,
+        "prompt_tokens": 3218,
+        "output_tokens": 28670,
+        "seconds": 207.2,
+        "waited_s": 40.0,
         "paced_s": 0.0,
         "neurons": 0.0,
         "errors": []
@@ -208,57 +269,61 @@
         "calls": 1,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 217,
-        "output_tokens": 1614,
-        "seconds": 53.75,
+        "prompt_tokens": 523,
+        "output_tokens": 2374,
+        "seconds": 42.96,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
         "errors": []
       },
       "judge1": {
-        "calls": 1,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 4471,
-        "output_tokens": 6263,
-        "seconds": 87.57,
-        "waited_s": 0.0,
+        "calls": 11,
+        "retries": 4,
+        "http_429": 1,
+        "prompt_tokens": 19842,
+        "output_tokens": 107138,
+        "seconds": 502.39,
+        "waited_s": 10.0,
         "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": []
+        "errors": [
+          "JSON parse नहीं हुआ"
+        ]
       },
       "judge2": {
         "calls": 2,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 1299,
-        "output_tokens": 2360,
-        "seconds": 48.03,
+        "prompt_tokens": 2333,
+        "output_tokens": 5643,
+        "seconds": 28.75,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
         "errors": []
       },
       "judge_probe": {
-        "calls": 1,
-        "retries": 0,
+        "calls": 6,
+        "retries": 2,
         "http_429": 0,
-        "prompt_tokens": 4471,
-        "output_tokens": 7035,
-        "seconds": 89.84,
-        "waited_s": 0.0,
+        "prompt_tokens": 9390,
+        "output_tokens": 29330,
+        "seconds": 578.36,
+        "waited_s": 30.0,
         "paced_s": 0.0,
         "neurons": 0.0,
-        "errors": []
+        "errors": [
+          "HTTP 500: "
+        ]
       },
       "judge_canary": {
-        "calls": 1,
+        "calls": 3,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 1217,
-        "output_tokens": 1793,
-        "seconds": 28.7,
+        "prompt_tokens": 4206,
+        "output_tokens": 8061,
+        "seconds": 218.96,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -266,44 +331,88 @@
       }
     }
   },
-  "seconds_total": 556.5,
+  "seconds_total": 1748.2,
   "stages": [
     {
       "agent": "source_witness",
       "stage": "गवाह से पाठ लाना",
-      "started": "2026-11-18T00:02:30Z",
+      "started": "2026-11-18T08:42:44Z",
       "status": "ok",
-      "duration_s": 0.58
+      "duration_s": 0.64
     },
     {
       "agent": "aligner",
       "stage": "ID और गिनती (गवाह के चिह्नों से)",
-      "started": "2026-11-18T00:02:30Z",
+      "started": "2026-11-18T08:42:45Z",
       "status": "ok",
       "duration_s": 0.0
     },
     {
       "agent": "foreman_code",
       "stage": "मॉडलों की सूचियाँ",
-      "started": "2026-11-18T00:02:30Z",
+      "started": "2026-11-18T08:42:45Z",
       "status": "ok",
       "duration_s": 0.0
     },
     {
       "agent": "draft_a",
-      "stage": "ड्राफ़्ट A · DeepSeek-V4.1-Flash-1017",
-      "started": "2026-11-18T00:02:30Z",
+      "stage": "ड्राफ़्ट A · gemini-3.5-flash-lite",
+      "started": "2026-11-18T08:42:45Z",
+      "status": "ok",
+      "model": "google_ai_studio/gemini-3.5-flash-lite",
+      "family": "google",
+      "duration_s": 88.7,
+      "usage": {
+        "calls": 11,
+        "retries": 7,
+        "http_429": 0,
+        "prompt_tokens": 3443,
+        "output_tokens": 5798,
+        "seconds": 28.7,
+        "waited_s": 60.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."
+        ]
+      }
+    },
+    {
+      "agent": "draft_b",
+      "stage": "ड्राफ़्ट B · DeepSeek-V4.1-Flash-1017",
+      "started": "2026-11-18T08:44:14Z",
       "status": "ok",
       "model": "ovh/DeepSeek-V4.1-Flash-1017",
       "family": "deepseek",
-      "duration_s": 37.93,
+      "duration_s": 247.2,
+      "usage": {
+        "calls": 6,
+        "retries": 3,
+        "http_429": 0,
+        "prompt_tokens": 3218,
+        "output_tokens": 28670,
+        "seconds": 207.2,
+        "waited_s": 40.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge_canary",
+      "stage": "जज की चलती जाँच · baidu/ernie-5.5-flash-preview:free",
+      "started": "2026-11-18T08:48:21Z",
+      "status": "ok",
+      "model": "openrouter/baidu/ernie-5.5-flash-preview:free",
+      "family": "baidu",
+      "duration_s": 7.5,
       "usage": {
         "calls": 1,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 1205,
-        "output_tokens": 9126,
-        "seconds": 37.93,
+        "prompt_tokens": 1441,
+        "output_tokens": 1407,
+        "seconds": 7.5,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -311,20 +420,43 @@
       }
     },
     {
-      "agent": "draft_b",
-      "stage": "ड्राफ़्ट B · Qwen3.5-397B-A17B",
-      "started": "2026-11-18T00:03:08Z",
+      "agent": "judge",
+      "stage": "जज, पहला दौर · baidu/ernie-5.5-flash-preview:free",
+      "started": "2026-11-18T08:48:29Z",
       "status": "ok",
-      "model": "ovh/Qwen3.5-397B-A17B",
-      "family": "alibaba-qwen",
-      "duration_s": 210.07,
+      "model": "openrouter/baidu/ernie-5.5-flash-preview:free",
+      "family": "baidu",
+      "duration_s": 512.4,
       "usage": {
-        "calls": 1,
+        "calls": 11,
+        "retries": 4,
+        "http_429": 1,
+        "prompt_tokens": 19842,
+        "output_tokens": 107138,
+        "seconds": 502.39,
+        "waited_s": 10.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "JSON parse नहीं हुआ"
+        ]
+      }
+    },
+    {
+      "agent": "judge_probe",
+      "stage": "स्थिरता: वही जज, उलटा क्रम",
+      "started": "2026-11-18T08:57:01Z",
+      "status": "ok",
+      "model": "openrouter/baidu/ernie-5.5-flash-preview:free",
+      "family": "baidu",
+      "duration_s": 100.87,
+      "usage": {
+        "calls": 2,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 1151,
-        "output_tokens": 13885,
-        "seconds": 210.07,
+        "prompt_tokens": 5100,
+        "output_tokens": 21934,
+        "seconds": 100.87,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -333,124 +465,149 @@
     },
     {
       "agent": "judge_canary",
-      "stage": "जज की चलती जाँच · gpt-oss-120b",
-      "started": "2026-11-18T00:06:38Z",
+      "stage": "जज की चलती जाँच · Qwen3.5-397B-A17B",
+      "started": "2026-11-18T08:58:42Z",
       "status": "ok",
-      "model": "ovh/gpt-oss-120b",
-      "family": "openai",
-      "duration_s": 28.7,
-      "usage": {
-        "calls": 1,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 1217,
-        "output_tokens": 1793,
-        "seconds": 28.7,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": []
-      }
-    },
-    {
-      "agent": "judge",
-      "stage": "जज, पहला दौर · gpt-oss-120b",
-      "started": "2026-11-18T00:07:07Z",
-      "status": "ok",
-      "model": "ovh/gpt-oss-120b",
-      "family": "openai",
-      "duration_s": 87.57,
-      "usage": {
-        "calls": 1,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 4471,
-        "output_tokens": 6263,
-        "seconds": 87.57,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": []
-      }
-    },
-    {
-      "agent": "judge_probe",
-      "stage": "स्थिरता: वही जज, उलटा क्रम",
-      "started": "2026-11-18T00:08:34Z",
-      "status": "ok",
-      "model": "ovh/gpt-oss-120b",
-      "family": "openai",
-      "duration_s": 89.84,
-      "usage": {
-        "calls": 1,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 4471,
-        "output_tokens": 7035,
-        "seconds": 89.84,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": []
-      }
-    },
-    {
-      "agent": "draft_c",
-      "stage": "ड्राफ़्ट C (केवल असहमति वाले) · gemma-4-31b-it",
-      "started": "2026-11-18T00:10:04Z",
-      "status": "ok",
-      "model": "google_ai_studio/gemma-4-31b-it",
-      "family": "google",
-      "duration_s": 53.75,
-      "usage": {
-        "calls": 1,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 217,
-        "output_tokens": 1614,
-        "seconds": 53.75,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": []
-      }
-    },
-    {
-      "agent": "judge",
-      "stage": "जज, दूसरा दौर (alibaba-qwen बनाम google) · gpt-oss-120b",
-      "started": "2026-11-18T00:10:58Z",
-      "status": "ok",
-      "model": "ovh/gpt-oss-120b",
-      "family": "openai",
-      "duration_s": 20.02,
-      "usage": {
-        "calls": 1,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 663,
-        "output_tokens": 1261,
-        "seconds": 20.02,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": []
-      }
-    },
-    {
-      "agent": "judge",
-      "stage": "जज, दूसरा दौर (deepseek बनाम google) · gpt-oss-120b",
-      "started": "2026-11-18T00:11:18Z",
-      "status": "ok",
-      "model": "ovh/gpt-oss-120b",
-      "family": "openai",
-      "duration_s": 28.01,
+      "model": "ovh/Qwen3.5-397B-A17B",
+      "family": "alibaba-qwen",
+      "duration_s": 174.59,
       "usage": {
         "calls": 2,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 1299,
-        "output_tokens": 2360,
-        "seconds": 48.03,
+        "prompt_tokens": 2862,
+        "output_tokens": 5890,
+        "seconds": 182.09,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "स्थिरता: दूसरे परिवार का जज · Qwen3.5-397B-A17B",
+      "started": "2026-11-18T09:01:36Z",
+      "status": "ok",
+      "model": "ovh/Qwen3.5-397B-A17B",
+      "family": "alibaba-qwen",
+      "duration_s": 407.28,
+      "usage": {
+        "calls": 5,
+        "retries": 2,
+        "http_429": 0,
+        "prompt_tokens": 5100,
+        "output_tokens": 21934,
+        "seconds": 478.15,
+        "waited_s": 30.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 500: "
+        ]
+      }
+    },
+    {
+      "agent": "judge_canary",
+      "stage": "जज की चलती जाँच · gpt-oss-120b",
+      "started": "2026-11-18T09:08:24Z",
+      "status": "ok",
+      "model": "ovh/gpt-oss-120b",
+      "family": "openai",
+      "duration_s": 36.87,
+      "usage": {
+        "calls": 3,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 4206,
+        "output_tokens": 8061,
+        "seconds": 218.96,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "स्थिरता: दूसरे परिवार का जज · gpt-oss-120b",
+      "started": "2026-11-18T09:09:01Z",
+      "status": "ok",
+      "model": "ovh/gpt-oss-120b",
+      "family": "openai",
+      "duration_s": 100.21,
+      "usage": {
+        "calls": 6,
+        "retries": 2,
+        "http_429": 0,
+        "prompt_tokens": 9390,
+        "output_tokens": 29330,
+        "seconds": 578.36,
+        "waited_s": 30.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": [
+          "HTTP 500: "
+        ]
+      }
+    },
+    {
+      "agent": "draft_c",
+      "stage": "ड्राफ़्ट C (केवल असहमति वाले) · nvidia/nemotron-3-ultra-550b-a55b:free",
+      "started": "2026-11-18T09:10:41Z",
+      "status": "ok",
+      "model": "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free",
+      "family": "nvidia",
+      "duration_s": 42.96,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 523,
+        "output_tokens": 2374,
+        "seconds": 42.96,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "जज, दूसरा दौर (deepseek बनाम nvidia) · baidu/ernie-5.5-flash-preview:free",
+      "started": "2026-11-18T09:11:24Z",
+      "status": "ok",
+      "model": "openrouter/baidu/ernie-5.5-flash-preview:free",
+      "family": "baidu",
+      "duration_s": 18.26,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 1740,
+        "output_tokens": 3498,
+        "seconds": 18.26,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "agent": "judge",
+      "stage": "जज, दूसरा दौर (google बनाम nvidia) · baidu/ernie-5.5-flash-preview:free",
+      "started": "2026-11-18T09:11:42Z",
+      "status": "ok",
+      "model": "openrouter/baidu/ernie-5.5-flash-preview:free",
+      "family": "baidu",
+      "duration_s": 10.48,
+      "usage": {
+        "calls": 2,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 2333,
+        "output_tokens": 5643,
+        "seconds": 28.75,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -460,16 +617,16 @@
     {
       "agent": "hard_checks",
       "stage": "पक्की जाँचें D2/D3/D6/D7/D8",
-      "started": "2026-11-18T00:11:46Z",
+      "started": "2026-11-18T09:11:52Z",
       "status": "ok",
-      "duration_s": 0.01
+      "duration_s": 0.02
     },
     {
       "agent": "export_prep",
       "stage": "परतों का पेड़ + R-जाँचें",
-      "started": "2026-11-18T00:11:46Z",
+      "started": "2026-11-18T09:11:52Z",
       "status": "ok",
-      "duration_s": 0.06
+      "duration_s": 0.14
     }
   ],
   "gates": {
@@ -496,31 +653,28 @@
   "gate_findings": [
     {
       "check": "R2",
-      "path": "texts/isha",
+      "path": "texts/gita",
       "msg": "text-lock से पहले अनुवाद-परत मौजूद है"
     },
     {
       "check": "R6",
-      "path": "texts/isha/root/sa-Deva/1.json",
+      "path": "texts/gita/root/sa-Deva/1.json",
       "msg": "परत का लाइसेंस 'CC-BY-SA-4.0' display allow-list में नहीं"
     }
   ],
   "problems": [],
   "source": {
-    "base_edition_provisional": "ia-nsp-108-1925",
-    "carrier_witness": "sa-ws-isha",
+    "base_edition_provisional": "sa-ws-gita",
+    "carrier_witness": "sa-ws-gita",
     "carrier_licence": "CC-BY-SA-4.0",
-    "carrier_sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
+    "carrier_sha256": "ca0ace947df3f2e8d8d2a51a0cc95fcd4b32e9272759e41d6f736f435ef11669",
     "witness_status": "W1 (lock नहीं)",
-    "print_coverage_min_mean": [
-      0.3333,
-      0.8313
-    ]
+    "print_coverage_min_mean": null
   },
   "limits": [
     "परीक्षण-run: स्रोत अस्थायी, पाठ lock नहीं; बना पेड़ repo में नहीं गया",
     "बैज C/D मशीन-जाँच के हैं; किसी इंसान ने अनुवाद नहीं देखा",
     "D1, D4, D5, D9, D10, D12 नहीं चलीं",
-    "एक छोटा ग्रंथ (18 मंत्र): दरें pilot-संकेत हैं, निष्कर्ष नहीं"
+    "47 खंडों का एक run: दरें pilot-संकेत हैं, निष्कर्ष नहीं"
   ]
 }
