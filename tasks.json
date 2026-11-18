@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "67e2045c1375201c",
+  "digest": "407baeba75976732",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-18T09:04:19Z"
+  "updated_at": "2026-11-18T09:12:20Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -17,16 +17,49 @@
   "enabled": true,
   "fails": 0,
   "job_key": "fe2ac21105a634a7c598f3d9d1087255febe6017f1681b1b4c16669bc33abb3f",
+  "last": {
+   "at": "2026-11-18T09:12:00Z",
+   "batch_id": "gita-1-e2e.20261118.1",
+   "rc": 0,
+   "reason": null,
+   "ref": "pr:70",
+   "run": "44269317426",
+   "status": "done",
+   "summary": {
+    "agreement_rate": 0.851,
+    "api_calls": 40,
+    "badges": {
+     "C": 41,
+     "D": 6
+    },
+    "first_pass": 40,
+    "models": {
+     "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+     "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
+     "draft_c": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+     "judge1": "openrouter:baidu/ernie-5.5-flash-preview:free"
+    },
+    "pipeline_version": "pilot-e2e-0.7",
+    "resumed": [],
+    "seconds": 1748.2,
+    "segments": 47
+   }
+  },
+  "last_done": "2026-11-18T09:12:00Z",
   "queued_at": "2026-11-18T08:42:25Z",
+  "replans": 0,
   "seq": 1,
-  "status": "queued",
+  "status": "done",
   "step": "pilot_e2e"
  },
  "gita-2-e2e": {
+  "batch_id": "gita-2-e2e.20261118.1",
   "enabled": true,
   "fails": 0,
-  "seq": 0,
-  "status": "pending",
+  "job_key": "7358bcc700a0adab21fe30b298d3fe98b763c2758a44e3f0415039388bf9b567",
+  "queued_at": "2026-11-18T09:12:20Z",
+  "seq": 1,
+  "status": "queued",
   "step": "pilot_e2e"
  },
  "isha-e2e": {
