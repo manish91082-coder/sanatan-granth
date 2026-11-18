@@ -1,14 +1,12 @@
 {
  "models": {
   "google_ai_studio:gemini-3.5-flash-lite": {
-   "cooldown_until": "2026-11-18T19:37:33Z",
-   "fails": 1,
+   "fails": 0,
    "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
    "last_error_at": "2026-11-18T19:22:33Z",
-   "last_ok": "2026-11-18T19:20:16Z",
-   "output_tokens": 31269,
-   "reason": "overloaded",
-   "requests": 76,
+   "last_ok": "2026-11-18T20:03:55Z",
+   "output_tokens": 41565,
+   "requests": 106,
    "window": "2026-11-18"
   },
   "google_ai_studio:gemma-4-31b-it": {
@@ -26,8 +24,10 @@
    "window": "2026-11-18"
   },
   "groq:qwen/qwen3.8-27b": {
-   "output_tokens": 1425,
-   "requests": 4,
+   "fails": 0,
+   "last_ok": "2026-11-18T20:03:55Z",
+   "output_tokens": 2463,
+   "requests": 6,
    "window": "2026-11-18"
   },
   "openrouter:baidu/ernie-5.5-flash-preview:free": {
@@ -54,9 +54,9 @@
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
    "fails": 0,
-   "last_ok": "2026-11-18T19:20:16Z",
-   "output_tokens": 170488,
-   "requests": 26,
+   "last_ok": "2026-11-18T20:03:55Z",
+   "output_tokens": 225532,
+   "requests": 33,
    "window": "2026-11-18"
   },
   "ovh:Qwen3.5-397B-A17B": {
@@ -79,21 +79,21 @@
   },
   "ovh:gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-18T19:20:16Z",
-   "output_tokens": 96963,
-   "requests": 21,
+   "last_ok": "2026-11-18T20:03:55Z",
+   "output_tokens": 132222,
+   "requests": 29,
    "window": "2026-11-18"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 31269,
-   "requests": 76,
+   "output_tokens": 41565,
+   "requests": 106,
    "window": "2026-11-18"
   },
   "groq": {
-   "output_tokens": 19043,
-   "requests": 14,
+   "output_tokens": 20081,
+   "requests": 16,
    "window": "2026-11-18"
   },
   "openrouter": {
@@ -106,11 +106,11 @@
    "window": "2026-11-18"
   },
   "ovh": {
-   "output_tokens": 295390,
-   "requests": 59,
+   "output_tokens": 385693,
+   "requests": 74,
    "window": "2026-11-18"
   }
  },
- "updated_at": "2026-11-18T19:22:33Z",
+ "updated_at": "2026-11-18T20:03:55Z",
  "version": 1
 }
