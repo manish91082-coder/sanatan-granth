@@ -1,12 +1,29 @@
 {
  "_meta": {
-  "digest": "ba33779a0249f4c3",
+  "digest": "50fba1d61ba2dd05",
   "foreman_unreachable": 0,
-  "roster_version": "0.2",
-  "updated_at": "2026-11-18T08:03:41Z"
+  "roster_version": "0.3",
+  "updated_at": "2026-11-18T08:42:25Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
+  "fails": 0,
+  "seq": 0,
+  "status": "pending",
+  "step": "pilot_e2e"
+ },
+ "gita-1-e2e": {
+  "batch_id": "gita-1-e2e.20261118.1",
+  "enabled": true,
+  "fails": 0,
+  "job_key": "fe2ac21105a634a7c598f3d9d1087255febe6017f1681b1b4c16669bc33abb3f",
+  "queued_at": "2026-11-18T08:42:25Z",
+  "seq": 1,
+  "status": "queued",
+  "step": "pilot_e2e"
+ },
+ "gita-2-e2e": {
+  "enabled": true,
   "fails": 0,
   "seq": 0,
   "status": "pending",
