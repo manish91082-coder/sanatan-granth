@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "7ceb63999881a680",
+  "digest": "22fdc17b7b9391c1",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-18T16:20:44Z"
+  "updated_at": "2026-11-18T16:47:34Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -53,23 +53,23 @@
   "step": "pilot_e2e"
  },
  "gita-1-e2e-v08": {
-  "batch_id": "gita-1-e2e-v08.20261118.2",
+  "batch_id": "gita-1-e2e-v08.20261118.3",
   "enabled": true,
   "fails": 0,
-  "job_key": "31cff6e4f1a171df1d98e143dcf4f601d0d170b40b425a81d1abb5540b9ca89a",
+  "job_key": "eff7c9ea6dbdcb8de7561151cdafcc9908a88eb57fa2f04eb86b75a67349ba51",
   "last": {
-   "at": "2026-11-18T16:02:47Z",
-   "batch_id": "gita-1-e2e-v08.20261118.1",
+   "at": "2026-11-18T16:47:14Z",
+   "batch_id": "gita-1-e2e-v08.20261118.2",
    "rc": 75,
-   "reason": "ड्राफ़्ट A नहीं बना (आधे से कम खंड)",
-   "ref": "blocked:run44342208632",
-   "run": "44342208632",
+   "reason": "ड्राफ़्ट B नहीं बना (आधे से कम खंड)",
+   "ref": "blocked:run44342687082",
+   "run": "44342687082",
    "status": "blocked",
    "summary": null
   },
-  "queued_at": "2026-11-18T16:03:05Z",
-  "replans": 1,
-  "seq": 2,
+  "queued_at": "2026-11-18T16:47:34Z",
+  "replans": 2,
+  "seq": 3,
   "status": "queued",
   "step": "pilot_e2e"
  },
