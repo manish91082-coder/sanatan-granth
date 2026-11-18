@@ -1,0 +1,13 @@
+{
+ "at": "2026-11-18T16:47:14Z",
+ "batch_id": "gita-1-e2e-v08.20261118.2",
+ "blocked_until": "2026-11-18T16:47:14Z",
+ "rc": 75,
+ "reason": "ड्राफ़्ट B नहीं बना (आधे से कम खंड)",
+ "ref": "blocked:run44342687082",
+ "run": "44342687082",
+ "status": "blocked",
+ "step": "pilot_e2e",
+ "task": "gita-1-e2e-v08",
+ "text_id": "gita"
+}

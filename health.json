@@ -49,20 +49,20 @@
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
    "fails": 0,
-   "last_ok": "2026-11-18T09:40:37Z",
-   "output_tokens": 124956,
-   "requests": 19,
+   "last_ok": "2026-11-18T16:47:14Z",
+   "output_tokens": 155982,
+   "requests": 22,
    "window": "2026-11-18"
   },
   "ovh:Qwen3.5-397B-A17B": {
-   "cooldown_until": "2026-11-18T09:26:53Z",
-   "fails": 1,
-   "last_error": "HTTP 500: ",
-   "last_error_at": "2026-11-18T09:11:53Z",
+   "cooldown_until": "2026-11-18T17:17:14Z",
+   "fails": 2,
+   "last_error": "HTTP 0: RemoteDisconnected",
+   "last_error_at": "2026-11-18T16:47:14Z",
    "last_ok": "2026-11-18T00:30:36Z",
    "output_tokens": 27939,
-   "reason": "overloaded",
-   "requests": 6,
+   "reason": "timeout",
+   "requests": 10,
    "window": "2026-11-18"
   },
   "ovh:Qwen3.8-27B": {
@@ -101,11 +101,11 @@
    "window": "2026-11-18"
   },
   "ovh": {
-   "output_tokens": 194075,
-   "requests": 35,
+   "output_tokens": 225101,
+   "requests": 42,
    "window": "2026-11-18"
   }
  },
- "updated_at": "2026-11-18T16:02:47Z",
+ "updated_at": "2026-11-18T16:47:14Z",
  "version": 1
 }

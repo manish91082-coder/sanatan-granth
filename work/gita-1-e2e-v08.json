@@ -1,0 +1,207 @@
+{
+  "key": {
+    "text": "gita",
+    "chapters": [
+      "1"
+    ],
+    "pipeline_version": "pilot-e2e-0.8",
+    "source_sha256": "ca0ace947df3f2e8d8d2a51a0cc95fcd4b32e9272759e41d6f736f435ef11669",
+    "mock": false
+  },
+  "stages": {
+    "draft_a": {
+      "model": "ovh:DeepSeek-V4.1-Flash-1017",
+      "items": {
+        "gita:1.1": {
+          "en": "Dhritarashtra said: O Sanjaya, on the field of dharma, on the field of Kuru, assembled and desiring to fight, what did my sons and the sons of Pandu do?",
+          "hi": "धृतराष्ट्र ने कहा: हे संजय, धर्म के क्षेत्र में, कुरुक्षेत्र में, युद्ध की इच्छा से एकत्र हुए मेरे पुत्रों और पाण्डु के पुत्रों ने क्या किया?"
+        },
+        "gita:1.2": {
+          "en": "Sanjaya said: Having seen the Pandava army drawn up, then King Duryodhana approached the teacher and spoke these words.",
+          "hi": "संजय ने कहा: पाण्डवों की व्यूह में खड़ी सेना को देखकर, तब राजा दुर्योधन आचार्य के पास पहुँचकर वचन बोला।"
+        },
+        "gita:1.3": {
+          "en": "O teacher, behold this great army of the sons of Pandu, arrayed by the intelligent son of Drupada, your disciple.",
+          "hi": "हे आचार्य, पाण्डु-पुत्रों की इस महती सेना को देखिए, जिसे आपके बुद्धिमान शिष्य द्रुपद-पुत्र ने व्यूह में खड़ा किया है।"
+        },
+        "gita:1.4": {
+          "en": "Here are heroes, great archers, equal to Bhima and Arjuna in battle: Yuyudhana, Virata, and Drupada the great chariot-warrior.",
+          "hi": "यहाँ युद्ध में भीम और अर्जुन के समान शूरवीर, महाधनुर्धर हैं: युयुधान, विराट और महारथी द्रुपद।"
+        },
+        "gita:1.5": {
+          "en": "Dhrishtaketu, Chekitana, the valiant king of Kashi, Purujit, Kuntibhoja, and Shaibya, the bull among men.",
+          "hi": "धृष्टकेतु, चेकितान, वीर्यवान काशिराज, पुरुजित, कुन्तिभोज और नरपुंगव शैब्य।"
+        },
+        "gita:1.6": {
+          "en": "The valiant Yudhamanyu, the mighty Uttamaujas, the son of Subhadra, and the sons of Draupadi—all indeed are great chariot-warriors.",
+          "hi": "विक्रान्त युधामन्यु, वीर्यवान उत्तमौजा, सुभद्रा-पुत्र और द्रौपदी-पुत्र—ये सभी महारथी हैं।"
+        },
+        "gita:1.7": {
+          "en": "O best of the twice-born, know those who are distinguished among us; I tell you the leaders of my army for the sake of identification.",
+          "hi": "हे द्विजश्रेष्ठ, हमारे पक्ष में जो विशिष्ट हैं, उन्हें जानिए; मैं तुम्हें अपनी सेना के नायकों को पहचान के लिए बता रहा हूँ।"
+        },
+        "gita:1.8": {
+          "en": "Yourself, Bhishma, Karna, Kripa the conqueror in battle, Ashvatthama, Vikarna, and the son of Somadatta as well.",
+          "hi": "स्वयं आप, भीष्म, कर्ण, समिति को जीतने वाले कृप, अश्वत्थामा, विकर्ण और वैसे ही सोमदत्त-पुत्र।"
+        },
+        "gita:1.9": {
+          "en": "And many other heroes who have abandoned their lives for my sake, bearing various weapons, all skilled in war.",
+          "hi": "और बहुत से अन्य शूरवीर, जिन्होंने मेरे लिए अपने प्राण त्याग दिए हैं, नाना प्रकार के शस्त्रों से सुसज्जित, सभी युद्ध में कुशल हैं।"
+        },
+        "gita:1.10": {
+          "en": "That army of ours is unlimited, protected by Bhishma; but this army of theirs is limited, protected by Bhima.",
+          "hi": "भीष्म द्वारा रक्षित वह हमारी सेना असीमित है; परन्तु भीम द्वारा रक्षित उनकी यह सेना सीमित है।"
+        },
+        "gita:1.11": {
+          "en": "Therefore, all of you, stationed in your respective positions in all divisions, protect Bhishma alone.",
+          "hi": "इसलिए आप सभी, सभी व्यूह-स्थानों में यथाभाग स्थित होकर, भीष्म की ही रक्षा करें।"
+        },
+        "gita:1.12": {
+          "en": "Generating joy in him, the aged Kuru elder, the grandfather, the powerful one, roared a lion's roar and blew his conch loudly.",
+          "hi": "उसके मन में हर्ष उत्पन्न करते हुए, कुरुवृद्ध पितामह, प्रतापवान ने सिंहनाद करके ऊँचे स्वर में शंख बजाया।"
+        },
+        "gita:1.13": {
+          "en": "Then conches and kettledrums, tabors, drums, and cow-horns suddenly sounded together; that sound became tumultuous.",
+          "hi": "तब शंख, भेरी, पणव, आनक और गोमुख एक साथ अचानक बज उठे; वह शब्द कोलाहलपूर्ण हो गया।"
+        },
+        "gita:1.14": {
+          "en": "Then, stationed in a great chariot yoked with white horses, Madhava and the Pandava blew their divine conches.",
+          "hi": "तब श्वेत अश्वों से युक्त महान रथ में स्थित माधव और पाण्डव ने अपने दिव्य शंख बजाए।"
+        },
+        "gita:1.15": {
+          "en": "Hrishikesha blew Panchajanya; Dhananjaya blew Devadatta; and Vrikodara, of mighty deeds, blew the great conch Paundra.",
+          "hi": "हृषीकेश ने पाञ्चजन्य, धनञ्जय ने देवदत्त, और महाकर्मा वृकोदर ने महाशंख पौण्ड्र बजाया।"
+        },
+        "gita:1.16": {
+          "en": "King Yudhishthira, the son of Kunti, blew Anantavijaya; Nakula and Sahadeva blew Sughosha and Manipushpaka.",
+          "hi": "राजा कुन्तीपुत्र युधिष्ठिर ने अनन्तविजय बजाया; नकुल और सहदेव ने सुघोष और मणिपुष्पक बजाए।"
+        },
+        "gita:1.17": {
+          "en": "The king of Kashi, the supreme archer, Shikhandi the great chariot-warrior, Dhrishtadyumna, Virata, and the unconquered Satyaki.",
+          "hi": "काशिराज परम धनुर्धर, महारथी शिखण्डी, धृष्टद्युम्न, विराट और अपराजित सात्यकि।"
+        },
+        "gita:1.18": {
+          "en": "O king, Drupada, the sons of Draupadi, and the mighty-armed son of Subhadra blew their conches separately, each from all sides.",
+          "hi": "हे राजन्, द्रुपद, द्रौपदी-पुत्र और महाबाहु सुभद्रा-पुत्र ने सब ओर से अलग-अलग शंख बजाए।"
+        },
+        "gita:1.19": {
+          "en": "That roar rent the hearts of the sons of Dhritarashtra, and, tumultuous, it resounded through heaven and earth.",
+          "hi": "वह घोष धृतराष्ट्र-पुत्रों के हृदयों को विदीर्ण कर गया, और तुमुल होकर आकाश और पृथ्वी को गुंजायमान करता हुआ गूंजा।"
+        },
+        "gita:1.20": {
+          "en": "Then, seeing the sons of Dhritarashtra standing arranged, when the clash of weapons had begun, the Pandava, with the monkey on his banner, raised his bow.",
+          "hi": "तब, धृतराष्ट्र-पुत्रों को व्यवस्थित खड़े देखकर, शस्त्रों के संघर्ष के आरंभ होने पर, वानर-ध्वज वाले पाण्डव ने अपना धनुष उठाया।"
+        },
+        "gita:1.21": {
+          "en": "Arjuna said: O king, then he spoke this word to Hrishikesha: 'Place my chariot between the two armies, O Achyuta.'",
+          "hi": "अर्जुन ने कहा: हे राजन्, तब उसने हृषीकेश से यह वचन कहा: 'हे अच्युत, मेरा रथ दोनों सेनाओं के बीच खड़ा कर।'"
+        },
+        "gita:1.22": {
+          "en": "So that I may see these standing here desirous to fight, with whom I must fight in this undertaking of battle.",
+          "hi": "जब तक मैं इन युद्ध करने के इच्छुक खड़े हुए लोगों को देख लूँ, कि इस युद्ध-प्रयास में मुझे किनके साथ युद्ध करना है।"
+        },
+        "gita:1.23": {
+          "en": "I may behold those who are about to fight, who have assembled here, desirous of fulfilling the desire of the evil-minded son of Dhritarashtra in battle.",
+          "hi": "मैं उन्हें देख लूँ जो युद्ध करने वाले हैं, जो यहाँ एकत्र हुए हैं, और युद्ध में दुर्बुद्धि धृतराष्ट्र-पुत्र की प्रियता करने के इच्छुक हैं।"
+        },
+        "gita:1.24": {
+          "en": "Sanjaya said: O Bharata, thus addressed by Gudakesha, Hrishikesha, having placed the best chariot between the two armies...",
+          "hi": "संजय ने कहा: हे भारत, गुडाकेश द्वारा इस प्रकार कहे जाने पर, हृषीकेश ने दोनों सेनाओं के बीच उत्तम रथ को खड़ा करके..."
+        },
+        "gita:1.25": {
+          "en": "In front of Bhishma and Drona and all the rulers of the earth, he said: 'O Partha, behold these Kurus gathered together.'",
+          "hi": "भीष्म और द्रोण तथा पृथ्वी के सभी राजाओं के सामने उसने कहा: 'हे पार्थ, इन एकत्र हुए कुरुओं को देख।'"
+        },
+        "gita:1.26": {
+          "en": "There Partha saw standing fathers, then grandfathers, teachers, maternal uncles, brothers, sons, grandsons, and friends.",
+          "hi": "वहाँ पार्थ ने खड़े हुए पिताओं, फिर पितामहों, आचार्यों, मामाओं, भाइयों, पुत्रों, पौत्रों और मित्रों को देखा।"
+        },
+        "gita:1.27": {
+          "en": "Fathers-in-law and also friends in both armies. Having seen all those relatives standing, that son of Kunti...",
+          "hi": "ससुरों और दोनों सेनाओं में मित्रों को भी। उन सभी खड़े हुए बंधुओं को देखकर वह कुन्ती-पुत्र..."
+        },
+        "gita:1.28": {
+          "en": "Arjuna said: Overcome by great compassion, despondent, he said this: 'O Krishna, having seen these kinsmen assembled here desirous to fight...'",
+          "hi": "अर्जुन ने कहा: अत्यधिक करुणा से आविष्ट और विषादयुक्त होकर उसने यह कहा: 'हे कृष्ण, इन युद्ध करने के इच्छुक अपने जनों को यहाँ एकत्र देखकर...'"
+        },
+        "gita:1.29": {
+          "en": "My limbs are sinking, my mouth is drying up, and trembling in my body and horripilation arise.",
+          "hi": "मेरे अंग शिथिल पड़ रहे हैं, मेरा मुख सूख रहा है, मेरे शरीर में कंपन और रोमांच उत्पन्न हो रहा है।"
+        },
+        "gita:1.30": {
+          "en": "The Gandiva slips from my hand, and my skin burns, and I am not able to remain steady, and my mind seems to whirl.",
+          "hi": "गाण्डीव मेरे हाथ से गिर रहा है, और मेरी त्वचा जल रही है, और मैं स्थिर नहीं रह सकता, और मेरा मन चक्कर खाता-सा लगता है।"
+        },
+        "gita:1.31": {
+          "en": "And I see adverse omens, O Keshava, and I do not see any good after killing my own people in battle.",
+          "hi": "और हे केशव, मैं विपरीत निमित्त देख रहा हूँ, और युद्ध में अपने जनों को मारकर मैं कोई श्रेय नहीं देखता।"
+        },
+        "gita:1.32": {
+          "en": "I do not desire victory, O Krishna, nor kingdom nor pleasures. What use is kingdom to us, O Govinda, what use are enjoyments or life?",
+          "hi": "हे कृष्ण, मैं विजय नहीं चाहता, न राज्य और न सुख। हे गोविन्द, हमें राज्य से क्या, भोगों से क्या या जीवन से क्या?"
+        },
+        "gita:1.33": {
+          "en": "For whose sake kingdom, enjoyments and pleasures were desired by us, they are these standing in battle, having abandoned life and wealth.",
+          "hi": "जिनके लिए हमने राज्य, भोग और सुख चाहे थे, वे ये युद्ध में प्राण और धन त्यागकर खड़े हैं।"
+        },
+        "gita:1.34": {
+          "en": "Teachers, fathers, sons, likewise grandfathers, maternal uncles, fathers-in-law, grandsons, brothers-in-law, and relatives.",
+          "hi": "आचार्य, पिता, पुत्र, वैसे ही पितामह, मामा, ससुर, पौत्र, साले और संबंधी।"
+        },
+        "gita:1.35": {
+          "en": "I do not wish to kill these, even if they kill, O Madhusudana; not even for the sake of the kingdom of the three worlds, what then for the earth?",
+          "hi": "हे मधुसूदन, मैं इन्हें मारना नहीं चाहता, भले ही ये मारें; तीनों लोकों के राज्य के लिए भी नहीं, फिर पृथ्वी के लिए क्या कहना?"
+        },
+        "gita:1.36": {
+          "en": "Having killed the sons of Dhritarashtra, what pleasure would be ours, O Janardana? Sin alone would fall upon us after killing these aggressors.",
+          "hi": "हे जनार्दन, धृतराष्ट्र-पुत्रों को मारकर हमें क्या प्रसन्नता होगी? इन आततायियों को मारकर पाप ही हम पर आ पड़ेगा।"
+        },
+        "gita:1.37": {
+          "en": "Therefore we are not worthy to kill the sons of Dhritarashtra, our own relatives; for how, having killed our own kin, could we be happy, O Madhava?",
+          "hi": "इसलिए हम धृतराष्ट्र के पुत्रों, अपने ही बंधुओं, को मारने के योग्य नहीं हैं; क्योंकि हे माधव, अपने जनों को मारकर हम कैसे सुखी होंगे?"
+        },
+        "gita:1.38": {
+          "en": "Even though these, with minds overcome by greed, do not see the fault caused by the destruction of the family and the sin in treachery to friends.",
+          "hi": "यद्यपि ये लोभ से उपहत चेतना वाले कुल-क्षय से उत्पन्न दोष को और मित्र-द्रोह में पाप को नहीं देखते।"
+        },
+        "gita:1.39": {
+          "en": "How should we not know to turn away from sin, O Janardana, since we see the fault caused by the destruction of the family?",
+          "hi": "हे जनार्दन, कुल-क्षय से उत्पन्न दोष को देखते हुए हमें पाप से निवृत्त होना कैसे ज्ञात न हो?"
+        },
+        "gita:1.40": {
+          "en": "When the family is destroyed, the eternal family dharmas perish; when dharma is destroyed, the entire family is indeed overcome by adharma.",
+          "hi": "कुल के नष्ट होने पर सनातन कुल-धर्म नष्ट हो जाते हैं; धर्म के नष्ट होने पर सम्पूर्ण कुल को अधर्म अभिभूत कर लेता है।"
+        },
+        "gita:1.41": {
+          "en": "From the prevalence of adharma, O Krishna, the women of the family become corrupted; when the women are corrupted, O Varshneya, mixture of varnas is born.",
+          "hi": "हे कृष्ण, अधर्म के अभिभव से कुल-स्त्रियाँ दूषित हो जाती हैं; हे वार्ष्णेय, स्त्रियों के दूषित होने पर वर्ण-संकर उत्पन्न होता है।"
+        },
+        "gita:1.42": {
+          "en": "The mixture verily leads to hell for the destroyers of the family and for the family; their forefathers fall, with the rites of pinda and water cut off.",
+          "hi": "वर्ण-संकर कुल-घातकों के और कुल के लिए नरक ही है; इनके पितर पिण्ड और जल की क्रियाओं के लुप्त होने से गिरते हैं।"
+        },
+        "gita:1.43": {
+          "en": "By these faults of the destroyers of the family, which cause mixture of varnas, the eternal jati-dharmas and family dharmas are destroyed.",
+          "hi": "वर्ण-संकर उत्पन्न करने वाले कुल-घातकों के इन दोषों से शाश्वत जाति-धर्म और कुल-धर्म नष्ट हो जाते हैं।"
+        },
+        "gita:1.44": {
+          "en": "O Janardana, we have heard that for men whose family dharmas are destroyed, dwelling in hell is without fixed limit.",
+          "hi": "हे जनार्दन, हमने सुना है कि जिन मनुष्यों के कुल-धर्म नष्ट हो गए हैं, उनका नरक में अनियत निवास होता है।"
+        },
+        "gita:1.45": {
+          "en": "Alas! We have resolved to commit a great sin, since, from greed for the pleasure of the kingdom, we are ready to kill our own kin.",
+          "hi": "अहो! हम महान पाप करने का निश्चय कर बैठे हैं, क्योंकि राज्य-सुख के लोभ से हम अपने जनों को मारने के लिए उद्यत हैं।"
+        },
+        "gita:1.46": {
+          "en": "If the sons of Dhritarashtra, weapons in hand, should kill me in battle, unresisting and weaponless, that would be better for me.",
+          "hi": "यदि शस्त्र-पाणि धृतराष्ट्र के पुत्र युद्ध में मुझ प्रतिकार-रहित और शस्त्र-रहित को मार दें, तो वह मेरे लिए अधिक क्षेमकर होगा।"
+        },
+        "gita:1.47": {
+          "en": "Sanjaya said: Having spoken thus in the battle, Arjuna sat down on the chariot seat, casting aside his bow with its arrow, his mind stricken with grief.",
+          "hi": "संजय ने कहा: संग्राम में इस प्रकार कहकर अर्जुन शोक से संविग्न मन वाला होकर बाण सहित धनुष को त्यागकर रथ के भीतर बैठ गया।"
+        }
+      },
+      "saved_at": "2026-11-18T16:06:52Z"
+    }
+  }
+}
