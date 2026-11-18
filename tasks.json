@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "44209ef27c741b5f",
+  "digest": "8062ca166bd4f429",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-18T18:33:49Z"
+  "updated_at": "2026-11-18T19:07:01Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -55,22 +55,43 @@
  "gita-1-e2e-v08": {
   "batch_id": "gita-1-e2e-v08.20261118.5",
   "enabled": true,
-  "fails": 1,
+  "fails": 0,
   "job_key": "7593465f71501743234085c9ea3b4b2045219bf22f9b945b567db113160fdabd",
   "last": {
-   "at": "2026-11-18T17:22:45Z",
-   "batch_id": "gita-1-e2e-v08.20261118.4",
-   "rc": 75,
-   "reason": "चार बार रचना बदली, काम पूरा नहीं हुआ",
-   "ref": "blocked:run44357684660",
-   "run": "44357684660",
-   "status": "failed",
-   "summary": null
+   "at": "2026-11-18T19:06:45Z",
+   "batch_id": "gita-1-e2e-v08.20261118.5",
+   "rc": 0,
+   "reason": null,
+   "ref": "pr:74",
+   "run": "44371088141",
+   "status": "done",
+   "summary": {
+    "agreement_rate": 0.936,
+    "api_calls": 21,
+    "badges": {
+     "C": 45,
+     "D": 2
+    },
+    "first_pass": 44,
+    "models": {
+     "draft_a": "ovh:DeepSeek-V4.1-Flash-1017",
+     "draft_b": "google_ai_studio:gemini-3.5-flash-lite",
+     "draft_c": "groq:openai/gpt-oss-120b",
+     "judge1": "ovh:gpt-oss-120b"
+    },
+    "pipeline_version": "pilot-e2e-0.8",
+    "resumed": [
+     "draft_a"
+    ],
+    "seconds": 1937.8,
+    "segments": 47
+   }
   },
+  "last_done": "2026-11-18T19:06:45Z",
   "queued_at": "2026-11-18T18:01:01Z",
   "replans": 0,
   "seq": 5,
-  "status": "queued",
+  "status": "done",
   "step": "pilot_e2e"
  },
  "gita-2-e2e": {
@@ -114,11 +135,10 @@
   "step": "pilot_e2e"
  },
  "gita-2-e2e-v08": {
-  "batch_id": "gita-2-e2e-v08.20261118.1",
-  "blocked_until": "2026-11-18T19:03:49Z",
+  "batch_id": "gita-2-e2e-v08.20261118.2",
   "enabled": true,
   "fails": 1,
-  "job_key": "a849b30c09041bda95240a38eadc0a7b4eea6cf512608ff7e493f321f9f769f6",
+  "job_key": "53572035078bc5855ae6e6c9cf0d91d216b6ddf9bfcdc3cd65396a6791f5ad03",
   "last": {
    "at": "2026-11-18T18:33:21Z",
    "batch_id": "gita-2-e2e-v08.20261118.1",
@@ -129,10 +149,9 @@
    "status": "failed",
    "summary": null
   },
-  "queued_at": "2026-11-18T17:22:58Z",
-  "reason": "विफल; थोड़ी देर बाद दोबारा",
-  "seq": 1,
-  "status": "failed",
+  "queued_at": "2026-11-18T19:07:01Z",
+  "seq": 2,
+  "status": "queued",
   "step": "pilot_e2e"
  },
  "isha-e2e": {
