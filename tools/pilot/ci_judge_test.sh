@@ -20,6 +20,9 @@ REPORT="$OUT/report/judge_test_${TEXT}.json"
 if [ "$RC" -eq 0 ] && [ "$OPEN_PR" = "yes" ] && [ -n "${PR_TOKEN:-}" ] && [ -f "$REPORT" ]; then
   BRANCH="data/judge-test-${TEXT}-run${GITHUB_RUN_ID:-0}"
   REMOTE="https://x-access-token:${PR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+  # डेटा-branch ताज़ा main से कटे: job लंबा चलता है और इस बीच पिछले job का डेटा-PR merge हो चुका होता है;
+  # पुराने checkout से कटी branch साझा फ़ाइल पर टकराती है और auto-merge अटक जाता है (18 नवंबर, PR #71)।
+  if git fetch -q origin main 2>/dev/null; then git checkout -q --detach FETCH_HEAD 2>/dev/null || echo "::warning::ताज़ा main पर नहीं जा सका; पुराने checkout से branch"; fi
   mkdir -p audit/pilot
   cp "$REPORT" "audit/pilot/judge_test_${TEXT}.json"
   git config user.name "sanatan-granth-swarm"
