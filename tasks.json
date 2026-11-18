@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "43c504289f0a8886",
+  "digest": "31ed541b16ff57f9",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-18T09:24:22Z"
+  "updated_at": "2026-11-18T09:41:01Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -57,9 +57,39 @@
   "enabled": true,
   "fails": 0,
   "job_key": "7358bcc700a0adab21fe30b298d3fe98b763c2758a44e3f0415039388bf9b567",
+  "last": {
+   "at": "2026-11-18T09:40:42Z",
+   "batch_id": "gita-2-e2e.20261118.1",
+   "rc": 0,
+   "reason": null,
+   "ref": "pr:71",
+   "run": "44273746222",
+   "status": "done",
+   "summary": {
+    "agreement_rate": 0.903,
+    "api_calls": 46,
+    "badges": {
+     "C": 70,
+     "D": 2
+    },
+    "first_pass": 65,
+    "models": {
+     "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+     "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
+     "draft_c": "groq:openai/gpt-oss-120b",
+     "judge1": "openrouter:baidu/ernie-5.5-flash-preview:free"
+    },
+    "pipeline_version": "pilot-e2e-0.7",
+    "resumed": [],
+    "seconds": 1684.0,
+    "segments": 72
+   }
+  },
+  "last_done": "2026-11-18T09:40:42Z",
   "queued_at": "2026-11-18T09:12:20Z",
+  "replans": 0,
   "seq": 1,
-  "status": "queued",
+  "status": "done",
   "step": "pilot_e2e"
  },
  "isha-e2e": {
