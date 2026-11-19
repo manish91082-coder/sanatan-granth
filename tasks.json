@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "f1529915493d52cb",
+  "digest": "33c7eb24e9ceb7f7",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-18T20:21:22Z"
+  "updated_at": "2026-11-19T00:01:52Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -175,10 +175,10 @@
   "step": "pilot_e2e"
  },
  "isha-e2e": {
-  "batch_id": "isha-e2e.20261118.3",
+  "batch_id": "isha-e2e.20261119.4",
   "enabled": true,
   "fails": 0,
-  "job_key": "2b7fa022a304143d6d7b404187db54f266fe2b2e96ce25f805e164c8c9ce62ed",
+  "job_key": "2623a4880870d24c027aba2268a64f67db7f49e4939ffb49357dd7299d01b353",
   "last": {
    "at": "2026-11-18T00:11:52Z",
    "batch_id": "isha-e2e.20261118.3",
@@ -208,10 +208,10 @@
    }
   },
   "last_done": "2026-11-18T00:11:52Z",
-  "queued_at": "2026-11-18T00:02:16Z",
+  "queued_at": "2026-11-19T00:01:52Z",
   "replans": 0,
-  "seq": 3,
-  "status": "done",
+  "seq": 4,
+  "status": "queued",
   "step": "pilot_e2e"
  },
  "judge-requal": {
