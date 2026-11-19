@@ -4,9 +4,9 @@
    "fails": 0,
    "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
    "last_error_at": "2026-11-18T19:22:33Z",
-   "last_ok": "2026-11-18T20:03:55Z",
-   "output_tokens": 41565,
-   "requests": 106,
+   "last_ok": "2026-11-19T00:18:04Z",
+   "output_tokens": 43844,
+   "requests": 110,
    "window": "2026-11-18"
   },
   "google_ai_studio:gemma-4-31b-it": {
@@ -18,10 +18,10 @@
   },
   "groq:openai/gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-18T19:20:16Z",
-   "output_tokens": 17618,
-   "requests": 10,
-   "window": "2026-11-18"
+   "last_ok": "2026-11-19T00:18:04Z",
+   "output_tokens": 1496,
+   "requests": 1,
+   "window": "2026-11-19"
   },
   "groq:qwen/qwen3.8-27b": {
    "fails": 0,
@@ -54,21 +54,19 @@
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
    "fails": 0,
-   "last_ok": "2026-11-18T20:03:55Z",
-   "output_tokens": 225532,
-   "requests": 33,
-   "window": "2026-11-18"
+   "last_ok": "2026-11-19T00:18:04Z",
+   "output_tokens": 11681,
+   "requests": 1,
+   "window": "2026-11-19"
   },
   "ovh:Qwen3.5-397B-A17B": {
-   "cooldown_until": "2026-11-18T20:06:36Z",
-   "fails": 3,
+   "fails": 0,
    "last_error": "HTTP 0: TimeoutError",
    "last_error_at": "2026-11-18T19:06:36Z",
-   "last_ok": "2026-11-18T00:30:36Z",
-   "output_tokens": 27939,
-   "reason": "timeout",
-   "requests": 12,
-   "window": "2026-11-18"
+   "last_ok": "2026-11-19T00:18:04Z",
+   "output_tokens": 25329,
+   "requests": 3,
+   "window": "2026-11-19"
   },
   "ovh:Qwen3.8-27B": {
    "fails": 0,
@@ -79,38 +77,38 @@
   },
   "ovh:gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-18T20:03:55Z",
-   "output_tokens": 132222,
-   "requests": 29,
-   "window": "2026-11-18"
+   "last_ok": "2026-11-19T00:18:04Z",
+   "output_tokens": 9136,
+   "requests": 2,
+   "window": "2026-11-19"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 41565,
-   "requests": 106,
+   "output_tokens": 43844,
+   "requests": 110,
    "window": "2026-11-18"
   },
   "groq": {
-   "output_tokens": 20081,
-   "requests": 16,
-   "window": "2026-11-18"
+   "output_tokens": 1496,
+   "requests": 1,
+   "window": "2026-11-19"
   },
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
    "output_tokens": 371033,
-   "reported_at": "2026-11-18T09:41:01Z",
-   "reported_used": 37,
-   "reported_window": "2026-11-18",
+   "reported_at": "2026-11-19T00:01:52Z",
+   "reported_used": 0,
+   "reported_window": "2026-11-19",
    "requests": 40,
    "window": "2026-11-18"
   },
   "ovh": {
-   "output_tokens": 385693,
-   "requests": 74,
-   "window": "2026-11-18"
+   "output_tokens": 46146,
+   "requests": 6,
+   "window": "2026-11-19"
   }
  },
- "updated_at": "2026-11-18T20:03:55Z",
+ "updated_at": "2026-11-19T00:18:04Z",
  "version": 1
 }
