@@ -4,10 +4,10 @@
    "fails": 0,
    "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
    "last_error_at": "2026-11-18T19:22:33Z",
-   "last_ok": "2026-11-19T00:18:04Z",
-   "output_tokens": 43844,
-   "requests": 110,
-   "window": "2026-11-18"
+   "last_ok": "2026-11-20T00:27:55Z",
+   "output_tokens": 1772,
+   "requests": 2,
+   "window": "2026-11-19"
   },
   "google_ai_studio:gemma-4-31b-it": {
    "fails": 0,
@@ -31,42 +31,38 @@
    "window": "2026-11-18"
   },
   "openrouter:baidu/ernie-5.5-flash-preview:free": {
-   "cooldown_until": "2026-11-19T00:05:00Z",
-   "fails": 1,
+   "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-18T09:11:53Z",
-   "output_tokens": 355851,
-   "reason": "budget",
-   "requests": 37,
-   "window": "2026-11-18"
+   "last_ok": "2026-11-20T00:27:55Z",
+   "output_tokens": 178622,
+   "requests": 14,
+   "window": "2026-11-20"
   },
   "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
-   "cooldown_until": "2026-11-19T00:05:00Z",
-   "fails": 1,
+   "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-18T09:11:53Z",
-   "output_tokens": 15182,
-   "reason": "budget",
-   "requests": 3,
-   "window": "2026-11-18"
+   "last_ok": "2026-11-20T00:27:55Z",
+   "output_tokens": 5632,
+   "requests": 1,
+   "window": "2026-11-20"
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
    "fails": 0,
-   "last_ok": "2026-11-19T00:18:04Z",
-   "output_tokens": 11681,
+   "last_ok": "2026-11-20T00:27:55Z",
+   "output_tokens": 10127,
    "requests": 1,
-   "window": "2026-11-19"
+   "window": "2026-11-20"
   },
   "ovh:Qwen3.5-397B-A17B": {
    "fails": 0,
    "last_error": "HTTP 0: TimeoutError",
    "last_error_at": "2026-11-18T19:06:36Z",
-   "last_ok": "2026-11-19T00:18:04Z",
-   "output_tokens": 25329,
-   "requests": 3,
-   "window": "2026-11-19"
+   "last_ok": "2026-11-20T00:27:55Z",
+   "output_tokens": 26843,
+   "requests": 4,
+   "window": "2026-11-20"
   },
   "ovh:Qwen3.8-27B": {
    "fails": 0,
@@ -85,9 +81,9 @@
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 43844,
-   "requests": 110,
-   "window": "2026-11-18"
+   "output_tokens": 1772,
+   "requests": 2,
+   "window": "2026-11-19"
   },
   "groq": {
    "output_tokens": 1496,
@@ -96,19 +92,19 @@
   },
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
-   "output_tokens": 371033,
-   "reported_at": "2026-11-19T00:01:52Z",
+   "output_tokens": 184254,
+   "reported_at": "2026-11-20T00:00:28Z",
    "reported_used": 0,
-   "reported_window": "2026-11-19",
-   "requests": 40,
-   "window": "2026-11-18"
+   "reported_window": "2026-11-20",
+   "requests": 15,
+   "window": "2026-11-20"
   },
   "ovh": {
-   "output_tokens": 46146,
-   "requests": 6,
-   "window": "2026-11-19"
+   "output_tokens": 36970,
+   "requests": 5,
+   "window": "2026-11-20"
   }
  },
- "updated_at": "2026-11-19T00:18:04Z",
+ "updated_at": "2026-11-20T00:27:55Z",
  "version": 1
 }
