@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "b737a7c0623c356f",
+  "digest": "79bd3c40e124e65b",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-20T00:20:33Z"
+  "updated_at": "2026-11-20T00:28:30Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -180,38 +180,38 @@
   "fails": 0,
   "job_key": "5961b8d47c140b82cec525c0a8d3acabc4c1040eaf9aa534629e3399b78158a2",
   "last": {
-   "at": "2026-11-19T00:18:09Z",
-   "batch_id": "isha-e2e.20261119.4",
+   "at": "2026-11-20T00:28:01Z",
+   "batch_id": "isha-e2e.20261120.5",
    "rc": 0,
    "reason": null,
-   "ref": "pr:77",
-   "run": "44425670979",
+   "ref": "pr:78",
+   "run": "44642304100",
    "status": "done",
    "summary": {
-    "agreement_rate": 0.889,
-    "api_calls": 11,
+    "agreement_rate": 0.833,
+    "api_calls": 22,
     "badges": {
-     "C": 18,
-     "D": 0
+     "C": 17,
+     "D": 1
     },
-    "first_pass": 16,
+    "first_pass": 15,
     "models": {
      "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
      "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
-     "draft_c": "groq:openai/gpt-oss-120b",
-     "judge1": "ovh:Qwen3.5-397B-A17B"
+     "draft_c": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+     "judge1": "openrouter:baidu/ernie-5.5-flash-preview:free"
     },
     "pipeline_version": "pilot-e2e-0.8",
     "resumed": [],
-    "seconds": 959.6,
+    "seconds": 1632.0,
     "segments": 18
    }
   },
-  "last_done": "2026-11-19T00:18:09Z",
+  "last_done": "2026-11-20T00:28:01Z",
   "queued_at": "2026-11-20T00:00:28Z",
   "replans": 0,
   "seq": 5,
-  "status": "queued",
+  "status": "done",
   "step": "pilot_e2e"
  },
  "judge-requal": {
