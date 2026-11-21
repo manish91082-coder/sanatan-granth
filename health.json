@@ -4,10 +4,10 @@
    "fails": 0,
    "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
    "last_error_at": "2026-11-18T19:22:33Z",
-   "last_ok": "2026-11-20T00:27:55Z",
-   "output_tokens": 1772,
-   "requests": 2,
-   "window": "2026-11-19"
+   "last_ok": "2026-11-21T00:54:26Z",
+   "output_tokens": 2465,
+   "requests": 4,
+   "window": "2026-11-20"
   },
   "google_ai_studio:gemma-4-31b-it": {
    "fails": 0,
@@ -18,10 +18,10 @@
   },
   "groq:openai/gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-19T00:18:04Z",
-   "output_tokens": 1496,
-   "requests": 1,
-   "window": "2026-11-19"
+   "last_ok": "2026-11-21T00:54:26Z",
+   "output_tokens": 33742,
+   "requests": 42,
+   "window": "2026-11-21"
   },
   "groq:qwen/qwen3.8-27b": {
    "fails": 0,
@@ -34,35 +34,41 @@
    "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-20T00:27:55Z",
-   "output_tokens": 178622,
-   "requests": 14,
-   "window": "2026-11-20"
+   "last_ok": "2026-11-21T00:54:26Z",
+   "output_tokens": 86262,
+   "requests": 5,
+   "window": "2026-11-21"
   },
   "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
    "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-20T00:27:55Z",
-   "output_tokens": 5632,
-   "requests": 1,
-   "window": "2026-11-20"
+   "last_ok": "2026-11-21T00:54:26Z",
+   "output_tokens": 26552,
+   "requests": 4,
+   "window": "2026-11-21"
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
-   "fails": 0,
+   "cooldown_until": "2026-11-21T01:04:26Z",
+   "fails": 1,
+   "last_error": "HTTP 429: ",
+   "last_error_at": "2026-11-21T00:54:26Z",
    "last_ok": "2026-11-20T00:27:55Z",
-   "output_tokens": 10127,
-   "requests": 1,
-   "window": "2026-11-20"
+   "output_tokens": 9003,
+   "reason": "rate_limited",
+   "requests": 6,
+   "window": "2026-11-21"
   },
   "ovh:Qwen3.5-397B-A17B": {
-   "fails": 0,
-   "last_error": "HTTP 0: TimeoutError",
-   "last_error_at": "2026-11-18T19:06:36Z",
+   "cooldown_until": "2026-11-21T01:04:26Z",
+   "fails": 1,
+   "last_error": "HTTP 429: ",
+   "last_error_at": "2026-11-21T00:54:26Z",
    "last_ok": "2026-11-20T00:27:55Z",
-   "output_tokens": 26843,
-   "requests": 4,
-   "window": "2026-11-20"
+   "output_tokens": 6141,
+   "reason": "rate_limited",
+   "requests": 6,
+   "window": "2026-11-21"
   },
   "ovh:Qwen3.8-27B": {
    "fails": 0,
@@ -72,39 +78,43 @@
    "window": "2026-11-17"
   },
   "ovh:gpt-oss-120b": {
-   "fails": 0,
+   "cooldown_until": "2026-11-21T01:04:26Z",
+   "fails": 1,
+   "last_error": "HTTP 429: ",
+   "last_error_at": "2026-11-21T00:54:26Z",
    "last_ok": "2026-11-19T00:18:04Z",
-   "output_tokens": 9136,
-   "requests": 2,
-   "window": "2026-11-19"
+   "output_tokens": 2733,
+   "reason": "rate_limited",
+   "requests": 6,
+   "window": "2026-11-21"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 1772,
-   "requests": 2,
-   "window": "2026-11-19"
+   "output_tokens": 2465,
+   "requests": 4,
+   "window": "2026-11-20"
   },
   "groq": {
-   "output_tokens": 1496,
-   "requests": 1,
-   "window": "2026-11-19"
+   "output_tokens": 33742,
+   "requests": 42,
+   "window": "2026-11-21"
   },
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
-   "output_tokens": 184254,
-   "reported_at": "2026-11-20T00:00:28Z",
+   "output_tokens": 112814,
+   "reported_at": "2026-11-21T00:04:06Z",
    "reported_used": 0,
-   "reported_window": "2026-11-20",
-   "requests": 15,
-   "window": "2026-11-20"
+   "reported_window": "2026-11-21",
+   "requests": 9,
+   "window": "2026-11-21"
   },
   "ovh": {
-   "output_tokens": 36970,
-   "requests": 5,
-   "window": "2026-11-20"
+   "output_tokens": 17877,
+   "requests": 18,
+   "window": "2026-11-21"
   }
  },
- "updated_at": "2026-11-20T00:27:55Z",
+ "updated_at": "2026-11-21T00:54:26Z",
  "version": 1
 }
