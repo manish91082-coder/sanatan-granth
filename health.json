@@ -4,10 +4,10 @@
    "fails": 0,
    "last_error": "HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
    "last_error_at": "2026-11-18T19:22:33Z",
-   "last_ok": "2026-11-21T00:54:26Z",
-   "output_tokens": 2465,
-   "requests": 4,
-   "window": "2026-11-20"
+   "last_ok": "2026-11-22T00:50:40Z",
+   "output_tokens": 1896,
+   "requests": 1,
+   "window": "2026-11-21"
   },
   "google_ai_studio:gemma-4-31b-it": {
    "fails": 0,
@@ -18,10 +18,10 @@
   },
   "groq:openai/gpt-oss-120b": {
    "fails": 0,
-   "last_ok": "2026-11-21T00:54:26Z",
-   "output_tokens": 33742,
-   "requests": 42,
-   "window": "2026-11-21"
+   "last_ok": "2026-11-22T00:50:40Z",
+   "output_tokens": 19400,
+   "requests": 18,
+   "window": "2026-11-22"
   },
   "groq:qwen/qwen3.8-27b": {
    "fails": 0,
@@ -34,41 +34,41 @@
    "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-21T00:54:26Z",
-   "output_tokens": 86262,
-   "requests": 5,
-   "window": "2026-11-21"
+   "last_ok": "2026-11-22T00:50:40Z",
+   "output_tokens": 235022,
+   "requests": 18,
+   "window": "2026-11-22"
   },
   "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
    "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-21T00:54:26Z",
-   "output_tokens": 26552,
-   "requests": 4,
-   "window": "2026-11-21"
+   "last_ok": "2026-11-22T00:50:40Z",
+   "output_tokens": 3232,
+   "requests": 1,
+   "window": "2026-11-22"
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
-   "cooldown_until": "2026-11-21T01:04:26Z",
-   "fails": 1,
+   "cooldown_until": "2026-11-22T01:00:40Z",
+   "fails": 2,
    "last_error": "HTTP 429: ",
-   "last_error_at": "2026-11-21T00:54:26Z",
+   "last_error_at": "2026-11-22T00:50:40Z",
    "last_ok": "2026-11-20T00:27:55Z",
-   "output_tokens": 9003,
+   "output_tokens": 9278,
    "reason": "rate_limited",
    "requests": 6,
-   "window": "2026-11-21"
+   "window": "2026-11-22"
   },
   "ovh:Qwen3.5-397B-A17B": {
-   "cooldown_until": "2026-11-21T01:04:26Z",
-   "fails": 1,
+   "cooldown_until": "2026-11-22T01:00:40Z",
+   "fails": 2,
    "last_error": "HTTP 429: ",
-   "last_error_at": "2026-11-21T00:54:26Z",
+   "last_error_at": "2026-11-22T00:50:40Z",
    "last_ok": "2026-11-20T00:27:55Z",
-   "output_tokens": 6141,
+   "output_tokens": 5253,
    "reason": "rate_limited",
    "requests": 6,
-   "window": "2026-11-21"
+   "window": "2026-11-22"
   },
   "ovh:Qwen3.8-27B": {
    "fails": 0,
@@ -78,43 +78,43 @@
    "window": "2026-11-17"
   },
   "ovh:gpt-oss-120b": {
-   "cooldown_until": "2026-11-21T01:04:26Z",
-   "fails": 1,
+   "cooldown_until": "2026-11-22T01:00:40Z",
+   "fails": 2,
    "last_error": "HTTP 429: ",
-   "last_error_at": "2026-11-21T00:54:26Z",
+   "last_error_at": "2026-11-22T00:50:40Z",
    "last_ok": "2026-11-19T00:18:04Z",
-   "output_tokens": 2733,
+   "output_tokens": 2739,
    "reason": "rate_limited",
    "requests": 6,
-   "window": "2026-11-21"
+   "window": "2026-11-22"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 2465,
-   "requests": 4,
-   "window": "2026-11-20"
+   "output_tokens": 1896,
+   "requests": 1,
+   "window": "2026-11-21"
   },
   "groq": {
-   "output_tokens": 33742,
-   "requests": 42,
-   "window": "2026-11-21"
+   "output_tokens": 19400,
+   "requests": 18,
+   "window": "2026-11-22"
   },
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
-   "output_tokens": 112814,
-   "reported_at": "2026-11-21T00:04:06Z",
+   "output_tokens": 238254,
+   "reported_at": "2026-11-22T00:02:34Z",
    "reported_used": 0,
-   "reported_window": "2026-11-21",
-   "requests": 9,
-   "window": "2026-11-21"
+   "reported_window": "2026-11-22",
+   "requests": 19,
+   "window": "2026-11-22"
   },
   "ovh": {
-   "output_tokens": 17877,
+   "output_tokens": 17270,
    "requests": 18,
-   "window": "2026-11-21"
+   "window": "2026-11-22"
   }
  },
- "updated_at": "2026-11-21T00:54:26Z",
+ "updated_at": "2026-11-22T00:50:40Z",
  "version": 1
 }
