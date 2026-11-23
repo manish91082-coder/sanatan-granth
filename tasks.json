@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "64431e83d61496e0",
+  "digest": "5b4930b1c8e1f5c2",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-23T00:21:04Z"
+  "updated_at": "2026-11-23T00:58:58Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -180,38 +180,38 @@
   "fails": 0,
   "job_key": "1eb5f009d78e6c3769d8fe5de11dc6dc01e10fb2b65673c354a858a305ca3221",
   "last": {
-   "at": "2026-11-22T00:50:46Z",
-   "batch_id": "isha-e2e.20261122.7",
+   "at": "2026-11-23T00:58:35Z",
+   "batch_id": "isha-e2e.20261123.8",
    "rc": 0,
    "reason": null,
-   "ref": "pr:80",
-   "run": "44964683058",
+   "ref": "pr:83",
+   "run": "45086326073",
    "status": "done",
    "summary": {
-    "agreement_rate": 0.778,
-    "api_calls": 51,
+    "agreement_rate": 0.556,
+    "api_calls": 74,
     "badges": {
-     "C": 17,
-     "D": 1
+     "C": 14,
+     "D": 4
     },
-    "first_pass": 14,
+    "first_pass": 10,
     "models": {
      "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
      "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
      "draft_c": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
-     "judge1": "openrouter:baidu/ernie-5.5-flash-preview:free"
+     "judge1": "groq:openai/gpt-oss-120b"
     },
     "pipeline_version": "pilot-e2e-0.8",
     "resumed": [],
-    "seconds": 2874.8,
+    "seconds": 3430.1,
     "segments": 18
    }
   },
-  "last_done": "2026-11-22T00:50:46Z",
+  "last_done": "2026-11-23T00:58:35Z",
   "queued_at": "2026-11-23T00:01:04Z",
   "replans": 0,
   "seq": 8,
-  "status": "queued",
+  "status": "done",
   "step": "pilot_e2e"
  },
  "judge-requal": {
