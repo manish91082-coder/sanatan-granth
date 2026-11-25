@@ -1,0 +1,58 @@
+{
+ "at": "2026-11-25T01:11:17Z",
+ "batch_id": "judge-requal.20261125.2",
+ "rc": 0,
+ "ref": "run:45522854586",
+ "run": "45522854586",
+ "status": "done",
+ "step": "judge_test",
+ "summary": {
+  "items": 17,
+  "judges": [
+   {
+    "catch_rate": 1.0,
+    "judge": "openrouter:baidu/ernie-5.5-flash-preview:free",
+    "judged": 17,
+    "verdict": "सीमा के ऊपर"
+   },
+   {
+    "catch_rate": 1.0,
+    "judge": "ovh:Qwen3.5-397B-A17B",
+    "judged": 17,
+    "verdict": "सीमा के ऊपर"
+   },
+   {
+    "catch_rate": 1.0,
+    "judge": "ovh:DeepSeek-V4.1-Flash-1017",
+    "judged": 17,
+    "verdict": "सीमा के ऊपर"
+   },
+   {
+    "catch_rate": 1.0,
+    "judge": "groq:openai/gpt-oss-120b",
+    "judged": 17,
+    "verdict": "सीमा के ऊपर"
+   },
+   {
+    "catch_rate": 1.0,
+    "judge": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+    "judged": 17,
+    "verdict": "सीमा के ऊपर"
+   },
+   {
+    "catch_rate": 1.0,
+    "judge": "ovh:gpt-oss-120b",
+    "judged": 17,
+    "verdict": "सीमा के ऊपर"
+   },
+   {
+    "catch_rate": 0.941,
+    "judge": "google_ai_studio:gemini-3.5-flash-lite",
+    "judged": 17,
+    "verdict": "सीमा के ऊपर"
+   }
+  ]
+ },
+ "task": "judge-requal",
+ "text_id": "isha"
+}

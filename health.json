@@ -1,15 +1,13 @@
 {
  "models": {
   "google_ai_studio:gemini-3.5-flash-lite": {
-   "cooldown_until": "2026-12-01T00:50:34Z",
    "fails": 0,
    "last_error": "run की canary-जाँच में बिगाड़ी नक़ल नहीं पकड़ी",
    "last_error_at": "2026-11-24T00:50:34Z",
-   "last_ok": "2026-11-24T00:50:34Z",
-   "output_tokens": 2006,
-   "reason": "quality",
-   "requests": 4,
-   "window": "2026-11-23"
+   "last_ok": "2026-11-25T01:11:11Z",
+   "output_tokens": 1605,
+   "requests": 2,
+   "window": "2026-11-24"
   },
   "google_ai_studio:gemma-4-31b-it": {
    "fails": 0,
@@ -22,9 +20,9 @@
    "fails": 0,
    "last_error": "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 4035, Requested 4534. Please try again in 4.2",
    "last_error_at": "2026-11-24T00:50:34Z",
-   "last_ok": "2026-11-25T00:40:47Z",
-   "output_tokens": 17487,
-   "requests": 18,
+   "last_ok": "2026-11-25T01:11:11Z",
+   "output_tokens": 26068,
+   "requests": 23,
    "window": "2026-11-25"
   },
   "groq:qwen/qwen3.8-27b": {
@@ -38,38 +36,36 @@
    "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-25T00:40:47Z",
-   "output_tokens": 61820,
-   "requests": 6,
+   "last_ok": "2026-11-25T01:11:11Z",
+   "output_tokens": 68622,
+   "requests": 8,
    "window": "2026-11-25"
   },
   "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
    "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-25T00:40:47Z",
-   "output_tokens": 34337,
-   "requests": 7,
+   "last_ok": "2026-11-25T01:11:11Z",
+   "output_tokens": 47870,
+   "requests": 9,
    "window": "2026-11-25"
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
    "fails": 0,
    "last_error": "HTTP 429: ",
    "last_error_at": "2026-11-23T00:58:28Z",
-   "last_ok": "2026-11-25T00:40:47Z",
-   "output_tokens": 14802,
-   "requests": 1,
+   "last_ok": "2026-11-25T01:11:11Z",
+   "output_tokens": 19561,
+   "requests": 2,
    "window": "2026-11-25"
   },
   "ovh:Qwen3.5-397B-A17B": {
-   "cooldown_until": "2026-11-25T00:50:47Z",
-   "fails": 5,
+   "fails": 0,
    "last_error": "HTTP 429: ",
    "last_error_at": "2026-11-25T00:40:47Z",
-   "last_ok": "2026-11-20T00:27:55Z",
-   "output_tokens": 4434,
-   "reason": "rate_limited",
-   "requests": 6,
+   "last_ok": "2026-11-25T01:11:11Z",
+   "output_tokens": 13556,
+   "requests": 7,
    "window": "2026-11-25"
   },
   "ovh:Qwen3.8-27B": {
@@ -80,43 +76,41 @@
    "window": "2026-11-17"
   },
   "ovh:gpt-oss-120b": {
-   "cooldown_until": "2026-11-25T00:50:47Z",
-   "fails": 5,
+   "fails": 0,
    "last_error": "HTTP 429: ",
    "last_error_at": "2026-11-25T00:40:47Z",
-   "last_ok": "2026-11-19T00:18:04Z",
-   "output_tokens": 0,
-   "reason": "rate_limited",
-   "requests": 5,
+   "last_ok": "2026-11-25T01:11:11Z",
+   "output_tokens": 6752,
+   "requests": 6,
    "window": "2026-11-25"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 2006,
-   "requests": 4,
-   "window": "2026-11-23"
+   "output_tokens": 1605,
+   "requests": 2,
+   "window": "2026-11-24"
   },
   "groq": {
-   "output_tokens": 17487,
-   "requests": 18,
+   "output_tokens": 26068,
+   "requests": 23,
    "window": "2026-11-25"
   },
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
-   "output_tokens": 96157,
-   "reported_at": "2026-11-25T00:03:14Z",
-   "reported_used": 0,
+   "output_tokens": 116492,
+   "reported_at": "2026-11-25T00:41:10Z",
+   "reported_used": 13,
    "reported_window": "2026-11-25",
-   "requests": 13,
+   "requests": 17,
    "window": "2026-11-25"
   },
   "ovh": {
-   "output_tokens": 19236,
-   "requests": 12,
+   "output_tokens": 39869,
+   "requests": 15,
    "window": "2026-11-25"
   }
  },
- "updated_at": "2026-11-25T00:40:47Z",
+ "updated_at": "2026-11-25T01:11:17Z",
  "version": 1
 }
