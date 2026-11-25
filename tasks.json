@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "b2b696345b2f1fae",
+  "digest": "54715052844525d4",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-25T00:41:10Z"
+  "updated_at": "2026-11-25T01:03:23Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -215,11 +215,10 @@
   "step": "pilot_e2e"
  },
  "judge-requal": {
-  "batch_id": "judge-requal.20261118.1",
-  "blocked_until": "2026-11-25T00:50:47Z",
+  "batch_id": "judge-requal.20261125.2",
   "enabled": true,
   "fails": 0,
-  "job_key": "01698b69a50e81205019ba64cd08ed065da00be57bfb1d0e86b5488fc38a00bc",
+  "job_key": "86369aac7cd4446f3fee451c47ec12d0b4fc0e446337a86296110053a3b1fd09",
   "last": {
    "at": "2026-11-18T00:30:44Z",
    "batch_id": "judge-requal.20261118.1",
@@ -277,11 +276,10 @@
    }
   },
   "last_done": "2026-11-18T00:30:44Z",
-  "queued_at": "2026-11-18T00:21:04Z",
-  "reason": "जज-परीक्षा: कड़ी के जज (roster) अभी सब उपलब्ध नहीं",
+  "queued_at": "2026-11-25T01:03:23Z",
   "replans": 0,
-  "seq": 1,
-  "status": "blocked",
+  "seq": 2,
+  "status": "queued",
   "step": "judge_test"
  }
 }
