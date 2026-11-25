@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-18T00:30:36Z",
+  "generated_at": "2026-11-25T01:11:11Z",
   "text_id": "isha",
-  "run": "44207107596",
+  "run": "45522854586",
   "mock": false,
   "base_file": "audit/pilot/isha_e2e.json",
-  "base_sha256": "57f9a5d1825d0b01e45cb0d3405e4bd270e046c61d10369ac8d1f14f8357fc82",
+  "base_sha256": "ddc1c16f0387f29f6e386d32f151213c8e1df54b20ab84ac651861a78c43de47",
   "carrier_sha256": "564acd3037f6585bfa98acb31fdd4e9e5234fc791e5009f75fea3bc0591e1a68",
   "items": 17,
   "rules_used": [
@@ -23,7 +23,7 @@
     "sambanova:DeepSeek-V3.1",
     "sambanova:Meta-Llama-3.3-70B-Instruct"
   ],
-  "seconds_total": 557.6,
+  "seconds_total": 454.5,
   "results": [
     {
       "judge": "openrouter:baidu/ernie-5.5-flash-preview:free",
@@ -40,14 +40,14 @@
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 0,
       "missed_ids": [],
-      "seconds": 13.4,
+      "seconds": 28.8,
       "usage": {
         "calls": 2,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 5048,
-        "output_tokens": 2958,
-        "seconds": 13.38,
+        "prompt_tokens": 5144,
+        "output_tokens": 6802,
+        "seconds": 28.77,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -69,14 +69,14 @@
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 0,
       "missed_ids": [],
-      "seconds": 214.2,
+      "seconds": 59.4,
       "usage": {
         "calls": 1,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 4609,
-        "output_tokens": 9571,
-        "seconds": 214.22,
+        "prompt_tokens": 4702,
+        "output_tokens": 9122,
+        "seconds": 59.36,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -98,72 +98,14 @@
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 0,
       "missed_ids": [],
-      "seconds": 28.3,
+      "seconds": 17.3,
       "usage": {
         "calls": 1,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 5201,
-        "output_tokens": 6154,
-        "seconds": 28.29,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": []
-      }
-    },
-    {
-      "judge": "ovh:gpt-oss-120b",
-      "family": "openai",
-      "judged": 17,
-      "of": 17,
-      "caught": 17,
-      "catch_rate": 1.0,
-      "picked_base": 17,
-      "pick_rate": 1.0,
-      "passed_corrupt_as_ok": 0,
-      "passed_ids": [],
-      "said_same_meaning": 0,
-      "accepted_corrupt": 0,
-      "base_flagged_contradicted": 0,
-      "missed_ids": [],
-      "seconds": 62.5,
-      "usage": {
-        "calls": 1,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 4251,
-        "output_tokens": 5539,
-        "seconds": 62.48,
-        "waited_s": 0.0,
-        "paced_s": 0.0,
-        "neurons": 0.0,
-        "errors": []
-      }
-    },
-    {
-      "judge": "google_ai_studio:gemini-3.5-flash-lite",
-      "family": "google",
-      "judged": 17,
-      "of": 17,
-      "caught": 17,
-      "catch_rate": 1.0,
-      "picked_base": 17,
-      "pick_rate": 1.0,
-      "passed_corrupt_as_ok": 0,
-      "passed_ids": [],
-      "said_same_meaning": 0,
-      "accepted_corrupt": 0,
-      "base_flagged_contradicted": 0,
-      "missed_ids": [],
-      "seconds": 3.4,
-      "usage": {
-        "calls": 1,
-        "retries": 0,
-        "http_429": 0,
-        "prompt_tokens": 3835,
-        "output_tokens": 1628,
-        "seconds": 3.4,
+        "prompt_tokens": 5334,
+        "output_tokens": 4759,
+        "seconds": 17.26,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -185,16 +127,16 @@
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 1,
       "missed_ids": [],
-      "seconds": 63.0,
+      "seconds": 63.1,
       "usage": {
-        "calls": 5,
-        "retries": 2,
+        "calls": 4,
+        "retries": 1,
         "http_429": 1,
-        "prompt_tokens": 5920,
-        "output_tokens": 9717,
-        "seconds": 21.71,
-        "waited_s": 13.0,
-        "paced_s": 28.3,
+        "prompt_tokens": 5191,
+        "output_tokens": 8581,
+        "seconds": 25.72,
+        "waited_s": 2.0,
+        "paced_s": 35.4,
         "neurons": 0.0,
         "errors": []
       }
@@ -214,14 +156,76 @@
       "accepted_corrupt": 0,
       "base_flagged_contradicted": 0,
       "missed_ids": [],
-      "seconds": 172.5,
+      "seconds": 194.8,
       "usage": {
         "calls": 2,
         "retries": 0,
         "http_429": 0,
-        "prompt_tokens": 4713,
-        "output_tokens": 12808,
-        "seconds": 172.51,
+        "prompt_tokens": 4804,
+        "output_tokens": 13533,
+        "seconds": 194.81,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "judge": "ovh:gpt-oss-120b",
+      "family": "openai",
+      "judged": 17,
+      "of": 17,
+      "caught": 17,
+      "catch_rate": 1.0,
+      "picked_base": 16,
+      "pick_rate": 0.941,
+      "passed_corrupt_as_ok": 0,
+      "passed_ids": [],
+      "said_same_meaning": 1,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 1,
+      "missed_ids": [],
+      "seconds": 86.4,
+      "usage": {
+        "calls": 1,
+        "retries": 0,
+        "http_429": 0,
+        "prompt_tokens": 4324,
+        "output_tokens": 6752,
+        "seconds": 86.39,
+        "waited_s": 0.0,
+        "paced_s": 0.0,
+        "neurons": 0.0,
+        "errors": []
+      }
+    },
+    {
+      "judge": "google_ai_studio:gemini-3.5-flash-lite",
+      "family": "google",
+      "judged": 17,
+      "of": 17,
+      "caught": 16,
+      "catch_rate": 0.941,
+      "picked_base": 17,
+      "pick_rate": 1.0,
+      "passed_corrupt_as_ok": 1,
+      "passed_ids": [
+        "isha:3"
+      ],
+      "said_same_meaning": 0,
+      "accepted_corrupt": 0,
+      "base_flagged_contradicted": 1,
+      "missed_ids": [
+        "isha:3"
+      ],
+      "seconds": 4.5,
+      "usage": {
+        "calls": 2,
+        "retries": 1,
+        "http_429": 0,
+        "prompt_tokens": 5309,
+        "output_tokens": 1605,
+        "seconds": 4.47,
         "waited_s": 0.0,
         "paced_s": 0.0,
         "neurons": 0.0,
@@ -258,13 +262,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -306,13 +310,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -354,15 +358,15 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
-          "base": "OK",
-          "corrupt": "CONTRADICTED",
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "CONTRADICTED",
+          "corrupt": "OK",
           "pick_base": true,
           "agree": false
         },
@@ -397,18 +401,18 @@
           "agree": false
         },
         "ovh:gpt-oss-120b": {
-          "base": "OK",
+          "base": "CONTRADICTED",
+          "corrupt": "CONTRADICTED",
+          "pick_base": false,
+          "agree": true
+        },
+        "groq:openai/gpt-oss-120b": {
+          "base": "MINOR",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "google_ai_studio:gemini-3.5-flash-lite": {
-          "base": "OK",
-          "corrupt": "CONTRADICTED",
-          "pick_base": true,
-          "agree": false
-        },
-        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -450,13 +454,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -498,14 +502,14 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
-          "base": "CONTRADICTED",
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
@@ -546,14 +550,14 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
-          "base": "MINOR",
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
@@ -594,14 +598,14 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
-          "base": "MINOR",
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
@@ -642,13 +646,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -690,14 +694,14 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
-          "base": "OK",
+        "groq:openai/gpt-oss-120b": {
+          "base": "MINOR",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
-          "base": "MINOR",
+        "google_ai_studio:gemini-3.5-flash-lite": {
+          "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
@@ -738,13 +742,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -786,13 +790,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -834,13 +838,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -882,13 +886,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -930,13 +934,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -978,13 +982,13 @@
           "pick_base": true,
           "agree": false
         },
-        "google_ai_studio:gemini-3.5-flash-lite": {
+        "groq:openai/gpt-oss-120b": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
-        "groq:openai/gpt-oss-120b": {
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
@@ -1021,18 +1025,18 @@
           "agree": false
         },
         "ovh:gpt-oss-120b": {
-          "base": "MINOR",
-          "corrupt": "CONTRADICTED",
-          "pick_base": true,
-          "agree": false
-        },
-        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
           "agree": false
         },
         "groq:openai/gpt-oss-120b": {
+          "base": "CONTRADICTED",
+          "corrupt": "CONTRADICTED",
+          "pick_base": true,
+          "agree": false
+        },
+        "google_ai_studio:gemini-3.5-flash-lite": {
           "base": "OK",
           "corrupt": "CONTRADICTED",
           "pick_base": true,
