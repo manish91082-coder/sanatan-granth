@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "55a2aacdaaf2c7a8",
+  "digest": "b2b696345b2f1fae",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-25T00:23:17Z"
+  "updated_at": "2026-11-25T00:41:10Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -180,42 +180,43 @@
   "fails": 0,
   "job_key": "7454a0e9cf95dcb0d0aaf480cf2a6405d9eb5ceafdd18667f9fd611c44cd17ef",
   "last": {
-   "at": "2026-11-24T00:50:41Z",
-   "batch_id": "isha-e2e.20261124.9",
+   "at": "2026-11-25T00:40:52Z",
+   "batch_id": "isha-e2e.20261125.10",
    "rc": 0,
    "reason": null,
-   "ref": "pr:84",
-   "run": "45294185551",
+   "ref": "pr:85",
+   "run": "45514998480",
    "status": "done",
    "summary": {
     "agreement_rate": 0.778,
-    "api_calls": 54,
+    "api_calls": 37,
     "badges": {
-     "C": 15,
-     "D": 3
+     "C": 18,
+     "D": 0
     },
     "first_pass": 14,
     "models": {
-     "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
-     "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
-     "draft_c": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+     "draft_a": "ovh:DeepSeek-V4.1-Flash-1017",
+     "draft_b": "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+     "draft_c": "groq:openai/gpt-oss-120b",
      "judge1": "openrouter:baidu/ernie-5.5-flash-preview:free"
     },
     "pipeline_version": "pilot-e2e-0.8",
     "resumed": [],
-    "seconds": 2730.6,
+    "seconds": 2242.4,
     "segments": 18
    }
   },
-  "last_done": "2026-11-24T00:50:41Z",
+  "last_done": "2026-11-25T00:40:52Z",
   "queued_at": "2026-11-25T00:03:14Z",
   "replans": 0,
   "seq": 10,
-  "status": "queued",
+  "status": "done",
   "step": "pilot_e2e"
  },
  "judge-requal": {
   "batch_id": "judge-requal.20261118.1",
+  "blocked_until": "2026-11-25T00:50:47Z",
   "enabled": true,
   "fails": 0,
   "job_key": "01698b69a50e81205019ba64cd08ed065da00be57bfb1d0e86b5488fc38a00bc",
@@ -277,9 +278,10 @@
   },
   "last_done": "2026-11-18T00:30:44Z",
   "queued_at": "2026-11-18T00:21:04Z",
+  "reason": "जज-परीक्षा: कड़ी के जज (roster) अभी सब उपलब्ध नहीं",
   "replans": 0,
   "seq": 1,
-  "status": "done",
+  "status": "blocked",
   "step": "judge_test"
  }
 }
