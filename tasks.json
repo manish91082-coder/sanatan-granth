@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "24a553f0d2a9c261",
+  "digest": "55a2aacdaaf2c7a8",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-25T00:03:14Z"
+  "updated_at": "2026-11-25T00:23:17Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
