@@ -1,0 +1,30 @@
+{
+ "at": "2026-11-26T00:27:00Z",
+ "batch_id": "isha-e2e.20261126.11",
+ "rc": 0,
+ "ref": "pr:87",
+ "run": "45725802742",
+ "status": "done",
+ "step": "pilot_e2e",
+ "summary": {
+  "agreement_rate": 0.833,
+  "api_calls": 23,
+  "badges": {
+   "C": 18,
+   "D": 0
+  },
+  "first_pass": 15,
+  "models": {
+   "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
+   "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
+   "draft_c": "groq:openai/gpt-oss-120b",
+   "judge1": "openrouter:baidu/ernie-5.5-flash-preview:free"
+  },
+  "pipeline_version": "pilot-e2e-0.8",
+  "resumed": [],
+  "seconds": 1462.2,
+  "segments": 18
+ },
+ "task": "isha-e2e",
+ "text_id": "isha"
+}
