@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "digest": "431db562a13e48b2",
+  "digest": "faacb86650abe0ed",
   "foreman_unreachable": 0,
   "roster_version": "0.3",
-  "updated_at": "2026-11-28T00:24:42Z"
+  "updated_at": "2026-11-28T00:39:57Z"
  },
  "gita-1-2-e2e": {
   "enabled": false,
@@ -180,21 +180,21 @@
   "fails": 0,
   "job_key": "670c81d3c6739c93d67bd53bd82b17834c9fa1a88bcaf027bc9d03ba78e6d718",
   "last": {
-   "at": "2026-11-27T00:36:51Z",
-   "batch_id": "isha-e2e.20261127.12",
+   "at": "2026-11-28T00:39:39Z",
+   "batch_id": "isha-e2e.20261128.13",
    "rc": 0,
    "reason": null,
-   "ref": "pr:88",
-   "run": "45914243757",
+   "ref": "pr:89",
+   "run": "46085936493",
    "status": "done",
    "summary": {
-    "agreement_rate": 0.889,
-    "api_calls": 34,
+    "agreement_rate": 0.833,
+    "api_calls": 39,
     "badges": {
      "C": 17,
      "D": 1
     },
-    "first_pass": 16,
+    "first_pass": 15,
     "models": {
      "draft_a": "google_ai_studio:gemini-3.5-flash-lite",
      "draft_b": "ovh:DeepSeek-V4.1-Flash-1017",
@@ -203,15 +203,15 @@
     },
     "pipeline_version": "pilot-e2e-0.8",
     "resumed": [],
-    "seconds": 2140.0,
+    "seconds": 2085.4,
     "segments": 18
    }
   },
-  "last_done": "2026-11-27T00:36:51Z",
+  "last_done": "2026-11-28T00:39:39Z",
   "queued_at": "2026-11-28T00:04:38Z",
   "replans": 0,
   "seq": 13,
-  "status": "queued",
+  "status": "done",
   "step": "pilot_e2e"
  },
  "judge-requal": {
