@@ -4,10 +4,10 @@
    "fails": 0,
    "last_error": "run की canary-जाँच में बिगाड़ी नक़ल नहीं पकड़ी",
    "last_error_at": "2026-11-24T00:50:34Z",
-   "last_ok": "2026-11-27T00:36:45Z",
-   "output_tokens": 1574,
-   "requests": 1,
-   "window": "2026-11-26"
+   "last_ok": "2026-11-28T00:39:33Z",
+   "output_tokens": 1732,
+   "requests": 2,
+   "window": "2026-11-27"
   },
   "google_ai_studio:gemma-4-31b-it": {
    "fails": 0,
@@ -20,10 +20,10 @@
    "fails": 0,
    "last_error": "HTTP 429: Rate limit reached for model `openai/gpt-oss-120b` in organization `<org>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 4035, Requested 4534. Please try again in 4.2",
    "last_error_at": "2026-11-24T00:50:34Z",
-   "last_ok": "2026-11-27T00:36:45Z",
-   "output_tokens": 4738,
-   "requests": 3,
-   "window": "2026-11-27"
+   "last_ok": "2026-11-28T00:39:33Z",
+   "output_tokens": 20100,
+   "requests": 14,
+   "window": "2026-11-28"
   },
   "groq:qwen/qwen3.8-27b": {
    "fails": 0,
@@ -36,41 +36,41 @@
    "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-27T00:36:45Z",
-   "output_tokens": 121806,
-   "requests": 10,
-   "window": "2026-11-27"
+   "last_ok": "2026-11-28T00:39:33Z",
+   "output_tokens": 84857,
+   "requests": 6,
+   "window": "2026-11-28"
   },
   "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free": {
    "fails": 0,
    "last_error": "दिन का हमारा हिस्सा पूरा",
    "last_error_at": "2026-11-18T09:40:37Z",
-   "last_ok": "2026-11-27T00:36:45Z",
-   "output_tokens": 5092,
+   "last_ok": "2026-11-28T00:39:33Z",
+   "output_tokens": 736,
    "requests": 1,
-   "window": "2026-11-27"
+   "window": "2026-11-28"
   },
   "ovh:DeepSeek-V4.1-Flash-1017": {
-   "cooldown_until": "2026-11-27T00:46:45Z",
-   "fails": 1,
-   "last_error": "HTTP 429: ",
-   "last_error_at": "2026-11-27T00:36:45Z",
-   "last_ok": "2026-11-26T00:26:52Z",
-   "output_tokens": 9010,
-   "reason": "rate_limited",
-   "requests": 6,
-   "window": "2026-11-27"
-  },
-  "ovh:Qwen3.5-397B-A17B": {
-   "cooldown_until": "2026-11-27T00:46:45Z",
+   "cooldown_until": "2026-11-28T00:49:33Z",
    "fails": 2,
    "last_error": "HTTP 429: ",
-   "last_error_at": "2026-11-27T00:36:45Z",
-   "last_ok": "2026-11-25T01:11:11Z",
-   "output_tokens": 14362,
+   "last_error_at": "2026-11-28T00:39:33Z",
+   "last_ok": "2026-11-26T00:26:52Z",
+   "output_tokens": 8935,
    "reason": "rate_limited",
-   "requests": 7,
-   "window": "2026-11-27"
+   "requests": 6,
+   "window": "2026-11-28"
+  },
+  "ovh:Qwen3.5-397B-A17B": {
+   "cooldown_until": "2026-11-28T00:49:33Z",
+   "fails": 3,
+   "last_error": "HTTP 429: ",
+   "last_error_at": "2026-11-28T00:39:33Z",
+   "last_ok": "2026-11-25T01:11:11Z",
+   "output_tokens": 5461,
+   "reason": "rate_limited",
+   "requests": 6,
+   "window": "2026-11-28"
   },
   "ovh:Qwen3.8-27B": {
    "fails": 0,
@@ -80,43 +80,43 @@
    "window": "2026-11-17"
   },
   "ovh:gpt-oss-120b": {
-   "cooldown_until": "2026-11-27T00:46:45Z",
-   "fails": 1,
+   "cooldown_until": "2026-11-28T00:49:33Z",
+   "fails": 2,
    "last_error": "HTTP 429: ",
-   "last_error_at": "2026-11-27T00:36:45Z",
+   "last_error_at": "2026-11-28T00:39:33Z",
    "last_ok": "2026-11-25T01:11:11Z",
-   "output_tokens": 2075,
+   "output_tokens": 3040,
    "reason": "rate_limited",
    "requests": 6,
-   "window": "2026-11-27"
+   "window": "2026-11-28"
   }
  },
  "providers": {
   "google_ai_studio": {
-   "output_tokens": 1574,
-   "requests": 1,
-   "window": "2026-11-26"
+   "output_tokens": 1732,
+   "requests": 2,
+   "window": "2026-11-27"
   },
   "groq": {
-   "output_tokens": 4738,
-   "requests": 3,
-   "window": "2026-11-27"
+   "output_tokens": 20100,
+   "requests": 14,
+   "window": "2026-11-28"
   },
   "openrouter": {
    "exhausted_until": "2026-11-18T00:05:00Z",
-   "output_tokens": 126898,
-   "reported_at": "2026-11-27T00:00:54Z",
+   "output_tokens": 85593,
+   "reported_at": "2026-11-28T00:04:38Z",
    "reported_used": 0,
-   "reported_window": "2026-11-27",
-   "requests": 11,
-   "window": "2026-11-27"
+   "reported_window": "2026-11-28",
+   "requests": 7,
+   "window": "2026-11-28"
   },
   "ovh": {
-   "output_tokens": 25447,
-   "requests": 19,
-   "window": "2026-11-27"
+   "output_tokens": 17436,
+   "requests": 18,
+   "window": "2026-11-28"
   }
  },
- "updated_at": "2026-11-27T00:36:45Z",
+ "updated_at": "2026-11-28T00:39:33Z",
  "version": 1
 }
